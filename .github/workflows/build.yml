@@ -36,14 +36,13 @@ jobs:
         run: |
           cd godot-cpp
           echo "hash=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
-          echo $GITHUB_OUTPUT
         id: godot-cpp-hash
       
       - name: Get godot-cpp build cache
         uses: actions/cache@v3
         with:
           path: build/godot-cpp
-          key: ${{ runner.os }}-${{ steps.godot-cpp-hash.hash }}
+          key: ${{ runner.os }}-${{ steps.godot-cpp-hash.outputs.hash }}
 
       - name: Build CoreGame
         id: configure
