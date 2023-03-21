@@ -1,0 +1,58 @@
+name: CI
+
+env:
+  LINUX_ARTIFACT: libCoreGame.so
+  MACOS_ARTIFACT: libCoreGame.dylib
+  WINDOWS_ARTIFACT: CoreGame.dll
+
+jobs:
+  build:
+    name: ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
+    defaults:
+      run:
+        shell: bash
+    strategy:
+      matrix:
+        os: ["ubuntu-latest", "macos-latest", "windows-latest"]
+    steps:
+      - name: Fetch submodules
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      
+      - name: Get godot-cpp current commit
+        run: |
+          cd godot-cpp
+          echo "hash=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+        id: godot-cpp-hash
+      
+      - name: Get godot-cpp build cache
+        uses: actions/cache@v3
+        with:
+          path: build/godot-cpp
+          key: ${{ runner.os }}-${{ steps.godot-cpp-hash.hash }}
+
+      - name: Get Preset
+        id: get-preset
+        run: |
+          platform=${RUNNER_OS,,}
+          preset=ci/${platform}
+          outdir=dist/${platform}
+          echo "platform=${platform}" >> $GITHUB_OUTPUT
+          echo "preset=${preset}" >> $GITHUB_OUTPUT
+          echo "outdir=${outdir}" >> $GITHUB_OUTPUT
+      
+      - name: Build CoreGame
+        id: configure
+        run: |
+          cmake --preset ${{ steps.get-preset.preset }}
+          cmake --build build/${{ steps.get-preset.outdir }}
+
+      
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - src/**
+      - .github/**
