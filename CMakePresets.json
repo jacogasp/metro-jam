@@ -9,14 +9,61 @@
       }
     },
     {
+      "name": "release",
+      "binaryDir": "${sourceDir}/build/release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "ci",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
       "name": "macos",
-      "inherits": [
-        "debug"
-      ],
       "binaryDir": "${sourceDir}/build/macos",
       "cacheVariables": {
-        "CMAKE_LIBRARY_OUTPUT_DIRECTORY": "${sourceDir}/dist/macos"
+        "CMAKE_LIBRARY_OUTPUT_DIRECTORY": "${sourceDir}/dist/macos",
+        "CMAKE_OSX_ARCHITECTURES": "arm64;arm64e;x86_64"
       }
+    },
+    {
+      "name": "linux",
+      "binaryDir": "${sourceDir}/build/linux",
+      "cacheVariables": {
+        "CMAKE_LIBRARY_OUTPUT_DIRECTORY": "${sourceDir}/dist/linux"
+      }
+    },
+    {
+      "name": "windows",
+      "binaryDir": "${sourceDir}/build/windows",
+      "cacheVariables": {
+        "CMAKE_ARCHIVE_OUTPUT_DIRECTORY": "${sourceDir}/dist/windows"
+      }
+    },
+    {
+      "name": "ci-macos",
+      "inherits": [
+        "ci",
+        "macos"
+      ]
+    },
+    {
+      "name": "ci-linux",
+      "inherits": [
+        "ci",
+        "linux"
+      ]
+    },
+    {
+      "name": "ci-windows",
+      "inherits": [
+        "ci",
+        "windows"
+      ]
     }
   ]
 }
