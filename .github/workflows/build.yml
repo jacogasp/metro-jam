@@ -49,7 +49,7 @@ jobs:
         id: configure
         run: |
           cmake --preset ${{ matrix.config.cmake_preset }}
-          cmake --build build/${{ matrix.config.build_dir }}
+          cmake --build ${{ matrix.config.build_dir }}
       
 on:
   workflow_dispatch:
