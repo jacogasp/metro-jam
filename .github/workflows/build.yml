@@ -17,15 +17,15 @@ jobs:
         config:
           - name: Ubuntu
             os: ubuntu-latest
-            cmake_preset: ci/linux
+            cmake_preset: ci-linux
             dist_dir: dist/linux
           - name: macOS
             os: macos-latest
-            cmake_preset: ci/macos
+            cmake_preset: ci-macos
             dist_dir: dist/macos
           - name: Windows
             os: windows-latest
-            cmake_preset: ci/windows
+            cmake_preset: ci-windows
             dist_dir: dist/windows
     
     steps:
