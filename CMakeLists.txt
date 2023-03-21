@@ -1,0 +1,18 @@
+cmake_minimum_required(VERSION 3.24.2)
+project(CoreGame VERSION 0.1.0)
+
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED YES)
+
+add_subdirectory(godot-cpp)
+
+add_library(
+  ${PROJECT_NAME} SHARED
+  src/gdexample.cpp
+  src/register_types.cpp
+)
+
+target_link_libraries(${PROJECT_NAME} PUBLIC godot-cpp)
+set(CPACK_PROJECT_NAME ${PROJECT_NAME})
+SET(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
+include(CPack)

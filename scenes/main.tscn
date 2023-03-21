@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://blkic257bpcco"]
+
+[ext_resource type="Texture2D" uid="uid://b2u8bgksqj83j" path="res://icon.svg" id="1_7q02j"]
+
+[node name="Main" type="Node2D"]
+
+[node name="GDExample" type="GDExample" parent="."]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+editor_description = ""
+position = Vector2(16.2993, 12.7088)
+texture = ExtResource("1_7q02j")
+script = null

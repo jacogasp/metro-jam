@@ -1,0 +1,9 @@
+[configuration]
+
+entry_symbol = "example_library_init"
+
+[libraries]
+
+linux.64="res://dist/linux/libCoreGame.so"
+windows.x86_64="res://dist/windows/CoreGame.dll"
+macos="res://dist/macos/libCoreGame.dylib"
