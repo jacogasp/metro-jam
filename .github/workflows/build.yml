@@ -1,10 +1,5 @@
 name: CI
 
-env:
-  LINUX_ARTIFACT: libCoreGame.so
-  MACOS_ARTIFACT: libCoreGame.dylib
-  WINDOWS_ARTIFACT: CoreGame.dll
-
 jobs:
   build:
     name: ${{ matrix.config.name }}
@@ -38,6 +33,7 @@ jobs:
         run: |
           cd godot-cpp
           echo "hash=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+          echo $GITHUB_OUTPUT
         id: godot-cpp-hash
       
       - name: Get godot-cpp build cache
