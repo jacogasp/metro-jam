@@ -7,13 +7,26 @@ env:
 
 jobs:
   build:
+    name: ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
     defaults:
       run:
         shell: bash
     strategy:
       matrix:
-        os: ["ubuntu-latest", "macos-latest", "windows-latest"]
-    runs-on: ${{ matrix.os }}
+        config:
+          - name: Ubuntu
+            os: ubuntu-latest
+            cmake_preset: ci/linux
+            dist_dir: dist/linux
+          - name: macOS
+            os: macos-latest
+            cmake_preset: ci/macos
+            dist_dir: dist/macos
+          - name: Windows
+            os: windows-latest
+            cmake_preset: ci/windows
+            dist_dir: dist/windows
     
     steps:
       - name: Fetch submodules
@@ -33,22 +46,11 @@ jobs:
           path: build/godot-cpp
           key: ${{ runner.os }}-${{ steps.godot-cpp-hash.hash }}
 
-      - name: Get Preset
-        id: get-preset
-        run: |
-          platform=${RUNNER_OS,,}
-          preset=ci/${platform}
-          outdir=dist/${platform}
-          echo "platform=${platform}" >> $GITHUB_OUTPUT
-          echo "preset=${preset}" >> $GITHUB_OUTPUT
-          echo "outdir=${outdir}" >> $GITHUB_OUTPUT
-      
       - name: Build CoreGame
         id: configure
         run: |
-          cmake --preset ${{ steps.get-preset.preset }}
-          cmake --build build/${{ steps.get-preset.outdir }}
-
+          cmake --preset ${{ matrix.config.cmake_preset }}
+          cmake --build build/${{ matrix.config.dist_dir }}
       
 on:
   workflow_dispatch:
