@@ -65,5 +65,24 @@
         "windows"
       ]
     }
+  ],
+  "buildPresets": [
+    {
+      "name": "ci",
+      "hidden": true,
+      "configuration": "Release"
+    },
+    {
+      "name": "ci-linux",
+      "configurePreset": "ci-linux"
+    },
+    {
+      "name": "ci-macos",
+      "configurePreset": "ci-macos"
+    },
+    {
+      "name": "ci-windows",
+      "configurePreset": "ci-windows"
+    }
   ]
 }
