@@ -38,6 +38,9 @@ jobs:
         run: |
           cd godot-cpp
           echo "hash=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+      
+      - name: Cmake configure
+        run: cmake --preset ${{ matrix.config.cmake_preset }}
 
       - name: Cache godot-cpp
         id: godot-cpp-cache
@@ -48,15 +51,11 @@ jobs:
 
       - name: Build godot-cpp
         if: steps.godot-cpp-cache.outputs.cache-hit != 'true'
-        run: |
-          cmake --preset ${{ matrix.config.cmake_preset }}
-          cmake --build --preset ${{ matrix.config.cmake_preset }} --target godot-cpp
+        run: cmake --build --preset ${{ matrix.config.cmake_preset }} --target godot-cpp
 
       - name: Build CoreGame
         id: configure
-        run: |
-          cmake --preset ${{ matrix.config.cmake_preset }}
-          cmake --build --preset ${{ matrix.config.cmake_preset }} --target ${{ env.TARGET_NAME }}
+        run: cmake --build --preset ${{ matrix.config.cmake_preset }} --target ${{ env.TARGET_NAME }}
 
 on:
   workflow_dispatch:
