@@ -46,7 +46,7 @@ jobs:
         id: godot-cpp-cache
         uses: actions/cache@v3
         with:
-          path: ${{ github.workspace }}-${{ matrix.config.build_dir }}/godot-cpp
+          path: ${{ github.workspace }}/${{ matrix.config.build_dir }}/godot-cpp
           key: ${{ runner.os }}-${{ steps.godot-cpp-hash.outputs.hash }}
 
       - name: Build godot-cpp
