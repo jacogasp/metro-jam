@@ -36,11 +36,20 @@ jobs:
       - name: Get CPU count
         id: cpu-count
         run: |
-          if [ "$RUNNER_OS" == "Windows" ]; then
-            cpus=${NUMBER_OF_PROCESSOR}
-          else
+          case $RUNNER_OS in
+          Linux)
             cpus=$(nproc)
-          fi
+            ;;
+          macOS)
+            cpus=$(sysctl -n hw.ncpu)
+            ;;
+          Windows)
+            cpus=${NUMBER_OF_PROCESSOR}
+            ;;
+          *)
+            cpus=1
+            ;;
+          esac
           echo "Number of cores: ${cpus}"
           echo "cpus=${cpus}" >> $GITHUB_OUTPUT
 
