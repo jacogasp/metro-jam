@@ -16,11 +16,11 @@ jobs:
             cmake_preset: ci-linux
             build_dir: build/linux
             dist_dir: dist/linux
-          - name: macOS
-            os: macos-latest
-            cmake_preset: ci-macos
-            build_dir: build/macos
-            dist_dir: dist/macos
+          # - name: macOS
+          #   os: macos-latest
+          #   cmake_preset: ci-macos
+          #   build_dir: build/macos
+          #   dist_dir: dist/macos
           # - name: Windows
           #   os: windows-latest
           #   cmake_preset: ci-windows
@@ -66,7 +66,9 @@ jobs:
         id: godot-cpp-cache
         uses: actions/cache@v3
         with:
-          path: ${{ github.workspace }}/${{ matrix.config.build_dir }}/godot-cpp
+          path: |
+            ${{ github.workspace }}/${{ matrix.config.build_dir }}/CMakeCache.txt
+            ${{ github.workspace }}/${{ matrix.config.build_dir }}/godot-cpp
           key: ${{ runner.os }}-${{ steps.godot-cpp-hash.outputs.hash }}
 
       - name: Build godot-cpp
@@ -78,11 +80,10 @@ jobs:
 
       - name: Build CoreGame
         id: configure
-        run: ls ${{ github.workspace }}/${{ matrix.config.build_dir }}/godot-cpp/bin
-        # run: cmake --build
-        #   --preset ${{ matrix.config.cmake_preset }}
-        #   -j ${{ steps.cpu-count.outputs.cpus }}
-        #   --target ${{ env.TARGET_NAME }}
+        run: cmake --build
+          --preset ${{ matrix.config.cmake_preset }}
+          -j ${{ steps.cpu-count.outputs.cpus }}
+          --target ${{ env.TARGET_NAME }}
 
 on:
   workflow_dispatch:
