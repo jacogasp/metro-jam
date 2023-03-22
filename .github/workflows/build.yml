@@ -33,12 +33,22 @@ jobs:
         with:
           submodules: recursive
 
+      - name: Get CPU count
+        id: cpu-count
+        run: |
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            echo "nproc=${NUMBER_OF_PROCESSOR}" >> $GITHUB_OUTPUT
+          else
+            echo "nproc=$(nproc)" >> $GITHUB_OUTPUT
+          fi
+          echo "Number of cores: ${nproc}"
+
       - name: Get godot-cpp current commit
         id: godot-cpp-hash
         run: |
           cd godot-cpp
           echo "hash=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
-      
+
       - name: Cmake configure
         run: cmake --preset ${{ matrix.config.cmake_preset }}
 
@@ -51,11 +61,17 @@ jobs:
 
       - name: Build godot-cpp
         if: steps.godot-cpp-cache.outputs.cache-hit != 'true'
-        run: cmake --build --preset ${{ matrix.config.cmake_preset }} --target godot-cpp -j2
+        run: cmake --build \
+          --preset ${{ matrix.config.cmake_preset }} \
+          -j ${{ steps.cpu-count.outputs.nproc }} \
+          --target godot-cpp
 
       - name: Build CoreGame
         id: configure
-        run: cmake --build --preset ${{ matrix.config.cmake_preset }} --target ${{ env.TARGET_NAME }} -j2
+        run: cmake --build \
+          --preset ${{ matrix.config.cmake_preset }} \
+          -j ${{ steps.cpu-count.outputs.nproc }} \
+          --target ${{ env.TARGET_NAME }}
 
 on:
   workflow_dispatch:
