@@ -78,7 +78,7 @@ jobs:
 
       - name: Build CoreGame
         id: configure
-        run: ls ${{ github.workspace }}/${{ matrix.config.build_dir }}/
+        run: ls ${{ github.workspace }}/${{ matrix.config.build_dir }}/godot-cpp/bin
         # run: cmake --build
         #   --preset ${{ matrix.config.cmake_preset }}
         #   -j ${{ steps.cpu-count.outputs.cpus }}
