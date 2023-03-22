@@ -37,11 +37,12 @@ jobs:
         id: cpu-count
         run: |
           if [ "$RUNNER_OS" == "Windows" ]; then
-            echo "nproc=${NUMBER_OF_PROCESSOR}" >> $GITHUB_OUTPUT
+            cpus=${NUMBER_OF_PROCESSOR}
           else
-            echo "nproc=$(nproc)" >> $GITHUB_OUTPUT
+            cpus=$(nproc)
           fi
-          echo "Number of cores: ${nproc}"
+          echo "Number of cores: ${cpus}"
+          echo "cpus=${cpus}" >> $GITHUB_OUTPUT
 
       - name: Get godot-cpp current commit
         id: godot-cpp-hash
