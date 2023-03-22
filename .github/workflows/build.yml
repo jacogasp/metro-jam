@@ -78,10 +78,11 @@ jobs:
 
       - name: Build CoreGame
         id: configure
-        run: cmake --build
-          --preset ${{ matrix.config.cmake_preset }}
-          -j ${{ steps.cpu-count.outputs.cpus }}
-          --target ${{ env.TARGET_NAME }}
+        run: ls ${{ github.workspace }}/${{ matrix.config.build_dir }}/
+        # run: cmake --build
+        #   --preset ${{ matrix.config.cmake_preset }}
+        #   -j ${{ steps.cpu-count.outputs.cpus }}
+        #   --target ${{ env.TARGET_NAME }}
 
 on:
   workflow_dispatch:
