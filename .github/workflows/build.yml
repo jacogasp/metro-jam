@@ -50,13 +50,13 @@ jobs:
         if: steps.godot-cpp-cache.outputs.cache-hit != 'true'
         run: |
           cmake --preset ${{ matrix.config.cmake_preset }}
-          cmake --build --config Release --target godot-cpp
+          cmake --build --preset ${{ matrix.config.cmake_preset }} --target godot-cpp
 
       - name: Build CoreGame
         id: configure
         run: |
           cmake --preset ${{ matrix.config.cmake_preset }}
-          cmake --build --config Release --target ${{ env.TARGET_NAME }}
+          cmake --build --preset ${{ matrix.config.cmake_preset }} --target ${{ env.TARGET_NAME }}
 
 on:
   workflow_dispatch:
