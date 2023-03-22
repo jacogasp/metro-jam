@@ -1,5 +1,6 @@
 name: CI
-
+env:
+  TARGET_NAME: CoreGame
 jobs:
   build:
     name: ${{ matrix.config.name }}
@@ -25,31 +26,38 @@ jobs:
             cmake_preset: ci-windows
             build_dir: build/windows
             dist_dir: dist/windows
-    
+
     steps:
       - name: Fetch submodules
         uses: actions/checkout@v3
         with:
           submodules: recursive
-      
+
       - name: Get godot-cpp current commit
+        id: godot-cpp-hash
         run: |
           cd godot-cpp
           echo "hash=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
-        id: godot-cpp-hash
-      
-      - name: Get godot-cpp build cache
+
+      - name: Cache godot-cpp
+        id: godot-cpp-cache
         uses: actions/cache@v3
         with:
           path: ${{ matrix.config.build_dir }}/godot-cpp
           key: ${{ runner.os }}-${{ steps.godot-cpp-hash.outputs.hash }}
 
+      - name: Build godot-cpp
+        if: steps.godot-cpp-cache.outputs.cache-hit != 'true'
+        run: |
+          cmake --preset ${{ matrix.config.cmake_preset }}
+          cmake --build --preset ${{ matrix.config.cmake_preset }} --target godot-cpp
+
       - name: Build CoreGame
         id: configure
         run: |
           cmake --preset ${{ matrix.config.cmake_preset }}
-          cmake --build --preset ${{ matrix.config.cmake_preset }}
-      
+          cmake --build --preset ${{ matrix.config.cmake_preset }} --target ${{ env.TARGET_NAME }}
+
 on:
   workflow_dispatch:
   push:
