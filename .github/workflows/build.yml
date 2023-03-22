@@ -61,16 +61,16 @@ jobs:
 
       - name: Build godot-cpp
         if: steps.godot-cpp-cache.outputs.cache-hit != 'true'
-        run: cmake --build \
-          --preset ${{ matrix.config.cmake_preset }} \
-          -j ${{ steps.cpu-count.outputs.nproc }} \
+        run: cmake --build
+          --preset ${{ matrix.config.cmake_preset }}
+          -j ${{ steps.cpu-count.outputs.nproc }}
           --target godot-cpp
 
       - name: Build CoreGame
         id: configure
-        run: cmake --build \
-          --preset ${{ matrix.config.cmake_preset }} \
-          -j ${{ steps.cpu-count.outputs.nproc }} \
+        run: cmake --build
+          --preset ${{ matrix.config.cmake_preset }}
+          -j ${{ steps.cpu-count.outputs.nproc }}
           --target ${{ env.TARGET_NAME }}
 
 on:
