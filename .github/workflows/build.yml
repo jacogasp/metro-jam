@@ -1,7 +1,7 @@
 name: CI
 env:
   TARGET_NAME: CoreGame
-  CPM_SOURCE_CACHE: ${HOME}/.cache/CPM
+  CPM_SOURCE_CACHE: $HOME/.cache/CPM
 jobs:
   build:
     name: ${{ matrix.config.name }}
