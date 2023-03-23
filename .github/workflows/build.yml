@@ -29,10 +29,10 @@ jobs:
           #   dist_dir: dist/windows
 
     steps:
-      # - name: Fetch submodules
-      #   uses: actions/checkout@v3
-      #   with:
-      #     submodules: recursive
+      - name: Fetch submodules
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
 
       - name: Get CPU count
         id: cpu-count
@@ -54,11 +54,11 @@ jobs:
           echo "Number of cores: ${cpus}"
           echo "cpus=${cpus}" >> $GITHUB_OUTPUT
 
-      - name: Get godot-cpp current commit
-        id: godot-cpp-hash
-        run: |
-          cd godot-cpp
-          echo "hash=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+      # - name: Get godot-cpp current commit
+      #   id: godot-cpp-hash
+      #   run: |
+      #     cd godot-cpp
+      #     echo "hash=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
 
       - name: Cache CMake build dir
         id: cmake-build-cache
@@ -67,7 +67,8 @@ jobs:
           path: |
             ${{ github.workspace }}/${{ matrix.config.build_dir }}
             ${{ env.CPM_SOURCE_CACHE }}
-          key: ${{ runner.os }}-${{ steps.godot-cpp-hash.outputs.hash }}
+          # key: ${{ runner.os }}-${{ steps.godot-cpp-hash.outputs.hash }}
+          key: ${{ runner.os }}
 
       - name: Cmake configure
         if: steps.cmake-build-cache.outputs.cache-hit != 'true'
