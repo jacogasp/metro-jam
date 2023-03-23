@@ -4,7 +4,8 @@ project(CoreGame VERSION 0.1.0)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED YES)
 
-add_subdirectory(godot-cpp)
+include(cmake/CPM.cmake)
+CPMAddPackage("gh:godotengine/godot-cpp#4.0")
 
 add_library(
   ${PROJECT_NAME} SHARED
@@ -13,6 +14,7 @@ add_library(
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC godot-cpp)
+
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 SET(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)

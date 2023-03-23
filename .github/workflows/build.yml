@@ -1,6 +1,7 @@
 name: CI
 env:
   TARGET_NAME: CoreGame
+  CPM_SOURCE_CACHE: ${HOME}/.cache/CPM
 jobs:
   build:
     name: ${{ matrix.config.name }}
@@ -28,10 +29,10 @@ jobs:
           #   dist_dir: dist/windows
 
     steps:
-      - name: Fetch submodules
-        uses: actions/checkout@v3
-        with:
-          submodules: recursive
+      # - name: Fetch submodules
+      #   uses: actions/checkout@v3
+      #   with:
+      #     submodules: recursive
 
       - name: Get CPU count
         id: cpu-count
@@ -65,6 +66,7 @@ jobs:
         with:
           path: |
             ${{ github.workspace }}/${{ matrix.config.build_dir }}
+            ${{ env.CPM_SOURCE_CACHE }}
           key: ${{ runner.os }}-${{ steps.godot-cpp-hash.outputs.hash }}
 
       - name: Cmake configure
