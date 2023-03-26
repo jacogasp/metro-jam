@@ -2,6 +2,7 @@ name: CI
 env:
   TARGET_NAME: CoreGame
   CPM_SOURCE_CACHE: ${{ github.workspace }}/.cache/CPM
+  CCACHE_DIR: ${{ github.workspace }}/.cache/ccache
 jobs:
   build:
     name: ${{ matrix.config.name }}
@@ -33,6 +34,23 @@ jobs:
         uses: actions/checkout@v3
         with:
           submodules: recursive
+
+      - name: Install Ccache
+        run: |
+          case $RUNNER_OS in
+          Linux)
+            apt update && apt install ccache
+            ;;
+          macOS)
+            brew installl ccache
+            ;;
+          Windows)
+            choco install ccache
+            ;;
+          *)
+            cpus=1
+            ;;
+          esac
 
       - name: Get CPU count
         id: cpu-count
@@ -67,6 +85,7 @@ jobs:
           path: |
             ${{ github.workspace }}/${{ matrix.config.build_dir }}
             ${{ env.CPM_SOURCE_CACHE }}
+            ${{ env.CCACHE_DIR }}
           # key: ${{ runner.os }}-${{ steps.godot-cpp-hash.outputs.hash }}
           key: ${{ runner.os }}
 
