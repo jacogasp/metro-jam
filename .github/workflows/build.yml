@@ -39,7 +39,7 @@ jobs:
         run: |
           case $RUNNER_OS in
           Linux)
-            apt update && apt install ccache
+            sudo apt update && sudo apt install ccache
             ;;
           macOS)
             brew installl ccache
