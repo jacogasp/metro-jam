@@ -70,7 +70,7 @@
     {
       "name": "ci",
       "hidden": true,
-      "configuration": "release"
+      "configuration": "Release"
     },
     {
       "name": "ci-linux",
