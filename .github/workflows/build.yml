@@ -35,34 +35,20 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Install Ccache
+      - name: Prerequisites
+        id: deps
         run: |
           case $RUNNER_OS in
           Linux)
             sudo apt update && sudo apt install ccache
-            ;;
-          macOS)
-            brew installl ccache
-            ;;
-          Windows)
-            choco install ccache
-            ;;
-          *)
-            cpus=1
-            ;;
-          esac
-
-      - name: Get CPU count
-        id: cpu-count
-        run: |
-          case $RUNNER_OS in
-          Linux)
             cpus=$(nproc)
             ;;
           macOS)
+            brew installl ccache
             cpus=$(sysctl -n hw.ncpu)
             ;;
           Windows)
+            choco install ccache
             cpus=${NUMBER_OF_PROCESSOR}
             ;;
           *)
@@ -78,7 +64,7 @@ jobs:
       #     cd godot-cpp
       #     echo "hash=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
 
-      - name: Cache CMake build dir
+      - name: Cache
         id: cmake-build-cache
         uses: actions/cache@v3
         with:
@@ -97,14 +83,14 @@ jobs:
         if: steps.cmake-build-cache.outputs.cache-hit != 'true'
         run: cmake --build
           --preset ${{ matrix.config.cmake_preset }}
-          -j ${{ steps.cpu-count.outputs.cpus }}
+          -j ${{ steps.deps.outputs.cpus }}
           --target godot-cpp
 
       - name: Build CoreGame
         id: configure
         run: cmake --build
           --preset ${{ matrix.config.cmake_preset }}
-          -j ${{ steps.cpu-count.outputs.cpus }}
+          -j ${{ steps.deps.outputs.cpus }}
           --target ${{ env.TARGET_NAME }}
 
 on:
