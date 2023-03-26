@@ -68,7 +68,6 @@ jobs:
           key: ${{ runner.os }}
 
       - name: Cmake configure
-        if: steps.cache.outputs.cache-hit != 'true'
         run: cmake --preset ${{ matrix.config.cmake_preset }}
 
       - name: Build godot-cpp
