@@ -44,7 +44,7 @@ jobs:
             cpus=$(nproc)
             ;;
           macOS)
-            brew installl ccache
+            brew install ccache
             cpus=$(sysctl -n hw.ncpu)
             ;;
           Windows)
