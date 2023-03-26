@@ -58,29 +58,22 @@ jobs:
           echo "Number of cores: ${cpus}"
           echo "cpus=${cpus}" >> $GITHUB_OUTPUT
 
-      # - name: Get godot-cpp current commit
-      #   id: godot-cpp-hash
-      #   run: |
-      #     cd godot-cpp
-      #     echo "hash=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
-
       - name: Cache
-        id: cmake-build-cache
+        id: cache
         uses: actions/cache@v3
         with:
           path: |
-            ${{ github.workspace }}/${{ matrix.config.build_dir }}
             ${{ env.CPM_SOURCE_CACHE }}
             ${{ env.CCACHE_DIR }}
           # key: ${{ runner.os }}-${{ steps.godot-cpp-hash.outputs.hash }}
           key: ${{ runner.os }}
 
       - name: Cmake configure
-        if: steps.cmake-build-cache.outputs.cache-hit != 'true'
+        if: steps.cache.outputs.cache-hit != 'true'
         run: cmake --preset ${{ matrix.config.cmake_preset }}
 
       - name: Build godot-cpp
-        if: steps.cmake-build-cache.outputs.cache-hit != 'true'
+        if: steps.cache.outputs.cache-hit != 'true'
         run: cmake --build
           --preset ${{ matrix.config.cmake_preset }}
           -j ${{ steps.deps.outputs.cpus }}
