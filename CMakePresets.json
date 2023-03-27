@@ -74,14 +74,23 @@
     },
     {
       "name": "ci-linux",
+      "inherits": [
+        "ci"
+      ],
       "configurePreset": "ci-linux"
     },
     {
       "name": "ci-macos",
+      "inherits": [
+        "ci"
+      ],
       "configurePreset": "ci-macos"
     },
     {
       "name": "ci-windows",
+      "inherits": [
+        "ci"
+      ],
       "configurePreset": "ci-windows"
     }
   ]
