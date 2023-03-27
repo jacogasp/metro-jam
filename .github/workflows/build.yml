@@ -71,7 +71,6 @@ jobs:
         run: cmake --preset ${{ matrix.config.cmake_preset }}
 
       - name: Build godot-cpp
-        if: steps.cache.outputs.cache-hit != 'true'
         run: cmake --build
           --preset ${{ matrix.config.cmake_preset }}
           -j ${{ steps.deps.outputs.cpus }}
