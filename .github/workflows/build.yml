@@ -3,6 +3,10 @@ env:
   TARGET_NAME: CoreGame
   CPM_SOURCE_CACHE: ${{ github.workspace }}/.cache/CPM
   CCACHE_DIR: ${{ github.workspace }}/.cache/ccache
+  ARTIFACT_LINUX: libCoreGame.so
+  ARTIFACT_MACOS: libCoreGame.dylib
+  ARTIFACT_WINDOWS: CoreGame.ddl
+
 jobs:
   build:
     name: ${{ matrix.config.name }}
@@ -39,14 +43,17 @@ jobs:
           Linux)
             sudo apt update && sudo apt install ccache
             cpus=$(nproc)
+            artifact=${ARTIFACT_LINUX}
             ;;
           macOS)
             brew install ccache
             cpus=$(sysctl -n hw.ncpu)
+            artifact=${ARTIFACT_MACOS}
             ;;
           Windows)
             choco install ccache
             cpus=${NUMBER_OF_PROCESSOR}
+            artifact=${ARTIFACT_WINDOWS}
             ;;
           *)
             cpus=1
@@ -54,6 +61,7 @@ jobs:
           esac
           echo "Number of cores: ${cpus}"
           echo "cpus=${cpus}" >> $GITHUB_OUTPUT
+          echo "artifact=${artifact}" >> $GITHUB_OUTPUT
 
       - name: Cache
         id: cache
@@ -79,6 +87,12 @@ jobs:
           --preset ${{ matrix.config.cmake_preset }}
           -j ${{ steps.deps.outputs.cpus }}
           --target ${{ env.TARGET_NAME }}
+          
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ steps.deps.outputs.artifact }}
+          path: ${{ matrix.config.build_dir }}/${{ steps.deps.outputs.artifact }}
 
 on:
   workflow_dispatch:
