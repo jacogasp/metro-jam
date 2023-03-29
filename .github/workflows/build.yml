@@ -100,3 +100,6 @@ on:
     paths:
       - src/**
       - .github/**
+      - CMakeLists.txt
+      - CMakePresets.json
+      - extension_api.json
