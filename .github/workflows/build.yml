@@ -5,7 +5,7 @@ env:
   CCACHE_DIR: ${{ github.workspace }}/.cache/ccache
   ARTIFACT_LINUX: libCoreGame.so
   ARTIFACT_MACOS: libCoreGame.dylib
-  ARTIFACT_WINDOWS: CoreGame.ddl
+  ARTIFACT_WINDOWS: CoreGame.dll
 
 jobs:
   build:
