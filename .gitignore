@@ -2,7 +2,6 @@
 .godot/
 .vscode/
 .idea/
-dist/
-build/*
+build/
 .DS_Store
 !.gdignore

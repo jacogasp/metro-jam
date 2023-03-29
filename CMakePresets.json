@@ -26,7 +26,7 @@
       "name": "macos",
       "binaryDir": "${sourceDir}/build/macos",
       "cacheVariables": {
-        "CMAKE_LIBRARY_OUTPUT_DIRECTORY": "${sourceDir}/dist/macos",
+        "CMAKE_LIBRARY_OUTPUT_DIRECTORY": "${sourceDir}/build/macos",
         "CMAKE_OSX_ARCHITECTURES": "arm64;arm64e;x86_64"
       }
     },
@@ -34,14 +34,14 @@
       "name": "linux",
       "binaryDir": "${sourceDir}/build/linux",
       "cacheVariables": {
-        "CMAKE_LIBRARY_OUTPUT_DIRECTORY": "${sourceDir}/dist/linux"
+        "CMAKE_LIBRARY_OUTPUT_DIRECTORY": "${sourceDir}/build/linux"
       }
     },
     {
       "name": "windows",
       "binaryDir": "${sourceDir}/build/windows",
       "cacheVariables": {
-        "CMAKE_ARCHIVE_OUTPUT_DIRECTORY": "${sourceDir}/dist/windows"
+        "CMAKE_ARCHIVE_OUTPUT_DIRECTORY": "${sourceDir}/build/windows"
       }
     },
     {
