@@ -41,8 +41,8 @@
       "name": "windows",
       "binaryDir": "${sourceDir}/build/windows",
       "cacheVariables": {
-        "CMAKE_ARCHIVE_OUTPUT_DIRECTORY": "${sourceDir}/build/windows",
-        "CMAKE_RUNTIME_OUTPUT_DIRECTORY": "${sourceDir}/build/windows"
+        "CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG": "${sourceDir}/build/windows",
+        "CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE": "${sourceDir}/build/windows"
       }
     },
     {
