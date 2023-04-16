@@ -70,7 +70,7 @@ jobs:
           path: |
             ${{ env.CPM_SOURCE_CACHE }}
             ${{ env.CCACHE_DIR }}
-          key: ${{ runner.os }}
+          key: ${{ runner.os }}-${{ hashFiles('godot-cpp') }}
 
       - name: Cmake configure
         run: cmake --preset ${{ matrix.config.cmake_preset }}
