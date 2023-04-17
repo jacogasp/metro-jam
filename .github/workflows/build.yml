@@ -31,6 +31,8 @@ jobs:
             build_dir: build/windows
 
     steps:
+      - uses: actions/checkout@v3
+      
       - name: Prerequisites
         id: deps
         run: |
