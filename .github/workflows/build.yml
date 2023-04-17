@@ -5,7 +5,7 @@ env:
   CCACHE_DIR: ${{ github.workspace }}/.cache/ccache
   ARTIFACT_LINUX: libCoreGame.so
   ARTIFACT_MACOS: libCoreGame.dylib
-  ARTIFACT_WINDOWS: CoreGame.dll
+  ARTIFACT_WINDOWS: libCoreGame.dll
 
 jobs:
   build:
@@ -31,7 +31,8 @@ jobs:
             build_dir: build/windows
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout source code
+        uses: actions/checkout@v3
       
       - name: Prerequisites
         id: deps
