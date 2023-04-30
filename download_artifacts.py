@@ -52,12 +52,10 @@ def check_cache(cache, latests: dict) -> dict:
         return latests
 
     to_download = {}
-
     for a_lst_name, a_lst in latests.items():
         if a_lst_name in cache and a_lst["id"] == cache[a_lst_name]["id"]:
             continue
         to_download[a_lst_name] = a_lst
-
     return to_download
 
 
@@ -119,12 +117,13 @@ def main():
     cache = load_cache()
     to_download = check_cache(cache, latests)
 
-    if len(to_download) > 0:
-        print_download_list(to_download)
-        download_artifacts(to_download)
-        save_cache(json.dumps(latests))
-    else:
+    if len(to_download) == 0:
         print("Artifacts are up to date")
+        return
+
+    print_download_list(to_download)
+    download_artifacts(to_download)
+    save_cache(json.dumps(latests))
 
 
 if __name__ == "__main__":
