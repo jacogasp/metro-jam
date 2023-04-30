@@ -1,0 +1,3 @@
+#!/bin/sh
+REPO=$(git remote -v | grep fetch | cut -d ':' -f2 | cut -d '.' -f1)
+python download_artifacts.py "$REPO"
