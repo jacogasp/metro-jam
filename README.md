@@ -32,9 +32,9 @@ To build this project, use one of the following CMakePresets:
 
 ## Git Hooks
 
-This project is run a GitHub CI/CD pipeline which builds the game sorce code as
-shared libraries for each OS (`.so` for Linux, `.dylib` for macOS and `.dll`)
-and store them as artifacts.
+This project provides a GitHub CI/CD action worflow, which builds the game source
+code as shared libraries for each OS (`.so` for Linux, `.dylib` for macOS and
+`.dll` for Windows) and store them as GitHub artifacts.
 
 The `.githooks` directory provides scripts to automatically download the
 artifacts to your local `build` directory, in order to run the game.
