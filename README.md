@@ -46,7 +46,7 @@ your `.git/hooks` folder with
 ln -s $(pwd)/.githooks/* $(pwd)/.git/hooks
 ```
 
-You need Python installed.
+> You need **Python** and **GitHub CLI** installed.
 
 ## Manually download artifacts
 
