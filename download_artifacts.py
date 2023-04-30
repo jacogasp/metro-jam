@@ -6,16 +6,15 @@ import zipfile
 import sys
 
 
-CACHE_FILE = "build/.artifacts_cache"
-_, REPO = sys.argv
+CACHE_FILE = os.path.join("build", ".artifacts_cache")
 
-url = f"https://api.github.com/repos/{REPO}/actions/artifacts"
-print(url)
-http = urllib3.PoolManager()
+REPO = sys.argv[1]
+URL = f"https://api.github.com/repos/{REPO}/actions/artifacts"
 
 
 def get_artifacts_list():
-    r = http.request("GET", url)
+    http = urllib3.PoolManager()
+    r = http.request("GET", URL)
     data = r.data.decode("utf-8")
     return json.loads(data)["artifacts"]
 
@@ -23,22 +22,21 @@ def get_artifacts_list():
 def get_latests(artifacts: list):
     artifacts.sort(key=lambda art: art["updated_at"], reverse=True)
     latests = {}
-
     for artifact in artifacts:
         name = artifact["name"]
         if name not in latests:
             latests[name] = artifact
-
     return latests
 
 
 def load_cache() -> dict:
-    if os.path.isfile(CACHE_FILE):
-        print("Load artifacts cache file")
-        with open(CACHE_FILE, 'r') as f:
-            return json.load(f)
-
-    print("Artifacts cache file not found.")
+    if not os.path.isfile(CACHE_FILE):
+        print("Artifacts cache file not found.")
+        return 
+    
+    print("Load artifacts cache file")
+    with open(CACHE_FILE, 'r') as f:
+        return json.load(f)
 
 
 def save_cache(buf: str):
@@ -52,10 +50,10 @@ def check_cache(cache, latests: dict) -> dict:
         return latests
 
     to_download = {}
-    for a_lst_name, a_lst in latests.items():
-        if a_lst_name in cache and a_lst["id"] == cache[a_lst_name]["id"]:
+    for name, art in latests.items():
+        if name in cache and art["id"] == cache[name]["id"]:
             continue
-        to_download[a_lst_name] = a_lst
+        to_download[name] = art
     return to_download
 
 
@@ -86,12 +84,8 @@ def get_file_path_and_dir(artifact):
 
 def download_artifact(artifact, output_path):
     name = artifact["name"]
-    cmd = [
-        'gh', 'api',
-        '-H', 'Accept: application/vnd.github+json',
-        '-H', 'X-GitHub-Api-Version: 2022-11-28',
-        f'{artifact["url"]}/zip'
-    ]
+    cmd = ['gh', 'api','-H', 'Accept: application/vnd.github+json',
+        '-H', 'X-GitHub-Api-Version: 2022-11-28', f'{artifact["url"]}/zip']
     print(f"Download artifact {name}")
     with open(output_path, 'wb') as f:
         subprocess.call(cmd, stdout=f)
@@ -105,6 +99,7 @@ def unzip_artifact(path, output_dir):
 
 
 def download_artifacts(artifacts: dict):
+    print_download_list(artifacts)
     for artifact in artifacts.values():
         path, output_dir = get_file_path_and_dir(artifact)
         download_artifact(artifact, path)
@@ -116,12 +111,9 @@ def main():
     latests = get_latests(artifacts)
     cache = load_cache()
     to_download = check_cache(cache, latests)
-
     if len(to_download) == 0:
         print("Artifacts are up to date")
         return
-
-    print_download_list(to_download)
     download_artifacts(to_download)
     save_cache(json.dumps(latests))
 
