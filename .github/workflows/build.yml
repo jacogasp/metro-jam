@@ -40,17 +40,17 @@ jobs:
           case $RUNNER_OS in
           Linux)
             sudo apt update && sudo apt install ccache
-            cpus=$(nproc)
+            cpus=2
             artifact=${ARTIFACT_LINUX}
             ;;
           macOS)
             brew install ccache
-            cpus=$(sysctl -n hw.ncpu)
+            cpus=3
             artifact=${ARTIFACT_MACOS}
             ;;
           Windows)
             choco install ccache
-            cpus=${NUMBER_OF_PROCESSOR}
+            cpus=2
             artifact=${ARTIFACT_WINDOWS}
             ;;
           *)
@@ -68,24 +68,17 @@ jobs:
           path: |
             ${{ env.CPM_SOURCE_CACHE }}
             ${{ env.CCACHE_DIR }}
-          key: ${{ runner.os }}-${{ hashFiles('godot-cpp') }}
+          key: ${{ runner.os }}-${{ hashFiles('src') }}
 
       - name: Cmake configure
         run: cmake --preset ${{ matrix.config.cmake_preset }}
-
-      - name: Build godot-cpp
-        run: cmake --build
-          --preset ${{ matrix.config.cmake_preset }}
-          -j ${{ steps.deps.outputs.cpus }}
-          --target godot-cpp
 
       - name: Build CoreGame
         id: configure
         run: cmake --build
           --preset ${{ matrix.config.cmake_preset }}
           -j ${{ steps.deps.outputs.cpus }}
-          --target ${{ env.TARGET_NAME }}
-          
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
