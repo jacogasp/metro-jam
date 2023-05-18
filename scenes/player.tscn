@@ -1,6 +1,5 @@
-[gd_scene load_steps=9 format=3 uid="uid://dibkh0kdqa671"]
+[gd_scene load_steps=8 format=3 uid="uid://dibkh0kdqa671"]
 
-[ext_resource type="Script" path="res://scripts/player.gd" id="1_rugrl"]
 [ext_resource type="Texture2D" uid="uid://c3sfw5umx5dr7" path="res://kenney_abstract-platformer/PNG/Players/Player Blue/playerBlue_stand.png" id="1_vgdlg"]
 [ext_resource type="Texture2D" uid="uid://cul6arbbyuabg" path="res://kenney_abstract-platformer/PNG/Players/Player Blue/playerBlue_walk1.png" id="2_kpntp"]
 [ext_resource type="Texture2D" uid="uid://cx3yqgt8vbmy6" path="res://kenney_abstract-platformer/PNG/Players/Player Blue/playerBlue_walk2.png" id="3_xlnwe"]
@@ -44,8 +43,8 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t57q4"]
 size = Vector2(32, 48)
 
-[node name="player" type="CharacterBody2D"]
-script = ExtResource("1_rugrl")
+[node name="player" type="Player"]
+speed = 300.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_0nsvt")

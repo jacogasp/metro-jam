@@ -21,6 +21,7 @@ CPMAddPackage("gh:godotengine/godot-cpp#4.0")
 add_library(
   ${PROJECT_NAME} SHARED
   src/gdexample.cpp
+  src/player.cpp
   src/register_types.cpp
 )
 

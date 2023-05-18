@@ -927,6 +927,6 @@ script = ExtResource("3_8sqdl")
 amplitude = 2.0
 
 [node name="player" parent="." instance=ExtResource("2_5tq4j")]
-position = Vector2(192, 320)
+position = Vector2(177, 192)
 
 [node name="Camera2D" type="Camera2D" parent="player"]

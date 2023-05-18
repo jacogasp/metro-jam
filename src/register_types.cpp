@@ -4,6 +4,7 @@
 #include <gdextension_interface.h>
 
 #include "gdexample.hpp"
+#include "player.hpp"
 #include "register_types.hpp"
 
 using namespace godot;
@@ -14,6 +15,7 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
   }
 
   ClassDB::register_class<GDExample>();
+  ClassDB::register_class<Player>();
 }
 
 void uninitialize_example_module(ModuleInitializationLevel p_level) {
