@@ -2,7 +2,7 @@
 #include <godot_cpp/classes/animated_sprite2d.hpp>
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/input.hpp>
-#include <godot_cpp/classes/engine.hpp>
+#include <cassert>
 
 StandingState Player::standing      = StandingState();
 WalkingState Player::walking        = WalkingState();
