@@ -45,6 +45,8 @@ size = Vector2(32, 48)
 
 [node name="player" type="Player"]
 speed = 300.0
+position = Vector2(0, 975.139)
+velocity = Vector2(0, 983.332)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_0nsvt")
