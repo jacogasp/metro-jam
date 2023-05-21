@@ -43,7 +43,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t57q4"]
 size = Vector2(32, 48)
 
-[node name="player" type="Player"]
+[node name="player" type="Player" groups=["player"]]
 speed = 300.0
 position = Vector2(0, 975.139)
 velocity = Vector2(0, 983.332)

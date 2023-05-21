@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqrp3exgt0k54"]
+
+[ext_resource type="Texture2D" uid="uid://d3gdtx0jtbix8" path="res://kenney_abstract-platformer/PNG/Items/yellowGem.png" id="1_ra17f"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ba2t8"]
+
+[node name="Coin" type="Coin"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_ra17f")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ba2t8")
+disabled = true

@@ -67,22 +67,22 @@ should look like
 
 ```json
 {
-    "configurations": [
-        {
-            "name": "Mac",
-            "includePath": [
-                "${workspaceFolder}/**"
-            ],
-            "defines": [],
-            "macFrameworkPath": [
-                "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks"
-            ],
-            "compilerPath": "/usr/bin/clang",
-            // Add the following line
-            "compileCommands": "${workspaceFolder}/build/macos/compile_commands.json",
-            "intelliSenseMode": "macos-clang-arm64"
-        }
-    ],
-    "version": 4
+	"configurations": [
+		{
+			"name": "Mac",
+			"includePath": [
+				"${workspaceFolder}/**"
+			],
+			"defines": [],
+			"macFrameworkPath": [
+				"/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks"
+			],
+			"compilerPath": "/usr/bin/clang",
+			// Add the following line
+			"compileCommands": "${workspaceFolder}/build/macos/compile_commands.json",
+			"intelliSenseMode": "macos-clang-arm64"
+		}
+	],
+	"version": 4
 }
 ```

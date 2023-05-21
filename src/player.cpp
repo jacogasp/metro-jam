@@ -12,7 +12,10 @@ AirJumpingState Player::air_jumping = AirJumpingState();
 void Player::_bind_methods() {
   ClassDB::bind_method(D_METHOD("set_speed"), &Player::set_speed);
   ClassDB::bind_method(D_METHOD("get_speed"), &Player::get_speed);
+  ClassDB::bind_method(D_METHOD("set_gravity"), &Player::set_gravity);
+  ClassDB::bind_method(D_METHOD("get_gravity"), &Player::get_gravity);
   ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "speed"), "set_speed", "get_speed");
+  ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "gravity"), "set_gravity", "get_gravity");
 }
 
 void Player::_ready() {
@@ -56,6 +59,14 @@ void Player::set_speed(float speed) {
 
 void Player::set_state(PlayerState* state) {
   m_state = state;
+}
+
+float Player::get_gravity() const {
+  return m_gravity;
+}
+
+void Player::set_gravity(float gravity) {
+  m_gravity = gravity;
 }
 
 void Player::set_animation(const char* animation) const {

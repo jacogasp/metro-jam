@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://blkic257bpcco"]
+[gd_scene load_steps=8 format=3 uid="uid://blkic257bpcco"]
 
 [ext_resource type="PackedScene" uid="uid://dibkh0kdqa671" path="res://scenes/player.tscn" id="2_5tq4j"]
-[ext_resource type="PackedScene" uid="uid://cfcwoaprrdg6y" path="res://scenes/block.tscn" id="2_7xkw8"]
+[ext_resource type="PackedScene" path="res://scenes/block.tscn" id="2_7xkw8"]
 [ext_resource type="Texture2D" uid="uid://b5qfqod781xqc" path="res://kenney_abstract-platformer/Tilesheet/tilesheet_complete.png" id="2_evqwv"]
 [ext_resource type="Script" path="res://scripts/block.gd" id="3_8sqdl"]
+[ext_resource type="PackedScene" uid="uid://bqrp3exgt0k54" path="res://scenes/coin.tscn" id="5_j4qrk"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tu6m0"]
 texture = ExtResource("2_evqwv")
@@ -927,6 +928,9 @@ script = ExtResource("3_8sqdl")
 amplitude = 2.0
 
 [node name="player" parent="." instance=ExtResource("2_5tq4j")]
-position = Vector2(177, 487.977)
+position = Vector2(177, 229)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
+
+[node name="Coin" parent="." instance=ExtResource("5_j4qrk")]
+position = Vector2(348, 484)

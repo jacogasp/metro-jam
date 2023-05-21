@@ -28,6 +28,8 @@ class Player : public CharacterBody2D {
   void _physics_process(float delta);
   [[nodiscard]] float get_speed() const;
   void set_speed(float speed);
+  [[nodiscard]] float get_gravity() const;
+  void set_gravity(float gravity);
   void set_state(PlayerState* state);
   void set_animation(const char* animation) const;
 };
