@@ -6,13 +6,13 @@
 namespace core_game {
 template<typename T, typename NullLocator>
 class Locator {
-  inline static T* m_service;
+  inline static T* m_service = nullptr;
 
  public:
   static T* getService() {
     //    assert(m_service);
     if (m_service == nullptr) {
-      NullLocator::get();
+      return NullLocator::get();
     }
     return m_service;
   }

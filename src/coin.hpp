@@ -10,7 +10,7 @@ using namespace godot;
 class Coin : public Area2D {
   GDCLASS(Coin, Area2D);
   CollisionShape2D* m_collisionShape2D = nullptr;
-  core_game::Logger* m_logger          = nullptr;
+  core_game::LoggerService* m_logger   = nullptr;
   static void _bind_methods();
 
  public:

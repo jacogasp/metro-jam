@@ -32,6 +32,7 @@ class LoggerService {
 
 class LoggerNull : public LoggerService {
  public:
+  LoggerNull() = default;
   void log(const std::string_view& msg, Level logLevel) const final {
   }
   void debug(const std::string_view& msg) const final {
@@ -54,11 +55,11 @@ class Logger : public LoggerService {
   void error(const std::string_view& msg) const override;
 };
 
-class LoggerLocator : public Locator<Logger, LoggerLocator> {
+class LoggerLocator : public Locator<LoggerService, LoggerLocator> {
   static LoggerNull m_null_service;
 
  public:
-  static LoggerNull* get();
+  static LoggerService* get();
 };
 } // namespace core_game
 

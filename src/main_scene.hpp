@@ -11,6 +11,7 @@ class MainScene : public Node2D {
   core_game::Logger m_logger;
   static void _bind_methods();
   MainScene();
+  ~MainScene();
 };
 
 #endif // COREGAME_MAIN_SCENE_HPP

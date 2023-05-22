@@ -10,3 +10,6 @@ MainScene::MainScene()
   auto logger = core_game::LoggerLocator::getService();
   logger->info("Main scene initialized");
 }
+MainScene::~MainScene() {
+  core_game::LoggerLocator::registerService(nullptr);
+}
