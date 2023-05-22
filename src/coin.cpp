@@ -11,18 +11,19 @@ void Coin::_bind_methods() {
 }
 
 void Coin::_ready() {
-  UtilityFunctions::print("I'm Coin");
+  m_logger = core_game::Locator<core_game::Logger>::getService();
+  m_logger->info("I'm Coin");
   m_collisionShape2D = get_node<CollisionShape2D>("CollisionShape2D");
 }
 
 void Coin::_on_body_entered(Node2D* node) {
-  UtilityFunctions::print("[Body Entered] Interaction with Coin");
+  m_logger->debug("[Body Entered] Interaction with Coin");
 }
 
 void Coin::_on_area_entered(Area2D* area) {
-  UtilityFunctions::print("[Area Entered] Interaction with Coin");
+  m_logger->debug("[Area Entered] Interaction with Coin");
 }
 
 void Coin::test() {
-  UtilityFunctions::print("Test");
+  m_logger->debug("test");
 }

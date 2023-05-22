@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://blkic257bpcco"]
 
 [ext_resource type="PackedScene" uid="uid://dibkh0kdqa671" path="res://scenes/player.tscn" id="2_5tq4j"]
-[ext_resource type="PackedScene" path="res://scenes/block.tscn" id="2_7xkw8"]
+[ext_resource type="PackedScene" uid="uid://cfcwoaprrdg6y" path="res://scenes/block.tscn" id="2_7xkw8"]
 [ext_resource type="Texture2D" uid="uid://b5qfqod781xqc" path="res://kenney_abstract-platformer/Tilesheet/tilesheet_complete.png" id="2_evqwv"]
 [ext_resource type="Script" path="res://scripts/block.gd" id="3_8sqdl"]
 [ext_resource type="PackedScene" uid="uid://bqrp3exgt0k54" path="res://scenes/coin.tscn" id="5_j4qrk"]
@@ -914,7 +914,7 @@ terrain_set_0/terrain_0/name = "Terrain 0"
 terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 sources/0 = SubResource("TileSetAtlasSource_tu6m0")
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="MainScene"]
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_6rxcs")

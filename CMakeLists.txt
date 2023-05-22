@@ -8,23 +8,25 @@ set(GODOT_CUSTOM_API_FILE "${CMAKE_SOURCE_DIR}/extension_api.json")
 
 find_program(CCACHE ccache)
 if (CCACHE)
-	message(STATUS "ccache found")
-	set(CMAKE_C_COMPILER_LAUNCHER ${CCACHE})
-	set(CMAKE_CXX_COMPILER_LAUNCHER ${CCACHE})
+    message(STATUS "ccache found")
+    set(CMAKE_C_COMPILER_LAUNCHER ${CCACHE})
+    set(CMAKE_CXX_COMPILER_LAUNCHER ${CCACHE})
 else ()
-	message(STATUS "ccache not found")
+    message(STATUS "ccache not found")
 endif ()
 
 include(cmake/CPM.cmake)
 CPMAddPackage("gh:godotengine/godot-cpp#4.0")
 
 add_library(
-		${PROJECT_NAME} SHARED
-		src/register_types.cpp
-		src/gdexample.cpp
-		src/player.cpp
-		src/player_state.cpp
-		src/coin.cpp
+        ${PROJECT_NAME} SHARED
+        src/register_types.cpp
+        src/coin.cpp
+        src/gdexample.cpp
+        src/logger.cpp
+        src/main_scene.cpp
+        src/player.cpp
+        src/player_state.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC godot-cpp)
