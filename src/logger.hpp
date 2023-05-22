@@ -1,6 +1,7 @@
 #ifndef COREGAME_LOGGER_H
 #define COREGAME_LOGGER_H
 
+#include "service_locator.hpp"
 #include <array>
 #include <string>
 #include <string_view>
@@ -51,6 +52,13 @@ class Logger : public LoggerService {
   void info(const std::string_view& msg) const override;
   void warn(const std::string_view& msg) const override;
   void error(const std::string_view& msg) const override;
+};
+
+class LoggerLocator : public Locator<Logger, LoggerLocator> {
+  static LoggerNull m_null_service;
+
+ public:
+  static LoggerNull* get();
 };
 } // namespace core_game
 

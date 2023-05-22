@@ -46,4 +46,10 @@ void Logger::warn(const std::string_view& msg) const {
 void Logger::error(const std::string_view& msg) const {
   log(msg, ERROR);
 }
+
+LoggerNull LoggerLocator::m_null_service = LoggerNull();
+
+LoggerNull* LoggerLocator::get() {
+  return &m_null_service;
+}
 } // namespace core_game

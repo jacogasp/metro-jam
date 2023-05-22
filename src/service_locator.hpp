@@ -4,13 +4,16 @@
 #include <cassert>
 
 namespace core_game {
-template<typename T>
+template<typename T, typename NullLocator>
 class Locator {
   inline static T* m_service;
 
  public:
   static T* getService() {
-    assert(m_service);
+    //    assert(m_service);
+    if (m_service == nullptr) {
+      NullLocator::get();
+    }
     return m_service;
   }
   static void registerService(T* service) {

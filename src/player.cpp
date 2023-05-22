@@ -23,10 +23,6 @@ void Player::_ready() {
 }
 
 void Player::_physics_process(float delta) {
-  if (Engine::get_singleton()->is_editor_hint()) {
-    return;
-  }
-
   assert(m_state);
   auto input = Input::get_singleton();
   m_state->handleInput(*this, *input);
