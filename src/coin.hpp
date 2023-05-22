@@ -5,6 +5,7 @@
 #include <godot_cpp/classes/area2d.hpp>
 
 using namespace godot;
+class Node2D;
 
 class Coin : public Area2D {
     GDCLASS(Coin, Area2D);
@@ -13,7 +14,7 @@ class Coin : public Area2D {
 
 public:
     void _ready() override;
-    // void _on_body_entered(Node2D node);
+    void _on_body_entered(Node2D* node);
     void _on_area_entered(Area2D* area);
     void test();
 };
