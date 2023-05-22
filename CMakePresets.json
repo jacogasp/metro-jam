@@ -26,6 +26,7 @@
       "name": "macos",
       "binaryDir": "${sourceDir}/build/macos",
       "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
         "CMAKE_LIBRARY_OUTPUT_DIRECTORY": "${sourceDir}/build/macos",
         "CMAKE_OSX_ARCHITECTURES": "arm64;arm64e;x86_64"
       }
@@ -34,6 +35,7 @@
       "name": "linux",
       "binaryDir": "${sourceDir}/build/linux",
       "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
         "CMAKE_LIBRARY_OUTPUT_DIRECTORY": "${sourceDir}/build/linux"
       }
     },
@@ -42,6 +44,7 @@
       "binaryDir": "${sourceDir}/build/windows",
       "generator": "Ninja",
       "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
         "CMAKE_CXX_COMPILER_LAUNCHER": "ccache",
         "CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG": "${sourceDir}/build/windows",
         "CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE": "${sourceDir}/build/windows",
