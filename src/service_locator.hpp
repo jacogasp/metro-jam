@@ -1,9 +1,7 @@
-//
-// Created by Jacopo Gasparetto on 22/05/23.
-//
-
 #ifndef COREGAME_SERVICE_LOCATOR_HPP
 #define COREGAME_SERVICE_LOCATOR_HPP
+
+#include <cassert>
 
 namespace core_game {
 template<typename T>
