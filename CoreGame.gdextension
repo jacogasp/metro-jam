@@ -5,5 +5,5 @@ entry_symbol = "example_library_init"
 [libraries]
 
 linux.64="res://build/linux/libCoreGame.so"
-windows.x86_64="res://build/windows/CoreGame.dll"
+windows.x86_64="res://build/windows/libCoreGame.dll"
 macos="res://build/macos/libCoreGame.dylib"
