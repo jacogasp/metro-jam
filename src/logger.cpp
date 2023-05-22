@@ -15,10 +15,8 @@ LoggerService::LoggerService(Level logLevel, std::string fmt)
 std::stringstream LoggerService::getCurrentTime() const {
   using namespace std::chrono;
   std::time_t t = system_clock::to_time_t(std::chrono::system_clock::now());
-  std::tm ltime{};
-  localtime_r(&t, &ltime);
   std::stringstream ss{""};
-  ss << std::put_time(&ltime, m_fmt.c_str());
+  ss << std::put_time(std::localtime(&t), m_fmt.c_str());
   return ss;
 }
 
