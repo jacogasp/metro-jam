@@ -28,7 +28,13 @@ add_library(
         src/player.cpp
         src/player_state.cpp
 )
-target_link_libraries(${PROJECT_NAME} -Wl, -Bstatic godot-cpp -Wl, -Bdynamic)
+
+
+if (MSVC)
+    target_link_libraries(${PROJECT_NAME} -static godot-cpp)
+else ()
+    target_link_libraries(${PROJECT_NAME} PRIVATE godot-cpp)
+endif ()
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 SET(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
