@@ -4,7 +4,6 @@ project(CoreGame VERSION 0.1.0)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED YES)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(GODOT_CUSTOM_API_FILE "${CMAKE_SOURCE_DIR}/extension_api.json")
 
 find_program(CCACHE ccache)
 if (CCACHE)
@@ -29,11 +28,11 @@ add_library(
         src/player_state.cpp
 )
 
-
-if (MSVC)
-    target_link_libraries(${PROJECT_NAME} -static-libgcc -static-libstdc++ -static -pthread godot-cpp)
+if (MINGW)
+    message(STATUS Using MinGW)
+    target_link_libraries(${PROJECT_NAME} PRIVATE -static-libgcc -static-libstdc++ -static -pthread godot-cpp)
 else ()
-    target_link_libraries(${PROJECT_NAME} godot-cpp)
+    target_link_libraries(${PROJECT_NAME} PRIVATE godot-cpp)
 endif ()
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
