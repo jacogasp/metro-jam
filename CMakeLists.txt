@@ -31,9 +31,9 @@ add_library(
 
 
 if (MSVC)
-    target_link_libraries(${PROJECT_NAME} -static godot-cpp)
+    target_link_libraries(${PROJECT_NAME} -static -Wl,--no-undefined -static-libgcc -static-libstdc++ godot-cpp)
 else ()
-    target_link_libraries(${PROJECT_NAME} PRIVATE godot-cpp)
+    target_link_libraries(${PROJECT_NAME} godot-cpp)
 endif ()
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
