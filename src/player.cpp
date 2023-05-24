@@ -20,6 +20,7 @@ void Player::_bind_methods() {
 
 void Player::_ready() {
   m_animatedSprite2D = get_node<AnimatedSprite2D>("AnimatedSprite2D");
+  m_animatedSprite2D->play();
 }
 
 void Player::_physics_process(float delta) {
@@ -37,7 +38,6 @@ void Player::_physics_process(float delta) {
   } else if (input->is_action_pressed("move_right")) {
     velocity.x = m_speed;
   }
-  velocity.x != 0 ? m_animatedSprite2D->play() : m_animatedSprite2D->stop();
 
   auto is_flipped = m_animatedSprite2D->is_flipped_h() && velocity.x == 0;
   m_animatedSprite2D->set_flip_h(velocity.x < 0 || is_flipped);

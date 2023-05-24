@@ -110,13 +110,18 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_w7lpc")
+}],
+"loop": true,
+"name": &"JumpIn",
+"speed": 1.0
 }, {
+"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_2b3f3")
 }],
 "loop": true,
-"name": &"Jump",
-"speed": 1.0
+"name": &"JumpOut",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -147,7 +152,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_e0wc0")
 }],
 "loop": true,
-"name": &"Walk",
+"name": &"Run",
 "speed": 15.0
 }]
 
@@ -162,7 +167,6 @@ velocity = Vector2(0, 52514.6)
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_0nsvt")
 animation = &"Idle"
-frame_progress = 0.0997249
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -4)
