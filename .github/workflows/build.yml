@@ -100,7 +100,7 @@ jobs:
           unzip /tmp/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip
           mkdir ~/.godot
           mv /tmp/templates ~/.godot
-          mv /tmp/Godot_v${GODOT_VERSION}-stable_linux.x86_64 /usr/bin/godot
+          mv /tmp/Godot_v${GODOT_VERSION}-stable_linux.x86_64 ~/godot
       - uses: actions/download-artifact@v3
         with:
           name: ${ARTIFACT_MACOS}
@@ -114,7 +114,7 @@ jobs:
           name: ${ARTIFACT_WINDOWS}
           path: ${{ github.workspace }}/build/macOS/${ARTIFACT_WINDOW}
       - name: Export macOS
-        run: timeout 30 godot --headless --quit --export-release macOS
+        run: timeout 30 ~/godot --headless --quit --export-release macOS
 on:
   workflow_dispatch:
   push:
