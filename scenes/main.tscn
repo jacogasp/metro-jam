@@ -7,6 +7,7 @@
 [node name="Main" type="MainScene"]
 
 [node name="DummyMap" parent="." instance=ExtResource("6_ichl7")]
+position = Vector2(17, 0)
 
 [node name="player" parent="." instance=ExtResource("2_5tq4j")]
 gravity = 800.0
@@ -15,6 +16,8 @@ position = Vector2(197, 192)
 velocity = Vector2(0, 0)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
 
 [node name="Coin" parent="." instance=ExtResource("5_j4qrk")]
 position = Vector2(320, 302)
