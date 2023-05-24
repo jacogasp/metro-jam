@@ -97,15 +97,15 @@ jobs:
           mv /tmp/Godot_v${GODOT_VERSION}-stable_linux.x86_64 ~/godot
       - uses: actions/download-artifact@v3
         with:
-          name: ${ARTIFACT_MACOS}
+          name: ${{ env.ARTIFACT_MACOS }}
           path: ${{ github.workspace }}/build/macOS/${ARTIFACT_MACOS}
       - uses: actions/download-artifact@v3
         with:
-          name: ${ARTIFACT_LINUX}
+          name: ${{ env.ARTIFACT_LINUX }}
           path: ${{ github.workspace }}/build/linux/${ARTIFACT_LINUX}
       - uses: actions/download-artifact@v3
         with:
-          name: ${ARTIFACT_WINDOWS}
+          name: ${{ env. ARTIFACT_WINDOWS}}
           path: ${{ github.workspace }}/build/macOS/${ARTIFACT_WINDOW}
       - name: Export macOS
         run: timeout 30 ~/godot --headless --quit --export-release macOS
