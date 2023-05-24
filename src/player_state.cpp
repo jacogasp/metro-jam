@@ -64,19 +64,27 @@ void AirJumpingState::update(Player& player) {
 }
 
 void WalkingState::handleInput(Player& player, Input& input) {
-    if (input.is_action_just_pressed("jump")) {
-      player.set_state(&Player::jumping);
-      player.set_animation("JumpIn");
-      auto velocity = player.get_velocity();
-      velocity.y = -player.get_jump_force();
-      player.set_velocity(velocity);
-    }
+  if (input.is_action_just_pressed("jump")) {
+    player.set_state(&Player::jumping);
+    player.set_animation("JumpIn");
+    auto velocity = player.get_velocity();
+    velocity.y    = -player.get_jump_force();
+    player.set_velocity(velocity);
+  }
 }
 
 void WalkingState::update(Player& player) {
-    auto const velocity = player.get_velocity();
-    if (velocity.x == 0) {
-      player.set_animation("Idle");
-      player.set_state(&Player::standing);
-    }
+  auto const velocity = player.get_velocity();
+  if (velocity.x == 0) {
+    player.set_animation("Idle");
+    player.set_state(&Player::standing);
+  }
+}
+
+void AttackState::handleInput(Player& player, Input& input) {
+  // TODO
+}
+
+void AttackState::update(Player& player) {
+  // TODO
 }

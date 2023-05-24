@@ -21,7 +21,7 @@ class StandingState : public PlayerState {
 
 class WalkingState : public PlayerState {
   void handleInput(Player& player, godot::Input& input) override;
-  void update(Player &player) override;
+  void update(Player& player) override;
 };
 
 class JumpingState : public PlayerState {
@@ -30,6 +30,11 @@ class JumpingState : public PlayerState {
 };
 
 class AirJumpingState : public PlayerState {
+  void handleInput(Player& player, godot::Input& input) override;
+  void update(Player& player) override;
+};
+
+class AttackState : PlayerState {
   void handleInput(Player& player, godot::Input& input) override;
   void update(Player& player) override;
 };

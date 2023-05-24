@@ -24,6 +24,9 @@ class Player : public CharacterBody2D {
   static WalkingState walking;
   static JumpingState jumping;
   static AirJumpingState air_jumping;
+  static AttackState attacking;
+
+  friend class PlayerState;
 
   void _ready() override;
   void _physics_process(float delta);

@@ -8,6 +8,7 @@ StandingState Player::standing      = StandingState();
 WalkingState Player::walking        = WalkingState();
 JumpingState Player::jumping        = JumpingState();
 AirJumpingState Player::air_jumping = AirJumpingState();
+AttackState Player::attacking       = AttackState();
 
 void Player::_bind_methods() {
   ClassDB::bind_method(D_METHOD("set_speed"), &Player::set_speed);
