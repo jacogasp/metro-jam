@@ -98,8 +98,8 @@ jobs:
           wget https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip
           unzip /tmp/Godot_v${GODOT_VERSION}-stable_export_templates.tpz
           unzip /tmp/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip
-          mkdir /root/.godot
-          mv /tmp/templates /root/.godot
+          mkdir ~/.godot
+          mv /tmp/templates ~/.godot
           mv /tmp/Godot_v${GODOT_VERSION}-stable_linux.x86_64 /usr/bin/godot
       - name: Export macOS
         run: timeout 30 godot --headless --quit --export-release macOS
