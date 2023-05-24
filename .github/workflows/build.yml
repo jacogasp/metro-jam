@@ -89,6 +89,8 @@ jobs:
   export:
     name: Export game
     runs-on: ubuntu-latest
+    needs:
+      - build
     steps:
       - name: Install Godot and Godot Templates
         run: |
