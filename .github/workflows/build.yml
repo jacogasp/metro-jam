@@ -41,25 +41,20 @@ jobs:
           case $RUNNER_OS in
           Linux)
             sudo apt update && sudo apt install ccache
-            cpus=2
             artifact=${ARTIFACT_LINUX}
             ;;
           macOS)
             brew install ccache
-            cpus=3
             artifact=${ARTIFACT_MACOS}
             ;;
           Windows)
             choco install ccache
-            cpus=2
             artifact=${ARTIFACT_WINDOWS}
             ;;
           *)
             cpus=1
             ;;
           esac
-          echo "Number of cores: ${cpus}"
-          echo "cpus=${cpus}" >> $GITHUB_OUTPUT
           echo "artifact=${artifact}" >> $GITHUB_OUTPUT
 
       - name: Cache
@@ -76,10 +71,7 @@ jobs:
 
       - name: Build CoreGame
         id: configure
-        run: cmake --build
-          --preset ${{ matrix.config.cmake_preset }}
-          -j ${{ steps.deps.outputs.cpus }}
-
+        run: cmake --build --preset ${{ matrix.config.cmake_preset }}
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
