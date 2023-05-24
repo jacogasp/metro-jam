@@ -6,6 +6,7 @@ env:
   ARTIFACT_LINUX: libCoreGame.so
   ARTIFACT_MACOS: libCoreGame.dylib
   ARTIFACT_WINDOWS: libCoreGame.dll
+  GODOT_VERSION: 4.0.3
 
 jobs:
   build:
@@ -33,7 +34,7 @@ jobs:
     steps:
       - name: Checkout source code
         uses: actions/checkout@v3
-      
+
       - name: Prerequisites
         id: deps
         run: |
@@ -85,6 +86,23 @@ jobs:
           name: ${{ steps.deps.outputs.artifact }}
           path: ${{ matrix.config.build_dir }}/${{ steps.deps.outputs.artifact }}
 
+  export:
+    name: Export game
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Godot and Godot Templates
+        run: |
+          apt update && apt install -y wget unzip
+          cd /tmp
+          wget https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_export_templates.tpz
+          wget https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip
+          unzip /tmp/Godot_v${GODOT_VERSION}-stable_export_templates.tpz
+          unzip /tmp/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip
+          mkdir /root/.godot
+          mv /tmp/templates /root/.godot
+          mv /tmp/Godot_v${GODOT_VERSION}-stable_linux.x86_64 /usr/bin/godot
+      - name: Export macOS
+        run: timeout 30 godot --headless --quit --export-release macOS
 on:
   workflow_dispatch:
   push:
