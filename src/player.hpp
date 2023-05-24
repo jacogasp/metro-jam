@@ -11,7 +11,8 @@ using namespace godot;
 class Player : public CharacterBody2D {
   GDCLASS(Player, CharacterBody2D);
   float m_gravity                      = 500;
-  float m_jump                         = 350;
+  float m_jump_force                   = 350;
+  float m_air_jump_force               = 350;
   float m_speed                        = 0;
   AnimatedSprite2D* m_animatedSprite2D = nullptr;
   PlayerState* m_state{&Player::standing};
@@ -30,6 +31,10 @@ class Player : public CharacterBody2D {
   void set_speed(float speed);
   [[nodiscard]] float get_gravity() const;
   void set_gravity(float gravity);
+  [[nodiscard]] float get_jump_force() const;
+  void set_jump_force(float force);
+  [[nodiscard]] float get_air_jump_force() const;
+  void set_air_jump_force(float force);
   void set_state(PlayerState* state);
   void set_animation(const char* animation) const;
 };

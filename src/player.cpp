@@ -14,8 +14,19 @@ void Player::_bind_methods() {
   ClassDB::bind_method(D_METHOD("get_speed"), &Player::get_speed);
   ClassDB::bind_method(D_METHOD("set_gravity"), &Player::set_gravity);
   ClassDB::bind_method(D_METHOD("get_gravity"), &Player::get_gravity);
+  ClassDB::bind_method(D_METHOD("get_jump_force"), &Player::get_jump_force);
+  ClassDB::bind_method(D_METHOD("set_jump_force"), &Player::set_jump_force);
+  ClassDB::bind_method(D_METHOD("get_air_jump_force"),
+                       &Player::get_air_jump_force);
+  ClassDB::bind_method(D_METHOD("set_air_jump_force"),
+                       &Player::set_air_jump_force);
   ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "speed"), "set_speed", "get_speed");
-  ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "gravity"), "set_gravity", "get_gravity");
+  ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "gravity"), "set_gravity",
+               "get_gravity");
+  ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "jump_force"), "set_jump_force",
+               "get_jump_force");
+  ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "air_jump_force"),
+               "set_air_jump_force", "get_air_jump_force");
 }
 
 void Player::_ready() {
@@ -25,7 +36,8 @@ void Player::_ready() {
 
 void Player::_physics_process(float delta) {
   assert(m_state);
-  if (Engine::get_singleton()->is_editor_hint()) return;
+  if (Engine::get_singleton()->is_editor_hint())
+    return;
   auto input = Input::get_singleton();
   m_state->handleInput(*this, *input);
   m_state->update(*this);
@@ -52,6 +64,22 @@ float Player::get_speed() const {
 
 void Player::set_speed(float speed) {
   m_speed = speed;
+}
+
+float Player::get_jump_force() const {
+  return m_jump_force;
+}
+
+void Player::set_jump_force(float force) {
+  m_jump_force = force;
+}
+
+float Player::get_air_jump_force() const {
+  return m_air_jump_force;
+}
+
+void Player::set_air_jump_force(float force) {
+  m_air_jump_force = force;
 }
 
 void Player::set_state(PlayerState* state) {

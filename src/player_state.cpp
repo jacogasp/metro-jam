@@ -10,7 +10,7 @@ void StandingState::handleInput(Player& player, Input& input) {
   if (input.is_action_just_pressed("jump")) {
     player.set_state(&Player::jumping);
     player.set_animation("JumpIn");
-    velocity.y -= 350;
+    velocity.y = -player.get_jump_force();
     player.set_velocity(velocity);
   } else if (velocity.x != 0) {
     player.set_animation("Run");
@@ -23,7 +23,7 @@ void JumpingState::handleInput(Player& player, Input& input) {
   if (input.is_action_just_pressed("jump")) {
     player.set_state(&Player::air_jumping);
     player.set_animation("JumpIn");
-    velocity.y -= 350;
+    velocity.y = -player.get_air_jump_force();
     player.set_velocity(velocity);
   }
 }
@@ -68,7 +68,7 @@ void WalkingState::handleInput(Player& player, Input& input) {
       player.set_state(&Player::jumping);
       player.set_animation("JumpIn");
       auto velocity = player.get_velocity();
-      velocity.y -= 350;
+      velocity.y = -player.get_jump_force();
       player.set_velocity(velocity);
     }
 }
