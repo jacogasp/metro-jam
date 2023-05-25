@@ -147,6 +147,8 @@ jobs:
 
       - name: Export
         run: |
+          ls ${{ matrix.config.build_dir }}
+          otool -L ${{ matrix.config.build_dir }}/${{ steps.godot-install.godot-install.artifact }}
           timeout 30 godot --headless --quit --export-release ${{ matrix.config.export_preset }}
 on:
   workflow_dispatch:
