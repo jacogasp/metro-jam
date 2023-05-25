@@ -92,8 +92,8 @@ jobs:
           wget https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip
           unzip /tmp/Godot_v${GODOT_VERSION}-stable_export_templates.tpz
           unzip /tmp/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip
-          mkdir ~/.godot
-          mv /tmp/templates ~/.godot
+          mkdir ~/.local/share/godot ${GITHUB_WORKSPACE}/.godot
+          mv /tmp/templates ~/.local/share/godot
           mv /tmp/Godot_v${GODOT_VERSION}-stable_linux.x86_64 ~/godot
       - uses: actions/download-artifact@v3
         with:
