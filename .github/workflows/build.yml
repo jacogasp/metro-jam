@@ -136,8 +136,8 @@ jobs:
           wget -q https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_export_templates.tpz
           unzip Godot_v${GODOT_VERSION}-stable_export_templates.tpz
           mkdir -p ~/.local/share/godot/export_templates
-          mv templates ~/.local/share/godot/export_templates/templates
-          mv ~/.local/share/godot/export_templates/templates ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          mv templates ~/Library/Application\ Support/Godot/export_templates/
+          mv ~/Library/Application\ Support/Godot/export_templates/ ~/Library/Application\ Support/Godot/export_templates/${GODOT_VERSION}.stable
 
       - name: Download artifact
         uses: actions/download-artifact@v3
