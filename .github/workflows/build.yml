@@ -113,7 +113,11 @@ jobs:
             artifact=${ARTIFACT_LINUX}
             ;;
           macOS)
-            brew install wget unzip godot
+            brew install wget unzip
+            wget -q https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_macos.universal.zip
+            unzip Godot_v${GODOT_VERSION}-stable_macos.universal.zip
+            mv Godot.app /Applications
+            ln -s /Applications/Godot.app/Contents/MacOS/Godot /usr/local/bin/godot 
             artifact=${ARTIFACT_MACOS}
             ;;
           Windows)
@@ -125,11 +129,10 @@ jobs:
             ;;
           esac
           
-          cd /tmp
           wget -q https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_export_templates.tpz
-          unzip /tmp/Godot_v${GODOT_VERSION}-stable_export_templates.tpz
+          unzip Godot_v${GODOT_VERSION}-stable_export_templates.tpz
           mkdir -p ~/.local/share/godot/export_templates
-          mv /tmp/templates ~/.local/share/godot/export_templates/templates
+          mv templates ~/.local/share/godot/export_templates/templates
           mv ~/.local/share/godot/export_templates/templates ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
 
       - name: Download artifact
@@ -140,7 +143,6 @@ jobs:
 
       - name: Export
         run: |
-          cd ${GITHUB_WORKSPACE}
           timeout 30 godot --headless --quit --export-release ${{ matrix.config.export_preset }}
 on:
   workflow_dispatch:
