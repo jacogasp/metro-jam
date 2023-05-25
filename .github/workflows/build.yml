@@ -88,14 +88,14 @@ jobs:
         run: |
           apt update && apt install -y wget unzip
           cd /tmp
-          wget https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_export_templates.tpz
-          wget https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip
+          wget -q https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_export_templates.tpz
+          wget -q https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip
           unzip /tmp/Godot_v${GODOT_VERSION}-stable_export_templates.tpz
           unzip /tmp/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip
-          mkdir -p ~/.local/share/godot ~/bin 
+          mkdir -p ~/.local/share/godot
           mv /tmp/templates ~/.local/share/godot
           export PATH=~/bin:$PATH
-          mv /tmp/Godot_v${GODOT_VERSION}-stable_linux.x86_64 ~/bin/godot
+          mv /tmp/Godot_v${GODOT_VERSION}-stable_linux.x86_64 /usr/local/bin/godot
           cd ${GITHUB_WORKSPACE}
       - uses: actions/download-artifact@v3
         with:
