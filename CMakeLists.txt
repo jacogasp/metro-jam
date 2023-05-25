@@ -7,30 +7,30 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 find_program(CCACHE ccache)
 if (CCACHE)
-	message(STATUS "ccache found")
-	set(CMAKE_C_COMPILER_LAUNCHER ${CCACHE})
-	set(CMAKE_CXX_COMPILER_LAUNCHER ${CCACHE})
+  message(STATUS "ccache found")
+  set(CMAKE_C_COMPILER_LAUNCHER ${CCACHE})
+  set(CMAKE_CXX_COMPILER_LAUNCHER ${CCACHE})
 else ()
-	message(STATUS "ccache not found")
+  message(STATUS "ccache not found")
 endif ()
 
 include(cmake/CPM.cmake)
 CPMAddPackage("gh:godotengine/godot-cpp#4.0")
 
 add_library(
-		${PROJECT_NAME} SHARED
-		src/register_types.cpp
-		src/coin.cpp
-		src/gdexample.cpp
-		src/logger.cpp
-		src/main_scene.cpp
-		src/player.cpp
-		src/player_state.cpp
+        ${PROJECT_NAME} SHARED
+        src/register_types.cpp
+        src/coin.cpp
+        src/gdexample.cpp
+        src/logger.cpp
+        src/main_scene.cpp
+        src/player.cpp
+        src/player_state.cpp
 )
 
 if (MINGW)
-	message(STATUS Using MinGW)
-	target_link_libraries(${PROJECT_NAME} PRIVATE -static-libgcc -static-libstdc++ -static -pthread godot-cpp)
+  message(STATUS Using MinGW)
+  target_link_libraries(${PROJECT_NAME} PRIVATE -static-libgcc -static-libstdc++ -static -pthread godot-cpp)
 else ()
 	target_link_libraries(${PROJECT_NAME} PRIVATE godot-cpp)
 endif ()
