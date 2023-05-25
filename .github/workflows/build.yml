@@ -108,6 +108,7 @@ jobs:
       - name: Install Godot and Godot Templates
         id: godot-install
         run: |
+          mkdir dist
           case $RUNNER_OS in
           Linux)
             sudo apt update && sudo apt install -y wget unzip
