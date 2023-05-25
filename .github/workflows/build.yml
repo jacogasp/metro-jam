@@ -162,9 +162,8 @@ jobs:
 
       - name: Export
         run: |
-          ls ${{ matrix.config.build_dir }}
+          mkdir ${{ matrix.config.dist_dir }}
           timeout 180 godot --headless --quit --export-release ${{ matrix.config.export_preset }}
-          ls dist
 
       - name: Upload executable artifact
         uses: actions/upload-artifact@v3
