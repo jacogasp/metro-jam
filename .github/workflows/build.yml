@@ -84,6 +84,8 @@ jobs:
     needs:
       - build
     steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
       - name: Install Godot and Godot Templates
         run: |
           apt update && apt install -y wget unzip
@@ -94,7 +96,6 @@ jobs:
           unzip /tmp/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip
           mkdir -p ~/.local/share/godot
           mv /tmp/templates ~/.local/share/godot
-          export PATH=~/bin:$PATH
           mv /tmp/Godot_v${GODOT_VERSION}-stable_linux.x86_64 /usr/local/bin/godot
 
       - uses: actions/download-artifact@v3
