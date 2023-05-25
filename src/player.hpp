@@ -15,6 +15,7 @@ class Player : public CharacterBody2D {
   float m_air_jump_force               = 350;
   float m_speed                        = 0;
   AnimatedSprite2D* m_animatedSprite2D = nullptr;
+  bool m_is_animation_finished = false;
   PlayerState* m_state{&Player::standing};
 
   static void _bind_methods();
@@ -40,6 +41,9 @@ class Player : public CharacterBody2D {
   void set_air_jump_force(float force);
   void set_state(PlayerState* state);
   void set_animation(const char* animation) const;
+  bool get_animation_finished_flag() const;
+  void set_animation_finished_flag(bool is_animation_finished);
+  void animation_finished();
 };
 
 #endif

@@ -11,7 +11,6 @@ position = Vector2(17, 0)
 
 [node name="player" parent="." instance=ExtResource("2_5tq4j")]
 gravity = 800.0
-air_jump_force = 300.0
 position = Vector2(197, 192)
 velocity = Vector2(0, 0)
 

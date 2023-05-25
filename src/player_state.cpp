@@ -15,6 +15,10 @@ void StandingState::handleInput(Player& player, Input& input) {
   } else if (velocity.x != 0) {
     player.set_animation("Run");
     player.set_state(&Player::walking);
+  } else if (input.is_action_just_pressed("attack")) {
+    player.set_state(&Player::attacking);
+    player.set_animation("Attack");
+    player.m_animatedSprite2D->get_animation();
   }
 }
 
@@ -82,9 +86,25 @@ void WalkingState::update(Player& player) {
 }
 
 void AttackState::handleInput(Player& player, Input& input) {
-  // TODO
+  if (input.is_action_just_pressed("jump")) {
+    player.set_state(&Player::jumping);
+    player.set_animation("JumpIn");
+    auto velocity = player.get_velocity();
+    velocity.y    = -player.get_jump_force();
+    player.set_velocity(velocity);
+  }
 }
 
 void AttackState::update(Player& player) {
-  // TODO
+  if (player.get_animation_finished_flag()) {
+    auto velocity = player.get_velocity();
+    if (velocity.y > 0) {
+      player.set_animation("JumpOut");
+      player.set_state(&Player::jumping);
+    } else {
+      player.set_animation("Idle");
+      player.set_state(&Player::standing);
+    }
+    player.set_animation_finished_flag(false);
+  }
 }

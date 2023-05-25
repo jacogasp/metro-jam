@@ -2,6 +2,7 @@
 #include <godot_cpp/classes/animated_sprite2d.hpp>
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/input.hpp>
+#include <godot_cpp/variant/utility_functions.hpp>
 #include <cassert>
 
 StandingState Player::standing      = StandingState();
@@ -21,6 +22,7 @@ void Player::_bind_methods() {
                        &Player::get_air_jump_force);
   ClassDB::bind_method(D_METHOD("set_air_jump_force"),
                        &Player::set_air_jump_force);
+  ClassDB::bind_method(D_METHOD("animation_finished"), &Player::animation_finished);
   ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "speed"), "set_speed", "get_speed");
   ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "gravity"), "set_gravity",
                "get_gravity");
@@ -56,6 +58,7 @@ void Player::_physics_process(float delta) {
   m_animatedSprite2D->set_flip_h(velocity.x < 0 || is_flipped);
   set_velocity(velocity);
   move_and_slide();
+  m_animatedSprite2D->play();
 }
 
 // Setters and getters
@@ -97,4 +100,17 @@ void Player::set_gravity(float gravity) {
 
 void Player::set_animation(const char* animation) const {
   m_animatedSprite2D->set_animation(animation);
+}
+
+bool Player::get_animation_finished_flag() const {
+  return m_is_animation_finished;
+}
+
+void Player::set_animation_finished_flag(bool is_animation_finished) {
+  m_is_animation_finished = is_animation_finished;
+}
+
+void Player::animation_finished() {
+  auto frame_on_finish = m_animatedSprite2D->get_frame();
+  set_animation_finished_flag(true);
 }

@@ -1,7 +1,7 @@
 #include "coin.hpp"
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/node2d.hpp>
-#include <godot_cpp/variant/utility_functions.hpp>
+
 
 void Coin::_bind_methods() {
   ClassDB::bind_method(D_METHOD("_on_body_entered"), &Coin::_on_body_entered);
@@ -18,6 +18,7 @@ void Coin::_ready() {
 
 void Coin::_on_body_entered(Node2D* node) {
   m_logger->debug("[Body Entered] Interaction with Coin");
+  queue_free();
 }
 
 void Coin::_on_area_entered(Area2D* area) {

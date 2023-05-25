@@ -2,6 +2,7 @@
 #define PLAYER_STATE_HPP
 
 #include <memory>
+#include "logger.hpp"
 
 namespace godot {
 class Input;
@@ -34,7 +35,7 @@ class AirJumpingState : public PlayerState {
   void update(Player& player) override;
 };
 
-class AttackState : PlayerState {
+class AttackState : public PlayerState {
   void handleInput(Player& player, godot::Input& input) override;
   void update(Player& player) override;
 };
