@@ -104,6 +104,7 @@ jobs:
     steps:
       - name: Checkout source code
         uses: actions/checkout@v3
+
       - name: Install Godot and Godot Templates
         id: godot-install
         run: |
@@ -141,7 +142,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
-          name: ${{ steps.deps.godot-install.artifact }}
+          name: ${{ steps.godot-install.godot-install.artifact }}
           path: ${{ matrix.config.build_dir }}
 
       - name: Export
