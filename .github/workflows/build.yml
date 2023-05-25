@@ -6,7 +6,6 @@ env:
   ARTIFACT_LINUX: libCoreGame.so
   ARTIFACT_MACOS: libCoreGame.dylib
   ARTIFACT_WINDOWS: libCoreGame.dll
-  EXECUTABLE_LINUX: TBD
   GODOT_VERSION: 4.0.3
 
 jobs:
@@ -150,7 +149,7 @@ jobs:
       - name: Upload executable artifact
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.config.dist_dir }}
+          name: ${{ matrix.config.executable }}
           path: ${{ matrix.config.dist_dir }}/${{ matrix.config.executable }}
 on:
   workflow_dispatch:
