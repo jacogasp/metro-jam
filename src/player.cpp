@@ -34,6 +34,7 @@ void Player::_bind_methods() {
 
 void Player::_ready() {
   m_animatedSprite2D = get_node<AnimatedSprite2D>("AnimatedSprite2D");
+  m_animatedSprite2D->set_animation("Idle");
   m_animatedSprite2D->play();
 }
 
