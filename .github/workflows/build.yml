@@ -91,14 +91,14 @@ jobs:
             os: macos-latest
             export_preset: macOS
             build_dir: build/macos
-#          - name: Export Ubuntu
-#            os: ubuntu-latest
-#            cmake_preset: ci-linux
-#            build_dir: build/linux
-#          - name: Export Windows
-#            os: windows-latest
-#            cmake_preset: ci-windows
-#            build_dir: build/windows
+    #          - name: Export Ubuntu
+    #            os: ubuntu-latest
+    #            cmake_preset: ci-linux
+    #            build_dir: build/linux
+    #          - name: Export Windows
+    #            os: windows-latest
+    #            cmake_preset: ci-windows
+    #            build_dir: build/windows
     needs:
       - build
     steps:
@@ -119,7 +119,13 @@ jobs:
             wget -q https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_macos.universal.zip
             unzip Godot_v${GODOT_VERSION}-stable_macos.universal.zip
             mv Godot.app /Applications
-            ln -s /Applications/Godot.app/Contents/MacOS/Godot /usr/local/bin/godot 
+            ln -s /Applications/Godot.app/Contents/MacOS/Godot /usr/local/bin/godot
+            echo "Downloading Export Templates for Godot ${GODOT_VERSION}"
+            wget -q https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_export_templates.tpz
+            unzip Godot_v${GODOT_VERSION}-stable_export_templates.tpz
+            mkdir -p  ~/Library/Application\ Support/Godot/export_templates
+            mv templates ~/Library/Application\ Support/Godot/export_templates/
+            mv ~/Library/Application\ Support/Godot/export_templates/ ~/Library/Application\ Support/Godot/export_templates/${GODOT_VERSION}.stable
             artifact=${ARTIFACT_MACOS}
             ;;
           Windows)
@@ -132,12 +138,6 @@ jobs:
           esac
           
           echo "artifact=${artifact}" >> $GITHUB_OUTPUT
-          echo "Downloading Export Templates for Godot ${GODOT_VERSION}"
-          wget -q https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_export_templates.tpz
-          unzip Godot_v${GODOT_VERSION}-stable_export_templates.tpz
-          mkdir -p ~/.local/share/godot/export_templates
-          mv templates ~/Library/Application\ Support/Godot/export_templates/
-          mv ~/Library/Application\ Support/Godot/export_templates/ ~/Library/Application\ Support/Godot/export_templates/${GODOT_VERSION}.stable
 
       - name: Download artifact
         uses: actions/download-artifact@v3
