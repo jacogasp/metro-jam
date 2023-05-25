@@ -113,7 +113,7 @@ jobs:
             artifact=${ARTIFACT_LINUX}
             ;;
           macOS)
-            brew install wget unzip
+            brew install wget unzip coreutils
             wget -q https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_macos.universal.zip
             unzip Godot_v${GODOT_VERSION}-stable_macos.universal.zip
             mv Godot.app /Applications
