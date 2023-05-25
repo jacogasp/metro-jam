@@ -102,19 +102,18 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: ${{ env.ARTIFACT_MACOS }}
-          path: ${{ github.workspace }}/build/macOS/${ARTIFACT_MACOS}
+          path: ${{ github.workspace }}/build/macOS/${{ env.ARTIFACT_MACOS }}
       - uses: actions/download-artifact@v3
         with:
           name: ${{ env.ARTIFACT_LINUX }}
-          path: ${{ github.workspace }}/build/linux/${ARTIFACT_LINUX}
+          path: ${{ github.workspace }}/build/linux/${{ env.ARTIFACT_LINUX }}
       - uses: actions/download-artifact@v3
         with:
           name: ${{ env. ARTIFACT_WINDOWS}}
-          path: ${{ github.workspace }}/build/macOS/${ARTIFACT_WINDOW}
+          path: ${{ github.workspace }}/build/macOS/${{ env. ARTIFACT_WINDOWS}}
       - name: Export macOS
         run: |
           cd ${GITHUB_WORKSPACE}
-          ls -lah
           timeout 30 godot --headless --quit --export-release macOS
 on:
   workflow_dispatch:
