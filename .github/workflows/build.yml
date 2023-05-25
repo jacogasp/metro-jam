@@ -142,7 +142,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: ${{ steps.deps.godot-install.artifact }}
-          path: ${{ matrix.config.build_dir }}/${{ steps.godot-install.outputs.artifact }}
+          path: ${{ matrix.config.build_dir }}
 
       - name: Export
         run: |
