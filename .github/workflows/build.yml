@@ -141,6 +141,9 @@ jobs:
             mkdir -p $APPDATA/Godot/export_templates/${GODOT_VERSION}.stable
             mv templates/window_* $APPDATA/Godot/export_templates/${GODOT_VERSION}.stable/
             rm -rf templates
+            echo "Download rcedit"
+            wget -q https://github.com/electron/rcedit/releases/download/v1.1.1/rcedit-x64.exe
+            mv rcedit-x64.exe /c/Windows
             cp .github/workflows/editor_settings-4.tres $APPDATA/Godot/
             artifact=${ARTIFACT_WINDOWS}
             ;;
