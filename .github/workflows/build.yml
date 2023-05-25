@@ -79,42 +79,69 @@ jobs:
           path: ${{ matrix.config.build_dir }}/${{ steps.deps.outputs.artifact }}
 
   export:
-    name: Export game
-    runs-on: ubuntu-latest
+    name: ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
+    defaults:
+      run:
+        shell: bash
+    strategy:
+      matrix:
+        config:
+          - name: Export macOS
+            os: macos-latest
+            export_preset: macOS
+            build_dir: build/macos
+#          - name: Export Ubuntu
+#            os: ubuntu-latest
+#            cmake_preset: ci-linux
+#            build_dir: build/linux
+#          - name: Export Windows
+#            os: windows-latest
+#            cmake_preset: ci-windows
+#            build_dir: build/windows
     needs:
       - build
     steps:
       - name: Checkout source code
         uses: actions/checkout@v3
       - name: Install Godot and Godot Templates
+        id: godot-install
         run: |
-          apt update && apt install -y wget unzip
+          case $RUNNER_OS in
+          Linux)
+            sudo apt update && sudo apt install -y wget unzip
+            artifact=${ARTIFACT_LINUX}
+            ;;
+          macOS)
+            brew install wget unzip godot
+            artifact=${ARTIFACT_MACOS}
+            ;;
+          Windows)
+            # choco install wget unzip
+            artifact=${ARTIFACT_WINDOWS}
+            ;;
+          *)
+            echo Unknown OS
+            ;;
+          esac
+          
           cd /tmp
           wget -q https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_export_templates.tpz
-          wget -q https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip
           unzip /tmp/Godot_v${GODOT_VERSION}-stable_export_templates.tpz
-          unzip /tmp/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip
           mkdir -p ~/.local/share/godot/export_templates
           mv /tmp/templates ~/.local/share/godot/export_templates/templates
           mv ~/.local/share/godot/export_templates/templates ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
-          mv /tmp/Godot_v${GODOT_VERSION}-stable_linux.x86_64 /usr/local/bin/godot
 
-      - uses: actions/download-artifact@v3
+      - name: Download artifact
+        uses: actions/download-artifact@v3
         with:
-          name: ${{ env.ARTIFACT_MACOS }}
-          path: ${{ github.workspace }}/build/macOS/${{ env.ARTIFACT_MACOS }}
-      - uses: actions/download-artifact@v3
-        with:
-          name: ${{ env.ARTIFACT_LINUX }}
-          path: ${{ github.workspace }}/build/linux/${{ env.ARTIFACT_LINUX }}
-      - uses: actions/download-artifact@v3
-        with:
-          name: ${{ env. ARTIFACT_WINDOWS}}
-          path: ${{ github.workspace }}/build/macOS/${{ env. ARTIFACT_WINDOWS}}
-      - name: Export macOS
+          name: ${{ steps.deps.godot-install.artifact }}
+          path: ${{ matrix.config.build_dir }}/${{ steps.deps.outputs.artifact }}
+
+      - name: Export
         run: |
           cd ${GITHUB_WORKSPACE}
-          timeout 30 godot --headless --quit --export-release macOS
+          timeout 30 godot --headless --quit --export-release ${{ matrix.config.export_preset }}
 on:
   workflow_dispatch:
   push:
