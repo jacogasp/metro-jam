@@ -93,7 +93,7 @@ jobs:
           unzip /tmp/Godot_v${GODOT_VERSION}-stable_export_templates.tpz
           unzip /tmp/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip
           mkdir ~/.local/share/godot ${GITHUB_WORKSPACE}/bin 
-          mv /tmp/templates ~/.local/share/godot ~/bin
+          mv /tmp/templates ~/.local/share/godot
           mv /tmp/Godot_v${GODOT_VERSION}-stable_linux.x86_64 ~/bin/godot
           cd ${GITHUB_WORKSPACE}
       - uses: actions/download-artifact@v3
