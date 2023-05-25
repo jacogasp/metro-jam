@@ -132,7 +132,7 @@ jobs:
           Windows)
             choco install wget unzip
             echo "Downloading Godot ${GODOT_VERSION}"
-            wget https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_win64.exe.zip
+            wget -q https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_win64.exe.zip
             unzip Godot_v${GODOT_VERSION}-stable_win64.exe.zip
             mv Godot_v${GODOT_VERSION}-stable_win64.exe /c/Windows/godot.exe
             echo "Downloading Export Templates for Godot ${GODOT_VERSION}"
