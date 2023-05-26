@@ -21,7 +21,6 @@ add_library(
         ${PROJECT_NAME} SHARED
         src/register_types.cpp
         src/coin.cpp
-        src/gdexample.cpp
         src/logger.cpp
         src/main_scene.cpp
         src/player.cpp
