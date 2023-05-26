@@ -22,14 +22,18 @@ void Player::_bind_methods() {
                        &Player::get_air_jump_force);
   ClassDB::bind_method(D_METHOD("set_air_jump_force"),
                        &Player::set_air_jump_force);
-  ClassDB::bind_method(D_METHOD("animation_finished"), &Player::animation_finished);
+  ClassDB::bind_method(D_METHOD("animation_finished"),
+                       &Player::animation_finished);
+
+  // clang-format off
   ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "speed"), "set_speed", "get_speed");
-  ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "gravity"), "set_gravity",
-               "get_gravity");
-  ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "jump_force"), "set_jump_force",
-               "get_jump_force");
+  ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "gravity"),
+               "set_gravity","get_gravity");
+  ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "jump_force"),
+               "set_jump_force","get_jump_force");
   ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "air_jump_force"),
                "set_air_jump_force", "get_air_jump_force");
+  // clang-format on
 }
 
 void Player::_ready() {
