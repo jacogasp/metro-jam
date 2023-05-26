@@ -107,15 +107,14 @@ void Player::set_animation(const char* animation) const {
   m_animatedSprite2D->set_animation(animation);
 }
 
-bool Player::get_animation_finished_flag() const {
-  return m_is_animation_finished;
+bool Player::get_is_animation_locked() const {
+  return m_is_animation_locked;
 }
 
-void Player::set_animation_finished_flag(bool is_animation_finished) {
-  m_is_animation_finished = is_animation_finished;
+void Player::set_is_animation_locked(bool is_animation_locked) {
+  m_is_animation_locked = is_animation_locked;
 }
 
 void Player::animation_finished() {
-  auto frame_on_finish = m_animatedSprite2D->get_frame();
-  set_animation_finished_flag(true);
+  set_is_animation_locked(false);
 }
