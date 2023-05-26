@@ -73,7 +73,15 @@ def get_file_path_and_dir(artifact):
         "dll": "windows"
     }
 
-    output_dir = os.path.join("build", build_dir_map[ext])
+    dist_dir_map = {
+        "dmg": "macos",
+        "exe": "windows"
+    }
+
+    if ext in build_dir_map:
+        output_dir = os.path.join("build", build_dir_map[ext])
+    else:
+        output_dir = os.path.join("dist", dist_dir_map[ext])
 
     if not os.path.isdir(output_dir):
         os.makedirs(output_dir)

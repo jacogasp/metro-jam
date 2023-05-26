@@ -3,7 +3,9 @@
 #include <godot_cpp/godot.hpp>
 #include <gdextension_interface.h>
 
-#include "gdexample.hpp"
+#include "coin.hpp"
+#include "main_scene.hpp"
+#include "player.hpp"
 #include "register_types.hpp"
 
 using namespace godot;
@@ -13,7 +15,9 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
     return;
   }
 
-  ClassDB::register_class<GDExample>();
+  ClassDB::register_class<MainScene>();
+  ClassDB::register_class<Player>();
+  ClassDB::register_class<Coin>();
 }
 
 void uninitialize_example_module(ModuleInitializationLevel p_level) {

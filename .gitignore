@@ -3,5 +3,6 @@
 .vscode/
 .idea/
 build/
+dist/
 .DS_Store
 !.gdignore
