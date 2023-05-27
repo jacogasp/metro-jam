@@ -14,7 +14,7 @@ class Gate : public Area2D {
   GDCLASS(Gate, Area2D);
   std::string m_next_room;
   core_game::LoggerService* m_logger{nullptr};
-  CollisionShape2D *m_collision_shape;
+  CollisionShape2D *m_collision_shape{nullptr};
   bool m_closed{false};
 
   static void _bind_methods();
@@ -24,7 +24,7 @@ class Gate : public Area2D {
 
  public:
   void set_next_room(const String& scene);
-  String get_next_room() const;
+  [[nodiscard]] String get_next_room() const;
   Vector2 get_collision_shape_position() const;
   [[nodiscard]] bool is_closed() const;
   void set_closed(bool closed);
