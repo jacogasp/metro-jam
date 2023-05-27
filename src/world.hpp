@@ -31,15 +31,16 @@ class World : public Node2D {
 
   static void _bind_methods();
   void _ready() override;
+  void _process(float);
+  void update_scene();
   // Use set/get only for editor only
   Ref<PackedScene> get_packed_scene();
   void set_packed_scene(const Ref<PackedScene>& packed_scene);
   void set_player(const NodePath &path);
   [[nodiscard]] NodePath get_player() const;
-  void update_scene();
-  void _process(float);
 
  public:
+  // deferred method
   static void go_to_scene(const NextSceneMessage& next_sceen_message);
 };
 

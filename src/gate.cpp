@@ -18,14 +18,6 @@ void Gate::_ready() {
   m_collision_shape = get_node<CollisionShape2D>("CollisionShape2D");
 }
 
-void Gate::set_next_room(const String& scene) {
-  m_next_room = scene.utf8().get_data();
-}
-
-String Gate::get_next_room() const {
-  return {m_next_room.c_str()};
-}
-
 void Gate::_on_body_entered(Node2D* node) {
   if (is_closed())
     return;
@@ -43,6 +35,16 @@ void Gate::_on_body_exited(godot::Node2D* node) {
   if (node->is_in_group("player")) {
     set_closed(false);
   }
+}
+
+// Getters and setters
+
+void Gate::set_next_room(const String& scene) {
+  m_next_room = scene.utf8().get_data();
+}
+
+String Gate::get_next_room() const {
+  return {m_next_room.c_str()};
 }
 
 Vector2 Gate::get_collision_shape_position() const {

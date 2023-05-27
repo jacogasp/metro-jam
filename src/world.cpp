@@ -46,22 +46,6 @@ void World::_process(float) {
   m_pending_index = 0;
 }
 
-Ref<PackedScene> World::get_packed_scene() {
-  return m_packed_scene;
-}
-
-void World::set_packed_scene(const Ref<PackedScene>& packed_scene) {
-  m_packed_scene = packed_scene;
-}
-
-void World::set_player(const NodePath& path) {
-  m_player_node_path = path;
-}
-
-NodePath World::get_player() const {
-  return m_player_node_path;
-}
-
 void World::update_scene() {
   if (m_packed_scene.is_null()) {
     m_logger->error("Packed scene is null");
@@ -78,4 +62,22 @@ void World::update_scene() {
 void World::go_to_scene(const NextSceneMessage& next_scene_message) {
   m_pending.at(m_pending_index) = next_scene_message;
   m_pending_index++;
+}
+
+// Getters and setters
+
+Ref<PackedScene> World::get_packed_scene() {
+  return m_packed_scene;
+}
+
+void World::set_packed_scene(const Ref<PackedScene>& packed_scene) {
+  m_packed_scene = packed_scene;
+}
+
+void World::set_player(const NodePath& path) {
+  m_player_node_path = path;
+}
+
+NodePath World::get_player() const {
+  return m_player_node_path;
 }
