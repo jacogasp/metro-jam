@@ -27,12 +27,13 @@ String Gate::get_next_room() const {
 }
 
 void Gate::_on_body_entered(Node2D* node) {
-  if (is_closed()) return;
+  if (is_closed())
+    return;
 
   if (node->is_in_group("player")) {
-    m_logger->info("On body entered");
     CharString gate_name_buf = get_name().get_basename().utf8();
-    auto gate_name           = gate_name_buf.get_data();
+    auto gate_name           = std::string{gate_name_buf.get_data()};
+    m_logger->info("Player entered gate " + gate_name);
     World::go_to_scene({m_next_room, gate_name});
     queue_free();
   }
