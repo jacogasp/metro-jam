@@ -4,9 +4,11 @@
 #include <gdextension_interface.h>
 
 #include "coin.hpp"
+#include "gate.hpp"
 #include "main_scene.hpp"
 #include "player.hpp"
 #include "register_types.hpp"
+#include "world.hpp"
 
 using namespace godot;
 
@@ -18,6 +20,8 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
   ClassDB::register_class<MainScene>();
   ClassDB::register_class<Player>();
   ClassDB::register_class<Coin>();
+  ClassDB::register_class<World>();
+  ClassDB::register_class<Gate>();
 }
 
 void uninitialize_example_module(ModuleInitializationLevel p_level) {

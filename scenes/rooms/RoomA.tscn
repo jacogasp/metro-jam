@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://d2dtf2x2p4jhw"]
+
+[ext_resource type="PackedScene" uid="uid://b3bu8lmtqc0nh" path="res://scenes/dummy_map.tscn" id="1_3e0jd"]
+[ext_resource type="PackedScene" uid="uid://bqrp3exgt0k54" path="res://scenes/coin.tscn" id="2_0jhtn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6s580"]
+size = Vector2(32, 80)
+
+[node name="RoomA" type="Node2D"]
+
+[node name="DummyMap" parent="." instance=ExtResource("1_3e0jd")]
+position = Vector2(2.08165e-12, 2.08165e-12)
+
+[node name="Coin" parent="." instance=ExtResource("2_0jhtn")]
+position = Vector2(432, 125)
+
+[node name="GateA" type="Gate" parent="." groups=["gates"]]
+next_room = "scenes/rooms/RoomB.tscn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GateA"]
+position = Vector2(816, 311)
+shape = SubResource("RectangleShape2D_6s580")
+
+[connection signal="body_entered" from="GateA" to="GateA" method="_on_body_entered"]
+[connection signal="body_exited" from="GateA" to="GateA" method="_on_body_exited"]
