@@ -12,7 +12,6 @@ void Coin::_bind_methods() {
 
 void Coin::_ready() {
   m_logger = core_game::LoggerLocator::getService();
-  m_logger->info("I'm Coin");
   m_collisionShape2D = get_node<CollisionShape2D>("CollisionShape2D");
 }
 
