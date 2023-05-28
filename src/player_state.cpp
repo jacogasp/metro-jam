@@ -19,6 +19,7 @@ void StandingState::handleInput(Player& player, Input& input) {
   } else if (input.is_action_just_pressed("attack")) {
     player.set_state(&Player::attacking);
     player.set_animation("Attack");
+    player.set_weapon_monitoring(true);
   }
 }
 
@@ -33,6 +34,7 @@ void JumpingState::handleInput(Player& player, Input& input) {
     player.set_state(&Player::attacking);
     player.set_animation("Attack");
     ((AttackState*)player.m_state)->previous_state = &Player::jumping;
+    player.set_weapon_monitoring(true);
   }
 }
 
@@ -56,6 +58,7 @@ void AirJumpingState::handleInput(Player& player, Input& input) {
     player.set_state(&Player::attacking);
     player.set_animation("Attack");
     ((AttackState*)player.m_state)->previous_state = &Player::air_jumping;
+    player.set_weapon_monitoring(true);
   }
 }
 
@@ -87,6 +90,7 @@ void WalkingState::handleInput(Player& player, Input& input) {
     player.set_state(&Player::attacking);
     player.set_animation("Attack");
     ((AttackState*)player.m_state)->previous_state = &Player::walking;
+    player.set_weapon_monitoring(true);
   }
 }
 
@@ -111,6 +115,7 @@ void AttackState::update(Player& player) {
     return;
   }
 
+  player.set_weapon_monitoring(false);
   const auto velocity = player.get_velocity();
 
   if (velocity.y != 0) {

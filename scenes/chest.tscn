@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bwp42lmw4oj5h"]
+
+[ext_resource type="Texture2D" uid="uid://2lxpnj76x2pi" path="res://kenney_abstract-platformer/PNG/Other/blockGrey.png" id="1_k20rb"]
+[ext_resource type="Script" path="res://scripts/damageable.gd" id="2_ykilw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ceeox"]
+size = Vector2(32, 32)
+
+[node name="StaticBody2D" type="StaticBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_k20rb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ceeox")
+
+[node name="Damageable" type="Node" parent="."]
+script = ExtResource("2_ykilw")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://dibkh0kdqa671"]
+[gd_scene load_steps=23 format=3 uid="uid://dibkh0kdqa671"]
 
 [ext_resource type="Texture2D" uid="uid://dd2uegvk6nott" path="res://Character_Sprite_Sheet.png" id="1_kpbhj"]
 
@@ -159,6 +159,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t57q4"]
 size = Vector2(16, 40)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bt8yl"]
+size = Vector2(19, 41)
+
 [node name="player" type="Player" groups=["player"]]
 speed = 300.0
 gravity = 2.08165e-12
@@ -167,10 +170,21 @@ velocity = Vector2(0, 52514.6)
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_0nsvt")
 animation = &"Idle"
-frame_progress = 0.491419
+frame_progress = 0.403424
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -4)
 shape = SubResource("RectangleShape2D_t57q4")
 
+[node name="Weapon" type="Weapon" parent="."]
+collision_layer = 0
+collision_mask = 8
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Weapon"]
+position = Vector2(19.5, -4.5)
+shape = SubResource("RectangleShape2D_bt8yl")
+debug_color = Color(0.960784, 0, 0.517647, 0.419608)
+
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="animation_finished"]
+[connection signal="body_entered" from="Weapon" to="Weapon" method="_on_body_entered"]

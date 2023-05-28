@@ -8,7 +8,6 @@ void Coin::_bind_methods() {
 }
 
 void Coin::_ready() {
-  m_logger = core_game::LoggerLocator::getService();
   m_collisionShape2D = get_node<CollisionShape2D>("CollisionShape2D");
 }
 
@@ -17,4 +16,4 @@ void Coin::_on_coin_area_body_entered(Node2D* body) {
   if (groups.has("player")) {
     queue_free();
   }
-}
+} 

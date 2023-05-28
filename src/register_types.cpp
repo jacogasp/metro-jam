@@ -9,6 +9,7 @@
 #include "player.hpp"
 #include "register_types.hpp"
 #include "world.hpp"
+#include "weapon.hpp"
 
 using namespace godot;
 
@@ -19,6 +20,7 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
 
   ClassDB::register_class<MainScene>();
   ClassDB::register_class<Player>();
+  ClassDB::register_class<Weapon>();
   ClassDB::register_class<Coin>();
   ClassDB::register_class<World>();
   ClassDB::register_class<Gate>();

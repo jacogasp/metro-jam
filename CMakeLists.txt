@@ -27,6 +27,7 @@ add_library(
 		src/world.cpp
 		src/gate.cpp
 		src/coin.cpp
+		src/weapon.cpp
 )
 
 if (MINGW)

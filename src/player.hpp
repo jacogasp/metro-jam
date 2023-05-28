@@ -2,6 +2,7 @@
 #define PLAYER_HPP
 
 #include "player_state.hpp"
+#include "weapon.hpp"
 #include <godot_cpp/classes/animated_sprite2d.hpp>
 #include <godot_cpp/classes/character_body2d.hpp>
 #include <memory>
@@ -17,7 +18,9 @@ class Player : public CharacterBody2D {
   bool m_can_attack                    = true;
   AnimatedSprite2D* m_animatedSprite2D = nullptr;
   bool m_is_animation_locked           = false;
+  Weapon* m_weapon                     = nullptr;
   PlayerState* m_state{&Player::standing};
+  
 
   static void _bind_methods();
 
@@ -42,6 +45,7 @@ class Player : public CharacterBody2D {
   void set_air_jump_force(float force);
   void set_state(PlayerState* state);
   void set_animation(const char* animation) const;
+  void set_weapon_monitoring(bool can_monitor) const;
 };
 
 #endif
