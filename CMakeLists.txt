@@ -18,15 +18,15 @@ include(cmake/CPM.cmake)
 CPMAddPackage("gh:godotengine/godot-cpp#4.0")
 
 add_library(
-        ${PROJECT_NAME} SHARED
-        src/register_types.cpp
-        src/coin.cpp
-        src/logger.cpp
-        src/main_scene.cpp
-        src/player.cpp
-        src/player_state.cpp
-        src/world.cpp
-        src/gate.cpp
+		${PROJECT_NAME} SHARED
+		src/register_types.cpp
+		src/logger.cpp
+		src/main_scene.cpp
+		src/player.cpp
+		src/player_state.cpp
+		src/world.cpp
+		src/gate.cpp
+		src/coin.cpp
 )
 
 if (MINGW)

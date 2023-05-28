@@ -22,8 +22,6 @@ void Player::_bind_methods() {
                        &Player::get_air_jump_force);
   ClassDB::bind_method(D_METHOD("set_air_jump_force"),
                        &Player::set_air_jump_force);
-  ClassDB::bind_method(D_METHOD("animation_finished"),
-                       &Player::animation_finished);
 
   // clang-format off
   ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "speed"), "set_speed", "get_speed");
@@ -105,16 +103,4 @@ void Player::set_gravity(float gravity) {
 
 void Player::set_animation(const char* animation) const {
   m_animatedSprite2D->set_animation(animation);
-}
-
-bool Player::get_is_animation_locked() const {
-  return m_is_animation_locked;
-}
-
-void Player::set_is_animation_locked(bool is_animation_locked) {
-  m_is_animation_locked = is_animation_locked;
-}
-
-void Player::animation_finished() {
-  set_is_animation_locked(false);
 }

@@ -167,6 +167,7 @@ velocity = Vector2(0, 52514.6)
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_0nsvt")
 animation = &"Idle"
+frame_progress = 0.491419
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -4)

@@ -3,6 +3,7 @@
 #include "player.hpp"
 
 #include <godot_cpp/classes/input.hpp>
+#include <godot_cpp/classes/sprite_frames.hpp>
 using namespace godot;
 
 void StandingState::handleInput(Player& player, Input& input) {
@@ -18,7 +19,6 @@ void StandingState::handleInput(Player& player, Input& input) {
   } else if (input.is_action_just_pressed("attack")) {
     player.set_state(&Player::attacking);
     player.set_animation("Attack");
-    player.set_is_animation_locked(true);
   }
 }
 
@@ -32,7 +32,6 @@ void JumpingState::handleInput(Player& player, Input& input) {
   } else if (input.is_action_just_pressed("attack")) {
     player.set_state(&Player::attacking);
     player.set_animation("Attack");
-    player.set_is_animation_locked(true);
   }
 }
 
@@ -55,7 +54,6 @@ void AirJumpingState::handleInput(Player& player, Input& input) {
   if (input.is_action_just_pressed("attack")) {
     player.set_state(&Player::attacking);
     player.set_animation("Attack");
-    player.set_is_animation_locked(true);
   }
 }
 
@@ -86,7 +84,6 @@ void WalkingState::handleInput(Player& player, Input& input) {
   } else if (input.is_action_just_pressed("attack")) {
     player.set_state(&Player::attacking);
     player.set_animation("Attack");
-    player.set_is_animation_locked(true);
   }
 }
 
@@ -103,9 +100,11 @@ void AttackState::handleInput(Player& player, Input& input) {
 }
 
 void AttackState::update(Player& player) {
-  const auto is_animation_locked = player.get_is_animation_locked();
+  const auto current_frame = player.m_animatedSprite2D->get_frame();
+  const auto frames = *(player.m_animatedSprite2D->get_sprite_frames());
+  const auto num_frames = frames->get_frame_count("Attack");
 
-  if (is_animation_locked) {
+  if (current_frame != num_frames - 1) {
     return;
   }
 

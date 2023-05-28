@@ -14,8 +14,9 @@ class Player : public CharacterBody2D {
   float m_jump_force                   = 350;
   float m_air_jump_force               = 350;
   float m_speed                        = 0;
+  bool m_can_attack                    = true;
   AnimatedSprite2D* m_animatedSprite2D = nullptr;
-  bool m_is_animation_locked = false;
+  bool m_is_animation_locked           = false;
   PlayerState* m_state{&Player::standing};
 
   static void _bind_methods();
@@ -41,9 +42,6 @@ class Player : public CharacterBody2D {
   void set_air_jump_force(float force);
   void set_state(PlayerState* state);
   void set_animation(const char* animation) const;
-  bool get_is_animation_locked() const;
-  void set_is_animation_locked(bool is_animation_locked);
-  void animation_finished();
 };
 
 #endif

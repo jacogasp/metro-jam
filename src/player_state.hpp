@@ -2,7 +2,6 @@
 #define PLAYER_STATE_HPP
 
 #include <memory>
-#include "logger.hpp"
 
 namespace godot {
 class Input;
