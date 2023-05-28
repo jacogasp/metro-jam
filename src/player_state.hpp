@@ -37,6 +37,8 @@ class AirJumpingState : public PlayerState {
 class AttackState : public PlayerState {
   void handleInput(Player& player, godot::Input& input) override;
   void update(Player& player) override;
+  public:
+    PlayerState* previous_state = nullptr;
 };
 
 #endif // PLAYER_STATE_HPP
