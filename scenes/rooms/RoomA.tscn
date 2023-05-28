@@ -15,6 +15,27 @@ layer_0/tile_data = PackedInt32Array(0, 0, 1, 65536, 0, 2, 131072, 0, 2, 196608,
 [node name="Coin" parent="." instance=ExtResource("2_0jhtn")]
 position = Vector2(466, 106)
 
+[node name="Coin2" parent="." instance=ExtResource("2_0jhtn")]
+position = Vector2(469, 46)
+
+[node name="Coin3" parent="." instance=ExtResource("2_0jhtn")]
+position = Vector2(449, 75)
+
+[node name="Coin4" parent="." instance=ExtResource("2_0jhtn")]
+position = Vector2(327, 179)
+
+[node name="Coin5" parent="." instance=ExtResource("2_0jhtn")]
+position = Vector2(312, 212)
+
+[node name="Coin6" parent="." instance=ExtResource("2_0jhtn")]
+position = Vector2(301, 245)
+
+[node name="Coin7" parent="." instance=ExtResource("2_0jhtn")]
+position = Vector2(698, 167)
+
+[node name="Coin8" parent="." instance=ExtResource("2_0jhtn")]
+position = Vector2(645, 64)
+
 [node name="GateA" type="Gate" parent="." groups=["gates"]]
 next_room = "scenes/rooms/RoomB.tscn"
 
