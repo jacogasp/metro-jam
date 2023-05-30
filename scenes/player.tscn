@@ -170,7 +170,7 @@ velocity = Vector2(0, 52514.6)
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_0nsvt")
 animation = &"Idle"
-frame_progress = 0.403424
+frame_progress = 0.933671
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -4)
@@ -186,5 +186,4 @@ position = Vector2(19.5, -4.5)
 shape = SubResource("RectangleShape2D_bt8yl")
 debug_color = Color(0.960784, 0, 0.517647, 0.419608)
 
-[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="animation_finished"]
 [connection signal="body_entered" from="Weapon" to="Weapon" method="_on_body_entered"]
