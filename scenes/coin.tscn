@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bqrp3exgt0k54"]
 
-[ext_resource type="Texture2D" uid="uid://d3gdtx0jtbix8" path="res://kenney_abstract-platformer/PNG/Items/yellowGem.png" id="1_ra17f"]
+[ext_resource type="Texture2D" uid="uid://coa0gawul4pnj" path="res://Assets.png" id="1_dcltj"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_lwb7c"]
 friction = 0.95
@@ -22,7 +22,9 @@ linear_damp = 5.0
 constant_force = Vector2(2.08165e-12, 2.08165e-12)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_ra17f")
+texture = ExtResource("1_dcltj")
+region_enabled = true
+region_rect = Rect2(64, 64, 16, 16)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_35set")
