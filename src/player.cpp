@@ -102,9 +102,6 @@ void Player::set_gravity(float gravity) {
   m_gravity = gravity;
 }
 
-void Player::set_animation(const char* animation) const {
-  m_animatedSprite2D->set_animation(animation);
-}
 Vector2 Player::get_h_direction() const {
   return m_animatedSprite2D->is_flipped_h() ? Vector2{-1, 0} : Vector2{1, 0};
 }
