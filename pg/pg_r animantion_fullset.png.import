@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cb1cgvtrbhc1s"
-path="res://.godot/imported/pg_r animantion fullset.png-ca802660f5685dc66fecaa1100bc26ac.ctex"
+path="res://.godot/imported/pg_r animantion_fullset.png-8ce3c3acf6b3193f2dc3bede83e87394.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://pg/pg_r animantion fullset.png"
-dest_files=["res://.godot/imported/pg_r animantion fullset.png-ca802660f5685dc66fecaa1100bc26ac.ctex"]
+source_file="res://pg/pg_r animantion_fullset.png"
+dest_files=["res://.godot/imported/pg_r animantion_fullset.png-8ce3c3acf6b3193f2dc3bede83e87394.ctex"]
 
 [params]
 
