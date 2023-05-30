@@ -36,8 +36,7 @@ void Player::_bind_methods() {
 
 void Player::_ready() {
   m_animatedSprite2D = get_node<AnimatedSprite2D>("AnimatedSprite2D");
-  m_animatedSprite2D->set_animation("Idle");
-  m_animatedSprite2D->play();
+  m_animatedSprite2D->play("Idle");
 
   m_weapon = get_node<Weapon>("Weapon");
   m_weapon->set_monitoring(false);
@@ -64,7 +63,6 @@ void Player::_physics_process(float delta) {
   m_animatedSprite2D->set_flip_h(velocity.x < 0 || is_flipped);
   set_velocity(velocity);
   move_and_slide();
-  m_animatedSprite2D->play();
 }
 
 // Setters and getters

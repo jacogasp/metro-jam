@@ -17,7 +17,6 @@ class Player : public CharacterBody2D {
   float m_speed                        = 0;
   bool m_can_attack                    = true;
   AnimatedSprite2D* m_animatedSprite2D = nullptr;
-  bool m_is_animation_locked           = false;
   Weapon* m_weapon                     = nullptr;
   PlayerState* m_state{&Player::standing};
 
