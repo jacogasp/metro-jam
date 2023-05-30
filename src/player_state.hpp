@@ -19,7 +19,7 @@ class StandingState : public PlayerState {
   void handleInput(Player& player, godot::Input& input) override;
 };
 
-class WalkingState : public PlayerState {
+class RunningState : public PlayerState {
   void handleInput(Player& player, godot::Input& input) override;
   void update(Player& player) override;
 };

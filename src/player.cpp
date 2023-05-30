@@ -6,7 +6,7 @@
 #include <cassert>
 
 StandingState Player::standing      = StandingState();
-WalkingState Player::walking        = WalkingState();
+RunningState Player::running        = RunningState();
 JumpingState Player::jumping        = JumpingState();
 AirJumpingState Player::air_jumping = AirJumpingState();
 AttackState Player::attacking       = AttackState();
@@ -106,6 +106,9 @@ void Player::set_gravity(float gravity) {
 
 void Player::set_animation(const char* animation) const {
   m_animatedSprite2D->set_animation(animation);
+}
+Vector2 Player::get_h_direction() const {
+  return m_animatedSprite2D->is_flipped_h() ? Vector2{-1, 0} : Vector2{1, 0};
 }
 
 void Player::set_weapon_monitoring(bool can_monitor) const {

@@ -20,13 +20,12 @@ class Player : public CharacterBody2D {
   bool m_is_animation_locked           = false;
   Weapon* m_weapon                     = nullptr;
   PlayerState* m_state{&Player::standing};
-  
 
   static void _bind_methods();
 
  public:
   static StandingState standing;
-  static WalkingState walking;
+  static RunningState running;
   static JumpingState jumping;
   static AirJumpingState air_jumping;
   static AttackState attacking;
@@ -46,6 +45,7 @@ class Player : public CharacterBody2D {
   void set_state(PlayerState* state);
   void set_animation(const char* animation) const;
   void set_weapon_monitoring(bool can_monitor) const;
+  [[nodiscard]] Vector2 get_h_direction() const;
 };
 
 #endif

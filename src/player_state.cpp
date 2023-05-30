@@ -15,7 +15,7 @@ void StandingState::handleInput(Player& player, Input& input) {
     player.set_velocity(velocity);
   } else if (velocity.x != 0) {
     player.set_animation("Run");
-    player.set_state(&Player::walking);
+    player.set_state(&Player::running);
   } else if (input.is_action_just_pressed("attack")) {
     player.set_state(&Player::attacking);
     player.set_animation("Attack");
@@ -48,7 +48,7 @@ void JumpingState::update(Player& player) {
       player.set_state(&Player::standing);
     } else {
       player.set_animation("Run");
-      player.set_state(&Player::walking);
+      player.set_state(&Player::running);
     }
   }
 }
@@ -74,12 +74,12 @@ void AirJumpingState::update(Player& player) {
       player.set_state(&Player::standing);
     } else {
       player.set_animation("Run");
-      player.set_state(&Player::walking);
+      player.set_state(&Player::running);
     }
   }
 }
 
-void WalkingState::handleInput(Player& player, Input& input) {
+void RunningState::handleInput(Player& player, Input& input) {
   if (input.is_action_just_pressed("jump")) {
     player.set_state(&Player::jumping);
     player.set_animation("JumpIn");
@@ -89,12 +89,12 @@ void WalkingState::handleInput(Player& player, Input& input) {
   } else if (input.is_action_just_pressed("attack")) {
     player.set_state(&Player::attacking);
     player.set_animation("Attack");
-    ((AttackState*)player.m_state)->previous_state = &Player::walking;
+    ((AttackState*)player.m_state)->previous_state = &Player::running;
     player.set_weapon_monitoring(true);
   }
 }
 
-void WalkingState::update(Player& player) {
+void RunningState::update(Player& player) {
   auto const velocity = player.get_velocity();
   if (velocity.x == 0) {
     player.set_animation("Idle");
@@ -130,7 +130,7 @@ void AttackState::update(Player& player) {
   }
 
   if (velocity.x != 0) {
-    player.set_state(&Player::walking);
+    player.set_state(&Player::running);
     player.set_animation("Run");
   }
   else
