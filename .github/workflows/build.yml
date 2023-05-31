@@ -164,12 +164,23 @@ jobs:
         run: |
           mkdir ${{ matrix.config.dist_dir }}
           timeout 180 godot --headless --quit --export-release ${{ matrix.config.export_preset }}
+          ls -lah ${{ matrix.config.dist_dir }}
 
       - name: Upload executable artifact
         uses: actions/upload-artifact@v3
+        if: ${{ matrix.config.os }} != "windows-latest"
         with:
           name: ${{ matrix.config.executable }}
           path: ${{ matrix.config.dist_dir }}/${{ matrix.config.executable }}
+
+      - name: Upload executable artifact
+        uses: actions/upload-artifact@v3
+        if: ${{ matrix.config.os }} == "windows-latest"
+        with:
+          name: ${{ matrix.config.executable }}
+          path: |
+            ${{ matrix.config.dist_dir }}/${{ matrix.config.executable }}
+            ${{ matrix.config.dist_dir }}/${{ env.ARTIFACT_WINDOWS }}
 on:
   workflow_dispatch:
   push:
