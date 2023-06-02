@@ -25,11 +25,16 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
   ClassDB::register_class<Coin>();
   ClassDB::register_class<World>();
   ClassDB::register_class<Gate>();
+
+#ifdef CORE_GAME_PROFILING
   core_game::Instrumentor::get().begin_session("Example session");
+#endif
 }
 
 void uninitialize_example_module(ModuleInitializationLevel p_level) {
+#ifdef CORE_GAME_PROFILING
   core_game::Instrumentor::get().end_session();
+#endif
   if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
     return;
   }

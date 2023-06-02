@@ -33,7 +33,7 @@ class Instrumentor {
   }
 
   void begin_session(const std::string& name,
-                     const std::string& filepath = "results.json") {
+                     const std::string& filepath = "profiler.json") {
     m_ostream.open(filepath);
     m_session = std::make_unique<InstrumentationSession>();
     write_header();
@@ -120,9 +120,7 @@ class TimerInstrument {
 };
 } // namespace core_game
 
-#define PROFILING 1
-
-#if PROFILING
+#if CORE_GAME_PROFILING
 #  define PROFILE_FUNCTION()                                                   \
     core_game::TimerInstrument timer(std::string{typeid(*this).name()}         \
                                      + std::string{"::"}                       \

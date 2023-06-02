@@ -6,6 +6,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED YES)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_SHARED_LIBRARY_PREFIX "lib")
 
+option(CORE_GAME_ENABLE_PROFILER OFF)
+if (CORE_GAME_ENABLE_PROFILER)
+  message(STATUS "Enable profiler")
+  add_compile_definitions(CORE_GAME_PROFILING)
+endif ()
+
 find_program(CCACHE ccache)
 if (CCACHE)
   message(STATUS "ccache found")
