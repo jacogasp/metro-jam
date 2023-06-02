@@ -1,5 +1,6 @@
 #include "gate.hpp"
 #include "logger.hpp"
+#include "profiler.hpp"
 #include "world.hpp"
 
 void Gate::_bind_methods() {
@@ -19,6 +20,7 @@ void Gate::_ready() {
 }
 
 void Gate::_on_body_entered(Node2D* node) {
+  PROFILE_FUNCTION()
   if (is_closed())
     return;
 

@@ -2,6 +2,7 @@
 #include "gate.hpp"
 #include "logger.hpp"
 #include "player.hpp"
+#include "profiler.hpp"
 #include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/classes/scene_tree.hpp>
 #include <godot_cpp/classes/window.hpp>
@@ -22,6 +23,7 @@ void World::_bind_methods() {
 }
 
 void World::_ready() {
+  PROFILE_FUNCTION()
   m_logger = core_game::LoggerLocator::getService();
   m_player = get_node<Player>(m_player_node_path);
   update_scene();
@@ -29,6 +31,7 @@ void World::_ready() {
 }
 
 void World::_process(float) {
+  PROFILE_FUNCTION()
   for (int i = 0; i < m_pending_index; ++i) {
     auto const loader     = ResourceLoader::get_singleton();
     auto const next_scene = m_pending.at(i).next_scene;
@@ -47,6 +50,8 @@ void World::_process(float) {
 }
 
 void World::update_scene() {
+  PROFILE_FUNCTION()
+
   if (m_packed_scene.is_null()) {
     m_logger->error("Packed scene is null");
     return;

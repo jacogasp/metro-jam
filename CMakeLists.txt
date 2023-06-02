@@ -19,23 +19,24 @@ include(cmake/CPM.cmake)
 CPMAddPackage("gh:godotengine/godot-cpp#4.0")
 
 add_library(
-		${PROJECT_NAME} SHARED
-		src/register_types.cpp
-		src/logger.cpp
-		src/main_scene.cpp
-		src/player.cpp
-		src/player_state.cpp
-		src/world.cpp
-		src/gate.cpp
-		src/coin.cpp
-		src/weapon.cpp
+        ${PROJECT_NAME} SHARED
+        src/register_types.cpp
+        src/logger.cpp
+        src/main_scene.cpp
+        src/player.cpp
+        src/player_state.cpp
+        src/world.cpp
+        src/gate.cpp
+        src/coin.cpp
+        src/weapon.cpp
+        src/profiler.cpp
 )
 
 if (MINGW)
   message(STATUS Using MinGW)
   target_link_libraries(${PROJECT_NAME} PRIVATE -static-libgcc -static-libstdc++ -static -pthread godot-cpp)
 else ()
-	target_link_libraries(${PROJECT_NAME} PRIVATE godot-cpp)
+  target_link_libraries(${PROJECT_NAME} PRIVATE godot-cpp)
 endif ()
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})

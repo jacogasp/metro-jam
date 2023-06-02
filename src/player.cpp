@@ -1,4 +1,5 @@
 #include "player.hpp"
+#include "profiler.hpp"
 #include <godot_cpp/classes/animated_sprite2d.hpp>
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/input.hpp>
@@ -35,6 +36,7 @@ void Player::_bind_methods() {
 }
 
 void Player::_ready() {
+  PROFILE_FUNCTION()
   m_animatedSprite2D = get_node<AnimatedSprite2D>("AnimatedSprite2D");
   m_animatedSprite2D->play("Idle");
 
@@ -43,6 +45,7 @@ void Player::_ready() {
 }
 
 void Player::_physics_process(float delta) {
+  PROFILE_FUNCTION()
   assert(m_state);
   if (Engine::get_singleton()->is_editor_hint())
     return;
