@@ -23,7 +23,7 @@ jobs:
             cmake_preset: ci-linux
             build_dir: build/linux
           - name: macOS
-            os: macos-latest
+            os: macos-11
             cmake_preset: ci-macos
             build_dir: build/macos
           - name: Windows
