@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://bwp42lmw4oj5h"]
+
+[ext_resource type="Texture2D" uid="uid://b3argiortbcna" path="res://assets_temp/crate.png" id="1_l2sio"]
+[ext_resource type="Script" path="res://scripts/damageable.gd" id="2_ykilw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ceeox"]
+size = Vector2(28, 28)
+
+[node name="ChestVanilla" type="StaticBody2D"]
+collision_layer = 8
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_l2sio")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ceeox")
+
+[node name="Damageable" type="Node" parent="."]
+script = ExtResource("2_ykilw")

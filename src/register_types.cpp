@@ -3,7 +3,9 @@
 #include <godot_cpp/godot.hpp>
 #include <gdextension_interface.h>
 
+#include "chest.hpp"
 #include "coin.hpp"
+#include "coin_spawner.hpp"
 #include "gate.hpp"
 #include "main_scene.hpp"
 #include "player.hpp"
@@ -23,6 +25,8 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
   ClassDB::register_class<Player>();
   ClassDB::register_class<Weapon>();
   ClassDB::register_class<Coin>();
+  ClassDB::register_class<CoinSpawner>();
+  ClassDB::register_class<Chest>();
   ClassDB::register_class<World>();
   ClassDB::register_class<Gate>();
 

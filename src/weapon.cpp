@@ -1,5 +1,9 @@
+#include "chest.hpp"
+#include "coin_spawner.hpp"
 #include "weapon.hpp"
 #include <godot_cpp/classes/engine.hpp>
+#include <godot_cpp/variant/utility_functions.hpp>
+#include <string>
 
 void Weapon::_bind_methods() {
     ClassDB::bind_method(D_METHOD("set_damage", "damage"), &Weapon::set_damage);
@@ -23,16 +27,11 @@ void Weapon::set_damage(float damage) {
 }
 
 void Weapon::_on_body_entered(Node2D* body) {
-    
-    godot::TypedArray<Node> children = body->get_children();
 
-    for (int i = 0; i < children.size(); i++) {
-        auto child = children[i];
-        if (child.stringify().contains("Damageable")) {
-            // child.hit(m_damage);
-            // body->get_node<Damageable>().hit(m_damage);
-            body->queue_free();
-            break;
-        }
+    const auto groups = body->get_groups();
+    if (groups.has("chest")) {
+        auto coin_spawner = body->get_node<CoinSpawner>("CoinSpawner");
+        coin_spawner->spawn();
+        body->queue_free();
     }
 }
