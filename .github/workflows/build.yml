@@ -125,7 +125,9 @@ jobs:
             wget "https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
             unzip "Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
             mkdir -p "~/Library/Application\ Support/Godot/export_templates/${GODOT_VERSION}.stable"
-            mv templates/macos.zip "~/Library/Application\ Support/Godot/export_templates/${GODOT_VERSION}.stable"
+            mv templates/macos.zip "~/Library/Application\ Support/Godot/export_templates/${GODOT_VERSION}.stable/macos.zip"
+            ls "~/Library/Application\ Support/Godot/export_templates/"
+            ls "~/Library/Application\ Support/Godot/export_templates/${GODOT_VERSION}.stable"
             rm -rf templates
             artifact="${ARTIFACT_MACOS}"
             ;;
