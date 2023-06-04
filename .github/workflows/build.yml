@@ -88,7 +88,7 @@ jobs:
       matrix:
         config:
           - name: Export macOS
-            os: macos-latest
+            os: macos-11
             export_preset: macOS
             build_dir: build/macos
             dist_dir: dist/macos
