@@ -64,6 +64,8 @@ void Player::_physics_process(float delta) {
 
   auto is_flipped = m_animatedSprite2D->is_flipped_h() && velocity.x == 0;
   m_animatedSprite2D->set_flip_h(velocity.x < 0 || is_flipped);
+  auto is_flipped_weapon = m_weapon->is_flipped_h() && velocity.x == 0;
+  m_weapon->set_flip_h(velocity.x < 0 || is_flipped_weapon);
   set_velocity(velocity);
   move_and_slide();
 }

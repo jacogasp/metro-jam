@@ -18,12 +18,33 @@ void Weapon::_ready() {
     m_collisionShape2D = get_node<CollisionShape2D>("CollisionShape2D");
 }
 
+void Weapon::_physics_process(float delta) {
+    auto collider_position = m_collisionShape2D->get_position();
+    auto new_collider_pos_x = 0.0;
+
+    if (m_flip_h && collider_position.x > 0 || !m_flip_h && collider_position.x < 0) {
+        new_collider_pos_x = -collider_position.x;
+    } else {
+        new_collider_pos_x = collider_position.x;
+    }
+
+    m_collisionShape2D->set_position(Vector2(new_collider_pos_x, collider_position.y));
+}
+
 float Weapon::get_damage() const {
     return m_damage;
 }
 
 void Weapon::set_damage(float damage) {
     m_damage = damage;
+}
+
+void Weapon::set_flip_h(bool value) {
+    m_flip_h = value;
+}
+
+bool Weapon::is_flipped_h() {
+    return m_flip_h;
 }
 
 void Weapon::_on_body_entered(Node2D* body) {
