@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://d2dtf2x2p4jhw"]
+[gd_scene load_steps=5 format=3 uid="uid://d2dtf2x2p4jhw"]
 
 [ext_resource type="PackedScene" uid="uid://b3bu8lmtqc0nh" path="res://scenes/dummy_map.tscn" id="1_3e0jd"]
 [ext_resource type="PackedScene" uid="uid://bqrp3exgt0k54" path="res://scenes/coin.tscn" id="2_0jhtn"]
-[ext_resource type="PackedScene" uid="uid://bwp42lmw4oj5h" path="res://scenes/chest_vanilla.tscn" id="3_254do"]
 [ext_resource type="PackedScene" uid="uid://bepuvct7mnre7" path="res://scenes/chest.tscn" id="4_xg3nt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6s580"]
@@ -38,11 +37,28 @@ position = Vector2(698, 167)
 [node name="Coin8" parent="." instance=ExtResource("2_0jhtn")]
 position = Vector2(645, 64)
 
-[node name="ChestVanilla" parent="." instance=ExtResource("3_254do")]
-position = Vector2(49, 322)
-
 [node name="Chest" parent="." instance=ExtResource("4_xg3nt")]
 position = Vector2(382, 306)
+
+[node name="Chest2" parent="." instance=ExtResource("4_xg3nt")]
+quantity = 75
+position = Vector2(502, 130)
+
+[node name="Chest3" parent="." instance=ExtResource("4_xg3nt")]
+quantity = 20
+position = Vector2(37, 322)
+
+[node name="Chest4" parent="." instance=ExtResource("4_xg3nt")]
+quantity = 1
+position = Vector2(242, 210)
+
+[node name="Chest5" parent="." instance=ExtResource("4_xg3nt")]
+quantity = 50
+position = Vector2(274, 306)
+
+[node name="Chest6" parent="." instance=ExtResource("4_xg3nt")]
+quantity = 100
+position = Vector2(175, 210)
 
 [node name="GateA" type="Gate" parent="." groups=["gates"]]
 next_room = "scenes/rooms/RoomB.tscn"
