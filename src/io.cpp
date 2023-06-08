@@ -27,7 +27,7 @@ void crate_savings_directory(const std::filesystem::path& path) {
   }
 }
 
-File::File(const std::string_view path)
+File::File(const std::filesystem::path& path)
     : m_ofstream{path}
     , m_ifstream{path} {
   if (!m_ofstream.is_open()) {

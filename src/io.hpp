@@ -20,7 +20,7 @@ class File {
   std::ifstream m_ifstream;
 
  public:
-  explicit File(std::string_view path);
+  explicit File(const std::filesystem::path& path);
   ~File();
   std::string get();
   void write(std::string_view s);
