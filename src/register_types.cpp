@@ -6,7 +6,9 @@
 #include "chest.hpp"
 #include "coin.hpp"
 #include "coin_spawner.hpp"
+#include "constants.hpp"
 #include "gate.hpp"
+#include "io.hpp"
 #include "main_scene.hpp"
 #include "player.hpp"
 #include "profiler.hpp"
@@ -20,7 +22,7 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
   if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
     return;
   }
-
+  core_game::crate_savings_directory(core_game::SAVINGS_DIRECTORY);
   ClassDB::register_class<MainScene>();
   ClassDB::register_class<Player>();
   ClassDB::register_class<Weapon>();

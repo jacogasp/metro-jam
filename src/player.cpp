@@ -1,9 +1,11 @@
 #include "player.hpp"
+#include "constants.hpp"
+#include "io.hpp"
+#include "logger.hpp"
 #include "profiler.hpp"
 #include <godot_cpp/classes/animated_sprite2d.hpp>
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/input.hpp>
-#include <godot_cpp/variant/utility_functions.hpp>
 #include <cassert>
 
 StandingState Player::standing      = StandingState();
@@ -37,11 +39,14 @@ void Player::_bind_methods() {
 
 void Player::_ready() {
   PROFILE_FUNCTION()
+  m_logger = core_game::LoggerLocator::getService();
+
   m_animatedSprite2D = get_node<AnimatedSprite2D>("AnimatedSprite2D");
   m_animatedSprite2D->play("Idle");
 
   m_weapon = get_node<Weapon>("Weapon");
   m_weapon->set_monitoring(false);
+  m_logger->info("Player ready.");
 }
 
 void Player::_physics_process(float delta) {
@@ -68,6 +73,27 @@ void Player::_physics_process(float delta) {
   m_weapon->set_flip_h(velocity.x < 0 || is_flipped_weapon);
   set_velocity(velocity);
   move_and_slide();
+
+  if (input->is_action_just_pressed("save")) {
+    save();
+  }
+}
+
+void Player::save() {
+  try {
+    Dictionary d{};
+    d["pos.x"] = get_position().x;
+    d["pos.y"] = get_position().y;
+    auto path  = std::string{core_game::SAVINGS_DIRECTORY} + "/player.json";
+    core_game::File file{path};
+    file.write(core_game::dict_to_json(d));
+    m_logger->info("Player state saved.");
+  } catch (const std::exception& e) {
+    m_logger->error(e.what());
+  }
+}
+
+void Player::load() {
 }
 
 // Setters and getters

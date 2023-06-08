@@ -1,21 +1,29 @@
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
 
+#include "persist.hpp"
 #include "player_state.hpp"
 #include "weapon.hpp"
+
 #include <godot_cpp/classes/animated_sprite2d.hpp>
 #include <godot_cpp/classes/character_body2d.hpp>
 #include <memory>
 
 using namespace godot;
+namespace core_game {
+class LoggerService;
 
-class Player : public CharacterBody2D {
-  GDCLASS(Player, CharacterBody2D);
+}
+class Player
+    : public CharacterBody2D
+    , public Persist {
+  GDCLASS(Player, CharacterBody2D)
   float m_gravity                      = 500;
   float m_jump_force                   = 350;
   float m_air_jump_force               = 350;
   float m_speed                        = 0;
   bool m_can_attack                    = true;
+  core_game::LoggerService* m_logger              = nullptr;
   AnimatedSprite2D* m_animatedSprite2D = nullptr;
   Weapon* m_weapon                     = nullptr;
   PlayerState* m_state{&Player::standing};
@@ -45,6 +53,8 @@ class Player : public CharacterBody2D {
   void set_animation(const char* animation) const;
   void set_weapon_monitoring(bool can_monitor) const;
   [[nodiscard]] Vector2 get_h_direction() const;
+  void save() override;
+  void load() override;
 };
 
 #endif
