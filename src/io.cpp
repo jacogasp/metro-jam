@@ -1,11 +1,11 @@
 #include "io.hpp"
 #include <godot_cpp/classes/json.hpp>
+#include <sstream>
 
 namespace core_game {
 
 godot::Dictionary json_to_dict(const std::string& s) {
-  auto json           = godot::JSON();
-  godot::Dictionary d = json.get_data();
+  auto d = godot::JSON::parse_string(s.c_str());
   return d;
 }
 
@@ -27,29 +27,36 @@ void crate_savings_directory(const std::filesystem::path& path) {
   }
 }
 
-File::File(const std::filesystem::path& path)
-    : m_ofstream{path}
-    , m_ifstream{path} {
+FileWriter::FileWriter(const std::filesystem::path& path)
+    : m_ofstream{path} {
   if (!m_ofstream.is_open()) {
     throw std::runtime_error("cannot open file");
   }
 }
 
-File::~File() {
-  {
-    m_ofstream.close();
-    m_ifstream.close();
+FileWriter::~FileWriter() {
+  { m_ofstream.close(); }
+}
+
+void FileWriter::write(std::string_view s) {
+  m_ofstream << s;
+}
+
+FileReader::FileReader(const std::filesystem::path& path)
+    : m_ifstream{path} {
+  if (!m_ifstream.is_open()) {
+    throw std::runtime_error("cannot open file");
   }
 }
 
-std::string File::get() {
-  std::string s;
-  m_ifstream >> s;
-  return s;
+FileReader::~FileReader() {
+  { m_ifstream.close(); }
 }
 
-void File::write(std::string_view s) {
-  m_ofstream << s;
+std::string FileReader::get() {
+  std::stringstream ss{};
+  ss << m_ifstream.rdbuf();
+  return ss.str();
 }
 
 } // namespace core_game

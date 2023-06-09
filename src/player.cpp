@@ -43,10 +43,22 @@ void Player::_ready() {
 
   m_animatedSprite2D = get_node<AnimatedSprite2D>("AnimatedSprite2D");
   m_animatedSprite2D->play("Idle");
-
   m_weapon = get_node<Weapon>("Weapon");
   m_weapon->set_monitoring(false);
+  load();
   m_logger->info("Player ready.");
+}
+
+void Player::_process(float delta) {
+  PROFILE_FUNCTION()
+   if (Engine::get_singleton()->is_editor_hint())
+    return;
+  auto input = Input::get_singleton();
+  if (input->is_action_just_pressed("save")) {
+    save();
+  } else if (input->is_action_just_pressed("load")) {
+    load();
+  }
 }
 
 void Player::_physics_process(float delta) {
@@ -73,19 +85,16 @@ void Player::_physics_process(float delta) {
   m_weapon->set_flip_h(velocity.x < 0 || is_flipped_weapon);
   set_velocity(velocity);
   move_and_slide();
-
-  if (input->is_action_just_pressed("save")) {
-    save();
-  }
 }
 
 void Player::save() {
+  PROFILE_FUNCTION()
   try {
     Dictionary d{};
     d["pos.x"] = get_position().x;
     d["pos.y"] = get_position().y;
-    auto path  = std::string{core_game::SAVINGS_DIRECTORY} + "/player.json";
-    core_game::File file{path};
+    auto path  = core_game::SAVINGS_DIRECTORY + "/player.json";
+    core_game::FileWriter file{path};
     file.write(core_game::dict_to_json(d));
     m_logger->info("Player state saved.");
   } catch (const std::exception& e) {
@@ -94,6 +103,27 @@ void Player::save() {
 }
 
 void Player::load() {
+  PROFILE_FUNCTION()
+  const auto path = core_game::SAVINGS_DIRECTORY + "/player.json";
+  if (!std::filesystem::exists(path)) {
+    m_logger->error("Save file not found");
+    return;
+  }
+  try {
+    core_game::FileReader file{path};
+    const auto body         = file.get();
+    const auto player_state = core_game::json_to_dict(body);
+    if (!player_state.has("pos.x")) {
+      m_logger->error("Player saving data corrupted");
+      return;
+    }
+    const float x = static_cast<float>(player_state["pos.x"]);
+    const float y = static_cast<float>(player_state["pos.y"]);
+    set_position({x, y});
+    m_logger->info("Loaded saved player state");
+  } catch (const std::exception& e) {
+    m_logger->error(e.what());
+  }
 }
 
 // Setters and getters

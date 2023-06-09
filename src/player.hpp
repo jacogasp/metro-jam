@@ -40,6 +40,7 @@ class Player
   friend class PlayerState;
 
   void _ready() override;
+  void _process(float delta);
   void _physics_process(float delta);
   [[nodiscard]] float get_speed() const;
   void set_speed(float speed);
