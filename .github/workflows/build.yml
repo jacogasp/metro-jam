@@ -164,7 +164,6 @@ jobs:
 
       - name: Export
         run: |
-          ls "~/Library/Application\ Support/Godot/export_templates/${GODOT_VERSION}.stable"
           mkdir ${{ matrix.config.dist_dir }}
           timeout 180 godot --headless --quit --export-release ${{ matrix.config.export_preset }}
           ls -lah ${{ matrix.config.dist_dir }}
