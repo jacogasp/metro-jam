@@ -26,6 +26,15 @@ void StandingState::handleInput(Player& player, Input& input) {
   }
 }
 
+void StandingState::update(Player& player) {
+  auto const velocity = player.get_velocity();
+  if (player.is_on_floor()) {
+    player.m_animatedSprite2D->play("Idle");
+  } else if (velocity.y > 0) {
+    player.m_animatedSprite2D->play("JumpOut");
+  }
+}
+
 void JumpingState::handleInput(Player& player, Input& input) {
   PROFILE_FUNCTION()
   auto velocity = player.get_velocity();
@@ -103,9 +112,15 @@ void RunningState::handleInput(Player& player, Input& input) {
 void RunningState::update(Player& player) {
   PROFILE_FUNCTION()
   auto const velocity = player.get_velocity();
-  if (velocity.x == 0) {
-    player.m_animatedSprite2D->play("Idle");
-    player.set_state(&Player::standing);
+  if (player.is_on_floor()) {
+    if (velocity.x != 0) {
+      player.m_animatedSprite2D->play("Run");
+    } else {
+      player.m_animatedSprite2D->play("Idle");
+      player.set_state(&Player::standing);
+    }
+  } else if (velocity.y > 0) {
+    player.m_animatedSprite2D->play("JumpOut");
   }
 }
 
