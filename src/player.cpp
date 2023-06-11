@@ -25,6 +25,7 @@ void Player::_bind_methods() {
                        &Player::get_air_jump_force);
   ClassDB::bind_method(D_METHOD("set_air_jump_force"),
                        &Player::set_air_jump_force);
+  ClassDB::bind_method(D_METHOD("hit"), &Player::hit);
 
   // clang-format off
   ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "speed"), "set_speed", "get_speed");
@@ -169,4 +170,8 @@ Vector2 Player::get_h_direction() const {
 
 void Player::set_weapon_monitoring(bool can_monitor) const {
   m_weapon->set_monitoring(can_monitor);
+}
+
+void Player::hit() {
+  m_logger->info("Player hit!");
 }

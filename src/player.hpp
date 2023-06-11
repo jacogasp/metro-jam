@@ -51,6 +51,7 @@ class Player
   void set_air_jump_force(float force);
   void set_state(PlayerState* state);
   void set_weapon_monitoring(bool can_monitor) const;
+  void hit();
   [[nodiscard]] Vector2 get_h_direction() const;
   void save() override;
   void load() override;
