@@ -1,9 +1,8 @@
 #include "coin.hpp"
 #include <godot_cpp/classes/engine.hpp>
 
-
 void Coin::_bind_methods() {
-  ClassDB::bind_method(D_METHOD("_on_coin_area_body_entered", "body"), 
+  ClassDB::bind_method(D_METHOD("_on_coin_area_body_entered", "body"),
                        &Coin::_on_coin_area_body_entered);
 }
 
@@ -12,8 +11,7 @@ void Coin::_ready() {
 }
 
 void Coin::_on_coin_area_body_entered(Node2D* body) {
-  const auto groups = body->get_groups();
-  if (groups.has("player")) {
+  if (body->is_in_group("Player")) {
     queue_free();
   }
-} 
+}

@@ -24,7 +24,7 @@ void Gate::_on_body_entered(Node2D* node) {
   if (is_closed())
     return;
 
-  if (node->is_in_group("player")) {
+  if (node->is_in_group("Player")) {
     CharString gate_name_buf = get_name().get_basename().utf8();
     auto gate_name           = std::string{gate_name_buf.get_data()};
     m_logger->info("Player entered gate " + gate_name);
@@ -34,7 +34,7 @@ void Gate::_on_body_entered(Node2D* node) {
 }
 
 void Gate::_on_body_exited(godot::Node2D* node) {
-  if (node->is_in_group("player")) {
+  if (node->is_in_group("Player")) {
     set_closed(false);
   }
 }
