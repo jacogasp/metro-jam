@@ -249,7 +249,7 @@ size = Vector2(19, 41)
 [node name="player" type="Player" groups=["Player"]]
 speed = 300.0
 gravity = 2.08165e-12
-position = Vector2(3281.07, 1551.93)
+position = Vector2(637.914, 2447.92)
 velocity = Vector2(0, 52514.6)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

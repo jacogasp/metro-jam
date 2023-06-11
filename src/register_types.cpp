@@ -8,7 +8,9 @@
 #include "coin_spawner.hpp"
 #include "constants.hpp"
 #include "gate.hpp"
+#include "hud.hpp"
 #include "io.hpp"
+#include "lifebar.hpp"
 #include "main_scene.hpp"
 #include "player.hpp"
 #include "profiler.hpp"
@@ -31,6 +33,8 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
   ClassDB::register_class<Chest>();
   ClassDB::register_class<World>();
   ClassDB::register_class<Gate>();
+  ClassDB::register_class<LifeBar>();
+  ClassDB::register_class<HUD>();
 
 #ifdef CORE_GAME_PROFILING
   core_game::Instrumentor::get().begin_session("Example session");

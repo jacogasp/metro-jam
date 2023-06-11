@@ -36,6 +36,8 @@ void Player::_bind_methods() {
   ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "air_jump_force"),
                "set_air_jump_force", "get_air_jump_force");
   // clang-format on
+
+  ADD_SIGNAL(MethodInfo("player_hit"));
 }
 
 void Player::_ready() {
@@ -52,7 +54,7 @@ void Player::_ready() {
 
 void Player::_process(float delta) {
   PROFILE_FUNCTION()
-   if (Engine::get_singleton()->is_editor_hint())
+  if (Engine::get_singleton()->is_editor_hint())
     return;
   auto input = Input::get_singleton();
   if (input->is_action_just_pressed("save")) {
@@ -173,5 +175,5 @@ void Player::set_weapon_monitoring(bool can_monitor) const {
 }
 
 void Player::hit() {
-  m_logger->info("Player hit!");
+  emit_signal("player_hit");
 }

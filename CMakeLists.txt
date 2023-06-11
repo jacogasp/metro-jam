@@ -41,6 +41,8 @@ add_library(
         src/profiler.cpp
         src/persist.cpp
         src/io.cpp
+        src/lifebar.cpp
+        src/hud.cpp
 )
 
 if (MINGW)
