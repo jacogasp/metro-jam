@@ -2,13 +2,13 @@
 
 [ext_resource type="Material" uid="uid://bcw2f556s0rec" path="res://shaders/Fire.material" id="1_vbox0"]
 [ext_resource type="Texture2D" uid="uid://b2u8bgksqj83j" path="res://icon.svg" id="2_f310f"]
-[ext_resource type="Shader" path="res://pixel.gdshader" id="3_gd1o3"]
+[ext_resource type="Shader" path="res://shaders/pixel.gdshader" id="2_fqfd1"]
 [ext_resource type="PackedScene" uid="uid://b31qyx4laex5m" path="res://scenes/steam_jet.tscn" id="5_5qp7u"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_yk0tg"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tw52a"]
-shader = ExtResource("3_gd1o3")
+shader = ExtResource("2_fqfd1")
 shader_parameter/pixel_density = 32.0
 
 [node name="shaders_experiments" type="Node2D"]
