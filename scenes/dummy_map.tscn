@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b3bu8lmtqc0nh"]
 
-[ext_resource type="TileSet" uid="uid://fmt5fimiqkkg" path="res://tilesets/DummyMap.tres" id="1_c3l2k"]
+[ext_resource type="TileSet" uid="uid://fmt5fimiqkkg" path="res://assets/tilesets/DummyMap.tres" id="1_c3l2k"]
 
 [node name="DummyMap" type="TileMap"]
 position = Vector2(16, 0)

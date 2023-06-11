@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://b31qyx4laex5m"]
 
-[ext_resource type="Texture2D" uid="uid://bjjxt2cylw5jy" path="res://textures/smoke.png" id="1_a3vys"]
+[ext_resource type="Texture2D" uid="uid://bjjxt2cylw5jy" path="res://assets/textures/smoke.png" id="1_a3vys"]
 [ext_resource type="Script" path="res://scripts/steam_jet.gd" id="2_crnuq"]
 
 [sub_resource type="Curve" id="Curve_ee86a"]

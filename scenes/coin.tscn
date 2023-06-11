@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bqrp3exgt0k54"]
 
-[ext_resource type="Texture2D" uid="uid://pq1wtifdm683" path="res://assets_temp/coin.png" id="1_hoj0h"]
+[ext_resource type="Texture2D" uid="uid://pq1wtifdm683" path="res://assets/coin.png" id="1_hoj0h"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_lwb7c"]
 friction = 0.95
