@@ -22,7 +22,6 @@ class Player
   float m_jump_force                   = 350;
   float m_air_jump_force               = 350;
   float m_speed                        = 0;
-  bool m_can_attack                    = true;
   core_game::LoggerService* m_logger              = nullptr;
   AnimatedSprite2D* m_animatedSprite2D = nullptr;
   Weapon* m_weapon                     = nullptr;
@@ -51,7 +50,6 @@ class Player
   [[nodiscard]] float get_air_jump_force() const;
   void set_air_jump_force(float force);
   void set_state(PlayerState* state);
-  void set_animation(const char* animation) const;
   void set_weapon_monitoring(bool can_monitor) const;
   [[nodiscard]] Vector2 get_h_direction() const;
   void save() override;
