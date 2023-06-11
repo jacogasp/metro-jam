@@ -72,7 +72,6 @@ load={
 
 [rendering]
 
-environment/defaults/default_clear_color=Color(0.112013, 0.10133, 0.176044, 1)
 anti_aliasing/quality/msaa_2d=2
 anti_aliasing/quality/screen_space_aa=1
 anti_aliasing/quality/use_taa=true
