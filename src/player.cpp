@@ -105,7 +105,7 @@ void Player::save() {
     core_game::FileWriter file{savings_path};
     file.write(core_game::dict_to_json(d));
     static const auto msg{std::string{"Player saved player state to "}
-                          + savings_path.c_str()};
+                          + savings_path.string()};
     m_logger->info(msg);
   } catch (const std::exception& e) {
     m_logger->error(e.what());
@@ -130,7 +130,7 @@ void Player::load() {
     const float y = static_cast<float>(player_state["pos.y"]);
     set_position({x, y});
     static const auto msg{std::string{"Loaded saved player state from "}
-                          + savings_path.c_str()};
+                          + savings_path.string()};
     m_logger->info(msg);
   } catch (const std::exception& e) {
     m_logger->error(e.what());
