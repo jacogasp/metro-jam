@@ -119,7 +119,7 @@ jobs:
             echo "Downloading Godot ${GODOT_VERSION}"
             wget "https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_macos.universal.zip"
             unzip "Godot_v${GODOT_VERSION}-stable_macos.universal.zip"
-            ln -s ./Godot.app/Contents/MacOS/Godot /usr/local/bin/godot
+            ln -s $(pwd)/Godot.app/Contents/MacOS/Godot /usr/local/bin/godot
             echo "Downloading Export Templates for Godot ${GODOT_VERSION}"
             wget "https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
             unzip "Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
