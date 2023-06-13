@@ -14,10 +14,11 @@ player = NodePath("../player")
 
 [node name="player" parent="." instance=ExtResource("2_5tq4j")]
 gravity = 800.0
-position = Vector2(637.914, 2447.92)
+position = Vector2(576.853, 2431.85)
 velocity = Vector2(0, 0)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
+position = Vector2(0.0864868, -70.9238)
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 editor_draw_limits = true
