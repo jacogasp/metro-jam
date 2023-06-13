@@ -7,6 +7,7 @@
 
 #include <godot_cpp/classes/animated_sprite2d.hpp>
 #include <godot_cpp/classes/character_body2d.hpp>
+#include <godot_cpp/classes/ray_cast2d.hpp>
 #include <memory>
 
 using namespace godot;
@@ -22,9 +23,11 @@ class Player
   float m_jump_force                   = 350;
   float m_air_jump_force               = 350;
   float m_speed                        = 0;
-  core_game::LoggerService* m_logger              = nullptr;
+  float m_landing_threshold            = 10;
+  core_game::LoggerService* m_logger   = nullptr;
   AnimatedSprite2D* m_animatedSprite2D = nullptr;
   Weapon* m_weapon                     = nullptr;
+  RayCast2D* m_landing_ray             = nullptr;
   PlayerState* m_state{&Player::standing};
 
   static void _bind_methods();
