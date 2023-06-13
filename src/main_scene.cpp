@@ -21,6 +21,5 @@ void MainScene::_ready() {
 }
 
 void MainScene::on_player_hit() const {
-  std::cerr << "on player hit \n";
   m_hud->get_lifebar()->lose_life();
 }
