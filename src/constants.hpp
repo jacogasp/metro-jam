@@ -1,9 +1,11 @@
 #ifndef COREGAME_CONSTANTS_HPP
 #define COREGAME_CONSTANTS_HPP
 
-#include <string>
+#include "types.hpp"
+
 namespace core_game {
-static const std::string SAVINGS_DIRECTORY{".savings"};
+static const Path SAVINGS_DIRECTORY{
+    std::filesystem::temp_directory_path().append("savings")};
 }
 
 #endif // COREGAME_CONSTANTS_HPP

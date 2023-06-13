@@ -13,6 +13,11 @@ RunningState Player::running        = RunningState();
 JumpingState Player::jumping        = JumpingState();
 AirJumpingState Player::air_jumping = AirJumpingState();
 AttackState Player::attacking       = AttackState();
+Path Player::savings_path           = []() {
+  auto path = core_game::SAVINGS_DIRECTORY;
+  path.append("player.json");
+  return path;
+}();
 
 void Player::_bind_methods() {
   ClassDB::bind_method(D_METHOD("set_speed"), &Player::set_speed);
@@ -46,7 +51,7 @@ void Player::_ready() {
 
   m_animatedSprite2D = get_node<AnimatedSprite2D>("AnimatedSprite2D");
   m_animatedSprite2D->play("Idle");
-  m_weapon = get_node<Weapon>("Weapon");
+  m_weapon      = get_node<Weapon>("Weapon");
   m_landing_ray = get_node<RayCast2D>("LandingRay");
   m_weapon->set_monitoring(false);
   load();
@@ -97,10 +102,11 @@ void Player::save() {
     Dictionary d{};
     d["pos.x"] = get_position().x;
     d["pos.y"] = get_position().y;
-    auto path  = core_game::SAVINGS_DIRECTORY + "/player.json";
-    core_game::FileWriter file{path};
+    core_game::FileWriter file{savings_path};
     file.write(core_game::dict_to_json(d));
-    m_logger->info("Player state saved.");
+    static const auto msg{std::string{"Player saved player state to "}
+                          + savings_path.c_str()};
+    m_logger->info(msg);
   } catch (const std::exception& e) {
     m_logger->error(e.what());
   }
@@ -108,13 +114,12 @@ void Player::save() {
 
 void Player::load() {
   PROFILE_FUNCTION()
-  const auto path = core_game::SAVINGS_DIRECTORY + "/player.json";
-  if (!std::filesystem::exists(path)) {
-    m_logger->error("Save file not found");
+  if (!std::filesystem::exists(savings_path)) {
+    m_logger->warn("Save file not found");
     return;
   }
   try {
-    core_game::FileReader file{path};
+    core_game::FileReader file{savings_path};
     const auto body         = file.get();
     const auto player_state = core_game::json_to_dict(body);
     if (!player_state.has("pos.x")) {
@@ -124,7 +129,9 @@ void Player::load() {
     const float x = static_cast<float>(player_state["pos.x"]);
     const float y = static_cast<float>(player_state["pos.y"]);
     set_position({x, y});
-    m_logger->info("Loaded saved player state");
+    static const auto msg{std::string{"Loaded saved player state from "}
+                          + savings_path.c_str()};
+    m_logger->info(msg);
   } catch (const std::exception& e) {
     m_logger->error(e.what());
   }

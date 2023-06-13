@@ -3,6 +3,7 @@
 
 #include "persist.hpp"
 #include "player_state.hpp"
+#include "types.hpp"
 #include "weapon.hpp"
 
 #include <godot_cpp/classes/animated_sprite2d.hpp>
@@ -13,8 +14,8 @@
 using namespace godot;
 namespace core_game {
 class LoggerService;
-
 }
+
 class Player
     : public CharacterBody2D
     , public Persist {
@@ -38,6 +39,7 @@ class Player
   static JumpingState jumping;
   static AirJumpingState air_jumping;
   static AttackState attacking;
+  static Path savings_path;
 
   friend class PlayerState;
 
