@@ -43,6 +43,7 @@ add_library(
         src/io.cpp
         src/lifebar.cpp
         src/hud.cpp
+        src/types.cpp
 )
 
 if (MINGW)
