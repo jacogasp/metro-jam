@@ -178,9 +178,10 @@ jobs:
 on:
   workflow_dispatch:
   push:
-    paths:
-      - src/**
-      - .github/**
-      - CMakeLists.txt
-      - CMakePresets.json
-      - extension_api.json
+    paths-ignore:
+      - .githooks/
+      - .clang-format
+      - .gitignore
+      - download_artifacts.py
+      - enable_debugger.sh
+      - README.md
