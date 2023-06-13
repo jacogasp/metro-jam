@@ -40,6 +40,7 @@ void JumpingState::handleInput(Player& player, Input& input) {
   auto velocity = player.get_velocity();
   if (input.is_action_just_pressed("jump")) {
     player.set_state(&Player::air_jumping);
+    player.m_animatedSprite2D->stop();
     player.m_animatedSprite2D->play("JumpIn");
     velocity.y = -player.get_air_jump_force();
     player.set_velocity(velocity);
