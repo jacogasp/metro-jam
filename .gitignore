@@ -8,3 +8,4 @@ dist/
 !.gdignore
 profiler.json
 .savings
+templates/
