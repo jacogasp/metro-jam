@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://f00bear4c8gc"
-path="res://.godot/imported/pg_animantion_fullset_v1.png-e8e888532873e145cd9499b1feb05ea5.ctex"
+uid="uid://cq3js6pr88m2d"
+path="res://.godot/imported/pg_sprites.png-388be30050f3af25840707ccd24fdea4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/pg_animantion_fullset_v1.png"
-dest_files=["res://.godot/imported/pg_animantion_fullset_v1.png-e8e888532873e145cd9499b1feb05ea5.ctex"]
+source_file="res://assets/characters/pg_sprites.png"
+dest_files=["res://.godot/imported/pg_sprites.png-388be30050f3af25840707ccd24fdea4.ctex"]
 
 [params]
 

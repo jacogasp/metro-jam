@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d12slpllax4a6"
-path="res://.godot/imported/pg_sprites_v2.png-aba3cfb44c86e74c1d77152c9cf4153d.ctex"
+uid="uid://chhfkylu6ll30"
+path="res://.godot/imported/bumblebee_sprites.png-4cabd9d308d117de386d26d382951df6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/pg_sprites_v2.png"
-dest_files=["res://.godot/imported/pg_sprites_v2.png-aba3cfb44c86e74c1d77152c9cf4153d.ctex"]
+source_file="res://assets/characters/bumblebee_sprites.png"
+dest_files=["res://.godot/imported/bumblebee_sprites.png-4cabd9d308d117de386d26d382951df6.ctex"]
 
 [params]
 
