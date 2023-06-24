@@ -44,6 +44,7 @@ add_library(
         src/lifebar.cpp
         src/hud.cpp
         src/types.cpp
+        src/player_commands.cpp
 )
 
 if (MINGW)

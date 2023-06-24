@@ -1,6 +1,7 @@
 
 #include "player_state.hpp"
 #include "player.hpp"
+#include "player_commands.hpp"
 #include "profiler.hpp"
 
 #include <godot_cpp/classes/input.hpp>
@@ -8,121 +9,113 @@
 
 using namespace godot;
 
+static void execute(PlayerCommand& command, Player& player) {
+  std::visit([&player](auto cmd) { cmd.execute(player); }, command);
+}
+
 void StandingState::handleInput(Player& player, Input& input) {
   PROFILE_FUNCTION()
-  auto velocity = player.get_velocity();
+  PlayerCommand command = NullCommand();
+  auto velocity         = player.get_velocity();
   if (input.is_action_just_pressed("jump")) {
-    player.set_state(&Player::jumping);
-    player.m_animatedSprite2D->play("JumpIn");
-    velocity.y = -player.get_jump_force();
-    player.set_velocity(velocity);
+    command = JumpCommand();
   } else if (velocity.x != 0) {
-    player.m_animatedSprite2D->play("Run");
-    player.set_state(&Player::running);
+    command = RunCommand();
   } else if (input.is_action_just_pressed("attack")) {
-    player.set_state(&Player::attacking);
-    player.m_animatedSprite2D->play("Attack");
-    player.set_weapon_monitoring(true);
+    command = AttackCommand();
   }
+  execute(command, player);
 }
 
 void StandingState::update(Player& player) {
-  auto const velocity = player.get_velocity();
+  PlayerCommand command = NullCommand();
+  auto const velocity   = player.get_velocity();
   if (player.is_on_floor()) {
-    player.m_animatedSprite2D->play("Idle");
+    command = IdleCommand();
   } else if (velocity.y > 0) {
-    player.m_animatedSprite2D->play("JumpOut");
+    command = JumpOutCommand();
   }
+  execute(command, player);
 }
 
 void JumpingState::handleInput(Player& player, Input& input) {
   PROFILE_FUNCTION()
-  auto velocity = player.get_velocity();
+  PlayerCommand command = NullCommand();
   if (input.is_action_just_pressed("jump")) {
-    player.set_state(&Player::air_jumping);
-    player.m_animatedSprite2D->stop();
-    player.m_animatedSprite2D->play("JumpIn");
-    velocity.y = -player.get_air_jump_force();
-    player.set_velocity(velocity);
+    command = JumpCommand();
   } else if (input.is_action_just_pressed("attack")) {
-    player.set_state(&Player::attacking);
-    player.m_animatedSprite2D->play("Attack");
-    player.set_weapon_monitoring(true);
+    command = AttackCommand();
   }
-  player.m_animatedSprite2D->play();
+  execute(command, player);
 }
 
 void JumpingState::update(Player& player) {
   PROFILE_FUNCTION()
-  auto const velocity = player.get_velocity();
+  PlayerCommand command = NullCommand();
+  auto const velocity   = player.get_velocity();
   if (velocity.y > 0) {
-    player.m_animatedSprite2D->play("JumpOut");
+    command = JumpOutCommand();
   } else if (velocity.y == 0 && player.is_on_floor()) {
     if (velocity.x == 0) {
-      player.m_animatedSprite2D->play("Idle");
-      player.set_state(&Player::standing);
+      command = IdleCommand();
     } else {
-      player.m_animatedSprite2D->play("Run");
-      player.set_state(&Player::running);
+      command = RunCommand();
     }
   }
+  execute(command, player);
 }
 
 void AirJumpingState::handleInput(Player& player, Input& input) {
   PROFILE_FUNCTION()
+  PlayerCommand command = NullCommand();
   if (input.is_action_just_pressed("attack")) {
-    player.set_state(&Player::attacking);
-    player.m_animatedSprite2D->play("Attack");
-    player.set_weapon_monitoring(true);
+    command = AttackCommand();
   }
+  execute(command, player);
 }
 
 void AirJumpingState::update(Player& player) {
   PROFILE_FUNCTION()
-  auto const velocity = player.get_velocity();
+  PlayerCommand command = NullCommand();
+  auto const velocity   = player.get_velocity();
   if (velocity.y > 0) {
-    player.m_animatedSprite2D->play("JumpOut");
+    command = JumpOutCommand();
   }
-
   if (player.is_on_floor()) {
     if (velocity.x == 0) {
-      player.m_animatedSprite2D->play("Idle");
-      player.set_state(&Player::standing);
+      command = IdleCommand();
     } else {
-      player.m_animatedSprite2D->play("Run");
-      player.set_state(&Player::running);
+      command = RunCommand();
     }
   }
+  execute(command, player);
 }
 
 void RunningState::handleInput(Player& player, Input& input) {
   PROFILE_FUNCTION()
+  PlayerCommand command = NullCommand();
   if (input.is_action_just_pressed("jump")) {
-    player.set_state(&Player::jumping);
-    player.m_animatedSprite2D->play("JumpIn");
-    auto velocity = player.get_velocity();
-    velocity.y    = -player.get_jump_force();
-    player.set_velocity(velocity);
+    command = JumpCommand();
   } else if (input.is_action_just_pressed("attack")) {
-    player.set_state(&Player::attacking);
-    player.m_animatedSprite2D->play("Attack");
-    player.set_weapon_monitoring(true);
+    command = AttackCommand();
   }
+  execute(command, player);
 }
 
 void RunningState::update(Player& player) {
   PROFILE_FUNCTION()
-  auto const velocity = player.get_velocity();
+  PlayerCommand command = NullCommand();
+  auto const velocity   = player.get_velocity();
   if (player.is_on_floor()) {
     if (velocity.x != 0) {
-      player.m_animatedSprite2D->play("Run");
+      command = RunCommand();
     } else {
-      player.m_animatedSprite2D->play("Idle");
-      player.set_state(&Player::standing);
+      command = IdleCommand();
     }
   } else if (velocity.y > 0) {
-    player.m_animatedSprite2D->play("JumpOut");
+    command = JumpOutCommand();
   }
+  execute(command, player);
 }
 
 void AttackState::handleInput(Player& player, Input& input) {
@@ -137,15 +130,13 @@ void AttackState::update(Player& player) {
   }
 
   player.set_weapon_monitoring(false);
-  const auto velocity = player.get_velocity();
-
+  PlayerCommand command = NullCommand();
+  const auto velocity   = player.get_velocity();
   if (player.is_on_floor()) {
     if (velocity.x != 0) {
-      player.set_state(&Player::running);
-      player.m_animatedSprite2D->play("Run");
+      command = RunCommand();
     } else {
-      player.set_state(&Player::standing);
-      player.m_animatedSprite2D->play("Idle");
+      command = IdleCommand();
     }
   } else {
     if (velocity.y > 0) {
@@ -154,4 +145,5 @@ void AttackState::update(Player& player) {
       player.m_animatedSprite2D->play("JumpIn");
     }
   }
+  execute(command, player);
 }
