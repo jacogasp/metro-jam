@@ -6,6 +6,7 @@ void NullCommand::execute(Player&) {
 }
 
 void IdleCommand::execute(Player& player) {
+  player.set_state(&Player::standing);
   player.m_animatedSprite2D->play("Idle");
 }
 
