@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://dibkh0kdqa671"]
+[gd_scene load_steps=27 format=3 uid="uid://dibkh0kdqa671"]
 
 [ext_resource type="Texture2D" uid="uid://cq3js6pr88m2d" path="res://assets/characters/pg_sprites.png" id="2_7vcqu"]
 
@@ -14,11 +14,15 @@ region = Rect2(1792, 0, 128, 128)
 atlas = ExtResource("2_7vcqu")
 region = Rect2(1920, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_extmp"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_amiyq"]
+atlas = ExtResource("2_7vcqu")
+region = Rect2(1664, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mkvdn"]
 atlas = ExtResource("2_7vcqu")
 region = Rect2(2048, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_yyic4"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_356ru"]
 atlas = ExtResource("2_7vcqu")
 region = Rect2(2176, 0, 128, 128)
 
@@ -97,15 +101,23 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_k42v7")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_extmp")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_yyic4")
 }],
 "loop": false,
-"name": &"Attack",
+"name": &"AttackH",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_amiyq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mkvdn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_356ru")
+}],
+"loop": false,
+"name": &"AttackV",
 "speed": 15.0
 }, {
 "frames": [{
@@ -201,8 +213,9 @@ velocity = Vector2(0, 52514.6)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_0nsvt")
-animation = &"Idle"
-frame_progress = 0.261228
+animation = &"AttackH"
+frame = 2
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1.08649, 4.03809)

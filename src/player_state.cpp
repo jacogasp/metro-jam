@@ -124,7 +124,7 @@ void AttackState::handleInput(Player& player, Input& input) {
 
 void AttackState::update(Player& player) {
   PROFILE_FUNCTION()
-  if (player.m_animatedSprite2D->get_animation().match("Attack")
+  if (player.m_animatedSprite2D->get_animation().begins_with("Attack")
       && player.m_animatedSprite2D->is_playing()) {
     return;
   }

@@ -1,5 +1,6 @@
 #include "player_commands.hpp"
 #include "player.hpp"
+#include <godot_cpp/classes/random_number_generator.hpp>
 
 void NullCommand::execute(Player&) {
   // do nothing
@@ -28,7 +29,11 @@ void RunCommand::execute(Player& player) {
 }
 
 void AttackCommand::execute(Player& player) {
+  static const char* animations[] = {"AttackH", "AttackV"};
+  auto generator                  = godot::RandomNumberGenerator();
+  int animation_index             = generator.randi_range(0, 1);
+  auto animation                  = animations[animation_index];
   player.set_state(&Player::attacking);
-  player.m_animatedSprite2D->play("Attack");
+  player.m_animatedSprite2D->play(animation);
   player.set_weapon_monitoring(true);
 }
