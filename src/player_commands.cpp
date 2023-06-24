@@ -2,38 +2,44 @@
 #include "player.hpp"
 #include <godot_cpp/classes/random_number_generator.hpp>
 
+template<>
 void NullCommand::execute(Player&) {
   // do nothing
 }
 
-void IdleCommand::execute(Player& player) {
-  player.set_state(&Player::standing);
-  player.m_animatedSprite2D->play("Idle");
+template<>
+void IdleCommand::execute(Player& game_actor) {
+  game_actor.set_state(&Player::standing);
+  game_actor.m_animatedSprite2D->play("Idle");
 }
 
-void JumpCommand::execute(Player& player) {
-  auto velocity = player.get_velocity();
-  player.set_state(&Player::jumping);
-  player.m_animatedSprite2D->play("JumpIn");
-  velocity.y = -player.get_jump_force();
-  player.set_velocity(velocity);
+template<>
+void JumpCommand::execute(Player& game_actor) {
+  auto velocity = game_actor.get_velocity();
+  game_actor.set_state(&Player::jumping);
+  game_actor.m_animatedSprite2D->play("JumpIn");
+  velocity.y = -game_actor.get_jump_force();
+  game_actor.set_velocity(velocity);
 }
 
-void JumpOutCommand::execute(Player& player) {
-  player.m_animatedSprite2D->play("JumpOut");
+template<>
+void JumpOutCommand::execute(Player& game_actor) {
+  game_actor.m_animatedSprite2D->play("JumpOut");
 }
 
-void RunCommand::execute(Player& player) {
-  player.m_animatedSprite2D->play("Run");
-  player.set_state(&Player::running);
+template<>
+void RunCommand::execute(Player& game_actor) {
+  game_actor.m_animatedSprite2D->play("Run");
+  game_actor.set_state(&Player::running);
 }
 
-void AttackCommand::execute(Player& player) {
+template<>
+void AttackCommand::execute(Player& game_actor) {
   static const char* animations[] = {"AttackH", "AttackV"};
   auto generator                  = godot::RandomNumberGenerator();
   int animation_index             = generator.randi_range(0, 1);
   auto animation                  = animations[animation_index];
-  player.set_state(&Player::attacking);
-  player.m_animatedSprite2D->play(animation);
-  player.set_weapon_monitoring(true);
+  game_actor.set_state(&Player::attacking);
+  game_actor.m_animatedSprite2D->play(animation);
+  game_actor.set_weapon_monitoring(true);
 }

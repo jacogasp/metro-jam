@@ -45,6 +45,8 @@ add_library(
         src/hud.cpp
         src/types.cpp
         src/player_commands.cpp
+        src/bumblebee.cpp
+        src/commands.cpp
 )
 
 if (MINGW)
