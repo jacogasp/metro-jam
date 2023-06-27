@@ -28,6 +28,15 @@ void JumpOutCommand::execute(Player& game_actor) {
 }
 
 template<>
+void AirJumpCommand::execute(Player& game_actor) {
+  auto velocity = game_actor.get_velocity();
+  game_actor.set_state(&Player::air_jumping);
+  game_actor.m_animatedSprite2D->play("JumpIn");
+  velocity.y = -game_actor.get_air_jump_force();
+  game_actor.set_velocity(velocity);
+}
+
+template<>
 void RunCommand::execute(Player& game_actor) {
   game_actor.m_animatedSprite2D->play("Run");
   game_actor.set_state(&Player::running);

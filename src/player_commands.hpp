@@ -22,6 +22,9 @@ template<>
 void JumpOutCommand::execute(Player& game_actor);
 
 template <>
+void AirJumpCommand::execute(Player& game_actor);
+
+template <>
 void AttackCommand::execute(Player& game_actor);
 
 #endif // COREGAME_PLAYER_COMMANDS_HPP

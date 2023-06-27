@@ -8,10 +8,11 @@ class IdleCommand;
 class RunCommand;
 class JumpCommand;
 class JumpOutCommand;
+class AirJumpCommand;
 class AttackCommand;
 
 using Command = std::variant<NullCommand, IdleCommand, RunCommand, JumpCommand,
-                             JumpOutCommand, AttackCommand>;
+                             JumpOutCommand, AirJumpCommand, AttackCommand>;
 
 
 template<typename GameActor>
@@ -44,6 +45,12 @@ class JumpCommand {
 };
 
 class JumpOutCommand {
+ public:
+  template<typename GameActor>
+  void execute(GameActor& game_actor);
+};
+
+class AirJumpCommand {
  public:
   template<typename GameActor>
   void execute(GameActor& game_actor);

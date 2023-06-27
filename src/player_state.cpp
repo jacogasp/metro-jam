@@ -38,7 +38,7 @@ void JumpingState::handleInput(Player& player, Input& input) {
   PROFILE_FUNCTION()
   Command command = NullCommand();
   if (input.is_action_just_pressed("jump")) {
-    command = JumpCommand();
+    command = AirJumpCommand();
   } else if (input.is_action_just_pressed("attack")) {
     command = AttackCommand();
   }
