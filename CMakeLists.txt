@@ -47,6 +47,7 @@ add_library(
         src/player_commands.cpp
         src/bumblebee.cpp
         src/commands.cpp
+        src/timer.cpp
 )
 
 if (MINGW)
