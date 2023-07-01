@@ -3,6 +3,7 @@
 #include <godot_cpp/godot.hpp>
 #include <gdextension_interface.h>
 
+#include "bumblebee.hpp"
 #include "chest.hpp"
 #include "coin.hpp"
 #include "coin_spawner.hpp"
@@ -35,6 +36,7 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
   ClassDB::register_class<Gate>();
   ClassDB::register_class<LifeBar>();
   ClassDB::register_class<HUD>();
+  ClassDB::register_class<BumbleBee>();
 
 #ifdef CORE_GAME_PROFILING
   core_game::Instrumentor::get().begin_session("Example session");
