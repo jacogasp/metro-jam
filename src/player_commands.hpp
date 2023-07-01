@@ -3,17 +3,15 @@
 
 #include <variant>
 
-class Player;
-class NullCommand;
-class IdleCommand;
-class RunCommand;
-class JumpCommand;
-class JumpOutCommand;
-class AirJumpCommand;
-class AttackCommand;
-class SlideCommand;
-
-class PlayerCommandRaw {};
+struct Player;
+struct NullCommand;
+struct IdleCommand;
+struct RunCommand;
+struct JumpCommand;
+struct JumpOutCommand;
+struct AirJumpCommand;
+struct AttackCommand;
+struct SlideCommand;
 
 using PlayerCommand =
     std::variant<NullCommand, IdleCommand, RunCommand, JumpCommand,
@@ -21,44 +19,36 @@ using PlayerCommand =
 
 void execute(PlayerCommand& command, Player& player);
 
-class NullCommand : PlayerCommandRaw {
- public:
-  void execute(Player& game_actor) const;
+struct NullCommand {
+  void operator()(Player& player) const;
 };
 
-class IdleCommand {
- public:
-  static void execute(Player& player);
+struct IdleCommand {
+  void operator()(Player& player);
 };
 
-class RunCommand {
- public:
-  static void execute(Player& player);
+struct RunCommand {
+  void operator()(Player& player);
 };
 
-class JumpCommand {
- public:
-  static void execute(Player& player);
+struct JumpCommand {
+  void operator()(Player& player);
 };
 
-class JumpOutCommand {
- public:
-  static void execute(Player& player);
+struct JumpOutCommand {
+  void operator()(Player& player);
 };
 
-class AirJumpCommand {
- public:
-  static void execute(Player& player);
+struct AirJumpCommand {
+  void operator()(Player& player);
 };
 
-class AttackCommand {
- public:
-  static void execute(Player& player);
+struct AttackCommand {
+  void operator()(Player& player);
 };
 
-class SlideCommand {
- public:
-  static void execute(Player& player);
+struct SlideCommand {
+  void operator()(Player& player);
 };
 
 #endif // COREGAME_PLAYER_COMMANDS_HPP
