@@ -13,7 +13,9 @@ RunningState Player::running        = RunningState();
 JumpingState Player::jumping        = JumpingState();
 AirJumpingState Player::air_jumping = AirJumpingState();
 AttackState Player::attacking       = AttackState();
-Path Player::savings_path           = []() {
+SlideState Player::sliding          = SlideState();
+
+Path Player::savings_path = []() {
   auto path = core_game::SAVINGS_DIRECTORY;
   path.append("player.json");
   return path;
@@ -68,6 +70,13 @@ void Player::_process(float delta) {
   } else if (input->is_action_just_pressed("load")) {
     load();
   }
+
+  auto const x_velocity = get_velocity().x;
+  if (x_velocity > 0) {
+    m_direction = right;
+  } else if (x_velocity < 0) {
+    m_direction = left;
+  }
 }
 
 void Player::_physics_process(float delta) {
@@ -75,24 +84,26 @@ void Player::_physics_process(float delta) {
   assert(m_state);
   if (Engine::get_singleton()->is_editor_hint())
     return;
-  auto input = Input::get_singleton();
-  m_state->handleInput(*this, *input);
-  m_state->update(*this);
 
   auto const g = get_velocity().y + m_gravity * delta;
   Vector2 velocity{0, g};
+
+  auto input = Input::get_singleton();
 
   if (input->is_action_pressed("move_left")) {
     velocity.x = -m_speed;
   } else if (input->is_action_pressed("move_right")) {
     velocity.x = m_speed;
   }
+  set_velocity(velocity);
+
+  m_state->handleInput(*this, *input);
+  m_state->update(*this);
 
   auto is_flipped = m_animatedSprite2D->is_flipped_h() && velocity.x == 0;
   m_animatedSprite2D->set_flip_h(velocity.x < 0 || is_flipped);
   auto is_flipped_weapon = m_weapon->is_flipped_h() && velocity.x == 0;
   m_weapon->set_flip_h(velocity.x < 0 || is_flipped_weapon);
-  set_velocity(velocity);
   move_and_slide();
 }
 

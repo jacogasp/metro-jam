@@ -52,3 +52,9 @@ void AttackCommand::execute(Player& game_actor) const {
   game_actor.m_animatedSprite2D->play(animation);
   game_actor.set_weapon_monitoring(true);
 }
+
+template<>
+void SlideCommand::execute(Player& game_actor) const {
+  game_actor.m_animatedSprite2D->play("Slide");
+  game_actor.set_state(&Player::sliding);
+};

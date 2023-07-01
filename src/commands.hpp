@@ -10,9 +10,10 @@ class JumpCommand;
 class JumpOutCommand;
 class AirJumpCommand;
 class AttackCommand;
+class SlideCommand;
 
 using Command = std::variant<NullCommand, IdleCommand, RunCommand, JumpCommand,
-                             JumpOutCommand, AirJumpCommand, AttackCommand>;
+                             JumpOutCommand, AirJumpCommand, AttackCommand, SlideCommand>;
 
 
 template<typename GameActor>
@@ -59,6 +60,18 @@ class AirJumpCommand {
 class AttackCommand {
  public:
   template<typename GameActor>
+  void execute(GameActor& game_actor) const;
+};
+
+class SlideCommand {
+ public:
+  template <typename GameActor>
+  void execute(GameActor& game_actor) const;
+};
+
+class FlipCommand {
+ public:
+  template <typename GameActor>
   void execute(GameActor& game_actor) const;
 };
 

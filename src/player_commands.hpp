@@ -27,4 +27,7 @@ void AirJumpCommand::execute(Player& game_actor) const;
 template <>
 void AttackCommand::execute(Player& game_actor) const;
 
+template <>
+void SlideCommand::execute(Player& game_actor) const;
+
 #endif // COREGAME_PLAYER_COMMANDS_HPP

@@ -20,11 +20,15 @@ class Player
     : public CharacterBody2D
     , public Persist {
   GDCLASS(Player, CharacterBody2D)
+
+  enum Direction { left = -1, right = 1 };
+
   float m_gravity                      = 500;
   float m_jump_force                   = 350;
   float m_air_jump_force               = 350;
   float m_speed                        = 0;
   float m_landing_threshold            = 10;
+  Direction m_direction                = right;
   core_game::LoggerService* m_logger   = nullptr;
   AnimatedSprite2D* m_animatedSprite2D = nullptr;
   Weapon* m_weapon                     = nullptr;
@@ -39,6 +43,7 @@ class Player
   static JumpingState jumping;
   static AirJumpingState air_jumping;
   static AttackState attacking;
+  static SlideState sliding;
   static Path savings_path;
 
   friend class PlayerState;

@@ -40,4 +40,8 @@ class AttackState : public PlayerState {
   void update(Player& player) override;
 };
 
+class SlideState : public PlayerState {
+  void update(Player &player) override;
+};
+
 #endif // PLAYER_STATE_HPP
