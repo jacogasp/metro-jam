@@ -51,11 +51,14 @@ class BumbleBee final : public CharacterBody2D {
   TimerIntervalRange m_jump_timer_interval_ms{1000, 2000};
   Timer m_timer{};
   Direction m_direction{left};
+  Vector2 m_jump_velocity{200, -200};
 
   static void _bind_methods();
   void _ready() override;
   void _physics_process(float delta);
   void set_state(BumbleBeeState* state);
+  void set_jump_velocity(Vector2 const& velocity);
+  Vector2 get_jump_velocity() const;
 };
 
 // Commands
@@ -64,12 +67,11 @@ struct IdleCommand {
   void operator()(BumbleBee& bumble_bee) const;
 };
 
-
 struct JumpCommand {
   void operator()(BumbleBee& bumble_bee) const;
 };
 
-struct FlipCommand  {
+struct FlipCommand {
   void operator()(BumbleBee& bumble_bee) const;
 };
 

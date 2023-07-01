@@ -2,6 +2,12 @@
 #include <godot_cpp/classes/engine.hpp>
 
 void BumbleBee::_bind_methods() {
+  ClassDB::bind_method(D_METHOD("set_jump_velocity"),
+                       &BumbleBee::set_jump_velocity);
+  ClassDB::bind_method(D_METHOD("get_jump_velocity"),
+                       &BumbleBee::get_jump_velocity);
+  ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "jump_velocity"),
+               "set_jump_velocity", "get_jump_velocity");
 }
 
 IdleState BumbleBee::idle_state = IdleState();
@@ -40,6 +46,14 @@ void BumbleBee::set_state(BumbleBeeState* state) {
   m_state = state;
 }
 
+void BumbleBee::set_jump_velocity(Vector2 const& velocity) {
+  m_jump_velocity = velocity;
+}
+
+Vector2 BumbleBee::get_jump_velocity() const {
+  return m_jump_velocity;
+}
+
 // Commands
 void IdleCommand::operator()(BumbleBee& bumble_bee) const {
   bumble_bee.m_animated_sprite2D->play("Idle");
@@ -49,7 +63,9 @@ void IdleCommand::operator()(BumbleBee& bumble_bee) const {
 
 void JumpCommand::operator()(BumbleBee& bumble_bee) const {
   bumble_bee.m_animated_sprite2D->play("JumpIn");
-  Vector2 jump_velocity{150 * static_cast<float>(bumble_bee.m_direction), -300};
+  auto direction     = static_cast<int>(bumble_bee.m_direction);
+  auto jump_velocity = bumble_bee.m_jump_velocity;
+  jump_velocity.x *= (float)direction;
   auto velocity = bumble_bee.get_velocity() + jump_velocity;
   bumble_bee.set_velocity(velocity);
   bumble_bee.set_state(&BumbleBee::jumping);
