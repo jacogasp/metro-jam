@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://dibkh0kdqa671"]
+[gd_scene load_steps=31 format=3 uid="uid://dibkh0kdqa671"]
 
 [ext_resource type="Texture2D" uid="uid://cq3js6pr88m2d" path="res://assets/characters/pg_sprites.png" id="2_7vcqu"]
 
@@ -90,6 +90,22 @@ region = Rect2(1280, 0, 128, 128)
 atlas = ExtResource("2_7vcqu")
 region = Rect2(1408, 0, 128, 128)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_cx6hp"]
+atlas = ExtResource("2_7vcqu")
+region = Rect2(3840, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hv5jt"]
+atlas = ExtResource("2_7vcqu")
+region = Rect2(4224, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cumpi"]
+atlas = ExtResource("2_7vcqu")
+region = Rect2(4352, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vvfxe"]
+atlas = ExtResource("2_7vcqu")
+region = Rect2(4480, 0, 128, 128)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_0nsvt"]
 animations = [{
 "frames": [{
@@ -168,6 +184,11 @@ animations = [{
 "name": &"JumpOut",
 "speed": 5.0
 }, {
+"frames": [],
+"loop": true,
+"name": &"PowerSlide",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_0ci2d")
@@ -196,6 +217,32 @@ animations = [{
 "loop": true,
 "name": &"Run",
 "speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx6hp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx6hp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx6hp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx6hp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hv5jt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cumpi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vvfxe")
+}],
+"loop": false,
+"name": &"Slide",
+"speed": 15.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8ynl1"]
@@ -209,12 +256,12 @@ speed = 300.0
 gravity = 2.08165e-12
 jump_force = 400.0
 position = Vector2(566.836, 2431.78)
+collision_mask = 16
 velocity = Vector2(0, 52514.6)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_0nsvt")
-animation = &"Idle"
-frame_progress = 0.810912
+animation = &"PowerSlide"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1.08649, 4.03809)
