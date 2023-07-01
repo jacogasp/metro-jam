@@ -42,7 +42,7 @@ void RunCommand::operator()(Player& player) {
 
 void AttackCommand::operator()(Player& player) {
   static const char* animations[] = {"AttackH", "AttackV"};
-  auto generator                  = godot::RandomNumberGenerator();
+  static auto generator           = godot::RandomNumberGenerator();
   int animation_index             = generator.randi_range(0, 1);
   auto animation                  = animations[animation_index];
   player.set_state(&Player::attacking);
