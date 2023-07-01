@@ -11,7 +11,7 @@ using namespace godot;
 
 void StandingState::handleInput(Player& player, Input& input) {
   PROFILE_FUNCTION()
-  Command command = NullCommand();
+  PlayerCommand command = NullCommand();
   auto velocity   = player.get_velocity();
   if (input.is_action_just_pressed("jump")) {
     command = JumpCommand();
@@ -24,7 +24,7 @@ void StandingState::handleInput(Player& player, Input& input) {
 }
 
 void StandingState::update(Player& player) {
-  Command command     = NullCommand();
+  PlayerCommand command     = NullCommand();
   auto const velocity = player.get_velocity();
   if (player.is_on_floor()) {
     command = IdleCommand();
@@ -36,7 +36,7 @@ void StandingState::update(Player& player) {
 
 void JumpingState::handleInput(Player& player, Input& input) {
   PROFILE_FUNCTION()
-  Command command = NullCommand();
+  PlayerCommand command = NullCommand();
   if (input.is_action_just_pressed("jump")) {
     command = AirJumpCommand();
   } else if (input.is_action_just_pressed("attack")) {
@@ -47,7 +47,7 @@ void JumpingState::handleInput(Player& player, Input& input) {
 
 void JumpingState::update(Player& player) {
   PROFILE_FUNCTION()
-  Command command     = NullCommand();
+  PlayerCommand command     = NullCommand();
   auto const velocity = player.get_velocity();
   if (velocity.y > 0) {
     command = JumpOutCommand();
@@ -63,7 +63,7 @@ void JumpingState::update(Player& player) {
 
 void AirJumpingState::handleInput(Player& player, Input& input) {
   PROFILE_FUNCTION()
-  Command command = NullCommand();
+  PlayerCommand command = NullCommand();
   if (input.is_action_just_pressed("attack")) {
     command = AttackCommand();
   }
@@ -72,7 +72,7 @@ void AirJumpingState::handleInput(Player& player, Input& input) {
 
 void AirJumpingState::update(Player& player) {
   PROFILE_FUNCTION()
-  Command command     = NullCommand();
+  PlayerCommand command     = NullCommand();
   auto const velocity = player.get_velocity();
   if (velocity.y > 0) {
     command = JumpOutCommand();
@@ -89,7 +89,7 @@ void AirJumpingState::update(Player& player) {
 
 void RunningState::handleInput(Player& player, Input& input) {
   PROFILE_FUNCTION()
-  Command command = NullCommand();
+  PlayerCommand command = NullCommand();
   if (input.is_action_just_pressed("jump")) {
     command = JumpCommand();
   } else if (input.is_action_just_pressed("attack")) {
@@ -102,7 +102,7 @@ void RunningState::handleInput(Player& player, Input& input) {
 
 void RunningState::update(Player& player) {
   PROFILE_FUNCTION()
-  Command command     = NullCommand();
+  PlayerCommand command     = NullCommand();
   auto const velocity = player.get_velocity();
   if (player.is_on_floor()) {
     if (velocity.x != 0) {
@@ -128,7 +128,7 @@ void AttackState::update(Player& player) {
   }
 
   player.set_weapon_monitoring(false);
-  Command command     = NullCommand();
+  PlayerCommand command     = NullCommand();
   const auto velocity = player.get_velocity();
   if (player.is_on_floor()) {
     if (velocity.x != 0) {
@@ -155,7 +155,7 @@ void SlideState::update(Player& player) {
     return;
   }
 
-  Command command     = NullCommand();
+  PlayerCommand command     = NullCommand();
   auto const velocity = player.get_velocity();
   if (player.is_on_floor()) {
     if (velocity.x != 0) {

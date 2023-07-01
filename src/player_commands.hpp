@@ -2,32 +2,63 @@
 #define COREGAME_PLAYER_COMMANDS_HPP
 
 #include <variant>
-#include "commands.hpp"
 
 class Player;
+class NullCommand;
+class IdleCommand;
+class RunCommand;
+class JumpCommand;
+class JumpOutCommand;
+class AirJumpCommand;
+class AttackCommand;
+class SlideCommand;
 
-template<>
-void NullCommand::execute(Player& game_actor) const;
+class PlayerCommandRaw {};
 
-template<>
-void IdleCommand::execute(Player &game_actor) const;
+using PlayerCommand =
+    std::variant<NullCommand, IdleCommand, RunCommand, JumpCommand,
+                 JumpOutCommand, AirJumpCommand, AttackCommand, SlideCommand>;
 
-template<>
-void RunCommand::execute(Player &game_actor) const;
+void execute(PlayerCommand& command, Player& player);
 
-template<>
-void JumpCommand::execute(Player& game_actor) const;
+class NullCommand : PlayerCommandRaw {
+ public:
+  void execute(Player& game_actor) const;
+};
 
-template<>
-void JumpOutCommand::execute(Player& game_actor) const;
+class IdleCommand {
+ public:
+  static void execute(Player& player);
+};
 
-template <>
-void AirJumpCommand::execute(Player& game_actor) const;
+class RunCommand {
+ public:
+  static void execute(Player& player);
+};
 
-template <>
-void AttackCommand::execute(Player& game_actor) const;
+class JumpCommand {
+ public:
+  static void execute(Player& player);
+};
 
-template <>
-void SlideCommand::execute(Player& game_actor) const;
+class JumpOutCommand {
+ public:
+  static void execute(Player& player);
+};
+
+class AirJumpCommand {
+ public:
+  static void execute(Player& player);
+};
+
+class AttackCommand {
+ public:
+  static void execute(Player& player);
+};
+
+class SlideCommand {
+ public:
+  static void execute(Player& player);
+};
 
 #endif // COREGAME_PLAYER_COMMANDS_HPP

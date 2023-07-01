@@ -27,12 +27,10 @@ class Player
   float m_jump_force                   = 350;
   float m_air_jump_force               = 350;
   float m_speed                        = 0;
-  float m_landing_threshold            = 10;
   Direction m_direction                = right;
   core_game::LoggerService* m_logger   = nullptr;
   AnimatedSprite2D* m_animatedSprite2D = nullptr;
   Weapon* m_weapon                     = nullptr;
-  RayCast2D* m_landing_ray             = nullptr;
   PlayerState* m_state{&Player::standing};
 
   static void _bind_methods();

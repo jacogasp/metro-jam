@@ -54,7 +54,6 @@ void Player::_ready() {
   m_animatedSprite2D = get_node<AnimatedSprite2D>("AnimatedSprite2D");
   m_animatedSprite2D->play("Idle");
   m_weapon      = get_node<Weapon>("Weapon");
-  m_landing_ray = get_node<RayCast2D>("LandingRay");
   m_weapon->set_monitoring(false);
   load();
   m_logger->info("Player ready.");
