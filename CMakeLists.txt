@@ -46,7 +46,6 @@ add_library(
         src/types.cpp
         src/player_commands.cpp
         src/bumblebee.cpp
-        src/commands.cpp
         src/timer.cpp
 )
 
