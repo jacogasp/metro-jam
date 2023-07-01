@@ -10,7 +10,6 @@ JumpState BumbleBee::jumping          = JumpState();
 OnWallState BumbleBee::on_wall        = OnWallState();
 static auto constexpr idle_command    = IdleCommand();
 static auto constexpr jump_command    = JumpCommand();
-static auto constexpr jumpout_command = JumpOutCommand();
 static auto constexpr flip_command    = FlipCommand();
 
 void BumbleBee::_ready() {
@@ -20,7 +19,7 @@ void BumbleBee::_ready() {
   m_animated_sprite2D->play("Idle");
   m_front_ray = get_node<RayCast2D>("FrontRay");
   set_velocity({0, 0});
-  m_timer.set_callback([this]() { jump_command.execute(*this); });
+  m_timer.set_callback([this]() { jump_command(*this); });
   m_timer.set_timeout(2);
   m_timer.set_repeat(true);
   m_timer.start();
@@ -43,33 +42,25 @@ void BumbleBee::set_state(BumbleBeeState* state) {
 }
 
 // Commands
-template<>
-void IdleCommand::execute(BumbleBee& game_actor) const {
-  game_actor.m_animated_sprite2D->play("Idle");
-  game_actor.set_velocity({0, 0});
-  game_actor.set_state(&BumbleBee::idle);
+void IdleCommand::operator()(BumbleBee& bumble_bee) const {
+  bumble_bee.m_animated_sprite2D->play("Idle");
+  bumble_bee.set_velocity({0, 0});
+  bumble_bee.set_state(&BumbleBee::idle);
 }
 
-template<>
-void JumpCommand::execute(BumbleBee& game_actor) const {
-  game_actor.m_animated_sprite2D->play("JumpIn");
-  Vector2 jump_velocity{150 * static_cast<float>(game_actor.m_direction), -300};
-  auto velocity = game_actor.get_velocity() + jump_velocity;
-  game_actor.set_velocity(velocity);
-  game_actor.set_state(&BumbleBee::jumping);
+void JumpCommand::operator()(BumbleBee& bumble_bee) const {
+  bumble_bee.m_animated_sprite2D->play("JumpIn");
+  Vector2 jump_velocity{150 * static_cast<float>(bumble_bee.m_direction), -300};
+  auto velocity = bumble_bee.get_velocity() + jump_velocity;
+  bumble_bee.set_velocity(velocity);
+  bumble_bee.set_state(&BumbleBee::jumping);
 }
 
-template<>
-void FlipCommand::execute(BumbleBee& game_actor) const {
-  game_actor.m_direction = game_actor.m_direction == BumbleBee::Direction::right
+void FlipCommand::operator()(BumbleBee& bumble_bee) const {
+  bumble_bee.m_direction = bumble_bee.m_direction == BumbleBee::Direction::right
                              ? BumbleBee::Direction::left
                              : BumbleBee::Direction::right;
-  game_actor.set_state(&BumbleBee::on_wall);
-}
-
-template<>
-void JumpOutCommand::execute(BumbleBee& game_actor) const {
-  game_actor.m_animated_sprite2D->play("JumpOut");
+  bumble_bee.set_state(&BumbleBee::on_wall);
 }
 
 // BumbleBee's States
@@ -78,12 +69,12 @@ void IdleState::update(BumbleBee& bumble_bee) const {
 
 void JumpState::update(BumbleBee& bumble_bee) const {
   if (bumble_bee.is_on_wall()) {
-    flip_command.execute(bumble_bee);
+    flip_command(bumble_bee);
     return;
   }
 
   if (bumble_bee.get_velocity().y > 0 && bumble_bee.is_on_floor()) {
-    idle_command.execute(bumble_bee);
+    idle_command(bumble_bee);
   }
 }
 
@@ -91,6 +82,6 @@ void OnWallState::update(BumbleBee& bumble_bee) const {
   if (bumble_bee.get_velocity().y < 0) {
     bumble_bee.set_state(&BumbleBee::jumping);
   } else if (bumble_bee.is_on_floor()) {
-    idle_command.execute(bumble_bee);
+    idle_command(bumble_bee);
   }
 }

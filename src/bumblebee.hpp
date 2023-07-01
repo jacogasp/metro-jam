@@ -1,19 +1,16 @@
 #ifndef COREGAME_BUMBLEBEE_HPP
 #define COREGAME_BUMBLEBEE_HPP
 
-#include "commands.hpp"
 #include "timer.hpp"
 #include <godot_cpp/classes/animated_sprite2d.hpp>
 #include <godot_cpp/classes/character_body2d.hpp>
 #include <godot_cpp/classes/input.hpp>
 #include <godot_cpp/classes/ray_cast2d.hpp>
-#include <future>
+#include <variant>
 
 using namespace godot;
 
 class BumbleBee;
-class IdleState;
-class JumpState;
 
 // States
 class BumbleBeeState {
@@ -62,16 +59,20 @@ class BumbleBee final : public CharacterBody2D {
 };
 
 // Commands
-template<>
-void IdleCommand::execute(BumbleBee& game_actor) const;
 
-template<>
-void JumpCommand::execute(BumbleBee& game_actor) const;
+struct IdleCommand {
+  void operator()(BumbleBee& bumble_bee) const;
+};
 
-template<>
-void JumpOutCommand::execute(BumbleBee& game_actor) const;
 
-template<>
-void FlipCommand::execute(BumbleBee& game_actor) const;
+struct JumpCommand {
+  void operator()(BumbleBee& bumble_bee) const;
+};
+
+struct FlipCommand  {
+  void operator()(BumbleBee& bumble_bee) const;
+};
+
+using BumbleBeeCommand = std::variant<IdleCommand, JumpCommand, FlipCommand>;
 
 #endif // COREGAME_BUMBLEBEE_HPP
