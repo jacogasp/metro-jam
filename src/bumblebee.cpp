@@ -48,8 +48,6 @@ void IdleCommand::execute(BumbleBee& game_actor) const {
 
 template<>
 void JumpCommand::execute(BumbleBee& game_actor) const {
-  std::cerr << "jump\n";
-
   game_actor.m_animated_sprite2D->play("JumpIn");
   game_actor.set_velocity(game_actor.get_velocity() + Vector2{-150, -300});
   game_actor.set_state(&BumbleBee::jumping);
@@ -65,13 +63,7 @@ void IdleState::update(BumbleBee& bumble_bee) const {
 }
 
 void JumpState::update(BumbleBee& bumble_bee) const {
-  auto const velocity = bumble_bee.get_velocity();
-
-  if (velocity.y > 0) {
-    if (bumble_bee.is_on_floor()) {
-      idle_command.execute(bumble_bee);
-    } else {
-      jumpout_command.execute(bumble_bee);
-    }
+  if (bumble_bee.get_velocity().y > 0 && bumble_bee.is_on_floor()) {
+    idle_command.execute(bumble_bee);
   }
 }
