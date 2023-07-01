@@ -208,14 +208,13 @@ size = Vector2(19, 41)
 speed = 300.0
 gravity = 2.08165e-12
 jump_force = 400.0
-position = Vector2(1061.85, 2431.85)
+position = Vector2(566.836, 2431.78)
 velocity = Vector2(0, 52514.6)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_0nsvt")
-animation = &"AttackH"
-frame = 2
-frame_progress = 1.0
+animation = &"Idle"
+frame_progress = 0.810912
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1.08649, 4.03809)
