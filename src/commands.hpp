@@ -23,43 +23,43 @@ static void execute(Command& command, GameActor& player) {
 class NullCommand {
  public:
   template<typename GameActor>
-  void execute(GameActor& game_actor);
+  void execute(GameActor& game_actor) const;
 };
 
 class IdleCommand {
  public:
   template<typename GameActor>
-  void execute(GameActor& game_actor);
+  void execute(GameActor& game_actor) const;
 };
 
 class RunCommand {
  public:
   template<typename GameActor>
-  void execute(GameActor& game_actor);
+  void execute(GameActor& game_actor) const;
 };
 
 class JumpCommand {
  public:
   template<typename GameActor>
-  void execute(GameActor& game_actor);
+  void execute(GameActor& game_actor) const;
 };
 
 class JumpOutCommand {
  public:
   template<typename GameActor>
-  void execute(GameActor& game_actor);
+  void execute(GameActor& game_actor) const;
 };
 
 class AirJumpCommand {
  public:
   template<typename GameActor>
-  void execute(GameActor& game_actor);
+  void execute(GameActor& game_actor) const;
 };
 
 class AttackCommand {
  public:
   template<typename GameActor>
-  void execute(GameActor& game_actor);
+  void execute(GameActor& game_actor) const;
 };
 
 #endif // COREGAME_COMMANDS_HPP
