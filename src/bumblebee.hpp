@@ -41,11 +41,11 @@ class BumbleBee final : public CharacterBody2D {
 
   enum Direction { left = -1, right = 1 };
 
-  static IdleState idle;
+  static IdleState idle_state;
   static JumpState jumping;
   static OnWallState on_wall;
 
-  BumbleBeeState* m_state{&BumbleBee::idle};
+  BumbleBeeState* m_state{&BumbleBee::idle_state};
   AnimatedSprite2D* m_animated_sprite2D{nullptr};
   RayCast2D* m_front_ray{nullptr};
   TimerIntervalRange m_jump_timer_interval_ms{1000, 2000};

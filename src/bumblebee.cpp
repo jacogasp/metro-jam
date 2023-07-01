@@ -5,12 +5,12 @@
 void BumbleBee::_bind_methods() {
 }
 
-IdleState BumbleBee::idle             = IdleState();
-JumpState BumbleBee::jumping          = JumpState();
-OnWallState BumbleBee::on_wall        = OnWallState();
-static auto constexpr idle_command    = IdleCommand();
-static auto constexpr jump_command    = JumpCommand();
-static auto constexpr flip_command    = FlipCommand();
+IdleState BumbleBee::idle_state = IdleState();
+JumpState BumbleBee::jumping    = JumpState();
+OnWallState BumbleBee::on_wall  = OnWallState();
+static auto constexpr idle      = IdleCommand();
+static auto constexpr jump      = JumpCommand();
+static auto constexpr flip      = FlipCommand();
 
 void BumbleBee::_ready() {
   if (Engine::get_singleton()->is_editor_hint())
@@ -19,7 +19,7 @@ void BumbleBee::_ready() {
   m_animated_sprite2D->play("Idle");
   m_front_ray = get_node<RayCast2D>("FrontRay");
   set_velocity({0, 0});
-  m_timer.set_callback([this]() { jump_command(*this); });
+  m_timer.set_callback([this]() { jump(*this); });
   m_timer.set_timeout(2);
   m_timer.set_repeat(true);
   m_timer.start();
@@ -45,7 +45,7 @@ void BumbleBee::set_state(BumbleBeeState* state) {
 void IdleCommand::operator()(BumbleBee& bumble_bee) const {
   bumble_bee.m_animated_sprite2D->play("Idle");
   bumble_bee.set_velocity({0, 0});
-  bumble_bee.set_state(&BumbleBee::idle);
+  bumble_bee.set_state(&BumbleBee::idle_state);
 }
 
 void JumpCommand::operator()(BumbleBee& bumble_bee) const {
@@ -69,12 +69,11 @@ void IdleState::update(BumbleBee& bumble_bee) const {
 
 void JumpState::update(BumbleBee& bumble_bee) const {
   if (bumble_bee.is_on_wall()) {
-    flip_command(bumble_bee);
+    flip(bumble_bee);
     return;
   }
-
   if (bumble_bee.get_velocity().y > 0 && bumble_bee.is_on_floor()) {
-    idle_command(bumble_bee);
+    idle(bumble_bee);
   }
 }
 
@@ -82,6 +81,6 @@ void OnWallState::update(BumbleBee& bumble_bee) const {
   if (bumble_bee.get_velocity().y < 0) {
     bumble_bee.set_state(&BumbleBee::jumping);
   } else if (bumble_bee.is_on_floor()) {
-    idle_command(bumble_bee);
+    idle(bumble_bee);
   }
 }
