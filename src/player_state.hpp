@@ -10,7 +10,7 @@ class Player;
 
 class PlayerState {
  public:
-  ~PlayerState() = default;
+  virtual ~PlayerState() = default;
   virtual void handleInput(Player& player, godot::Input& input){};
   virtual void update(Player& player){};
 };
