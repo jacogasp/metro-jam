@@ -78,12 +78,17 @@ animations = [{
 radius = 24.0208
 
 [node name="Bumblee" type="BumbleBee"]
+collision_layer = 2
+collision_mask = 16
 velocity = Vector2(-109650, -219300)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_p132n")
 animation = &"JumpOut"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-3, 8)
 shape = SubResource("CircleShape2D_4dmxq")
+
+[node name="FrontRay" type="RayCast2D" parent="."]
+target_position = Vector2(29, 0)

@@ -7,15 +7,18 @@ void BumbleBee::_bind_methods() {
 
 IdleState BumbleBee::idle             = IdleState();
 JumpState BumbleBee::jumping          = JumpState();
+OnWallState BumbleBee::on_wall        = OnWallState();
 static auto constexpr idle_command    = IdleCommand();
 static auto constexpr jump_command    = JumpCommand();
 static auto constexpr jumpout_command = JumpOutCommand();
+static auto constexpr flip_command    = FlipCommand();
 
 void BumbleBee::_ready() {
   if (Engine::get_singleton()->is_editor_hint())
     return;
   m_animated_sprite2D = get_node<AnimatedSprite2D>("AnimatedSprite2D");
   m_animated_sprite2D->play("Idle");
+  m_front_ray = get_node<RayCast2D>("FrontRay");
   set_velocity({0, 0});
   m_timer.set_callback([this]() { jump_command.execute(*this); });
   m_timer.set_timeout(2);
@@ -31,6 +34,7 @@ void BumbleBee::_physics_process(float delta) {
   set_velocity(velocity);
   m_timer.tick(delta);
   m_state->update(*this);
+  m_animated_sprite2D->set_flip_h(m_direction == left);
   move_and_slide();
 }
 
@@ -49,8 +53,18 @@ void IdleCommand::execute(BumbleBee& game_actor) const {
 template<>
 void JumpCommand::execute(BumbleBee& game_actor) const {
   game_actor.m_animated_sprite2D->play("JumpIn");
-  game_actor.set_velocity(game_actor.get_velocity() + Vector2{-150, -300});
+  Vector2 jump_velocity{150 * static_cast<float>(game_actor.m_direction), -300};
+  auto velocity = game_actor.get_velocity() + jump_velocity;
+  game_actor.set_velocity(velocity);
   game_actor.set_state(&BumbleBee::jumping);
+}
+
+template<>
+void FlipCommand::execute(BumbleBee& game_actor) const {
+  game_actor.m_direction = game_actor.m_direction == BumbleBee::Direction::right
+                             ? BumbleBee::Direction::left
+                             : BumbleBee::Direction::right;
+  game_actor.set_state(&BumbleBee::on_wall);
 }
 
 template<>
@@ -63,7 +77,20 @@ void IdleState::update(BumbleBee& bumble_bee) const {
 }
 
 void JumpState::update(BumbleBee& bumble_bee) const {
+  if (bumble_bee.is_on_wall()) {
+    flip_command.execute(bumble_bee);
+    return;
+  }
+
   if (bumble_bee.get_velocity().y > 0 && bumble_bee.is_on_floor()) {
+    idle_command.execute(bumble_bee);
+  }
+}
+
+void OnWallState::update(BumbleBee& bumble_bee) const {
+  if (bumble_bee.get_velocity().y < 0) {
+    bumble_bee.set_state(&BumbleBee::jumping);
+  } else if (bumble_bee.is_on_floor()) {
     idle_command.execute(bumble_bee);
   }
 }
