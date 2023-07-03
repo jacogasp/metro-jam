@@ -46,6 +46,7 @@
       "binaryDir": "${sourceDir}/build/windows",
       "generator": "Ninja",
       "cacheVariables": {
+        "CMAKE_C_COMPILER_LAUNCHER": "ccache",
         "CMAKE_CXX_COMPILER_LAUNCHER": "ccache",
         "CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG": "${sourceDir}/build/windows",
         "CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE": "${sourceDir}/build/windows",
