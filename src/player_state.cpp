@@ -49,14 +49,17 @@ void JumpingState::update(Player& player) {
   PROFILE_FUNCTION()
   PlayerCommand command = NullCommand();
   auto const velocity   = player.get_velocity();
-  if (velocity.y > 0) {
-    command = JumpOutCommand();
-  } else if (velocity.y == 0 && player.is_on_floor()) {
+  if (velocity.y < 0) {
+    return;
+  }
+  if (player.is_on_floor()) {
     if (velocity.x == 0) {
       command = IdleCommand();
     } else {
       command = RunCommand();
     }
+  } else {
+    command = JumpOutCommand();
   }
   execute(command, player);
 }
