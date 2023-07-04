@@ -151,23 +151,22 @@ void AttackState::update(Player& player) {
 }
 
 void SlideState::update(Player& player) {
-  // Use fade out
-  if (player.m_animatedSprite2D->is_playing()) {
-    auto velocity = player.get_velocity();
+  auto velocity = player.get_velocity();
+  if (player.m_animatedSprite2D->is_playing()
+      && player.m_animatedSprite2D->get_animation().begins_with("Slide")) {
     velocity += Vector2{static_cast<float>(player.m_direction) * 400, 0};
     player.set_velocity(velocity);
     return;
   }
 
   PlayerCommand command = NullCommand();
-  auto const velocity   = player.get_velocity();
-  if (player.is_on_floor()) {
-    if (velocity.x != 0) {
-      command = RunCommand();
-    } else {
+  if (player.is_on_floor_only()) {
+    if (velocity.x == 0) {
       command = IdleCommand();
+    } else {
+      command = RunCommand();
     }
-  } else if (velocity.y > 0) {
+  } else {
     command = JumpOutCommand();
   }
   execute(command, player);
