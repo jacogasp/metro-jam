@@ -48,17 +48,20 @@ class BumbleBee final : public CharacterBody2D {
   BumbleBeeState* m_state{&BumbleBee::idle_state};
   AnimatedSprite2D* m_animated_sprite2D{nullptr};
   RayCast2D* m_front_ray{nullptr};
-  TimerIntervalRange m_jump_timer_interval_ms{1000, 2000};
+
   Timer m_timer{};
   Direction m_direction{left};
   Vector2 m_jump_velocity{200, -200};
+  TimeDelta m_jump_interval_s{2};
 
   static void _bind_methods();
   void _ready() override;
   void _physics_process(float delta);
   void set_state(BumbleBeeState* state);
   void set_jump_velocity(Vector2 const& velocity);
-  Vector2 get_jump_velocity() const;
+  [[nodiscard]] Vector2 get_jump_velocity() const;
+  void set_jump_interval(TimeDelta interval);
+  [[nodiscard]] TimeDelta get_jump_interval() const;
 };
 
 // Commands

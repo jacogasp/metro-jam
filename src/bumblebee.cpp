@@ -6,8 +6,14 @@ void BumbleBee::_bind_methods() {
                        &BumbleBee::set_jump_velocity);
   ClassDB::bind_method(D_METHOD("get_jump_velocity"),
                        &BumbleBee::get_jump_velocity);
+  ClassDB::bind_method(D_METHOD("set_jump_interval"),
+                       &BumbleBee::set_jump_interval);
+  ClassDB::bind_method(D_METHOD("get_jump_interval"),
+                       &BumbleBee::get_jump_interval);
   ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "jump_velocity"),
                "set_jump_velocity", "get_jump_velocity");
+  ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "jump_interval"),
+               "set_jump_interval", "get_jump_interval");
 }
 
 IdleState BumbleBee::idle_state = IdleState();
@@ -25,7 +31,7 @@ void BumbleBee::_ready() {
   m_front_ray = get_node<RayCast2D>("FrontRay");
   set_velocity({0, 0});
   m_timer.set_callback([this]() { jump(*this); });
-  m_timer.set_timeout(2);
+  m_timer.set_timeout(m_jump_interval_s);
   m_timer.set_repeat(true);
   m_timer.start();
 }
@@ -52,6 +58,13 @@ void BumbleBee::set_jump_velocity(Vector2 const& velocity) {
 
 Vector2 BumbleBee::get_jump_velocity() const {
   return m_jump_velocity;
+}
+void BumbleBee::set_jump_interval(TimeDelta interval) {
+  m_jump_interval_s = interval;
+}
+
+TimeDelta BumbleBee::get_jump_interval() const {
+  return m_jump_interval_s;
 }
 
 // Commands
