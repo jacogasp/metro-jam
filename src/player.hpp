@@ -7,8 +7,10 @@
 #include "weapon.hpp"
 
 #include <godot_cpp/classes/animated_sprite2d.hpp>
+#include <godot_cpp/classes/animation_player.hpp>
 #include <godot_cpp/classes/character_body2d.hpp>
 #include <godot_cpp/classes/ray_cast2d.hpp>
+#include <godot_cpp/classes/shader_material.hpp>
 #include <memory>
 
 using namespace godot;
@@ -31,6 +33,8 @@ class Player
   core_game::LoggerService* m_logger   = nullptr;
   AnimatedSprite2D* m_animatedSprite2D = nullptr;
   Weapon* m_weapon                     = nullptr;
+  AnimationPlayer* m_vfx               = nullptr;
+  Ref<ShaderMaterial> m_material       = nullptr;
   PlayerState* m_state{&Player::standing};
 
   static void _bind_methods();
@@ -59,6 +63,8 @@ class Player
   void set_air_jump_force(float force);
   void set_state(PlayerState* state);
   void set_weapon_monitoring(bool can_monitor) const;
+  void set_hit_animation_time(float t);
+  [[nodiscard]] float get_hit_animation_time() const;
   void hit();
   [[nodiscard]] Vector2 get_h_direction() const;
   void save() override;

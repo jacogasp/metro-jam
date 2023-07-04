@@ -1,5 +1,6 @@
-[gd_scene load_steps=31 format=3 uid="uid://dibkh0kdqa671"]
+[gd_scene load_steps=34 format=3 uid="uid://dibkh0kdqa671"]
 
+[ext_resource type="Material" uid="uid://bqesh5ktv6wvb" path="res://shaders/Hit.material" id="1_krao5"]
 [ext_resource type="Texture2D" uid="uid://cq3js6pr88m2d" path="res://assets/characters/pg_sprites.png" id="2_7vcqu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hq0w2"]
@@ -251,6 +252,27 @@ height = 56.2236
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bt8yl"]
 size = Vector2(19, 41)
 
+[sub_resource type="Animation" id="Animation_mlkyu"]
+resource_name = "Hit"
+length = 0.15
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:hit_animation_time")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ktlxv"]
+_data = {
+"Hit": SubResource("Animation_mlkyu")
+}
+
 [node name="player" type="Player" groups=["Player"]]
 speed = 300.0
 gravity = 2.08165e-12
@@ -260,8 +282,10 @@ collision_mask = 16
 velocity = Vector2(0, 52514.6)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = ExtResource("1_krao5")
 sprite_frames = SubResource("SpriteFrames_0nsvt")
-animation = &"PowerSlide"
+animation = &"Idle"
+frame_progress = 0.218962
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1.08649, 4.03809)
@@ -279,5 +303,10 @@ monitoring = false
 position = Vector2(19.5, -4.5)
 shape = SubResource("RectangleShape2D_bt8yl")
 debug_color = Color(0.960784, 0, 0.517647, 0.419608)
+
+[node name="VFX" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ktlxv")
+}
 
 [connection signal="body_entered" from="Weapon" to="Weapon" method="_on_body_entered"]

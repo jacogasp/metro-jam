@@ -33,6 +33,10 @@ void Player::_bind_methods() {
   ClassDB::bind_method(D_METHOD("set_air_jump_force"),
                        &Player::set_air_jump_force);
   ClassDB::bind_method(D_METHOD("hit"), &Player::hit);
+  ClassDB::bind_method(D_METHOD("set_hit_animation_time"),
+                       &Player::set_hit_animation_time);
+  ClassDB::bind_method(D_METHOD("get_hit_animation_time"),
+                       &Player::get_hit_animation_time);
 
   // clang-format off
   ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "speed"), "set_speed", "get_speed");
@@ -42,6 +46,9 @@ void Player::_bind_methods() {
                "set_jump_force","get_jump_force");
   ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "air_jump_force"),
                "set_air_jump_force", "get_air_jump_force");
+  ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "hit_animation_time",
+               PROPERTY_HINT_RANGE, "0,1,0.01"), "set_hit_animation_time",
+               "get_hit_animation_time");
   // clang-format on
 
   ADD_SIGNAL(MethodInfo("player_hit"));
@@ -53,8 +60,10 @@ void Player::_ready() {
 
   m_animatedSprite2D = get_node<AnimatedSprite2D>("AnimatedSprite2D");
   m_animatedSprite2D->play("Idle");
-  m_weapon      = get_node<Weapon>("Weapon");
+  m_weapon = get_node<Weapon>("Weapon");
   m_weapon->set_monitoring(false);
+  m_material = m_animatedSprite2D->get_material();
+  m_vfx      = get_node<AnimationPlayer>("VFX");
   load();
   m_logger->info("Player ready.");
 }
@@ -194,4 +203,19 @@ void Player::set_weapon_monitoring(bool can_monitor) const {
 
 void Player::hit() {
   emit_signal("player_hit");
+  m_vfx->play("Hit");
+}
+
+void Player::set_hit_animation_time(float t) {
+  if (m_animatedSprite2D == nullptr)
+    return;
+  m_material->set_shader_parameter("time", t);
+  queue_redraw();
+}
+
+float Player::get_hit_animation_time() const {
+  if (m_material == nullptr)
+    return 0.0f;
+  auto const time = m_material->get_shader_parameter("time");
+  return (float)time;
 }
