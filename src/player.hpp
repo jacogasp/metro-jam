@@ -29,6 +29,7 @@ class Player
   float m_jump_force                   = 350;
   float m_air_jump_force               = 350;
   float m_speed                        = 0;
+  float m_slide_speed                  = 400;
   Direction m_direction                = right;
   core_game::LoggerService* m_logger   = nullptr;
   AnimatedSprite2D* m_animatedSprite2D = nullptr;
@@ -61,12 +62,13 @@ class Player
   void set_jump_force(float force);
   [[nodiscard]] float get_air_jump_force() const;
   void set_air_jump_force(float force);
+  [[nodiscard]] float get_slide_speed() const;
+  void set_slide_speed(float slide_speed);
   void set_state(PlayerState* state);
   void set_weapon_monitoring(bool can_monitor) const;
   void set_hit_animation_time(float t);
   [[nodiscard]] float get_hit_animation_time() const;
   void hit();
-  [[nodiscard]] Vector2 get_h_direction() const;
   void save() override;
   void load() override;
 };

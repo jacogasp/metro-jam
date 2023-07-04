@@ -37,6 +37,8 @@ void Player::_bind_methods() {
                        &Player::set_hit_animation_time);
   ClassDB::bind_method(D_METHOD("get_hit_animation_time"),
                        &Player::get_hit_animation_time);
+  ClassDB::bind_method(D_METHOD("set_slide_speed"), &Player::set_slide_speed);
+  ClassDB::bind_method(D_METHOD("get_slide_speed"), &Player::get_slide_speed);
 
   // clang-format off
   ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "speed"), "set_speed", "get_speed");
@@ -46,6 +48,8 @@ void Player::_bind_methods() {
                "set_jump_force","get_jump_force");
   ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "air_jump_force"),
                "set_air_jump_force", "get_air_jump_force");
+ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "slide_speed"),
+               "set_slide_speed", "get_slide_speed");
   ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "hit_animation_time",
                PROPERTY_HINT_RANGE, "0,1,0.01"), "set_hit_animation_time",
                "get_hit_animation_time");
@@ -193,10 +197,6 @@ void Player::set_gravity(float gravity) {
   m_gravity = gravity;
 }
 
-Vector2 Player::get_h_direction() const {
-  return m_animatedSprite2D->is_flipped_h() ? Vector2{-1, 0} : Vector2{1, 0};
-}
-
 void Player::set_weapon_monitoring(bool can_monitor) const {
   m_weapon->set_monitoring(can_monitor);
 }
@@ -218,4 +218,12 @@ float Player::get_hit_animation_time() const {
     return 0.0f;
   auto const time = m_material->get_shader_parameter("time");
   return (float)time;
+}
+
+float Player::get_slide_speed() const {
+  return m_slide_speed;
+}
+
+void Player::set_slide_speed(float slide_speed) {
+  m_slide_speed = slide_speed;
 }

@@ -154,7 +154,8 @@ void SlideState::update(Player& player) {
   auto velocity = player.get_velocity();
   if (player.m_animatedSprite2D->is_playing()
       && player.m_animatedSprite2D->get_animation().begins_with("Slide")) {
-    velocity += Vector2{static_cast<float>(player.m_direction) * 400, 0};
+    velocity += Vector2{
+        static_cast<float>(player.m_direction) * player.m_slide_speed, 0};
     player.set_velocity(velocity);
     return;
   }
