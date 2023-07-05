@@ -2,20 +2,12 @@
 #include "player.hpp"
 #include <godot_cpp/classes/random_number_generator.hpp>
 
-void execute(PlayerCommand& command, Player& player) {
-  std::visit([&player](auto cmd) { cmd(player); }, command);
-}
-
-void NullCommand::operator()(Player&) const {
-  // do nothing
-}
-
-void IdleCommand::operator()(Player& player) {
+void IdleCommand::operator()(Player& player) const {
   player.set_state(&Player::standing);
   player.m_animatedSprite2D->play("Idle");
 }
 
-void JumpCommand::operator()(Player& player) {
+void JumpCommand::operator()(Player& player) const {
   auto velocity = player.get_velocity();
   player.set_state(&Player::jumping);
   player.m_animatedSprite2D->play("JumpIn");
@@ -23,11 +15,11 @@ void JumpCommand::operator()(Player& player) {
   player.set_velocity(velocity);
 }
 
-void JumpOutCommand::operator()(Player& player) {
+void JumpOutCommand::operator()(Player& player) const {
   player.m_animatedSprite2D->play("JumpOut");
 }
 
-void AirJumpCommand::operator()(Player& player) {
+void AirJumpCommand::operator()(Player& player) const {
   auto velocity = player.get_velocity();
   player.set_state(&Player::air_jumping);
   player.m_animatedSprite2D->play("JumpIn");
@@ -35,12 +27,12 @@ void AirJumpCommand::operator()(Player& player) {
   player.set_velocity(velocity);
 }
 
-void RunCommand::operator()(Player& player) {
+void RunCommand::operator()(Player& player) const {
   player.m_animatedSprite2D->play("Run");
   player.set_state(&Player::running);
 }
 
-void AttackCommand::operator()(Player& player) {
+void AttackCommand::operator()(Player& player) const {
   static const char* animations[] = {"AttackH", "AttackV"};
   static auto generator           = godot::RandomNumberGenerator();
   int animation_index             = generator.randi_range(0, 1);
@@ -50,7 +42,7 @@ void AttackCommand::operator()(Player& player) {
   player.set_weapon_monitoring(true);
 }
 
-void SlideCommand::operator()(Player& player) {
+void SlideCommand::operator()(Player& player) const {
   player.m_animatedSprite2D->play("Slide");
   player.set_state(&Player::sliding);
 }
