@@ -4,8 +4,10 @@
 #include "logger.hpp"
 #include "profiler.hpp"
 #include <godot_cpp/classes/animated_sprite2d.hpp>
+#include <godot_cpp/classes/collision_shape2d.hpp>
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/input.hpp>
+#include <godot_cpp/classes/shape2d.hpp>
 #include <cassert>
 
 StandingState Player::standing      = StandingState();
@@ -69,6 +71,8 @@ void Player::_ready() {
   m_material = m_animatedSprite2D->get_material();
   m_vfx      = get_node<AnimationPlayer>("VFX");
   load();
+  add_child(&line);
+
   m_logger->info("Player ready.");
 }
 
@@ -226,4 +230,11 @@ float Player::get_slide_speed() const {
 
 void Player::set_slide_speed(float slide_speed) {
   m_slide_speed = slide_speed;
+}
+
+float Player::get_ground_position() const {
+  auto cs          = get_node<CollisionShape2D>("CollisionShape2D");
+  auto const shape = cs->get_shape();
+  auto const rect  = shape->get_rect();
+  return rect.position.y + rect.size.height / 2;
 }

@@ -68,6 +68,7 @@ class Player
   void set_weapon_monitoring(bool can_monitor) const;
   void set_hit_animation_time(float t);
   [[nodiscard]] float get_hit_animation_time() const;
+  float get_ground_position() const;
   void hit();
   void save() override;
   void load() override;
