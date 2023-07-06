@@ -1,4 +1,5 @@
 #include "bumblebee.hpp"
+#include <godot_cpp/classes/collision_shape2d.hpp>
 #include <godot_cpp/classes/engine.hpp>
 
 void BumbleBee::_bind_methods() {
@@ -10,6 +11,8 @@ void BumbleBee::_bind_methods() {
                        &BumbleBee::set_jump_interval);
   ClassDB::bind_method(D_METHOD("get_jump_interval"),
                        &BumbleBee::get_jump_interval);
+  ClassDB::bind_method(D_METHOD("on_body_entered"),
+                       &BumbleBee::on_body_entered);
   ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "jump_velocity"),
                "set_jump_velocity", "get_jump_velocity");
   ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "jump_interval"),
@@ -65,6 +68,12 @@ void BumbleBee::set_jump_interval(TimeDelta interval) {
 
 TimeDelta BumbleBee::get_jump_interval() const {
   return m_jump_interval_s;
+}
+
+void BumbleBee::on_body_entered(Node* node) {
+  if (node->is_in_group("Player")) {
+    node->call("hit");
+  }
 }
 
 // Commands

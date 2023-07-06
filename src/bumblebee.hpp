@@ -62,6 +62,7 @@ class BumbleBee final : public CharacterBody2D {
   [[nodiscard]] Vector2 get_jump_velocity() const;
   void set_jump_interval(TimeDelta interval);
   [[nodiscard]] TimeDelta get_jump_interval() const;
+  void on_body_entered(Node *node);
 };
 
 // Commands
