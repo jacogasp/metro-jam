@@ -14,6 +14,9 @@ player = NodePath("../player")
 
 [node name="player" parent="." instance=ExtResource("2_5tq4j")]
 gravity = 800.0
+jump_force = 270.0
+air_jump_force = 300.0
+slide_speed = 100.0
 position = Vector2(576.853, 2431.85)
 velocity = Vector2(0, 0)
 
