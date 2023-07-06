@@ -3,6 +3,8 @@
 #include <godot_cpp/godot.hpp>
 #include <gdextension_interface.h>
 
+#include "register_types.hpp"
+
 #include "bumblebee.hpp"
 #include "chest.hpp"
 #include "coin.hpp"
@@ -15,7 +17,6 @@
 #include "main_scene.hpp"
 #include "player.hpp"
 #include "profiler.hpp"
-#include "register_types.hpp"
 #include "weapon.hpp"
 #include "world.hpp"
 

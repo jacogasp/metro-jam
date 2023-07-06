@@ -43,7 +43,12 @@ void World::_process(float) {
         m_current_scene->get_node<Gate>(new_gate_name.c_str());
     if (new_gate) {
       new_gate->set_closed(true);
-      m_player->set("position", new_gate->get_collision_shape_position());
+      auto player              = cast_to<Player>(m_player);
+      auto const player_ground = player->get_ground_position();
+      auto const gate_position = new_gate->get_position();
+      auto const new_x         = gate_position.x;
+      auto const new_y         = gate_position.y - player_ground;
+      m_player->set("position", Vector2{new_x, new_y});
     }
   }
   m_pending_index = 0;

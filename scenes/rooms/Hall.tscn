@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://0e7eflaq7ui6"]
+[gd_scene load_steps=8 format=3 uid="uid://0e7eflaq7ui6"]
 
 [ext_resource type="Texture2D" uid="uid://b2u8bgksqj83j" path="res://icon.svg" id="1_hkmiw"]
 [ext_resource type="Material" uid="uid://g3uwsdhmuuaj" path="res://shaders/Water.material" id="2_333v6"]
@@ -6,6 +6,9 @@
 [ext_resource type="Material" uid="uid://bcw2f556s0rec" path="res://shaders/Fire.material" id="4_e56xf"]
 [ext_resource type="TileSet" uid="uid://0w2a5bo421v7" path="res://assets/tilesets/TilesetBlocks.tres" id="4_pyf6q"]
 [ext_resource type="PackedScene" uid="uid://cu0874vm7p4ku" path="res://scenes/Bumblee.tscn" id="6_jj53g"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dbwxh"]
+size = Vector2(17.5, 64)
 
 [node name="Hall" type="Node2D"]
 
@@ -59,3 +62,15 @@ position = Vector2(2079, 2433)
 
 [node name="SteamJet" parent="SteamJet_line#1" instance=ExtResource("3_gaim7")]
 position = Vector2(2400, 2432)
+
+[node name="GateDHall" type="Gate" parent="."]
+next_room = "scenes/rooms/RoomD.tscn"
+position = Vector2(4793, 32)
+collision_mask = 257
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GateDHall"]
+position = Vector2(0, -32)
+shape = SubResource("RectangleShape2D_dbwxh")
+
+[connection signal="body_entered" from="GateDHall" to="GateDHall" method="_on_body_entered"]
+[connection signal="body_exited" from="GateDHall" to="GateDHall" method="_on_body_exited"]

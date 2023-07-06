@@ -94,3 +94,12 @@ shape = SubResource("CircleShape2D_4dmxq")
 
 [node name="FrontRay" type="RayCast2D" parent="."]
 target_position = Vector2(29, 0)
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 4096
+collision_mask = 273
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_4dmxq")
+
+[connection signal="body_entered" from="Area2D" to="." method="on_body_entered"]

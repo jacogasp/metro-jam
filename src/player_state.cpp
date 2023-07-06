@@ -122,6 +122,7 @@ void AttackState::update(Player& player) {
 }
 
 void SlideState::update(Player& player) {
+  PROFILE_FUNCTION()
   auto velocity = player.get_velocity();
   if (player.m_animatedSprite2D->is_playing()
       && player.m_animatedSprite2D->get_animation().begins_with("Slide")) {

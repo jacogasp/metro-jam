@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://cqhkrnuchxrrm"]
+[gd_scene load_steps=4 format=3 uid="uid://cqhkrnuchxrrm"]
 
 [ext_resource type="TileSet" uid="uid://0w2a5bo421v7" path="res://assets/tilesets/TilesetBlocks.tres" id="1_hh4i0"]
 [ext_resource type="PackedScene" uid="uid://b31qyx4laex5m" path="res://scenes/steam_jet.tscn" id="2_t44ap"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_egxwb"]
+size = Vector2(56.25, 161.375)
 
 [node name="RoomD" type="Node2D"]
 
@@ -41,3 +44,15 @@ position = Vector2(4416, 3104)
 
 [node name="SteamJet9" parent="SteamLine#1" instance=ExtResource("2_t44ap")]
 position = Vector2(4544, 3104)
+
+[node name="GateDHall" type="Gate" parent="."]
+next_room = "scenes/rooms/Hall.tscn"
+position = Vector2(6661, 2959)
+collision_mask = 257
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GateDHall"]
+position = Vector2(0, -80)
+shape = SubResource("RectangleShape2D_egxwb")
+
+[connection signal="body_entered" from="GateDHall" to="GateDHall" method="_on_body_entered"]
+[connection signal="body_exited" from="GateDHall" to="GateDHall" method="_on_body_exited"]
