@@ -64,7 +64,7 @@ jobs:
           path: |
             ${{ env.CPM_SOURCE_CACHE }}
             ${{ env.CCACHE_DIR }}
-          key: ${{ runner.os }}
+          key: ${{ runner.os }}-${{ hashFiles(**/extension_api.json) }}
 
       - name: Cmake configure
         run: cmake --preset ${{ matrix.config.cmake_preset }}
