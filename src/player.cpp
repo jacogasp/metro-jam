@@ -71,8 +71,6 @@ void Player::_ready() {
   m_material = m_animatedSprite2D->get_material();
   m_vfx      = get_node<AnimationPlayer>("VFX");
   load();
-  add_child(&line);
-
   m_logger->info("Player ready.");
 }
 
