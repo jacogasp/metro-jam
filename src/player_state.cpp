@@ -97,7 +97,7 @@ void RunningState::update(Player& player) {
   if (player.is_on_floor()) {
     velocity.x == 0 ? idle(player) : run(player);
   } else if (velocity.y > 0) {
-    jump(player);
+    jump_out(player);
   }
 }
 
