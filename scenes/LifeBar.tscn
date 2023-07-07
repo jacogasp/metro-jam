@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://ctehtj158jgy2"]
+
+[ext_resource type="Texture2D" uid="uid://pq1wtifdm683" path="res://assets/coin.png" id="1_kr0l0"]
+[ext_resource type="Texture2D" uid="uid://b3argiortbcna" path="res://assets/crate.png" id="2_4sgyj"]
+
+[node name="LifeBar" type="LifeBar"]
+placeholder_texture = ExtResource("1_kr0l0")
+life_texture = ExtResource("2_4sgyj")
+max_lives = 8
+current_life = 7
+offset = 1.426

@@ -1,0 +1,84 @@
+#ifndef COREGAME_BUMBLEBEE_HPP
+#define COREGAME_BUMBLEBEE_HPP
+
+#include "timer.hpp"
+#include <godot_cpp/classes/animated_sprite2d.hpp>
+#include <godot_cpp/classes/character_body2d.hpp>
+#include <godot_cpp/classes/input.hpp>
+#include <godot_cpp/classes/ray_cast2d.hpp>
+#include <variant>
+
+using namespace godot;
+
+class BumbleBee;
+
+// States
+class BumbleBeeState {
+ public:
+  virtual ~BumbleBeeState() = default;
+  virtual void handle_input(BumbleBee& bumble_bee, Input* input) const {};
+  virtual void update(BumbleBee& bumble_bee) const {};
+};
+
+class IdleState : public BumbleBeeState {
+  void update(BumbleBee& bumble_bee) const override;
+};
+
+class JumpState : public BumbleBeeState {
+  void update(BumbleBee& bumble_bee) const override;
+};
+
+class OnWallState : public BumbleBeeState {
+  void update(BumbleBee& bumble_bee) const override;
+};
+
+class BumbleBee final : public CharacterBody2D {
+  GDCLASS(BumbleBee, CharacterBody2D);
+  struct TimerIntervalRange {
+    int min;
+    int max;
+  };
+
+  enum Direction { left = -1, right = 1 };
+
+  static IdleState idle_state;
+  static JumpState jumping;
+  static OnWallState on_wall;
+
+  BumbleBeeState* m_state{&BumbleBee::idle_state};
+  AnimatedSprite2D* m_animated_sprite2D{nullptr};
+  RayCast2D* m_front_ray{nullptr};
+
+  Timer m_timer{};
+  Direction m_direction{left};
+  Vector2 m_jump_velocity{200, -200};
+  TimeDelta m_jump_interval_s{2};
+
+  static void _bind_methods();
+  void _ready() override;
+  void _physics_process(float delta);
+  void set_state(BumbleBeeState* state);
+  void set_jump_velocity(Vector2 const& velocity);
+  [[nodiscard]] Vector2 get_jump_velocity() const;
+  void set_jump_interval(TimeDelta interval);
+  [[nodiscard]] TimeDelta get_jump_interval() const;
+  void on_body_entered(Node *node);
+};
+
+// Commands
+
+struct IdleCommand {
+  void operator()(BumbleBee& bumble_bee) const;
+};
+
+struct JumpCommand {
+  void operator()(BumbleBee& bumble_bee) const;
+};
+
+struct FlipCommand {
+  void operator()(BumbleBee& bumble_bee) const;
+};
+
+using BumbleBeeCommand = std::variant<IdleCommand, JumpCommand, FlipCommand>;
+
+#endif // COREGAME_BUMBLEBEE_HPP

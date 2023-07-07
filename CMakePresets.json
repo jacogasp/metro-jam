@@ -5,7 +5,8 @@
       "name": "debug",
       "binaryDir": "${sourceDir}/build/debug",
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug"
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CORE_GAME_ENABLE_PROFILER": "ON"
       }
     },
     {
@@ -24,6 +25,7 @@
     },
     {
       "name": "macos",
+      "inherits": "debug",
       "binaryDir": "${sourceDir}/build/macos",
       "cacheVariables": {
         "CMAKE_LIBRARY_OUTPUT_DIRECTORY": "${sourceDir}/build/macos",
@@ -32,6 +34,7 @@
     },
     {
       "name": "linux",
+      "inherits": "debug",
       "binaryDir": "${sourceDir}/build/linux",
       "cacheVariables": {
         "CMAKE_LIBRARY_OUTPUT_DIRECTORY": "${sourceDir}/build/linux"
@@ -39,9 +42,11 @@
     },
     {
       "name": "windows",
+      "inherits": "debug",
       "binaryDir": "${sourceDir}/build/windows",
       "generator": "Ninja",
       "cacheVariables": {
+        "CMAKE_C_COMPILER_LAUNCHER": "ccache",
         "CMAKE_CXX_COMPILER_LAUNCHER": "ccache",
         "CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG": "${sourceDir}/build/windows",
         "CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE": "${sourceDir}/build/windows",
