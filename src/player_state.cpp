@@ -132,7 +132,10 @@ void SlideState::update(Player& player) {
     return;
   }
 
-  if (player.is_on_floor_only()) {
+  if (velocity.y < 0) {
+    return;
+  }
+  if (player.is_on_floor()) {
     velocity.x == 0 ? idle(player) : run(player);
   } else {
     jump_out(player);
