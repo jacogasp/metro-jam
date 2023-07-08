@@ -7,6 +7,8 @@
 [ext_resource type="TileSet" uid="uid://0w2a5bo421v7" path="res://assets/tilesets/TilesetBlocks.tres" id="4_pyf6q"]
 [ext_resource type="PackedScene" uid="uid://cu0874vm7p4ku" path="res://scenes/Bumblee.tscn" id="6_jj53g"]
 [ext_resource type="PackedScene" uid="uid://cta8f1rvvtlj7" path="res://scenes/steam_door.tscn" id="7_bjane"]
+[ext_resource type="PackedScene" uid="uid://byowg4tosyvo2" path="res://scenes/platform.tscn" id="7_mbcqu"]
+
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dbwxh"]
 size = Vector2(17.5, 64)
@@ -108,6 +110,12 @@ position = Vector2(4655, 2464)
 
 [node name="steam_door1" parent="." instance=ExtResource("7_bjane")]
 position = Vector2(267, 2461)
+[node name="Platforms" type="Node" parent="."]
+
+[node name="Platform1" parent="Platforms" instance=ExtResource("7_mbcqu")]
+position = Vector2(2875, 2139)
+amplitude = 150.0
+frequency = 1.5
 
 [connection signal="body_entered" from="GateDHall" to="GateDHall" method="_on_body_entered"]
 [connection signal="body_exited" from="GateDHall" to="GateDHall" method="_on_body_exited"]
