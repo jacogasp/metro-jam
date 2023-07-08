@@ -45,18 +45,17 @@ fract_delta = false
 script = ExtResource("2_crnuq")
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_mask = 257
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(0, -59)
 shape = SubResource("RectangleShape2D_wn6cd")
 
 [node name="StartTimer" type="Timer" parent="."]
-wait_time = 3.0
 one_shot = true
 autostart = true
 
 [node name="StopTimer" type="Timer" parent="."]
-wait_time = 5.0
 one_shot = true
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
