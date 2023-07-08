@@ -10,12 +10,6 @@ void LifeBar::_bind_methods() {
   ClassDB::bind_method(D_METHOD("get_offset"), &LifeBar::get_offset);
   ClassDB::bind_method(D_METHOD("set_offset"), &LifeBar::set_offset);
 
-  ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "life_empty"), "get_life_empty",
-               "set_life_empty");
-  ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "life_full"), "get_life_full",
-               "set_life_full");
-  ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "life_texture"), "set_life_sprite",
-               "get_life_sprite");
   ADD_PROPERTY(PropertyInfo(Variant::INT, "max_lives"), "set_max_lives",
                "get_max_lives");
   ADD_PROPERTY(PropertyInfo(Variant::INT, "current_life"), "set_current_life",
@@ -50,11 +44,11 @@ float LifeBar::get_offset() const {
 
 void LifeBar::_ready() {
   m_life_empty = get_node<Sprite2D>("LifeEmpty");
-  m_life_full = get_node<Sprite2D>("LifeFull");
+  m_life_full  = get_node<Sprite2D>("LifeFull");
   if (m_life_full == nullptr || m_life_empty == nullptr)
     return;
-  m_placeholder_width = m_life_empty->get_rect().size.x;
-  m_life_width        = m_life_full->get_rect().size.x;
+  m_life_empty_width  = m_life_empty->get_rect().size.x;
+  m_life_full_width   = m_life_full->get_rect().size.x;
   init();
 }
 
@@ -65,7 +59,7 @@ void LifeBar::init() {
   float current_x = 0;
   for (size_t i = 0; i < m_current_life; ++i) {
     Vector2 position = Vector2{current_x, 0};
-    current_x += m_life_width + m_offset;
+    current_x += m_life_full_width + m_offset;
     m_sprites.emplace_back(m_life_full->duplicate());
     m_sprites.back()->set("position", position);
     add_child(m_sprites.back());
@@ -73,9 +67,10 @@ void LifeBar::init() {
 
   if (m_life_empty == nullptr)
     return;
+
   for (size_t i = m_current_life; i < m_max_lives; ++i) {
     Vector2 position = Vector2{current_x, 0};
-    current_x += m_life_width + m_offset;
+    current_x += m_life_empty_width + m_offset;
     auto instance = m_life_empty->duplicate();
     instance->set("position", position);
     add_child(instance);

@@ -17,8 +17,8 @@ class LifeBar : public Node2D {
   int m_max_lives           = 0;
   int m_current_life        = 0;
   float m_offset            = 0;
-  float m_placeholder_width = 0;
-  float m_life_width        = 0;
+  float m_life_empty_width  = 0;
+  float m_life_full_width   = 0;
   std::vector<Node*> m_sprites{};
 
   static void _bind_methods();

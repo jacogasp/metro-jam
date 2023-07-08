@@ -3,9 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://brq77udpwpfat" path="res://assets/tilesets/Tileset.png" id="1_0166i"]
 
 [node name="LifeBar" type="LifeBar"]
-max_lives = 8
-current_life = 7
-offset = 1.426
+max_lives = 5
+current_life = 5
+offset = -4.0
 
 [node name="LifeFull" type="Sprite2D" parent="."]
 texture = ExtResource("1_0166i")
