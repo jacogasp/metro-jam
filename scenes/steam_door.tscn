@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://cta8f1rvvtlj7"]
+
+[ext_resource type="Material" uid="uid://b2nx5n23nqg2u" path="res://shaders/SteamParticle.material" id="1_yk6uc"]
+[ext_resource type="Texture2D" uid="uid://bjjxt2cylw5jy" path="res://assets/textures/smoke.png" id="2_fl2t3"]
+[ext_resource type="Script" path="res://scripts/steam_door.gd" id="3_4b8t3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q44ng"]
+size = Vector2(14, 67.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d82n3"]
+size = Vector2(2, 68)
+
+[node name="steam_door" type="GPUParticles2D"]
+amount = 56
+process_material = ExtResource("1_yk6uc")
+texture = ExtResource("2_fl2t3")
+lifetime = 0.4
+fixed_fps = 15
+trail_lifetime = 1.1
+script = ExtResource("3_4b8t3")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 257
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -34)
+shape = SubResource("RectangleShape2D_q44ng")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, -34)
+shape = SubResource("RectangleShape2D_d82n3")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
