@@ -18,7 +18,7 @@ gravity = 800.0
 jump_force = 270.0
 air_jump_force = 300.0
 slide_speed = 100.0
-position = Vector2(955, 2432)
+position = Vector2(2752, 1975)
 velocity = Vector2(0, 0)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
