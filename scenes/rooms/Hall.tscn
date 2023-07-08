@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://0e7eflaq7ui6"]
+[gd_scene load_steps=10 format=3 uid="uid://0e7eflaq7ui6"]
 
 [ext_resource type="Texture2D" uid="uid://b2u8bgksqj83j" path="res://icon.svg" id="1_hkmiw"]
 [ext_resource type="Material" uid="uid://g3uwsdhmuuaj" path="res://shaders/Water.material" id="2_333v6"]
@@ -7,8 +7,7 @@
 [ext_resource type="TileSet" uid="uid://0w2a5bo421v7" path="res://assets/tilesets/TilesetBlocks.tres" id="4_pyf6q"]
 [ext_resource type="PackedScene" uid="uid://cu0874vm7p4ku" path="res://scenes/Bumblee.tscn" id="6_jj53g"]
 [ext_resource type="PackedScene" uid="uid://cta8f1rvvtlj7" path="res://scenes/steam_door.tscn" id="7_bjane"]
-[ext_resource type="PackedScene" uid="uid://byowg4tosyvo2" path="res://scenes/platform.tscn" id="7_mbcqu"]
-
+[ext_resource type="PackedScene" path="res://scenes/platform.tscn" id="7_mbcqu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dbwxh"]
 size = Vector2(17.5, 64)
@@ -110,6 +109,7 @@ position = Vector2(4655, 2464)
 
 [node name="steam_door1" parent="." instance=ExtResource("7_bjane")]
 position = Vector2(267, 2461)
+
 [node name="Platforms" type="Node" parent="."]
 
 [node name="Platform1" parent="Platforms" instance=ExtResource("7_mbcqu")]
