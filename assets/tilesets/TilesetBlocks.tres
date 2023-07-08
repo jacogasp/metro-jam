@@ -30,6 +30,7 @@ tile_data = PackedInt32Array(0, 131072, 4, 65536, 131072, 5, 1, 196608, 4, 65537
 tile_data = PackedInt32Array(0, 65536, 1)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jsf7a"]
+resource_name = "Tileset"
 texture = ExtResource("1_khbx3")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
