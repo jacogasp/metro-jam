@@ -12,8 +12,8 @@ using namespace godot;
 class LifeBar : public Node2D {
   GDCLASS(LifeBar, Node2D)
 
-  Sprite2D m_placeholder_sprite{};
-  Sprite2D m_life_sprite{};
+  Sprite2D* m_life_empty    = nullptr;
+  Sprite2D* m_life_full     = nullptr;
   int m_max_lives           = 0;
   int m_current_life        = 0;
   float m_offset            = 0;
@@ -23,10 +23,6 @@ class LifeBar : public Node2D {
 
   static void _bind_methods();
 
-  void set_placeholder_sprite(const Ref<Texture2D>& texture);
-  Ref<Texture2D> get_placeholder_sprite() const;
-  void set_life_sprite(const Ref<Texture2D>& image);
-  Ref<Texture2D> get_life_sprite() const;
   void set_max_lives(int max_lives);
   [[nodiscard]] int get_max_lives() const;
   void set_current_life(int current_life);
