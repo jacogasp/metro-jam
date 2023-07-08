@@ -13,12 +13,12 @@ entry_room = ExtResource("1_x5l5l")
 player = NodePath("../player")
 
 [node name="player" parent="." instance=ExtResource("2_5tq4j")]
-speed = 260.0
+speed = 280.0
 gravity = 800.0
-jump_force = 270.0
+jump_force = 350.0
 air_jump_force = 300.0
 slide_speed = 100.0
-position = Vector2(955, 2432)
+position = Vector2(4357, 1752)
 velocity = Vector2(0, 0)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
