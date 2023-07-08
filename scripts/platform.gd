@@ -20,7 +20,6 @@ func _process(delta):
 	time += delta
 	var y = amplitude * sin(frequency * time)
 	position.y -= y * delta
-	print(position.y, " ", y)
 
 func enable():
 	self.active = true
