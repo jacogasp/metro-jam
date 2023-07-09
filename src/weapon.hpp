@@ -18,10 +18,10 @@ class Weapon : public Area2D {
 public:
     void _ready() override;
     void _physics_process(float delta);
-    [[nodiscard]] float get_damage() const;
-    void set_damage(float damage);
+    [[nodiscard]] int get_damage() const;
+    void set_damage(int damage);
     void set_flip_h(bool value);
-    bool is_flipped_h();
+    [[nodiscard]] bool is_flipped_h() const;
     void _on_body_entered(Node2D* body);
 };
 
