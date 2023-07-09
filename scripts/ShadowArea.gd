@@ -1,3 +1,4 @@
+@tool
 extends Node
 
 enum Direction {
@@ -13,13 +14,21 @@ var tile_map
 var area_position : Vector2
 var enter_side = Direction.right
 
+func _get_configuration_warnings():
+	var warnings = []
+	if not $Area2D:
+		warnings.push_back("A child of type Area2D is required")
+	if not $TileMap:
+		warnings.push_back("A child of type TileMap is required")
+	return warnings
+
 func _ready():
-	var children = get_children()
-	for child in children:
-		if child is Area2D:
-			child.connect("body_entered", body_entered)
-			child.connect("body_exited", body_exited)
-			area_position = child.get_node("CollisionShape2D").global_position
+	if not $Area2D:
+		return
+	$Area2D.connect("body_entered", body_entered)
+	$Area2D.connect("body_exited", body_exited)
+	area_position = $Area2D/CollisionShape2D.global_position
+	print(area_position)
 
 
 func body_entered(body):
