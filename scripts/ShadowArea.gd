@@ -25,13 +25,11 @@ func _ready():
 func body_entered(body):
 	if (body.is_in_group("Player")):
 		enter_side = get_body_side(body)
-		print("enter", enter_side)
-			
+
 
 func body_exited(body):
 	if (body.is_in_group("Player")):
 		var exit_side = get_body_side(body)
-		print("exit", exit_side)
 		if (exit_side == enter_side):
 			return
 		if visible:
