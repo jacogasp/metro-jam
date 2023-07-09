@@ -41,6 +41,12 @@ void Player::_bind_methods() {
                        &Player::get_hit_animation_time);
   ClassDB::bind_method(D_METHOD("set_slide_speed"), &Player::set_slide_speed);
   ClassDB::bind_method(D_METHOD("get_slide_speed"), &Player::get_slide_speed);
+  ClassDB::bind_method(D_METHOD("set_attack_range"), &Player::set_attack_range);
+  ClassDB::bind_method(D_METHOD("get_attack_range"), &Player::get_attack_range);
+  ClassDB::bind_method(D_METHOD("set_attack_strength"),
+                       &Player::set_attack_strength);
+  ClassDB::bind_method(D_METHOD("get_attack_strength"),
+                       &Player::get_attack_strength);
 
   // clang-format off
   ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "speed"), "set_speed", "get_speed");
@@ -50,11 +56,16 @@ void Player::_bind_methods() {
                "set_jump_force","get_jump_force");
   ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "air_jump_force"),
                "set_air_jump_force", "get_air_jump_force");
-ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "slide_speed"),
+  ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "slide_speed"),
                "set_slide_speed", "get_slide_speed");
   ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "hit_animation_time",
                PROPERTY_HINT_RANGE, "0,1,0.01"), "set_hit_animation_time",
                "get_hit_animation_time");
+  ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "attack_range"), "set_attack_range",
+               "get_attack_range");
+  ADD_PROPERTY(PropertyInfo(Variant::INT, "attack_strength"), "set_attack_strength",
+               "get_attack_strength");
+
   // clang-format on
 
   ADD_SIGNAL(MethodInfo("player_hit"));
@@ -68,8 +79,9 @@ void Player::_ready() {
   m_animatedSprite2D->play("Idle");
   m_weapon = get_node<Weapon>("Weapon");
   m_weapon->set_monitoring(false);
-  m_material = m_animatedSprite2D->get_material();
-  m_vfx      = get_node<AnimationPlayer>("VFX");
+  m_material  = m_animatedSprite2D->get_material();
+  m_front_ray = get_node<RayCast2D>("FrontRay");
+  m_vfx       = get_node<AnimationPlayer>("VFX");
   load();
   m_logger->info("Player ready.");
 }
@@ -86,11 +98,18 @@ void Player::_process(float delta) {
   }
 
   auto const x_velocity = get_velocity().x;
+  auto const ray_origin = m_front_ray->get_position();
+
   if (x_velocity > 0) {
     m_direction = right;
   } else if (x_velocity < 0) {
     m_direction = left;
   }
+  Vector2 ray_target_position{m_attack_range, ray_origin.y};
+  if (m_direction == left) {
+    ray_target_position.x *= -1;
+  }
+  m_front_ray->set_target_position(ray_target_position);
 }
 
 void Player::_physics_process(float delta) {
@@ -187,6 +206,22 @@ void Player::set_air_jump_force(float force) {
   m_air_jump_force = force;
 }
 
+float Player::get_attack_range() const {
+  return m_attack_range;
+}
+
+void Player::set_attack_range(float attack_range) {
+  m_attack_range = attack_range;
+}
+
+int Player::get_attack_strength() const {
+  return m_attack_strength;
+}
+
+void Player::set_attack_strength(int strength) {
+  m_attack_strength = strength;
+}
+
 void Player::set_state(PlayerState* state) {
   m_state = state;
 }
@@ -212,7 +247,6 @@ void Player::set_hit_animation_time(float t) {
   if (m_animatedSprite2D == nullptr)
     return;
   m_material->set_shader_parameter("time", t);
-  queue_redraw();
 }
 
 float Player::get_hit_animation_time() const {

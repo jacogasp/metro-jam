@@ -277,7 +277,7 @@ _data = {
 speed = 300.0
 gravity = 2.08165e-12
 jump_force = 400.0
-position = Vector2(-118.443, 2047.78)
+position = Vector2(1744.13, 1983.78)
 collision_layer = 256
 collision_mask = 4113
 velocity = Vector2(0, 52514.6)
@@ -286,7 +286,7 @@ velocity = Vector2(0, 52514.6)
 material = ExtResource("1_krao5")
 sprite_frames = SubResource("SpriteFrames_0nsvt")
 animation = &"Idle"
-frame_progress = 0.660772
+frame_progress = 0.24813
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1.08649, 4.03809)
@@ -309,5 +309,11 @@ debug_color = Color(0.960784, 0, 0.517647, 0.419608)
 libraries = {
 "": SubResource("AnimationLibrary_ktlxv")
 }
+
+[node name="FrontRay" type="RayCast2D" parent="."]
+exclude_parent = false
+target_position = Vector2(112.872, 0.216064)
+collision_mask = 65535
+collide_with_areas = true
 
 [connection signal="body_entered" from="Weapon" to="Weapon" method="_on_body_entered"]
