@@ -23,6 +23,24 @@ Path Player::savings_path = []() {
   return path;
 }();
 
+static void set_ray_h_length(RayCast2D& ray, float strength) {
+  auto position = ray.get_position();
+  Vector2 target_position;
+  target_position.x =
+      position.x > 0 ? position.x + strength : position.x - strength;
+  target_position.y = position.y;
+  ray.set_target_position(target_position);
+}
+
+static void flip_h(RayCast2D& ray) {
+  auto position        = ray.get_position();
+  auto target_position = ray.get_target_position();
+  position.x *= -1;
+  target_position.x *= -1;
+  ray.set_position(position);
+  ray.set_target_position(target_position);
+}
+
 void Player::_bind_methods() {
   ClassDB::bind_method(D_METHOD("set_speed"), &Player::set_speed);
   ClassDB::bind_method(D_METHOD("get_speed"), &Player::get_speed);
@@ -81,7 +99,8 @@ void Player::_ready() {
   m_weapon->set_monitoring(false);
   m_material  = m_animatedSprite2D->get_material();
   m_front_ray = get_node<RayCast2D>("FrontRay");
-  m_vfx       = get_node<AnimationPlayer>("VFX");
+  set_ray_h_length(*m_front_ray, m_attack_range);
+  m_vfx = get_node<AnimationPlayer>("VFX");
   load();
   m_logger->info("Player ready.");
 }
@@ -97,19 +116,18 @@ void Player::_process(float delta) {
     load();
   }
 
-  auto const x_velocity = get_velocity().x;
-  auto const ray_origin = m_front_ray->get_position();
+  auto const x_velocity     = get_velocity().x;
+  auto const prev_direction = m_direction;
 
   if (x_velocity > 0) {
     m_direction = right;
   } else if (x_velocity < 0) {
     m_direction = left;
   }
-  Vector2 ray_target_position{m_attack_range, ray_origin.y};
-  if (m_direction == left) {
-    ray_target_position.x *= -1;
+
+  if (prev_direction != m_direction) {
+    flip_h(*m_front_ray);
   }
-  m_front_ray->set_target_position(ray_target_position);
 }
 
 void Player::_physics_process(float delta) {
@@ -219,6 +237,9 @@ int Player::get_attack_strength() const {
 }
 
 void Player::set_attack_strength(int strength) {
+  if (m_front_ray) {
+    set_ray_h_length(*m_front_ray, m_attack_range);
+  }
   m_attack_strength = strength;
 }
 

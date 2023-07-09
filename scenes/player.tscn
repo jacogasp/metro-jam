@@ -277,7 +277,8 @@ _data = {
 speed = 300.0
 gravity = 2.08165e-12
 jump_force = 400.0
-position = Vector2(1744.13, 1983.78)
+attack_range = 10.0
+position = Vector2(1745.13, 1983.78)
 collision_layer = 256
 collision_mask = 4113
 velocity = Vector2(0, 52514.6)
@@ -286,7 +287,7 @@ velocity = Vector2(0, 52514.6)
 material = ExtResource("1_krao5")
 sprite_frames = SubResource("SpriteFrames_0nsvt")
 animation = &"Idle"
-frame_progress = 0.24813
+frame_progress = 0.214461
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1.08649, 4.03809)
@@ -295,9 +296,9 @@ shape = SubResource("CapsuleShape2D_8ynl1")
 [node name="LandingRay" type="RayCast2D" parent="."]
 
 [node name="Weapon" type="Weapon" parent="."]
-position = Vector2(6.08649, 1.07617)
+position = Vector2(5.86994, 44.22)
 collision_layer = 0
-collision_mask = 8
+collision_mask = 0
 monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Weapon"]
@@ -311,9 +312,11 @@ libraries = {
 }
 
 [node name="FrontRay" type="RayCast2D" parent="."]
+position = Vector2(12.87, 0.219971)
 exclude_parent = false
-target_position = Vector2(112.872, 0.216064)
+target_position = Vector2(24.87, 0.219971)
 collision_mask = 65535
+hit_from_inside = true
 collide_with_areas = true
 
 [connection signal="body_entered" from="Weapon" to="Weapon" method="_on_body_entered"]
