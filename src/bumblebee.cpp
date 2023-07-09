@@ -41,6 +41,8 @@ void BumbleBee::_ready() {
     return;
   m_animated_sprite2D = get_node<AnimatedSprite2D>("AnimatedSprite2D");
   m_animated_sprite2D->play("Idle");
+  auto material = m_animated_sprite2D->get_material();
+  m_animated_sprite2D->set_material(material->duplicate());
   set_velocity({0, 0});
 
   m_health     = m_total_health;

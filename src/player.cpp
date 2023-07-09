@@ -97,7 +97,8 @@ void Player::_ready() {
   m_animatedSprite2D->play("Idle");
   m_weapon = get_node<Weapon>("Weapon");
   m_weapon->set_monitoring(false);
-  m_material  = m_animatedSprite2D->get_material();
+  m_material  = m_animatedSprite2D->get_material()->duplicate();
+  m_animatedSprite2D->set_material(m_material);
   m_front_ray = get_node<RayCast2D>("FrontRay");
   set_ray_h_length(*m_front_ray, m_attack_range);
   m_vfx = get_node<AnimationPlayer>("VFX");
