@@ -10,7 +10,7 @@
 
 using namespace godot;
 
-class Chest : public StaticBody2D, public IDamageable {
+class Chest : public StaticBody2D, public Damageable {
     GDCLASS(Chest, StaticBody2D);
     int m_life{20};
     Ref<PackedScene> m_packed_scene{nullptr};
