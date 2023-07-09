@@ -56,6 +56,7 @@ class BumbleBee final
   AnimatedSprite2D* m_animated_sprite2D{nullptr};
   AnimationPlayer* m_vfx{nullptr};
   HealthBar* m_health_bar{nullptr};
+  Node2D* m_target{nullptr};
 
   Timer m_timer{};
   Direction m_direction       = left;
@@ -66,6 +67,7 @@ class BumbleBee final
 
   static void _bind_methods();
   void _ready() override;
+  void _process(float);
   void _physics_process(float delta);
   void set_state(BumbleBeeState* state);
   void take_hit(int damage) override;
@@ -74,8 +76,11 @@ class BumbleBee final
   void set_jump_interval(TimeDelta interval);
   [[nodiscard]] TimeDelta get_jump_interval() const;
   void on_body_entered(Node* node);
-  void set_hit_animation_time(float t);
+  void set_hit_animation_time(float t) const;
   [[nodiscard]] float get_hit_animation_time() const;
+  void look_at(Node2D* node);
+  void acquire_target(Node2D *node);
+  void release_target(Node2D *node);
 };
 
 // Commands

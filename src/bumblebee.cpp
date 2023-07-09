@@ -19,6 +19,9 @@ void BumbleBee::_bind_methods() {
   ClassDB::bind_method(D_METHOD("get_hit_animation_time"),
                        &BumbleBee::get_hit_animation_time);
   ClassDB::bind_method(D_METHOD("take_hit"), &BumbleBee::take_hit);
+  ClassDB::bind_method(D_METHOD("look_at"), &BumbleBee::look_at);
+  ClassDB::bind_method(D_METHOD("acquire_target"), &BumbleBee::acquire_target);
+  ClassDB::bind_method(D_METHOD("release_target"), &BumbleBee::release_target);
   ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "jump_velocity"),
                "set_jump_velocity", "get_jump_velocity");
   ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "jump_interval"),
@@ -111,7 +114,7 @@ void BumbleBee::take_hit(int damage) {
   }
 }
 
-void BumbleBee::set_hit_animation_time(float t) {
+void BumbleBee::set_hit_animation_time(float t) const {
   if (m_animated_sprite2D) {
     Ref<ShaderMaterial> material = m_animated_sprite2D->get_material();
     material->set_shader_parameter("time", t);
@@ -126,6 +129,28 @@ float BumbleBee::get_hit_animation_time() const {
     return 0.0;
   float const time = material->get_shader_parameter("time");
   return time;
+}
+
+void BumbleBee::look_at(Node2D* node) {
+  auto position      = get_position();
+  auto node_position = node->get_position();
+  m_direction        = node_position.x < position.x ? left : right;
+}
+
+void BumbleBee::_process(float) {
+  if (m_target) {
+    look_at(m_target);
+  }
+}
+
+void BumbleBee::acquire_target(Node2D* node) {
+  m_target = node;
+}
+
+void BumbleBee::release_target(Node2D* node) {
+  if (m_target == node) {
+    m_target = nullptr;
+  }
 }
 
 // Commands
