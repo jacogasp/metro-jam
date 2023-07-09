@@ -177,5 +177,6 @@ on:
       - .clang-format
       - .gitignore
       - download_artifacts.py
+      - player_states.drawio
       - enable_debugger.sh
       - README.md
