@@ -1,11 +1,11 @@
 @tool
-extends Node
+extends Node2D
 
 enum Direction {
 	left, right
 }
 
-var visible = true
+var shadow_visible = true
 const physics_layer = 0
 const block_layer = 5
 var bit_mask = 0
@@ -41,12 +41,12 @@ func body_exited(body):
 		var exit_side = get_body_side(body)
 		if (exit_side == enter_side):
 			return
-		if visible:
+		if shadow_visible:
 			tile_map = $TileMap.duplicate()
 			$TileMap.queue_free()
 		else:
 			add_child(tile_map)
-		visible = not visible
+		shadow_visible = not shadow_visible
 
 
 func get_body_side(body):

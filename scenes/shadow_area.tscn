@@ -2,5 +2,5 @@
 
 [ext_resource type="Script" path="res://scripts/ShadowArea.gd" id="1_de4v0"]
 
-[node name="ShadowArea" type="Node"]
+[node name="ShadowArea" type="Node2D"]
 script = ExtResource("1_de4v0")
