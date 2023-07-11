@@ -20,7 +20,7 @@ config/icon="res://icon.svg"
 window/size/viewport_width=688
 window/size/viewport_height=384
 window/size/mode=2
-window/stretch/mode="viewport"
+window/stretch/mode="canvas_items"
 
 [input]
 
@@ -82,6 +82,3 @@ slide={
 [rendering]
 
 textures/vram_compression/import_s3tc_bptc=true
-anti_aliasing/quality/msaa_2d=2
-anti_aliasing/quality/screen_space_aa=1
-anti_aliasing/quality/use_taa=true
