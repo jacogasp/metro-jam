@@ -316,9 +316,9 @@ libraries = {
 }
 
 [node name="FrontRay" type="RayCast2D" parent="."]
-position = Vector2(12.87, 0.219971)
+position = Vector2(13, 0)
 exclude_parent = false
-target_position = Vector2(24.87, 0.219971)
+target_position = Vector2(23, 0)
 collision_mask = 65535
 hit_from_inside = true
 collide_with_areas = true
