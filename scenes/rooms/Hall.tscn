@@ -6,7 +6,7 @@
 [ext_resource type="Material" uid="uid://bcw2f556s0rec" path="res://shaders/Fire.material" id="4_e56xf"]
 [ext_resource type="TileSet" uid="uid://0w2a5bo421v7" path="res://assets/tilesets/TilesetBlocks.tres" id="4_pyf6q"]
 [ext_resource type="PackedScene" uid="uid://cu0874vm7p4ku" path="res://scenes/Bumblee.tscn" id="6_jj53g"]
-[ext_resource type="PackedScene" uid="uid://cta8f1rvvtlj7" path="res://scenes/steam_door.tscn" id="7_bjane"]
+[ext_resource type="PackedScene" uid="uid://cm30bx70vnhcg" path="res://scenes/steam_door.tscn" id="7_bjane"]
 [ext_resource type="PackedScene" uid="uid://byowg4tosyvo2" path="res://scenes/platform.tscn" id="7_mbcqu"]
 [ext_resource type="PackedScene" uid="uid://rknubmbqfi4w" path="res://scenes/shadow_area.tscn" id="9_tmsto"]
 
@@ -111,9 +111,6 @@ position = Vector2(4624, 2464)
 [node name="SteamJet14" parent="SteamJet_line2" instance=ExtResource("3_gaim7")]
 position = Vector2(4655, 2464)
 
-[node name="steam_door1" parent="." instance=ExtResource("7_bjane")]
-position = Vector2(1025, 1966)
-
 [node name="PlatformSystem1" type="Node" parent="."]
 
 [node name="Platform1" parent="PlatformSystem1" instance=ExtResource("7_mbcqu")]
@@ -147,6 +144,7 @@ amplitude = 150.0
 frequency = 1.5
 
 [node name="ShadowArea" parent="." instance=ExtResource("9_tmsto")]
+position = Vector2(3, -3)
 
 [node name="Area2D" type="Area2D" parent="ShadowArea"]
 position = Vector2(3654, 2272)
@@ -163,8 +161,20 @@ layer_0/tile_data = PackedInt32Array(3473512, 65536, 1, 3539048, 65536, 1, 36045
 
 [node name="PlatformSystem2" type="Node" parent="."]
 
-[node name="steam_door2toCorridor" parent="." instance=ExtResource("7_bjane")]
-position = Vector2(924, 1641)
+[node name="SteamDoor" parent="." instance=ExtResource("7_bjane")]
+position = Vector2(1023, 2016)
+
+[node name="CollisionShape2D" parent="SteamDoor/Door/StaticBody2D" index="0"]
+position = Vector2(0, -67)
+
+[node name="Area2D" parent="SteamDoor/Door" index="2"]
+collision_layer = 0
+collision_mask = 256
+
+[node name="CollisionShape2D" parent="SteamDoor/Door/Area2D" index="0"]
+position = Vector2(0, -67.5)
 
 [connection signal="body_entered" from="GateDHall" to="GateDHall" method="_on_body_entered"]
 [connection signal="body_exited" from="GateDHall" to="GateDHall" method="_on_body_exited"]
+
+[editable path="SteamDoor"]
