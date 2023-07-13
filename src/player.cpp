@@ -42,62 +42,35 @@ static void flip_h(RayCast2D& ray) {
 }
 
 void Player::_bind_methods() {
-  ClassDB::bind_method(D_METHOD("set_speed"), &Player::set_speed);
-  ClassDB::bind_method(D_METHOD("get_speed"), &Player::get_speed);
-  ClassDB::bind_method(D_METHOD("set_gravity"), &Player::set_gravity);
-  ClassDB::bind_method(D_METHOD("get_gravity"), &Player::get_gravity);
-  ClassDB::bind_method(D_METHOD("get_jump_force"), &Player::get_jump_force);
-  ClassDB::bind_method(D_METHOD("set_jump_force"), &Player::set_jump_force);
-  ClassDB::bind_method(D_METHOD("get_air_jump_force"),
-                       &Player::get_air_jump_force);
-  ClassDB::bind_method(D_METHOD("set_air_jump_force"),
-                       &Player::set_air_jump_force);
-  ClassDB::bind_method(D_METHOD("hit"), &Player::hit);
+  BIND_PROPERTY(Player, speed, Variant::FLOAT);
+  BIND_PROPERTY(Player, gravity, Variant::FLOAT);
+  BIND_PROPERTY(Player, jump_force, Variant::FLOAT);
+  BIND_PROPERTY(Player, air_jump_force, Variant::FLOAT);
+  BIND_PROPERTY(Player, slide_speed, Variant::FLOAT);
+  BIND_PROPERTY(Player, attack_range, Variant::FLOAT);
+  BIND_PROPERTY(Player, attack_strength, Variant::INT);
+
   ClassDB::bind_method(D_METHOD("set_hit_animation_time"),
                        &Player::set_hit_animation_time);
   ClassDB::bind_method(D_METHOD("get_hit_animation_time"),
                        &Player::get_hit_animation_time);
-  ClassDB::bind_method(D_METHOD("set_slide_speed"), &Player::set_slide_speed);
-  ClassDB::bind_method(D_METHOD("get_slide_speed"), &Player::get_slide_speed);
-  ClassDB::bind_method(D_METHOD("set_attack_range"), &Player::set_attack_range);
-  ClassDB::bind_method(D_METHOD("get_attack_range"), &Player::get_attack_range);
-  ClassDB::bind_method(D_METHOD("set_attack_strength"),
-                       &Player::set_attack_strength);
-  ClassDB::bind_method(D_METHOD("get_attack_strength"),
-                       &Player::get_attack_strength);
 
-  // clang-format off
-  ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "speed"), "set_speed", "get_speed");
-  ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "gravity"),
-               "set_gravity","get_gravity");
-  ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "jump_force"),
-               "set_jump_force","get_jump_force");
-  ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "air_jump_force"),
-               "set_air_jump_force", "get_air_jump_force");
-  ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "slide_speed"),
-               "set_slide_speed", "get_slide_speed");
+  ClassDB::bind_method(D_METHOD("hit"), &Player::hit);
   ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "hit_animation_time",
-               PROPERTY_HINT_RANGE, "0,1,0.01"), "set_hit_animation_time",
-               "get_hit_animation_time");
-  ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "attack_range"), "set_attack_range",
-               "get_attack_range");
-  ADD_PROPERTY(PropertyInfo(Variant::INT, "attack_strength"), "set_attack_strength",
-               "get_attack_strength");
-
-  // clang-format on
+                            PROPERTY_HINT_RANGE, "0,1,0.01"),
+               "set_hit_animation_time", "get_hit_animation_time");
 
   ADD_SIGNAL(MethodInfo("player_hit"));
 }
 
 void Player::_ready() {
   PROFILE_FUNCTION()
-  m_logger = core_game::LoggerLocator::getService();
-
+  m_logger           = core_game::LoggerLocator::getService();
   m_animatedSprite2D = get_node<AnimatedSprite2D>("AnimatedSprite2D");
   m_animatedSprite2D->play("Idle");
   m_weapon = get_node<Weapon>("Weapon");
   m_weapon->set_monitoring(false);
-  m_material  = m_animatedSprite2D->get_material()->duplicate();
+  m_material = m_animatedSprite2D->get_material()->duplicate();
   m_animatedSprite2D->set_material(m_material);
   m_front_ray = get_node<RayCast2D>("FrontRay");
   set_ray_h_length(*m_front_ray, m_attack_range);
