@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=12 format=3 uid="uid://0w2a5bo421v7"]
+[gd_resource type="TileSet" load_steps=13 format=3 uid="uid://0w2a5bo421v7"]
 
 [ext_resource type="Texture2D" uid="uid://brq77udpwpfat" path="res://assets/tilesets/Tileset.png" id="1_khbx3"]
 
@@ -28,6 +28,9 @@ tile_data = PackedInt32Array(0, 131072, 4, 65536, 131072, 5, 1, 196608, 4, 65537
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_h6xk6"]
 tile_data = PackedInt32Array(0, 65536, 1)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_40j81"]
+tile_data = PackedInt32Array(0, 196608, 8, 65536, 196608, 9, 131072, 196608, 10, 1, 262144, 8, 65537, 262144, 9, 131073, 262144, 10, 2, 327680, 8, 65538, 327680, 9, 131074, 327680, 10)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jsf7a"]
 resource_name = "Tileset"
@@ -617,9 +620,6 @@ texture_region_size = Vector2i(32, 32)
 2:9/0 = 0
 2:9/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:9/0/physics_layer_0/angular_velocity = 0.0
-1:8/0 = 0
-1:8/0/physics_layer_0/linear_velocity = Vector2(0, 0)
-1:8/0/physics_layer_0/angular_velocity = 0.0
 2:8/0 = 0
 2:8/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:8/0/physics_layer_0/angular_velocity = 0.0
@@ -656,6 +656,9 @@ texture_region_size = Vector2i(32, 32)
 5:10/0 = 0
 5:10/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 5:10/0/physics_layer_0/angular_velocity = 0.0
+1:8/0 = 0
+1:8/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:8/0/physics_layer_0/angular_velocity = 0.0
 
 [resource]
 tile_size = Vector2i(32, 32)
@@ -673,3 +676,4 @@ pattern_5 = SubResource("TileMapPattern_0iwvq")
 pattern_6 = SubResource("TileMapPattern_njipi")
 pattern_7 = SubResource("TileMapPattern_nx8y6")
 pattern_8 = SubResource("TileMapPattern_h6xk6")
+pattern_9 = SubResource("TileMapPattern_40j81")

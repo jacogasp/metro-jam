@@ -1,0 +1,63 @@
+[gd_scene load_steps=7 format=3 uid="uid://d3giml0uo584m"]
+
+[ext_resource type="Texture2D" uid="uid://bjjxt2cylw5jy" path="res://assets/textures/smoke.png" id="1_rgbxg"]
+[ext_resource type="Script" path="res://scripts/steam_jet.gd" id="2_gf6rp"]
+
+[sub_resource type="Curve" id="Curve_ee86a"]
+_data = [Vector2(0.000650715, 0), 0.0, 0.0, 0, 0, Vector2(0.996446, 0.993384), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_md0sv"]
+curve = SubResource("Curve_ee86a")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nfpxs"]
+lifetime_randomness = 0.38
+emission_shape = 1
+emission_sphere_radius = 2.73
+particle_flag_disable_z = true
+direction = Vector3(2.08165e-12, -1, 2.08165e-12)
+gravity = Vector3(0, 1000, 0)
+angular_velocity_min = -128.78
+angular_velocity_max = 120.98
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+damping_max = 49.05
+angle_min = -42.9
+angle_max = 136.6
+scale_min = 0.0
+scale_max = 0.1
+scale_curve = SubResource("CurveTexture_md0sv")
+turbulence_noise_strength = 0.35
+turbulence_noise_scale = 5.0
+turbulence_noise_speed = Vector3(2, 2.08165e-12, 0.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wn6cd"]
+size = Vector2(24, 118)
+
+[node name="SteamJet" type="GPUParticles2D"]
+position = Vector2(201, 268)
+amount = 200
+process_material = SubResource("ParticleProcessMaterial_nfpxs")
+texture = ExtResource("1_rgbxg")
+lifetime = 0.5
+randomness = 0.6
+fract_delta = false
+script = ExtResource("2_gf6rp")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 257
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 59)
+shape = SubResource("RectangleShape2D_wn6cd")
+
+[node name="StartTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="StopTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
+[connection signal="timeout" from="StopTimer" to="." method="_on_stop_timer_timeout"]
