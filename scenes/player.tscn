@@ -1,7 +1,11 @@
-[gd_scene load_steps=34 format=3 uid="uid://dibkh0kdqa671"]
+[gd_scene load_steps=35 format=3 uid="uid://dibkh0kdqa671"]
 
-[ext_resource type="Material" uid="uid://bqesh5ktv6wvb" path="res://shaders/Hit.material" id="1_krao5"]
+[ext_resource type="Shader" path="res://shaders/Hit.gdshader" id="1_m50du"]
 [ext_resource type="Texture2D" uid="uid://cq3js6pr88m2d" path="res://assets/characters/pg_sprites.png" id="2_7vcqu"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bebt3"]
+shader = ExtResource("1_m50du")
+shader_parameter/time = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hq0w2"]
 atlas = ExtResource("2_7vcqu")
@@ -284,7 +288,7 @@ collision_mask = 4113
 velocity = Vector2(0, 52514.6)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-material = ExtResource("1_krao5")
+material = SubResource("ShaderMaterial_bebt3")
 sprite_frames = SubResource("SpriteFrames_0nsvt")
 animation = &"Idle"
 frame_progress = 0.214461
