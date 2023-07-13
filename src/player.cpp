@@ -72,11 +72,36 @@ void Player::_ready() {
   m_weapon->set_monitoring(false);
   m_material = m_animatedSprite2D->get_material()->duplicate();
   m_animatedSprite2D->set_material(m_material);
-  m_front_ray = get_node<RayCast2D>("FrontRay");
+  m_front_ray       = get_node<RayCast2D>("FrontRay");
+  m_interaction_ray = get_node<RayCast2D>("InteractionRay");
   set_ray_h_length(*m_front_ray, m_attack_range);
   m_vfx = get_node<AnimationPlayer>("VFX");
   load();
   m_logger->info("Player ready.");
+}
+
+static void maybe_save(Player& player, Input& input) {
+  if (input.is_action_just_pressed("save")) {
+    player.save();
+  } else if (input.is_action_just_pressed("load")) {
+    player.load();
+  }
+}
+
+static bool check_interaction(Input& input, RayCast2D& ray) {
+  if (input.is_action_just_pressed("interact") && ray.is_colliding()) {
+    auto item = ray.get_collider();
+    if (item) {
+      item->call("interact");
+      auto parent = Object::cast_to<Area2D>(item)->get_parent();
+      if (parent && parent->get_parent()) {
+        auto node = parent->get_parent();
+        node->call("interact");
+      }
+      return true;
+    }
+  }
+  return false;
 }
 
 void Player::_process(float delta) {
@@ -84,14 +109,11 @@ void Player::_process(float delta) {
   if (Engine::get_singleton()->is_editor_hint())
     return;
   auto input = Input::get_singleton();
-  if (input->is_action_just_pressed("save")) {
-    save();
-  } else if (input->is_action_just_pressed("load")) {
-    load();
-  }
-
   auto const x_velocity     = get_velocity().x;
   auto const prev_direction = m_direction;
+
+  maybe_save(*this, *input);
+  check_interaction(*input, *m_interaction_ray);
 
   if (x_velocity > 0) {
     m_direction = right;
@@ -101,6 +123,7 @@ void Player::_process(float delta) {
 
   if (prev_direction != m_direction) {
     flip_h(*m_front_ray);
+    flip_h(*m_interaction_ray);
   }
 }
 

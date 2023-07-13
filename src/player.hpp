@@ -32,11 +32,13 @@ class Player
   float m_slide_speed                  = 400;
   float m_attack_range                 = 50;
   int m_attack_strength                = 25;
+  float m_object_interaction_range     = 150;
   Direction m_direction                = right;
   core_game::LoggerService* m_logger   = nullptr;
   AnimatedSprite2D* m_animatedSprite2D = nullptr;
   Weapon* m_weapon                     = nullptr;
   RayCast2D* m_front_ray               = nullptr;
+  RayCast2D* m_interaction_ray         = nullptr;
   AnimationPlayer* m_vfx               = nullptr;
   Ref<ShaderMaterial> m_material       = nullptr;
   PlayerState* m_state{&Player::standing};
