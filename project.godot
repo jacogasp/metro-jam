@@ -78,6 +78,7 @@ slide={
 2d_physics/layer_5="blocks"
 2d_physics/layer_9="player"
 2d_physics/layer_13="enemy"
+2d_physics/layer_17="lever"
 
 [rendering]
 
