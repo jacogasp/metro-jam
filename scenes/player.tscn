@@ -3,7 +3,7 @@
 [ext_resource type="Shader" path="res://shaders/Hit.gdshader" id="1_m50du"]
 [ext_resource type="Texture2D" uid="uid://cq3js6pr88m2d" path="res://assets/characters/pg_sprites.png" id="2_7vcqu"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_bebt3"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ffuyu"]
 shader = ExtResource("1_m50du")
 shader_parameter/time = 0.0
 
@@ -288,7 +288,7 @@ collision_mask = 4113
 velocity = Vector2(0, 52514.6)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-material = SubResource("ShaderMaterial_bebt3")
+material = SubResource("ShaderMaterial_ffuyu")
 sprite_frames = SubResource("SpriteFrames_0nsvt")
 animation = &"Idle"
 frame_progress = 0.214461
