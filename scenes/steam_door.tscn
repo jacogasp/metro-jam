@@ -13,22 +13,6 @@ font_size = 12
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x6goh"]
 size = Vector2(178, 94)
 
-[sub_resource type="Animation" id="Animation_eyy6y"]
-resource_name = "Open"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(-2, -2),
-"update": 0,
-"values": [-1.0472, -2.0944]
-}
-
 [sub_resource type="Animation" id="Animation_mktra"]
 resource_name = "Close"
 length = 0.2
@@ -43,6 +27,22 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(-2, -2),
 "update": 0,
 "values": [-2.0944, -1.0472]
+}
+
+[sub_resource type="Animation" id="Animation_eyy6y"]
+resource_name = "Open"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [-1.0472, -2.0944]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0mmlq"]
