@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://b31qyx4laex5m" path="res://scenes/steam_jet.tscn" id="3_gaim7"]
 [ext_resource type="Material" uid="uid://bcw2f556s0rec" path="res://shaders/Fire.material" id="4_e56xf"]
 [ext_resource type="TileSet" uid="uid://0w2a5bo421v7" path="res://assets/tilesets/TilesetBlocks.tres" id="4_pyf6q"]
-[ext_resource type="PackedScene" uid="uid://cu0874vm7p4ku" path="res://scenes/Bumblee.tscn" id="6_jj53g"]
+[ext_resource type="PackedScene" uid="uid://cu0874vm7p4ku" path="res://scenes/bumblee_bee.tscn" id="6_jj53g"]
 [ext_resource type="PackedScene" uid="uid://cm30bx70vnhcg" path="res://scenes/steam_door.tscn" id="7_bjane"]
 [ext_resource type="PackedScene" uid="uid://byowg4tosyvo2" path="res://scenes/platform.tscn" id="7_mbcqu"]
 [ext_resource type="PackedScene" uid="uid://rknubmbqfi4w" path="res://scenes/shadow_area.tscn" id="9_tmsto"]

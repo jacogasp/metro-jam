@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cu0874vm7p4ku"]
+[gd_scene load_steps=20 format=3 uid="uid://cu0874vm7p4ku"]
 
 [ext_resource type="Texture2D" uid="uid://chhfkylu6ll30" path="res://assets/characters/bumblebee_sprites.png" id="1_jjk3y"]
 [ext_resource type="Material" uid="uid://bqesh5ktv6wvb" path="res://shaders/Hit.material" id="1_y5ixb"]
@@ -31,6 +31,22 @@ region = Rect2(256, 0, 64, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_s2sns"]
 atlas = ExtResource("1_jjk3y")
 region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_txehd"]
+atlas = ExtResource("1_jjk3y")
+region = Rect2(576, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xqtil"]
+atlas = ExtResource("1_jjk3y")
+region = Rect2(640, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n1m3p"]
+atlas = ExtResource("1_jjk3y")
+region = Rect2(704, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_km03j"]
+atlas = ExtResource("1_jjk3y")
+region = Rect2(768, 0, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_p132n"]
 animations = [{
@@ -74,6 +90,23 @@ animations = [{
 "loop": true,
 "name": &"JumpOut",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_txehd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xqtil")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n1m3p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_km03j")
+}],
+"loop": true,
+"name": &"Walk",
+"speed": 5.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4dmxq"]
@@ -103,7 +136,7 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_asqgn"]
 size = Vector2(750, 722)
 
-[node name="Bumblee" type="BumbleBee"]
+[node name="BumbleBee" type="BumbleBee"]
 jump_velocity = Vector2(250, -250)
 jump_interval = 1.5
 collision_layer = 0
@@ -114,7 +147,8 @@ velocity = Vector2(-109650, -219300)
 material = ExtResource("1_y5ixb")
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_p132n")
-animation = &"JumpOut"
+animation = &"Walk"
+frame_progress = 0.641584
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_4dmxq")
