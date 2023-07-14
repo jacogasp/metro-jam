@@ -35,6 +35,10 @@ struct AttackCommand {
   void operator()(Player& player) const;
 };
 
+struct GrenadeCommand {
+  void operator()(Player& player) const;
+};
+
 struct SlideCommand {
   void operator()(Player& player) const;
 };

@@ -47,6 +47,11 @@ void AttackCommand::operator()(Player& player) const {
   }
 }
 
+void GrenadeCommand::operator()(Player& player) const {
+  player.m_animatedSprite2D->play("AttackGrenade");
+  player.set_state(&Player::attacking);
+}
+
 void SlideCommand::operator()(Player& player) const {
   player.m_animatedSprite2D->play("Slide");
   player.set_state(&Player::sliding);

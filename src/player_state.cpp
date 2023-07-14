@@ -15,6 +15,7 @@ static constexpr auto run      = RunCommand();
 static constexpr auto jump_out = JumpOutCommand();
 static constexpr auto air_jump = AirJumpCommand();
 static constexpr auto attack   = AttackCommand();
+static constexpr auto grenade  = GrenadeCommand();
 static constexpr auto slide    = SlideCommand();
 
 void StandingState::handleInput(Player& player, Input& input) {
@@ -26,6 +27,8 @@ void StandingState::handleInput(Player& player, Input& input) {
     run(player);
   } else if (input.is_action_just_pressed("attack")) {
     attack(player);
+  } else if (input.is_action_just_pressed("grenade")) {
+    grenade(player);
   }
 }
 
@@ -45,6 +48,8 @@ void JumpingState::handleInput(Player& player, Input& input) {
     air_jump(player);
   } else if (input.is_action_just_pressed("attack")) {
     attack(player);
+  } else if (input.is_action_just_pressed("grenade")) {
+    grenade(player);
   }
 }
 
@@ -65,6 +70,8 @@ void AirJumpingState::handleInput(Player& player, Input& input) {
   PROFILE_FUNCTION()
   if (input.is_action_just_pressed("attack")) {
     attack(player);
+  } else if (input.is_action_just_pressed("grenade")) {
+    grenade(player);
   }
 }
 
@@ -86,6 +93,8 @@ void RunningState::handleInput(Player& player, Input& input) {
     jump(player);
   } else if (input.is_action_just_pressed("attack")) {
     attack(player);
+  } else if (input.is_action_just_pressed("grenade")) {
+    grenade(player);
   } else if (input.is_action_just_pressed("slide")) {
     slide(player);
   }
