@@ -55,6 +55,13 @@ void BumbleBee::_ready() {
   walk(*this);
 }
 
+void BumbleBee::_process(float) {
+  if (m_target) {
+    look_at(m_target);
+  }
+}
+
+
 void BumbleBee::_physics_process(float delta) {
   if (Engine::get_singleton()->is_editor_hint())
     return;
@@ -129,12 +136,6 @@ void BumbleBee::look_at(Node2D* node) {
   m_direction        = node_position.x < position.x ? left : right;
 }
 
-void BumbleBee::_process(float) {
-  if (m_target) {
-    look_at(m_target);
-  }
-}
-
 void BumbleBee::acquire_target(Node2D* node) {
   m_timer.start();
   m_target = node;
@@ -150,7 +151,7 @@ void BumbleBee::release_target(Node2D* node) {
 }
 
 void BumbleBee::update_bounds() {
-  auto const cs   = get_node<CollisionShape2D>("Area2D/CollisionShape2D");
+  auto const cs   = get_node<CollisionShape2D>("AggroArea/CollisionShape2D");
   auto const rect = cs->get_shape()->get_rect();
   auto const pos  = get_position();
   m_bounds        = {pos.x - rect.size.x / 2, pos.x + rect.size.x / 2};
