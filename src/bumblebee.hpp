@@ -5,6 +5,7 @@
 #include "timer.hpp"
 #include <godot_cpp/classes/animated_sprite2d.hpp>
 #include <godot_cpp/classes/animation_player.hpp>
+#include <godot_cpp/classes/area2d.hpp>
 #include <godot_cpp/classes/character_body2d.hpp>
 #include <godot_cpp/classes/input.hpp>
 #include <godot_cpp/classes/ray_cast2d.hpp>
@@ -28,6 +29,10 @@ class IdleState : public BumbleBeeState {
   void update(BumbleBee& bumble_bee) const override;
 };
 
+class WalkingState : public BumbleBeeState {
+  void update(BumbleBee& bumble_bee) const override;
+};
+
 class JumpState : public BumbleBeeState {
   void update(BumbleBee& bumble_bee) const override;
 };
@@ -48,12 +53,14 @@ class BumbleBee final
   enum Direction { left = -1, right = 1 };
 
   static IdleState idle_state;
+  static WalkingState walking_state;
   static JumpState jumping;
   static OnWallState on_wall;
   static DyingState dying;
 
-  BumbleBeeState* m_state{&BumbleBee::idle_state};
+  BumbleBeeState* m_state{&BumbleBee::walking_state};
   AnimatedSprite2D* m_animated_sprite2D{nullptr};
+  Area2D* m_aggro_area{nullptr};
   AnimationPlayer* m_vfx{nullptr};
   HealthBar* m_health_bar{nullptr};
   Node2D* m_target{nullptr};
@@ -62,6 +69,7 @@ class BumbleBee final
   Direction m_direction       = left;
   Vector2 m_jump_velocity     = Vector2{200, -200};
   TimeDelta m_jump_interval_s = 2;
+  Vector2 m_bounds            = Vector2{};
   int m_total_health          = 100;
   int m_health                = 100;
 
@@ -79,13 +87,18 @@ class BumbleBee final
   void set_hit_animation_time(float t) const;
   [[nodiscard]] float get_hit_animation_time() const;
   void look_at(Node2D* node);
-  void acquire_target(Node2D *node);
-  void release_target(Node2D *node);
+  void acquire_target(Node2D* node);
+  void release_target(Node2D* node);
+  void update_bounds();
 };
 
 // Commands
 
 struct IdleCommand {
+  void operator()(BumbleBee& bumble_bee) const;
+};
+
+struct WalkCommand {
   void operator()(BumbleBee& bumble_bee) const;
 };
 

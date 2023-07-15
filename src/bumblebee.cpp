@@ -3,6 +3,7 @@
 #include <godot_cpp/classes/collision_shape2d.hpp>
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/shader_material.hpp>
+#include <godot_cpp/classes/shape2d.hpp>
 
 void BumbleBee::_bind_methods() {
   BIND_PROPERTY(BumbleBee, jump_velocity, Variant::FLOAT);
@@ -17,14 +18,16 @@ void BumbleBee::_bind_methods() {
   ClassDB::bind_method(D_METHOD("release_target"), &BumbleBee::release_target);
 }
 
-IdleState BumbleBee::idle_state = IdleState();
-JumpState BumbleBee::jumping    = JumpState();
-OnWallState BumbleBee::on_wall  = OnWallState();
-DyingState BumbleBee::dying     = DyingState();
-static auto constexpr idle      = IdleCommand();
-static auto constexpr jump      = JumpCommand();
-static auto constexpr flip      = FlipCommand();
-static auto constexpr die       = DieCommand();
+IdleState BumbleBee::idle_state       = IdleState();
+JumpState BumbleBee::jumping          = JumpState();
+WalkingState BumbleBee::walking_state = WalkingState();
+OnWallState BumbleBee::on_wall        = OnWallState();
+DyingState BumbleBee::dying           = DyingState();
+static auto constexpr idle            = IdleCommand();
+static auto constexpr walk            = WalkCommand();
+static auto constexpr jump            = JumpCommand();
+static auto constexpr flip            = FlipCommand();
+static auto constexpr die             = DieCommand();
 
 void BumbleBee::_ready() {
   if (Engine::get_singleton()->is_editor_hint())
@@ -47,7 +50,9 @@ void BumbleBee::_ready() {
   m_timer.set_callback([this]() { jump(*this); });
   m_timer.set_timeout(m_jump_interval_s);
   m_timer.set_repeat(true);
-  m_timer.start();
+  m_timer.stop();
+  update_bounds();
+  walk(*this);
 }
 
 void BumbleBee::_physics_process(float delta) {
@@ -131,13 +136,24 @@ void BumbleBee::_process(float) {
 }
 
 void BumbleBee::acquire_target(Node2D* node) {
+  m_timer.start();
   m_target = node;
 }
 
 void BumbleBee::release_target(Node2D* node) {
+  m_timer.stop();
+  update_bounds();
+  walk(*this);
   if (m_target == node) {
     m_target = nullptr;
   }
+}
+
+void BumbleBee::update_bounds() {
+  auto const cs   = get_node<CollisionShape2D>("Area2D/CollisionShape2D");
+  auto const rect = cs->get_shape()->get_rect();
+  auto const pos  = get_position();
+  m_bounds        = {pos.x - rect.size.x / 2, pos.x + rect.size.x / 2};
 }
 
 // Commands
@@ -145,6 +161,11 @@ void IdleCommand::operator()(BumbleBee& bumble_bee) const {
   bumble_bee.m_animated_sprite2D->play("Idle");
   bumble_bee.set_velocity({0, 0});
   bumble_bee.set_state(&BumbleBee::idle_state);
+}
+
+void WalkCommand::operator()(BumbleBee& bumble_bee) const {
+  bumble_bee.m_animated_sprite2D->play("Walk");
+  bumble_bee.set_state(&BumbleBee::walking_state);
 }
 
 void JumpCommand::operator()(BumbleBee& bumble_bee) const {
@@ -171,6 +192,23 @@ void DieCommand::operator()(BumbleBee& bumble_bee) const {
 
 // BumbleBee's States
 void IdleState::update(BumbleBee& bumble_bee) const {
+}
+
+void WalkingState::update(BumbleBee& bumble_bee) const {
+  auto velocity    = bumble_bee.get_velocity();
+  const auto speed = 25.f;
+  velocity.x = bumble_bee.m_direction == BumbleBee::right ? speed : -speed;
+
+  auto const x = bumble_bee.get_position().x;
+  if (x < bumble_bee.m_bounds.x) {
+    velocity.x *= -1;
+    bumble_bee.m_direction = BumbleBee::right;
+  } else if (x > bumble_bee.m_bounds.y) {
+    velocity.x *= -1;
+    bumble_bee.m_direction = BumbleBee::left;
+  }
+
+  bumble_bee.set_velocity(velocity);
 }
 
 void JumpState::update(BumbleBee& bumble_bee) const {
