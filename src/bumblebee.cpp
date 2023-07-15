@@ -1,33 +1,20 @@
 #include "bumblebee.hpp"
+#include "io.hpp"
 #include <godot_cpp/classes/collision_shape2d.hpp>
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/shader_material.hpp>
 
 void BumbleBee::_bind_methods() {
-  ClassDB::bind_method(D_METHOD("set_jump_velocity"),
-                       &BumbleBee::set_jump_velocity);
-  ClassDB::bind_method(D_METHOD("get_jump_velocity"),
-                       &BumbleBee::get_jump_velocity);
-  ClassDB::bind_method(D_METHOD("set_jump_interval"),
-                       &BumbleBee::set_jump_interval);
-  ClassDB::bind_method(D_METHOD("get_jump_interval"),
-                       &BumbleBee::get_jump_interval);
+  BIND_PROPERTY(BumbleBee, jump_velocity, Variant::FLOAT);
+  BIND_PROPERTY(BumbleBee, jump_interval, Variant::FLOAT);
+  BIND_PROPERTY(BumbleBee, hit_animation_time, Variant::FLOAT);
+
   ClassDB::bind_method(D_METHOD("on_body_entered"),
                        &BumbleBee::on_body_entered);
-  ClassDB::bind_method(D_METHOD("set_hit_animation_time"),
-                       &BumbleBee::set_hit_animation_time);
-  ClassDB::bind_method(D_METHOD("get_hit_animation_time"),
-                       &BumbleBee::get_hit_animation_time);
   ClassDB::bind_method(D_METHOD("take_hit"), &BumbleBee::take_hit);
   ClassDB::bind_method(D_METHOD("look_at"), &BumbleBee::look_at);
   ClassDB::bind_method(D_METHOD("acquire_target"), &BumbleBee::acquire_target);
   ClassDB::bind_method(D_METHOD("release_target"), &BumbleBee::release_target);
-  ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "jump_velocity"),
-               "set_jump_velocity", "get_jump_velocity");
-  ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "jump_interval"),
-               "set_jump_interval", "get_jump_interval");
-  ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "hit_animation_time"),
-               "set_hit_animation_time", "get_hit_animation_time");
 }
 
 IdleState BumbleBee::idle_state = IdleState();
