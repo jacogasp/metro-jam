@@ -1,10 +1,23 @@
 #include "timer.hpp"
 
+void Timer::start() {
+  m_elapsed_time = 0;
+  m_running = true;
+}
+
+void Timer::stop() {
+  m_running = false;
+}
+
 void Timer::tick(double delta_time) {
-  m_ellapsed_time += delta_time;
-  if (m_running && m_ellapsed_time >= m_timeout) {
+  if (!m_running) {
+    return;
+  }
+
+  m_elapsed_time += delta_time;
+  if (m_elapsed_time >= m_timeout) {
     fire();
-    m_ellapsed_time = 0;
+    m_elapsed_time = 0;
   }
 }
 
