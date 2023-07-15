@@ -4,6 +4,33 @@
 [ext_resource type="Material" uid="uid://bqesh5ktv6wvb" path="res://shaders/Hit.material" id="1_y5ixb"]
 [ext_resource type="Texture2D" uid="uid://dju2wr2n2ml5k" path="res://assets/health_bar.png" id="2_2i0h8"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_4dmxq"]
+radius = 24.0208
+
+[sub_resource type="Animation" id="Animation_mlkyu"]
+resource_name = "Hit"
+length = 0.15
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:hit_animation_time")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ktlxv"]
+_data = {
+"Hit": SubResource("Animation_mlkyu")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_asqgn"]
+size = Vector2(1088, 512)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_oy4ke"]
 atlas = ExtResource("1_jjk3y")
 region = Rect2(0, 0, 64, 64)
@@ -109,46 +136,12 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_4dmxq"]
-radius = 24.0208
-
-[sub_resource type="Animation" id="Animation_mlkyu"]
-resource_name = "Hit"
-length = 0.15
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:hit_animation_time")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 0.0]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_ktlxv"]
-_data = {
-"Hit": SubResource("Animation_mlkyu")
-}
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_asqgn"]
-size = Vector2(256, 256)
-
 [node name="BumbleBee" type="BumbleBee"]
 jump_velocity = Vector2(250, -250)
 jump_interval = 1.5
 collision_layer = 0
 collision_mask = 17
 velocity = Vector2(-109650, -219300)
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-material = ExtResource("1_y5ixb")
-position = Vector2(0, -8)
-sprite_frames = SubResource("SpriteFrames_p132n")
-animation = &"Walk"
-frame_progress = 0.641584
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_4dmxq")
@@ -189,6 +182,13 @@ collision_mask = 256
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AggroArea"]
 shape = SubResource("RectangleShape2D_asqgn")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = ExtResource("1_y5ixb")
+position = Vector2(0, -8)
+sprite_frames = SubResource("SpriteFrames_p132n")
+animation = &"Walk"
+frame_progress = 0.641584
 
 [connection signal="body_entered" from="Area2D" to="." method="on_body_entered"]
 [connection signal="body_entered" from="AggroArea" to="." method="acquire_target"]
