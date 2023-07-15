@@ -134,7 +134,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_asqgn"]
-size = Vector2(750, 722)
+size = Vector2(256, 256)
 
 [node name="BumbleBee" type="BumbleBee"]
 jump_velocity = Vector2(250, -250)
@@ -192,4 +192,5 @@ shape = SubResource("RectangleShape2D_asqgn")
 
 [connection signal="body_entered" from="Area2D" to="." method="on_body_entered"]
 [connection signal="body_entered" from="AggroArea" to="." method="acquire_target"]
+[connection signal="body_exited" from="AggroArea" to="." method="release_target"]
 [connection signal="mouse_exited" from="AggroArea" to="." method="release_target"]
