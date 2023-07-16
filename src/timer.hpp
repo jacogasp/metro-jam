@@ -27,6 +27,7 @@ class Timer {
   void set_callback(Callback fn);
   void set_repeat(bool repeat);
   void set_timeout(TimeDelta timeout);
+  [[nodiscard]] TimeDelta get_timeout() const;
 
  private:
   void fire();

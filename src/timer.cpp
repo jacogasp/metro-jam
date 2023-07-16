@@ -2,7 +2,7 @@
 
 void Timer::start() {
   m_elapsed_time = 0;
-  m_running = true;
+  m_running      = true;
 }
 
 void Timer::stop() {
@@ -42,4 +42,8 @@ void Timer::fire() {
   if (!m_repeat) {
     stop();
   }
+}
+
+TimeDelta Timer::get_timeout() const {
+  return m_timeout;
 }
