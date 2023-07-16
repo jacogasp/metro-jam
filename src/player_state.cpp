@@ -35,9 +35,7 @@ void StandingState::handleInput(Player& player, Input& input) {
 void StandingState::update(Player& player) {
   PROFILE_FUNCTION()
   auto const velocity = player.get_velocity();
-  if (player.is_on_floor()) {
-    idle(player);
-  } else if (velocity.y > 0) {
+  if (!player.is_on_ground() && velocity.y < 0) {
     jump_out(player);
   }
 }
@@ -59,7 +57,7 @@ void JumpingState::update(Player& player) {
   if (velocity.y < 0) {
     return;
   }
-  if (player.is_on_floor()) {
+  if (player.is_on_ground()) {
     velocity.x == 0 ? idle(player) : run(player);
   } else {
     jump_out(player);
@@ -82,7 +80,7 @@ void AirJumpingState::update(Player& player) {
   if (velocity.y > 0) {
     jump_out(player);
   }
-  if (player.is_on_floor()) {
+  if (player.is_on_ground()) {
     velocity.x == 0 ? idle(player) : run(player);
   }
 }
@@ -105,7 +103,7 @@ void RunningState::handleInput(Player& player, Input& input) {
 void RunningState::update(Player& player) {
   PROFILE_FUNCTION()
   auto const velocity = player.get_velocity();
-  if (player.is_on_floor()) {
+  if (player.is_on_ground()) {
     if (velocity.x == 0) {
       player.m_audio_footsteps->stop();
       idle(player);
@@ -128,7 +126,7 @@ void AttackState::update(Player& player) {
   }
 
   const auto velocity = player.get_velocity();
-  if (player.is_on_floor()) {
+  if (player.is_on_ground()) {
     velocity.x == 0 ? idle(player) : run(player);
   } else {
     player.m_animatedSprite2D->play(velocity.y > 0 ? "JumpOut" : "JumpIn");
@@ -149,7 +147,7 @@ void SlideState::update(Player& player) {
   if (velocity.y < 0) {
     return;
   }
-  if (player.is_on_floor()) {
+  if (player.is_on_ground()) {
     velocity.x == 0 ? idle(player) : run(player);
   } else {
     jump_out(player);

@@ -322,8 +322,6 @@ frame_progress = 0.665632
 position = Vector2(1.08649, 4.03809)
 shape = SubResource("CapsuleShape2D_8ynl1")
 
-[node name="LandingRay" type="RayCast2D" parent="."]
-
 [node name="VFX" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_ktlxv")

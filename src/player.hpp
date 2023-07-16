@@ -26,24 +26,25 @@ class Player
   GDCLASS(Player, CharacterBody2D)
 
   enum Direction { left = -1, right = 1 };
-
-  float m_gravity                      = 500;
-  float m_jump_force                   = 350;
-  float m_air_jump_force               = 350;
-  float m_speed                        = 0;
-  float m_slide_speed                  = 400;
-  float m_attack_range                 = 50;
-  int m_attack_strength                = 25;
-  float m_object_interaction_range     = 150;
-  Direction m_direction                = right;
-  core_game::LoggerService* m_logger   = nullptr;
-  AnimatedSprite2D* m_animatedSprite2D = nullptr;
-  RayCast2D* m_interaction_ray         = nullptr;
-  GrenadeLauncher* m_grenade_launcher  = nullptr;
-  AnimationPlayer* m_vfx               = nullptr;
-  Ref<ShaderMaterial> m_material       = nullptr;
-  AudioStreamPlayer* m_audio_footsteps = nullptr;
-  AudioStreamPlayer* m_audio_jump      = nullptr;
+  static constexpr int block_collision_mask = 1 << 4;
+  static constexpr float ground_skin_depth  = 5;
+  float m_gravity                           = 500;
+  float m_jump_force                        = 350;
+  float m_air_jump_force                    = 350;
+  float m_speed                             = 0;
+  float m_slide_speed                       = 400;
+  float m_attack_range                      = 50;
+  int m_attack_strength                     = 25;
+  float m_object_interaction_range          = 150;
+  Direction m_direction                     = right;
+  core_game::LoggerService* m_logger        = nullptr;
+  AnimatedSprite2D* m_animatedSprite2D      = nullptr;
+  RayCast2D* m_interaction_ray              = nullptr;
+  GrenadeLauncher* m_grenade_launcher       = nullptr;
+  AnimationPlayer* m_vfx                    = nullptr;
+  Ref<ShaderMaterial> m_material            = nullptr;
+  AudioStreamPlayer* m_audio_footsteps      = nullptr;
+  AudioStreamPlayer* m_audio_jump           = nullptr;
   PlayerState* m_state{&Player::standing};
 
   Wrench wrench_weapon{};
@@ -93,6 +94,7 @@ class Player
   void set_hit_animation_time(float t);
   [[nodiscard]] float get_hit_animation_time() const;
   [[nodiscard]] float get_ground_position() const;
+  [[nodiscard]] bool is_on_ground() const;
   void flip_h() const;
   void hit();
   void save() override;

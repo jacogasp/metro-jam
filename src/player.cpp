@@ -8,7 +8,10 @@
 #include <godot_cpp/classes/collision_shape2d.hpp>
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/input.hpp>
+#include <godot_cpp/classes/physics_direct_space_state2d.hpp>
+#include <godot_cpp/classes/physics_ray_query_parameters2d.hpp>
 #include <godot_cpp/classes/shape2d.hpp>
+#include <godot_cpp/classes/world2d.hpp>
 #include <cassert>
 
 StandingState Player::standing      = StandingState();
@@ -287,4 +290,15 @@ void Player::flip_h() const {
     impulse.x *= -1;
     m_grenade_launcher->set_impulse(impulse);
   }
+}
+bool Player::is_on_ground() const {
+  auto target = get_global_position();
+  target.y += ground_skin_depth;
+  auto query = PhysicsRayQueryParameters2D::create(
+      get_global_position(), target);
+  query->set_hit_from_inside(false);
+  auto space_state = get_world_2d()->get_direct_space_state();
+  auto result      = space_state->intersect_ray(query);
+  auto collider    = cast_to<Node2D>(result["collider"]);
+  return collider != nullptr;
 }
