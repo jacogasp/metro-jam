@@ -6,7 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://ccacc2nukk5o2" path="res://assets/audio/footsteps.wav" id="4_76t05"]
 [ext_resource type="AudioStream" uid="uid://d20t44iaf6fsx" path="res://assets/audio/jump.wav" id="5_fmb6a"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_aigpv"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nnh5t"]
 shader = ExtResource("1_m50du")
 shader_parameter/time = 0.0
 
@@ -313,13 +313,14 @@ collision_mask = 17
 velocity = Vector2(0, 52514.6)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-material = SubResource("ShaderMaterial_aigpv")
+material = SubResource("ShaderMaterial_nnh5t")
+position = Vector2(-1, -32)
 sprite_frames = SubResource("SpriteFrames_0nsvt")
 animation = &"Idle"
-frame_progress = 0.665632
+frame_progress = 0.838591
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1.08649, 4.03809)
+position = Vector2(0.0864906, -27.9619)
 shape = SubResource("CapsuleShape2D_8ynl1")
 
 [node name="VFX" type="AnimationPlayer" parent="."]
@@ -328,7 +329,7 @@ libraries = {
 }
 
 [node name="InteractionRay" type="RayCast2D" parent="."]
-position = Vector2(12, 0)
+position = Vector2(12, -27)
 target_position = Vector2(6, 0)
 collision_mask = 65536
 hit_from_inside = true
@@ -337,6 +338,7 @@ collide_with_areas = true
 [node name="GrenadeLauncher" type="GrenadeLauncher" parent="."]
 grenade = ExtResource("3_meisq")
 impulse = Vector2(500, -500)
+position = Vector2(0, -28)
 
 [node name="AudioFootsteps" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_76t05")
