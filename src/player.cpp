@@ -298,7 +298,7 @@ void Player::flip_h() const {
 static bool ray_hits(Vector2 position, Vector2 target, Ref<World2D> world) {
   auto query = PhysicsRayQueryParameters2D::create(
       position, target, Player::block_collision_mask);
-  query->set_hit_from_inside(false);
+  query->set_hit_from_inside(true);
   auto space_state = world->get_direct_space_state();
   auto result      = space_state->intersect_ray(query);
   auto collider    = Node::cast_to<Node2D>(result["collider"]);
