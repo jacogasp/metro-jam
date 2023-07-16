@@ -71,8 +71,9 @@ void Player::_ready() {
   m_animatedSprite2D->play("Idle");
   m_material = m_animatedSprite2D->get_material()->duplicate();
   m_animatedSprite2D->set_material(m_material);
-  m_front_ray       = get_node<RayCast2D>("FrontRay");
-  m_interaction_ray = get_node<RayCast2D>("InteractionRay");
+  m_grenade_launcher = get_node<GrenadeLauncher>("GrenadeLauncher");
+  m_front_ray        = get_node<RayCast2D>("FrontRay");
+  m_interaction_ray  = get_node<RayCast2D>("InteractionRay");
   set_ray_h_length(*m_front_ray, m_attack_range);
   m_vfx = get_node<AnimationPlayer>("VFX");
   add_child(&wrench_weapon);
@@ -122,8 +123,7 @@ void Player::_process(float delta) {
   }
 
   if (prev_direction != m_direction) {
-    flip_h(*m_front_ray);
-    flip_h(*m_interaction_ray);
+    flip_h();
   }
 }
 
@@ -278,4 +278,14 @@ float Player::get_ground_position() const {
   auto const shape = cs->get_shape();
   auto const rect  = shape->get_rect();
   return rect.position.y + rect.size.height / 2;
+}
+
+void Player::flip_h() const {
+  ::flip_h(*m_front_ray);
+  ::flip_h(*m_interaction_ray);
+  if (m_grenade_launcher) {
+    auto impulse = m_grenade_launcher->get_impulse();
+    impulse.x *= -1;
+    m_grenade_launcher->set_impulse(impulse);
+  }
 }

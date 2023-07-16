@@ -1,6 +1,7 @@
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
 
+#include "grenade.hpp"
 #include "persist.hpp"
 #include "player_state.hpp"
 #include "types.hpp"
@@ -39,6 +40,7 @@ class Player
   Weapon* m_weapon                     = nullptr;
   RayCast2D* m_front_ray               = nullptr;
   RayCast2D* m_interaction_ray         = nullptr;
+  GrenadeLauncher* m_grenade_launcher  = nullptr;
   AnimationPlayer* m_vfx               = nullptr;
   Ref<ShaderMaterial> m_material       = nullptr;
   PlayerState* m_state{&Player::standing};
@@ -90,6 +92,7 @@ class Player
   void set_hit_animation_time(float t);
   [[nodiscard]] float get_hit_animation_time() const;
   [[nodiscard]] float get_ground_position() const;
+  void flip_h() const;
   void hit();
   void save() override;
   void load() override;

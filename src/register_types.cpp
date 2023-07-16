@@ -11,6 +11,7 @@
 #include "coin_spawner.hpp"
 #include "constants.hpp"
 #include "gate.hpp"
+#include "grenade.hpp"
 #include "hud.hpp"
 #include "io.hpp"
 #include "lifebar.hpp"
@@ -38,6 +39,8 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
   ClassDB::register_class<HUD>();
   ClassDB::register_class<BumbleBee>();
   ClassDB::register_class<Wrench>();
+  ClassDB::register_class<GrenadeLauncher>();
+  ClassDB::register_class<Grenade>();
 
 #ifdef CORE_GAME_PROFILING
   core_game::Instrumentor::get().begin_session("Example session");

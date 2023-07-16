@@ -2,6 +2,7 @@
 
 [ext_resource type="Shader" path="res://shaders/Hit.gdshader" id="1_m50du"]
 [ext_resource type="Texture2D" uid="uid://cq3js6pr88m2d" path="res://assets/characters/pg_sprites.png" id="2_7vcqu"]
+[ext_resource type="PackedScene" uid="uid://evwtb6jegk0f" path="res://scenes/grenade.tscn" id="3_meisq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jso2p"]
 shader = ExtResource("1_m50du")
@@ -341,4 +342,6 @@ collision_mask = 65536
 hit_from_inside = true
 collide_with_areas = true
 
-
+[node name="GrenadeLauncher" type="GrenadeLauncher" parent="."]
+grenade = ExtResource("3_meisq")
+impulse = Vector2(500, -500)

@@ -49,6 +49,7 @@ add_library(
         src/timer.cpp
         src/weapon.hpp
         src/wrench.cpp
+        src/grenade.cpp
 )
 
 if (MINGW)

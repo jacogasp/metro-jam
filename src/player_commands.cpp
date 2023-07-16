@@ -48,6 +48,9 @@ void AttackCommand::operator()(Player& player) const {
 void GrenadeCommand::operator()(Player& player) const {
   player.m_animatedSprite2D->play("AttackGrenade");
   player.set_state(&Player::attacking);
+  if (player.m_grenade_launcher) {
+    player.m_grenade_launcher->fire({});
+  }
 }
 
 void SlideCommand::operator()(Player& player) const {
