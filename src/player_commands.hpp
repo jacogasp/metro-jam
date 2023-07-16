@@ -5,7 +5,7 @@ class Player;
 
 struct IdleCommand;
 struct RunCommand;
-struct JumpCommand;
+struct FallCommand;
 struct JumpOutCommand;
 struct AirJumpCommand;
 struct AttackCommand;
@@ -23,7 +23,7 @@ struct JumpCommand {
   void operator()(Player& player) const;
 };
 
-struct JumpOutCommand {
+struct FallCommand {
   void operator()(Player& player) const;
 };
 

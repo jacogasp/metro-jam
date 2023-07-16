@@ -17,6 +17,7 @@
 StandingState Player::standing      = StandingState();
 RunningState Player::running        = RunningState();
 JumpingState Player::jumping        = JumpingState();
+FallingState Player::falling        = FallingState();
 AirJumpingState Player::air_jumping = AirJumpingState();
 AttackState Player::attacking       = AttackState();
 SlideState Player::sliding          = SlideState();
@@ -294,8 +295,8 @@ void Player::flip_h() const {
 bool Player::is_on_ground() const {
   auto target = get_global_position();
   target.y += ground_skin_depth;
-  auto query = PhysicsRayQueryParameters2D::create(
-      get_global_position(), target);
+  auto query =
+      PhysicsRayQueryParameters2D::create(get_global_position(), target);
   query->set_hit_from_inside(false);
   auto space_state = get_world_2d()->get_direct_space_state();
   auto result      = space_state->intersect_ray(query);

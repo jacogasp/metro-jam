@@ -51,7 +51,7 @@ class Player
 
   friend class IdleCommand;
   friend class JumpCommand;
-  friend class JumpOutCommand;
+  friend class FallCommand;
   friend class AirJumpCommand;
   friend class RunCommand;
   friend class AttackCommand;
@@ -66,6 +66,7 @@ class Player
   static StandingState standing;
   static RunningState running;
   static JumpingState jumping;
+  static FallingState falling;
   static AirJumpingState air_jumping;
   static AttackState attacking;
   static SlideState sliding;

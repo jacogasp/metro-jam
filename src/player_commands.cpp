@@ -16,9 +16,9 @@ void JumpCommand::operator()(Player& player) const {
   player.set_velocity(velocity);
 }
 
-void JumpOutCommand::operator()(Player& player) const {
+void FallCommand::operator()(Player& player) const {
   player.m_animatedSprite2D->play("JumpOut");
-  player.set_state(&Player::jumping);
+  player.set_state(&Player::falling);
 }
 
 void AirJumpCommand::operator()(Player& player) const {

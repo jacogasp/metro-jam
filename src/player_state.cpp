@@ -12,7 +12,7 @@ using namespace godot;
 static constexpr auto idle     = IdleCommand();
 static constexpr auto jump     = JumpCommand();
 static constexpr auto run      = RunCommand();
-static constexpr auto jump_out = JumpOutCommand();
+static constexpr auto fall     = FallCommand();
 static constexpr auto air_jump = AirJumpCommand();
 static constexpr auto attack   = AttackCommand();
 static constexpr auto grenade  = GrenadeCommand();
@@ -36,7 +36,7 @@ void StandingState::update(Player& player) {
   PROFILE_FUNCTION()
   auto const velocity = player.get_velocity();
   if (!player.is_on_ground() && velocity.y < 0) {
-    jump_out(player);
+    fall(player);
   }
 }
 
@@ -60,7 +60,14 @@ void JumpingState::update(Player& player) {
   if (player.is_on_ground()) {
     velocity.x == 0 ? idle(player) : run(player);
   } else {
-    jump_out(player);
+    player.m_animatedSprite2D->play("JumpOut");
+  }
+}
+
+void FallingState::update(Player& player) {
+  auto const velocity = player.get_velocity();
+  if (player.is_on_ground()) {
+    velocity.x == 0 ? idle(player) : run(player);
   }
 }
 
@@ -75,13 +82,9 @@ void AirJumpingState::handleInput(Player& player, Input& input) {
 
 void AirJumpingState::update(Player& player) {
   PROFILE_FUNCTION()
-
   auto const velocity = player.get_velocity();
   if (velocity.y > 0) {
-    jump_out(player);
-  }
-  if (player.is_on_ground()) {
-    velocity.x == 0 ? idle(player) : run(player);
+    fall(player);
   }
 }
 
@@ -110,7 +113,7 @@ void RunningState::update(Player& player) {
     }
   } else if (velocity.y > 0) {
     player.m_audio_footsteps->stop();
-    jump_out(player);
+    fall(player);
   }
 }
 
@@ -150,6 +153,6 @@ void SlideState::update(Player& player) {
   if (player.is_on_ground()) {
     velocity.x == 0 ? idle(player) : run(player);
   } else {
-    jump_out(player);
+    fall(player);
   }
 }
