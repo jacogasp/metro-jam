@@ -18,8 +18,7 @@ func _process(delta):
 		return
 	
 	time += delta
-	var y = amplitude * sin(frequency * time)
-	position.y -= y * delta
+	position.y = center.y + amplitude * sin(frequency * time)
 
 func enable():
 	self.active = true
