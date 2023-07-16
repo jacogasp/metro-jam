@@ -121,7 +121,6 @@ void AttackState::update(Player& player) {
     return;
   }
 
-  player.set_weapon_monitoring(false);
   const auto velocity = player.get_velocity();
   if (player.is_on_floor()) {
     velocity.x == 0 ? idle(player) : run(player);

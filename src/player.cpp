@@ -4,6 +4,7 @@
 #include "logger.hpp"
 #include "profiler.hpp"
 #include <godot_cpp/classes/animated_sprite2d.hpp>
+#include <godot_cpp/classes/area2d.hpp>
 #include <godot_cpp/classes/collision_shape2d.hpp>
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/input.hpp>
@@ -68,14 +69,13 @@ void Player::_ready() {
   m_logger           = core_game::LoggerLocator::getService();
   m_animatedSprite2D = get_node<AnimatedSprite2D>("AnimatedSprite2D");
   m_animatedSprite2D->play("Idle");
-  m_weapon = get_node<Weapon>("Weapon");
-  m_weapon->set_monitoring(false);
   m_material = m_animatedSprite2D->get_material()->duplicate();
   m_animatedSprite2D->set_material(m_material);
   m_front_ray       = get_node<RayCast2D>("FrontRay");
   m_interaction_ray = get_node<RayCast2D>("InteractionRay");
   set_ray_h_length(*m_front_ray, m_attack_range);
   m_vfx = get_node<AnimationPlayer>("VFX");
+  add_child(&wrench_weapon);
   load();
   m_logger->info("Player ready.");
 }
@@ -108,7 +108,7 @@ void Player::_process(float delta) {
   PROFILE_FUNCTION()
   if (Engine::get_singleton()->is_editor_hint())
     return;
-  auto input = Input::get_singleton();
+  auto input                = Input::get_singleton();
   auto const x_velocity     = get_velocity().x;
   auto const prev_direction = m_direction;
 
@@ -150,8 +150,6 @@ void Player::_physics_process(float delta) {
 
   auto is_flipped = m_animatedSprite2D->is_flipped_h() && velocity.x == 0;
   m_animatedSprite2D->set_flip_h(velocity.x < 0 || is_flipped);
-  auto is_flipped_weapon = m_weapon->is_flipped_h() && velocity.x == 0;
-  m_weapon->set_flip_h(velocity.x < 0 || is_flipped_weapon);
   move_and_slide();
 }
 
@@ -230,14 +228,11 @@ void Player::set_attack_range(float attack_range) {
 }
 
 int Player::get_attack_strength() const {
-  return m_attack_strength;
+  return Player::wrench_weapon.get_damages();
 }
 
 void Player::set_attack_strength(int strength) {
-  if (m_front_ray) {
-    set_ray_h_length(*m_front_ray, m_attack_range);
-  }
-  m_attack_strength = strength;
+  Player::wrench_weapon.set_damages(strength);
 }
 
 void Player::set_state(PlayerState* state) {
@@ -250,10 +245,6 @@ float Player::get_gravity() const {
 
 void Player::set_gravity(float gravity) {
   m_gravity = gravity;
-}
-
-void Player::set_weapon_monitoring(bool can_monitor) const {
-  m_weapon->set_monitoring(can_monitor);
 }
 
 void Player::hit() {

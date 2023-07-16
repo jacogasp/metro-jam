@@ -47,6 +47,8 @@ add_library(
         src/player_commands.cpp
         src/bumblebee.cpp
         src/timer.cpp
+        src/weapon.hpp
+        src/wrench.cpp
 )
 
 if (MINGW)

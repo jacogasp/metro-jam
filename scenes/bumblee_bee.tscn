@@ -139,7 +139,7 @@ animations = [{
 [node name="BumbleBee" type="BumbleBee"]
 jump_velocity = Vector2(250, -250)
 jump_interval = 1.5
-collision_layer = 0
+collision_layer = 4096
 collision_mask = 17
 velocity = Vector2(-109650, -219300)
 

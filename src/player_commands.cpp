@@ -39,12 +39,10 @@ void AttackCommand::operator()(Player& player) const {
   auto animation                  = animations[animation_index];
   player.set_state(&Player::attacking);
   player.m_animatedSprite2D->play(animation);
-  player.set_weapon_monitoring(true);
-  if (player.m_front_ray && player.m_front_ray->is_colliding()) {
-    auto collider = player.m_front_ray->get_collider();
-    auto node     = Node::cast_to<Node>(collider);
-    node->get_parent()->call("take_hit", player.m_attack_strength);
-  }
+  auto target = player.get_global_position();
+  target.x += player.m_direction == Player::right ? player.m_attack_range
+                                                  : -player.m_attack_range;
+  player.wrench_weapon.fire(target);
 }
 
 void GrenadeCommand::operator()(Player& player) const {

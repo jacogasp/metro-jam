@@ -4,7 +4,7 @@
 #include "persist.hpp"
 #include "player_state.hpp"
 #include "types.hpp"
-#include "weapon.hpp"
+#include "wrench.hpp"
 
 #include <godot_cpp/classes/animated_sprite2d.hpp>
 #include <godot_cpp/classes/animation_player.hpp>
@@ -43,6 +43,19 @@ class Player
   Ref<ShaderMaterial> m_material       = nullptr;
   PlayerState* m_state{&Player::standing};
 
+  Wrench wrench_weapon{};
+
+  friend class IdleCommand;
+  friend class JumpCommand;
+  friend class JumpOutCommand;
+  friend class AirJumpCommand;
+  friend class RunCommand;
+  friend class AttackCommand;
+  friend class GrenadeCommand;
+  friend class SlideCommand;
+  friend class AttackState;
+  friend class SlideState;
+
   static void _bind_methods();
 
  public:
@@ -74,7 +87,6 @@ class Player
   [[nodiscard]] int get_attack_strength() const;
   void set_attack_strength(int attack_strength);
   void set_state(PlayerState* state);
-  void set_weapon_monitoring(bool can_monitor) const;
   void set_hit_animation_time(float t);
   [[nodiscard]] float get_hit_animation_time() const;
   [[nodiscard]] float get_ground_position() const;

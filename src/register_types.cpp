@@ -17,8 +17,8 @@
 #include "main_scene.hpp"
 #include "player.hpp"
 #include "profiler.hpp"
-#include "weapon.hpp"
 #include "world.hpp"
+#include "wrench.hpp"
 
 using namespace godot;
 
@@ -29,7 +29,6 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
   core_game::crate_savings_directory(core_game::SAVINGS_DIRECTORY);
   ClassDB::register_class<MainScene>();
   ClassDB::register_class<Player>();
-  ClassDB::register_class<Weapon>();
   ClassDB::register_class<Coin>();
   ClassDB::register_class<CoinSpawner>();
   ClassDB::register_class<Chest>();
@@ -38,6 +37,7 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
   ClassDB::register_class<LifeBar>();
   ClassDB::register_class<HUD>();
   ClassDB::register_class<BumbleBee>();
+  ClassDB::register_class<Wrench>();
 
 #ifdef CORE_GAME_PROFILING
   core_game::Instrumentor::get().begin_session("Example session");

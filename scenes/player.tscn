@@ -279,9 +279,6 @@ animations = [{
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8ynl1"]
 height = 56.2236
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_bt8yl"]
-size = Vector2(19, 41)
-
 [sub_resource type="Animation" id="Animation_mlkyu"]
 resource_name = "Hit"
 length = 0.15
@@ -307,32 +304,22 @@ _data = {
 speed = 300.0
 gravity = 2.08165e-12
 jump_force = 400.0
-attack_range = 10.0
+attack_strength = 25
 collision_layer = 256
-collision_mask = 4113
+collision_mask = 17
 velocity = Vector2(0, 52514.6)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_jso2p")
 sprite_frames = SubResource("SpriteFrames_0nsvt")
-animation = &"AttackGrenade"
+animation = &"Idle"
+frame_progress = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1.08649, 4.03809)
 shape = SubResource("CapsuleShape2D_8ynl1")
 
 [node name="LandingRay" type="RayCast2D" parent="."]
-
-[node name="Weapon" type="Weapon" parent="."]
-position = Vector2(5.86994, 44.22)
-collision_layer = 0
-collision_mask = 0
-monitoring = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Weapon"]
-position = Vector2(19.5, -4.5)
-shape = SubResource("RectangleShape2D_bt8yl")
-debug_color = Color(0.960784, 0, 0.517647, 0.419608)
 
 [node name="VFX" type="AnimationPlayer" parent="."]
 libraries = {
@@ -342,7 +329,7 @@ libraries = {
 [node name="FrontRay" type="RayCast2D" parent="."]
 position = Vector2(13, 0)
 exclude_parent = false
-target_position = Vector2(23, 0)
+target_position = Vector2(63, 0)
 collision_mask = 65535
 hit_from_inside = true
 collide_with_areas = true
@@ -354,4 +341,4 @@ collision_mask = 65536
 hit_from_inside = true
 collide_with_areas = true
 
-[connection signal="body_entered" from="Weapon" to="Weapon" method="_on_body_entered"]
+
