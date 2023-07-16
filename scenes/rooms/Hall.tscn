@@ -182,7 +182,6 @@ amplitude = 150.0
 frequency = 0.4
 
 [node name="ShadowArea" parent="." instance=ExtResource("9_tmsto")]
-position = Vector2(3, -3)
 
 [node name="Area2D" type="Area2D" parent="ShadowArea"]
 position = Vector2(3654, 2272)
