@@ -143,32 +143,32 @@ position = Vector2(4655, 2464)
 [node name="Platform1" parent="PlatformSystem1" instance=ExtResource("7_mbcqu")]
 position = Vector2(2875, 1952)
 amplitude = -150.0
-frequency = 1.5
+frequency = 0.4
 
 [node name="Platform2" parent="PlatformSystem1" instance=ExtResource("7_mbcqu")]
 position = Vector2(2994, 1951)
 amplitude = 150.0
-frequency = 1.5
+frequency = 0.4
 
 [node name="Platform3" parent="PlatformSystem1" instance=ExtResource("7_mbcqu")]
 position = Vector2(2875, 1714)
 amplitude = -150.0
-frequency = 1.5
+frequency = 0.4
 
 [node name="Platform4" parent="PlatformSystem1" instance=ExtResource("7_mbcqu")]
 position = Vector2(2994, 1714)
 amplitude = 150.0
-frequency = 1.5
+frequency = 0.4
 
 [node name="Platform5" parent="PlatformSystem1" instance=ExtResource("7_mbcqu")]
 position = Vector2(2875, 1470)
 amplitude = -150.0
-frequency = 1.5
+frequency = 0.4
 
 [node name="Platform6" parent="PlatformSystem1" instance=ExtResource("7_mbcqu")]
 position = Vector2(2994, 1470)
 amplitude = 150.0
-frequency = 1.5
+frequency = 0.4
 
 [node name="ShadowArea" parent="." instance=ExtResource("9_tmsto")]
 position = Vector2(3, -3)
