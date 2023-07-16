@@ -1,11 +1,44 @@
-[gd_scene load_steps=3 format=3 uid="uid://evwtb6jegk0f"]
+[gd_scene load_steps=8 format=3 uid="uid://evwtb6jegk0f"]
 
 [ext_resource type="Texture2D" uid="uid://b2u8bgksqj83j" path="res://icon.svg" id="1_bwh32"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5d1ew"]
 radius = 16.1245
 
+[sub_resource type="Gradient" id="Gradient_0q3t1"]
+offsets = PackedFloat32Array(0.000968992, 0.705426, 1)
+colors = PackedColorArray(0.572549, 0, 0, 1, 0.721569, 0.317647, 0, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_aboet"]
+gradient = SubResource("Gradient_0q3t1")
+
+[sub_resource type="Curve" id="Curve_b4ws1"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_b0uvw"]
+curve = SubResource("Curve_b4ws1")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6m2s0"]
+lifetime_randomness = 0.5
+particle_flag_disable_z = true
+direction = Vector3(2.08165e-12, 2.08165e-12, 2.08165e-12)
+spread = 180.0
+gravity = Vector3(0, 98, 0)
+initial_velocity_min = 200.0
+initial_velocity_max = 400.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 5.0
+scale_max = 10.0
+scale_curve = SubResource("CurveTexture_b0uvw")
+color_ramp = SubResource("GradientTexture1D_aboet")
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 0.5
+
 [node name="Grenade" type="Grenade"]
+timeout = 3.0
 collision_layer = 0
 collision_mask = 16
 
@@ -15,3 +48,11 @@ texture = ExtResource("1_bwh32")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_5d1ew")
+
+[node name="Particles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_6m2s0")
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0

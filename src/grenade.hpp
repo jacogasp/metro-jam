@@ -11,12 +11,19 @@ using namespace godot;
 
 class Grenade : public RigidBody2D {
   GDCLASS(Grenade, RigidBody2D);
+
  private:
   Timer m_timer{};
+  TimeDelta m_timeout{};
   static void _bind_methods();
+
  public:
+  Grenade();
   void _ready() override;
+  void _process(float delta);
   void explode();
+  void set_timeout(TimeDelta timeout);
+  [[nodiscard]] TimeDelta get_timeout() const;
 };
 
 #endif // COREGAME_GRENADE_HPP
