@@ -51,7 +51,6 @@ position = Vector2(2167.75, 1262)
 scale = Vector2(35.2852, 19.4844)
 
 [node name="Background" type="TileMap" parent="."]
-visible = false
 tile_set = SubResource("TileSet_wnv3l")
 cell_quadrant_size = 128
 format = 2
