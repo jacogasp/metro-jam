@@ -72,10 +72,8 @@ void Player::_ready() {
   m_material = m_animatedSprite2D->get_material()->duplicate();
   m_animatedSprite2D->set_material(m_material);
   m_grenade_launcher = get_node<GrenadeLauncher>("GrenadeLauncher");
-  m_front_ray        = get_node<RayCast2D>("FrontRay");
   m_interaction_ray  = get_node<RayCast2D>("InteractionRay");
-  set_ray_h_length(*m_front_ray, m_attack_range);
-  m_vfx = get_node<AnimationPlayer>("VFX");
+  m_vfx              = get_node<AnimationPlayer>("VFX");
   add_child(&wrench_weapon);
   load();
   m_logger->info("Player ready.");
@@ -281,7 +279,6 @@ float Player::get_ground_position() const {
 }
 
 void Player::flip_h() const {
-  ::flip_h(*m_front_ray);
   ::flip_h(*m_interaction_ray);
   if (m_grenade_launcher) {
     auto impulse = m_grenade_launcher->get_impulse();

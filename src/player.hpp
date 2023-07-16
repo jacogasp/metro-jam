@@ -37,8 +37,6 @@ class Player
   Direction m_direction                = right;
   core_game::LoggerService* m_logger   = nullptr;
   AnimatedSprite2D* m_animatedSprite2D = nullptr;
-  Weapon* m_weapon                     = nullptr;
-  RayCast2D* m_front_ray               = nullptr;
   RayCast2D* m_interaction_ray         = nullptr;
   GrenadeLauncher* m_grenade_launcher  = nullptr;
   AnimationPlayer* m_vfx               = nullptr;
