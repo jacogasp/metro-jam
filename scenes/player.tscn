@@ -1,10 +1,12 @@
-[gd_scene load_steps=38 format=3 uid="uid://dibkh0kdqa671"]
+[gd_scene load_steps=40 format=3 uid="uid://dibkh0kdqa671"]
 
 [ext_resource type="Shader" path="res://shaders/Hit.gdshader" id="1_m50du"]
 [ext_resource type="Texture2D" uid="uid://cq3js6pr88m2d" path="res://assets/characters/pg_sprites.png" id="2_7vcqu"]
 [ext_resource type="PackedScene" uid="uid://evwtb6jegk0f" path="res://scenes/grenade.tscn" id="3_meisq"]
+[ext_resource type="AudioStream" uid="uid://ccacc2nukk5o2" path="res://assets/audio/footsteps.wav" id="4_76t05"]
+[ext_resource type="AudioStream" uid="uid://d20t44iaf6fsx" path="res://assets/audio/jump.wav" id="5_fmb6a"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_2looy"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_aigpv"]
 shader = ExtResource("1_m50du")
 shader_parameter/time = 0.0
 
@@ -311,10 +313,10 @@ collision_mask = 17
 velocity = Vector2(0, 52514.6)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-material = SubResource("ShaderMaterial_2looy")
+material = SubResource("ShaderMaterial_aigpv")
 sprite_frames = SubResource("SpriteFrames_0nsvt")
 animation = &"Idle"
-frame_progress = 0.620406
+frame_progress = 0.665632
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1.08649, 4.03809)
@@ -337,3 +339,9 @@ collide_with_areas = true
 [node name="GrenadeLauncher" type="GrenadeLauncher" parent="."]
 grenade = ExtResource("3_meisq")
 impulse = Vector2(500, -500)
+
+[node name="AudioFootsteps" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_76t05")
+
+[node name="AudioJump" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_fmb6a")

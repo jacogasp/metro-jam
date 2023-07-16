@@ -90,12 +90,14 @@ void AirJumpingState::update(Player& player) {
 void RunningState::handleInput(Player& player, Input& input) {
   PROFILE_FUNCTION()
   if (input.is_action_just_pressed("jump")) {
+    player.m_audio_footsteps->stop();
     jump(player);
   } else if (input.is_action_just_pressed("attack")) {
     attack(player);
   } else if (input.is_action_just_pressed("grenade")) {
     grenade(player);
   } else if (input.is_action_just_pressed("slide")) {
+    player.m_audio_footsteps->stop();
     slide(player);
   }
 }
@@ -104,8 +106,12 @@ void RunningState::update(Player& player) {
   PROFILE_FUNCTION()
   auto const velocity = player.get_velocity();
   if (player.is_on_floor()) {
-    velocity.x == 0 ? idle(player) : run(player);
+    if (velocity.x == 0) {
+      player.m_audio_footsteps->stop();
+      idle(player);
+    }
   } else if (velocity.y > 0) {
+    player.m_audio_footsteps->stop();
     jump_out(player);
   }
 }

@@ -74,6 +74,8 @@ void Player::_ready() {
   m_grenade_launcher = get_node<GrenadeLauncher>("GrenadeLauncher");
   m_interaction_ray  = get_node<RayCast2D>("InteractionRay");
   m_vfx              = get_node<AnimationPlayer>("VFX");
+  m_audio_footsteps  = get_node<AudioStreamPlayer>("AudioFootsteps");
+  m_audio_jump       = get_node<AudioStreamPlayer>("AudioJump");
   add_child(&wrench_weapon);
   load();
   m_logger->info("Player ready.");

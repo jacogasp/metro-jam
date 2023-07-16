@@ -11,6 +11,7 @@ void JumpCommand::operator()(Player& player) const {
   auto velocity = player.get_velocity();
   player.set_state(&Player::jumping);
   player.m_animatedSprite2D->play("JumpIn");
+  player.m_audio_jump->play();
   velocity.y = -player.get_jump_force();
   player.set_velocity(velocity);
 }
@@ -24,12 +25,14 @@ void AirJumpCommand::operator()(Player& player) const {
   auto velocity = player.get_velocity();
   player.set_state(&Player::air_jumping);
   player.m_animatedSprite2D->play("JumpIn");
+  player.m_audio_jump->play();
   velocity.y = -player.get_air_jump_force();
   player.set_velocity(velocity);
 }
 
 void RunCommand::operator()(Player& player) const {
   player.m_animatedSprite2D->play("Run");
+  player.m_audio_footsteps->play();
   player.set_state(&Player::running);
 }
 
@@ -57,4 +60,5 @@ void GrenadeCommand::operator()(Player& player) const {
 void SlideCommand::operator()(Player& player) const {
   player.m_animatedSprite2D->play("Slide");
   player.set_state(&Player::sliding);
+  player.m_audio_footsteps->stop();
 }

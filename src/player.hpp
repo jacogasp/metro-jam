@@ -9,6 +9,7 @@
 
 #include <godot_cpp/classes/animated_sprite2d.hpp>
 #include <godot_cpp/classes/animation_player.hpp>
+#include <godot_cpp/classes/audio_stream_player.hpp>
 #include <godot_cpp/classes/character_body2d.hpp>
 #include <godot_cpp/classes/ray_cast2d.hpp>
 #include <godot_cpp/classes/shader_material.hpp>
@@ -41,6 +42,8 @@ class Player
   GrenadeLauncher* m_grenade_launcher  = nullptr;
   AnimationPlayer* m_vfx               = nullptr;
   Ref<ShaderMaterial> m_material       = nullptr;
+  AudioStreamPlayer* m_audio_footsteps = nullptr;
+  AudioStreamPlayer* m_audio_jump      = nullptr;
   PlayerState* m_state{&Player::standing};
 
   Wrench wrench_weapon{};
