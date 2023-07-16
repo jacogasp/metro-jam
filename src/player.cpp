@@ -78,8 +78,8 @@ void Player::_ready() {
   m_grenade_launcher = get_node<GrenadeLauncher>("GrenadeLauncher");
   m_interaction_ray  = get_node<RayCast2D>("InteractionRay");
   m_vfx              = get_node<AnimationPlayer>("VFX");
-  m_audio_footsteps  = get_node<AudioStreamPlayer>("AudioFootsteps");
-  m_audio_jump       = get_node<AudioStreamPlayer>("AudioJump");
+  m_audio_footsteps  = get_node<AudioStreamPlayer>("Audio/Footsteps");
+  m_audio_jump       = get_node<AudioStreamPlayer>("Audio/Jump");
   auto shape = get_node<CollisionShape2D>("CollisionShape2D")->get_shape();
   m_bounds   = shape->get_rect();
   add_child(&wrench_weapon);
@@ -255,6 +255,7 @@ void Player::set_gravity(float gravity) {
 
 void Player::hit() {
   emit_signal("player_hit");
+  get_node<AudioStreamPlayer>("Audio/Ouch")->play();
   m_vfx->play("Hit");
 }
 
