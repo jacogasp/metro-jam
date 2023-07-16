@@ -47,6 +47,8 @@ class Player
   AudioStreamPlayer* m_audio_jump           = nullptr;
   PlayerState* m_state{&Player::standing};
 
+  Rect2 m_bounds{};
+
   Wrench wrench_weapon{};
 
   friend class IdleCommand;

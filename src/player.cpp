@@ -80,6 +80,8 @@ void Player::_ready() {
   m_vfx              = get_node<AnimationPlayer>("VFX");
   m_audio_footsteps  = get_node<AudioStreamPlayer>("AudioFootsteps");
   m_audio_jump       = get_node<AudioStreamPlayer>("AudioJump");
+  auto shape = get_node<CollisionShape2D>("CollisionShape2D")->get_shape();
+  m_bounds   = shape->get_rect();
   add_child(&wrench_weapon);
   load();
   m_logger->info("Player ready.");
@@ -292,14 +294,24 @@ void Player::flip_h() const {
     m_grenade_launcher->set_impulse(impulse);
   }
 }
-bool Player::is_on_ground() const {
-  auto target = get_global_position();
-  target.y += ground_skin_depth;
-  auto query =
-      PhysicsRayQueryParameters2D::create(get_global_position(), target);
+
+static bool ray_hits(Vector2 position, Vector2 target, Ref<World2D> world) {
+  auto query = PhysicsRayQueryParameters2D::create(
+      position, target, Player::block_collision_mask);
   query->set_hit_from_inside(false);
-  auto space_state = get_world_2d()->get_direct_space_state();
+  auto space_state = world->get_direct_space_state();
   auto result      = space_state->intersect_ray(query);
-  auto collider    = cast_to<Node2D>(result["collider"]);
+  auto collider    = Node::cast_to<Node2D>(result["collider"]);
   return collider != nullptr;
+}
+
+bool Player::is_on_ground() const {
+  auto pos              = get_global_position();
+  auto world            = get_world_2d();
+  auto const half_width = m_bounds.size.x / 2;
+  Vector2 target_left{pos.x - half_width, pos.y + ground_skin_depth};
+  Vector2 target_right{pos.x + half_width, pos.y + ground_skin_depth};
+  auto hit_left  = ray_hits(pos, target_left, world);
+  auto hit_right = ray_hits(pos, target_right, world);
+  return hit_left || hit_right;
 }
