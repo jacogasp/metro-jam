@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cq3js6pr88m2d" path="res://assets/characters/pg_sprites.png" id="2_7vcqu"]
 [ext_resource type="PackedScene" uid="uid://evwtb6jegk0f" path="res://scenes/grenade.tscn" id="3_meisq"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_yup8p"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2looy"]
 shader = ExtResource("1_m50du")
 shader_parameter/time = 0.0
 
@@ -311,10 +311,10 @@ collision_mask = 17
 velocity = Vector2(0, 52514.6)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-material = SubResource("ShaderMaterial_yup8p")
+material = SubResource("ShaderMaterial_2looy")
 sprite_frames = SubResource("SpriteFrames_0nsvt")
 animation = &"Idle"
-frame_progress = 0
+frame_progress = 0.620406
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1.08649, 4.03809)
@@ -326,14 +326,6 @@ shape = SubResource("CapsuleShape2D_8ynl1")
 libraries = {
 "": SubResource("AnimationLibrary_ktlxv")
 }
-
-[node name="FrontRay" type="RayCast2D" parent="."]
-position = Vector2(13, 0)
-exclude_parent = false
-target_position = Vector2(63, 0)
-collision_mask = 65535
-hit_from_inside = true
-collide_with_areas = true
 
 [node name="InteractionRay" type="RayCast2D" parent="."]
 position = Vector2(12, 0)
