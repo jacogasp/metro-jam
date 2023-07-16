@@ -50,6 +50,7 @@ add_library(
         src/weapon.hpp
         src/wrench.cpp
         src/grenade.cpp
+        src/grenade_launcher.cpp
 )
 
 if (MINGW)

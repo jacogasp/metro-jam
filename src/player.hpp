@@ -1,7 +1,7 @@
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
 
-#include "grenade.hpp"
+#include "grenade_launcher.hpp"
 #include "persist.hpp"
 #include "player_state.hpp"
 #include "types.hpp"
