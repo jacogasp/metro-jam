@@ -22,7 +22,7 @@ else ()
 endif ()
 
 include(cmake/CPM.cmake)
-CPMAddPackage("gh:godotengine/godot-cpp#4.1")
+CPMAddPackage("gh:godotengine/godot-cpp#4.0")
 
 add_library(
         ${PROJECT_NAME} SHARED
