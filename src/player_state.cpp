@@ -19,7 +19,7 @@ static constexpr auto grenade  = GrenadeCommand();
 static constexpr auto slide    = SlideCommand();
 
 void StandingState::handleInput(Player& player, Input& input) {
-  PROFILE_FUNCTION()
+  PROFILE_FUNCTION();
   auto velocity = player.get_velocity();
   if (input.is_action_just_pressed("jump")) {
     jump(player);
@@ -33,7 +33,7 @@ void StandingState::handleInput(Player& player, Input& input) {
 }
 
 void StandingState::update(Player& player) {
-  PROFILE_FUNCTION()
+  PROFILE_FUNCTION();
   auto const velocity = player.get_velocity();
   if (!player.is_on_ground() && velocity.y < 0) {
     fall(player);
@@ -41,7 +41,7 @@ void StandingState::update(Player& player) {
 }
 
 void JumpingState::handleInput(Player& player, Input& input) {
-  PROFILE_FUNCTION()
+  PROFILE_FUNCTION();
   if (input.is_action_just_pressed("jump")) {
     air_jump(player);
   } else if (input.is_action_just_pressed("attack")) {
@@ -52,7 +52,7 @@ void JumpingState::handleInput(Player& player, Input& input) {
 }
 
 void JumpingState::update(Player& player) {
-  PROFILE_FUNCTION()
+  PROFILE_FUNCTION();
   auto const velocity = player.get_velocity();
   if (velocity.y < 0) {
     return;
@@ -72,7 +72,7 @@ void FallingState::update(Player& player) {
 }
 
 void AirJumpingState::handleInput(Player& player, Input& input) {
-  PROFILE_FUNCTION()
+  PROFILE_FUNCTION();
   if (input.is_action_just_pressed("attack")) {
     attack(player);
   } else if (input.is_action_just_pressed("grenade")) {
@@ -81,7 +81,7 @@ void AirJumpingState::handleInput(Player& player, Input& input) {
 }
 
 void AirJumpingState::update(Player& player) {
-  PROFILE_FUNCTION()
+  PROFILE_FUNCTION();
   auto const velocity = player.get_velocity();
   if (velocity.y > 0) {
     fall(player);
@@ -89,7 +89,7 @@ void AirJumpingState::update(Player& player) {
 }
 
 void RunningState::handleInput(Player& player, Input& input) {
-  PROFILE_FUNCTION()
+  PROFILE_FUNCTION();
   if (input.is_action_just_pressed("jump")) {
     player.m_audio_footsteps->stop();
     jump(player);
@@ -104,7 +104,7 @@ void RunningState::handleInput(Player& player, Input& input) {
 }
 
 void RunningState::update(Player& player) {
-  PROFILE_FUNCTION()
+  PROFILE_FUNCTION();
   auto const velocity = player.get_velocity();
   if (player.is_on_ground()) {
     if (velocity.x == 0) {
@@ -122,7 +122,7 @@ void AttackState::handleInput(Player& player, Input& input) {
 }
 
 void AttackState::update(Player& player) {
-  PROFILE_FUNCTION()
+  PROFILE_FUNCTION();
   if (player.m_animatedSprite2D->get_animation().begins_with("Attack")
       && player.m_animatedSprite2D->is_playing()) {
     return;
@@ -137,7 +137,7 @@ void AttackState::update(Player& player) {
 }
 
 void SlideState::update(Player& player) {
-  PROFILE_FUNCTION()
+  PROFILE_FUNCTION();
   auto velocity = player.get_velocity();
   if (player.m_animatedSprite2D->is_playing()
       && player.m_animatedSprite2D->get_animation().begins_with("Slide")) {
