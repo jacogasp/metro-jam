@@ -27,6 +27,14 @@ void crate_savings_directory(const std::filesystem::path& path) {
   }
 }
 
+bool close_to(float a, float b) {
+  return abs(a - b) < CMP_EPSILON;
+}
+
+bool close_to(double a, double b) {
+  return abs(a - b) < UNIT_EPSILON;
+}
+
 FileWriter::FileWriter(const std::filesystem::path& path)
     : m_ofstream{path} {
   if (!m_ofstream.is_open()) {

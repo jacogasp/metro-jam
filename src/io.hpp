@@ -16,12 +16,14 @@
   ADD_PROPERTY(PropertyInfo(variant, #varname), "set_" #varname,               \
                "get_" #varname)
 
-
 namespace core_game {
 
 godot::Dictionary json_to_dict(const std::string& s);
 std::string dict_to_json(const godot::Dictionary& d);
 void crate_savings_directory(const std::filesystem::path& path);
+
+bool close_to(float a, float b);
+bool close_to(double a, double b);
 
 class FileWriter {
   std::ofstream m_ofstream;

@@ -1,5 +1,6 @@
 
 #include "player_state.hpp"
+#include "io.hpp"
 #include "player.hpp"
 #include "player_commands.hpp"
 #include "profiler.hpp"
@@ -23,7 +24,7 @@ void StandingState::handleInput(Player& player, Input& input) {
   auto velocity = player.get_velocity();
   if (input.is_action_just_pressed("jump")) {
     jump(player);
-  } else if (velocity.x != 0) {
+  } else if (!core_game::close_to(velocity.x, 0.f)) {
     run(player);
   } else if (input.is_action_just_pressed("attack")) {
     attack(player);
@@ -58,7 +59,7 @@ void JumpingState::update(Player& player) {
     return;
   }
   if (player.is_on_ground()) {
-    velocity.x == 0 ? idle(player) : run(player);
+    core_game::close_to(velocity.x, 0.f) ? idle(player) : run(player);
   } else {
     player.m_animatedSprite2D->play("JumpOut");
   }
@@ -67,7 +68,7 @@ void JumpingState::update(Player& player) {
 void FallingState::update(Player& player) {
   auto const velocity = player.get_velocity();
   if (player.is_on_ground()) {
-    velocity.x == 0 ? idle(player) : run(player);
+    core_game::close_to(velocity.x, 0.f) ? idle(player) : run(player);
   }
 }
 
@@ -107,7 +108,7 @@ void RunningState::update(Player& player) {
   PROFILE_FUNCTION();
   auto const velocity = player.get_velocity();
   if (player.is_on_ground()) {
-    if (velocity.x == 0) {
+    if (core_game::close_to(velocity.x, 0.f)) {
       player.m_audio_footsteps->stop();
       idle(player);
     }
@@ -117,7 +118,7 @@ void RunningState::update(Player& player) {
   }
 }
 
-void AttackState::handleInput(Player& player, Input& input) {
+void AttackState::handleInput(Player&, Input&) {
   // TODO
 }
 
@@ -130,7 +131,7 @@ void AttackState::update(Player& player) {
 
   const auto velocity = player.get_velocity();
   if (player.is_on_ground()) {
-    velocity.x == 0 ? idle(player) : run(player);
+    core_game::close_to(velocity.x, 0.f) ? idle(player) : run(player);
   } else {
     player.m_animatedSprite2D->play(velocity.y > 0 ? "JumpOut" : "JumpIn");
   }
@@ -151,7 +152,7 @@ void SlideState::update(Player& player) {
     return;
   }
   if (player.is_on_ground()) {
-    velocity.x == 0 ? idle(player) : run(player);
+    core_game::close_to(velocity.x, 0.f) ? idle(player) : run(player);
   } else {
     fall(player);
   }
