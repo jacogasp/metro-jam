@@ -6,7 +6,7 @@
 #include <godot_cpp/classes/resource_loader.hpp>
 
 std::array<World::NextSceneMessage, 16> World::m_pending{};
-int World::m_pending_index{0};
+size_t World::m_pending_index{0};
 
 void World::_bind_methods() {
   ClassDB::bind_method(D_METHOD("set_packed_scene"), &World::set_packed_scene);
@@ -30,7 +30,7 @@ void World::_ready() {
 
 void World::_process(double) {
   PROFILE_FUNCTION();
-  for (int i = 0; i < m_pending_index; ++i) {
+  for (size_t i = 0; i < m_pending_index; ++i) {
     auto const loader     = ResourceLoader::get_singleton();
     auto const next_scene = m_pending.at(i).next_scene;
     m_logger->info("Load new scene " + next_scene);

@@ -27,7 +27,7 @@ class World : public Node2D {
   Ref<PackedScene> m_packed_scene{nullptr};
 
   static std::array<NextSceneMessage, 16> m_pending;
-  static int m_pending_index;
+  static size_t m_pending_index;
 
   static void _bind_methods();
   void _ready() override;
