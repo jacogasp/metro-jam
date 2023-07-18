@@ -6,7 +6,7 @@ env:
   ARTIFACT_LINUX: libCoreGame.so
   ARTIFACT_MACOS: libCoreGame.dylib
   ARTIFACT_WINDOWS: libCoreGame.dll
-  GODOT_VERSION: 4.0.3
+  GODOT_VERSION: 4.1
 
 jobs:
   build:
@@ -64,7 +64,7 @@ jobs:
           path: |
             ${{ env.CPM_SOURCE_CACHE }}
             ${{ env.CCACHE_DIR }}
-          key: ${{ runner.os }}-${{ hashFiles('env.CCACHE_DIR/**/extension_api.json') }}
+          key: ${{ runner.os }}-${{ hashFiles('CMakeLists.txt') }}
 
       - name: Cmake configure
         run: cmake --preset ${{ matrix.config.cmake_preset }}
