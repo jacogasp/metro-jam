@@ -34,7 +34,7 @@ void World::_process(double) {
     auto const loader     = ResourceLoader::get_singleton();
     auto const next_scene = m_pending.at(i).next_scene;
     m_logger->info("Load new scene " + next_scene);
-//    set_packed_scene(loader->load(next_scene.c_str()));
+    set_packed_scene(loader->load(next_scene.c_str()));
     auto const new_gate_name = m_pending.at(i).gate_name;
     update_scene();
     auto const new_gate =
