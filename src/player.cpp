@@ -297,14 +297,15 @@ void Player::flip_h() const {
   }
 }
 
-static bool ray_hits(Vector2 position, Vector2 target, const Ref<World2D>& world) {
+static bool ray_hits(Vector2 position, Vector2 target,
+                     const Ref<World2D>& world) {
   PROFILE_FUNCTION();
   auto query = PhysicsRayQueryParameters2D::create(
       position, target, Player::block_collision_mask);
   query->set_hit_from_inside(true);
-  auto space_state = world->get_direct_space_state();
-  auto result      = space_state->intersect_ray(query);
-  auto collider    = Node::cast_to<Node2D>(result["collider"]);
+  auto const space_state = world->get_direct_space_state();
+  auto const result      = space_state->intersect_ray(query);
+  auto const collider    = Node::cast_to<Node2D>(result["collider"]);
   return collider != nullptr;
 }
 
