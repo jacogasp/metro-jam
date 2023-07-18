@@ -21,8 +21,7 @@ else ()
   message(STATUS "ccache not found")
 endif ()
 
-include(cmake/CPM.cmake)
-CPMAddPackage("gh:godotengine/godot-cpp#4.1")
+include(cmake/deps.cmake)
 
 add_library(
         ${PROJECT_NAME} SHARED

@@ -64,7 +64,7 @@ jobs:
           path: |
             ${{ env.CPM_SOURCE_CACHE }}
             ${{ env.CCACHE_DIR }}
-          key: ${{ runner.os }}-${{ hashFiles('CMakeLists.txt') }}
+          key: ${{ runner.os }}-${{ hashFiles('cmake/deps.cmake') }}
 
       - name: Cmake configure
         run: cmake --preset ${{ matrix.config.cmake_preset }}
