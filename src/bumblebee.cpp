@@ -55,18 +55,18 @@ void BumbleBee::_ready() {
   walk(*this);
 }
 
-void BumbleBee::_process(float) {
+void BumbleBee::_process(double) {
   if (m_target) {
     look_at(m_target);
   }
 }
 
 
-void BumbleBee::_physics_process(float delta) {
+void BumbleBee::_physics_process(double delta) {
   if (Engine::get_singleton()->is_editor_hint())
     return;
   auto velocity = get_velocity();
-  velocity.y += 980 * delta;
+  velocity.y += 980 * static_cast<float>(delta);
   set_velocity(velocity);
   m_timer.tick(delta);
   m_state->update(*this);

@@ -21,8 +21,8 @@ using HealthBar = TextureProgressBar;
 class BumbleBeeState {
  public:
   virtual ~BumbleBeeState() = default;
-  virtual void handle_input(BumbleBee& bumble_bee, Input* input) const {};
-  virtual void update(BumbleBee& bumble_bee) const {};
+  virtual void handle_input(BumbleBee&, Input*) const {}
+  virtual void update(BumbleBee&) const {}
 };
 
 class IdleState : public BumbleBeeState {
@@ -48,7 +48,7 @@ class DyingState : public BumbleBeeState {
 class BumbleBee final
     : public CharacterBody2D
     , public Damageable {
-  GDCLASS(BumbleBee, CharacterBody2D);
+  GDCLASS(BumbleBee, CharacterBody2D)
 
   enum Direction { left = -1, right = 1 };
 
@@ -75,8 +75,8 @@ class BumbleBee final
 
   static void _bind_methods();
   void _ready() override;
-  void _process(float);
-  void _physics_process(float delta);
+  void _process(double) override;
+  void _physics_process(double delta) override;
   void set_state(BumbleBeeState* state);
   void take_hit(int damage) override;
   void set_jump_velocity(Vector2 const& velocity);
