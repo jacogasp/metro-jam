@@ -11,6 +11,7 @@
 #  define DISABLE_ALL_WARNINGS_BEGIN                                           \
     _Pragma("GCC diagnostic push")                                             \
     _Pragma("GCC diagnostic ignored \"-Wunused-parameter\"")
+# define DISABLE_ALL_WARNINGS_END _Pragma("GCC diagnostic pop")
 #endif
 
 #define GDCLASS_V2(Object, Type)                                               \
