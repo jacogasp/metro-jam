@@ -1,0 +1,26 @@
+[gd_resource type="TileSet" load_steps=7 format=3 uid="uid://4p6yoqcsif1f"]
+
+[ext_resource type="Texture2D" uid="uid://dovyy6ri1oscw" path="res://assets/tilesets/bg_sprite_01.png" id="1_rqxc1"]
+[ext_resource type="Texture2D" uid="uid://b2aql5pd0odrn" path="res://assets/tilesets/bg_sprite_02.png" id="2_5smjh"]
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_i3ouf"]
+tile_data = PackedInt32Array(0, 3, 0, 524288, 3, 1, 8, 65539, 0, 524296, 65539, 1)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_sfi61"]
+tile_data = PackedInt32Array(0, 2, 0, 524288, 2, 1, 8, 65538, 0, 524296, 65538, 1)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yt4pq"]
+texture = ExtResource("1_rqxc1")
+texture_region_size = Vector2i(256, 256)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_77c74"]
+texture = ExtResource("2_5smjh")
+texture_region_size = Vector2i(256, 256)
+0:0/0 = 0
+
+[resource]
+sources/2 = SubResource("TileSetAtlasSource_yt4pq")
+sources/3 = SubResource("TileSetAtlasSource_77c74")
+pattern_0 = SubResource("TileMapPattern_i3ouf")
+pattern_1 = SubResource("TileMapPattern_sfi61")
