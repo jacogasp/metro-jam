@@ -1,4 +1,5 @@
 #include "lifebar.hpp"
+#include <cassert>
 
 void LifeBar::_bind_methods() {
   ClassDB::bind_method(D_METHOD("get_max_lives"), &LifeBar::get_max_lives);
