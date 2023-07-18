@@ -69,7 +69,7 @@ void Player::_bind_methods() {
 }
 
 void Player::_ready() {
-  PROFILE_FUNCTION()
+  PROFILE_FUNCTION();
   m_logger           = core_game::LoggerLocator::getService();
   m_animatedSprite2D = get_node<AnimatedSprite2D>("AnimatedSprite2D");
   m_animatedSprite2D->play("Idle");
@@ -96,6 +96,7 @@ static void maybe_save(Player& player, Input& input) {
 }
 
 static bool check_interaction(Input& input, RayCast2D& ray) {
+  PROFILE_FUNCTION();
   if (input.is_action_just_pressed("interact") && ray.is_colliding()) {
     auto item = ray.get_collider();
     if (item) {
@@ -112,7 +113,7 @@ static bool check_interaction(Input& input, RayCast2D& ray) {
 }
 
 void Player::_process(float delta) {
-  PROFILE_FUNCTION()
+  PROFILE_FUNCTION();
   if (Engine::get_singleton()->is_editor_hint())
     return;
   auto input                = Input::get_singleton();
@@ -134,7 +135,7 @@ void Player::_process(float delta) {
 }
 
 void Player::_physics_process(float delta) {
-  PROFILE_FUNCTION()
+  PROFILE_FUNCTION();
   assert(m_state);
   if (Engine::get_singleton()->is_editor_hint())
     return;
@@ -160,7 +161,7 @@ void Player::_physics_process(float delta) {
 }
 
 void Player::save() {
-  PROFILE_FUNCTION()
+  PROFILE_FUNCTION();
   try {
     Dictionary d{};
     d["pos.x"] = get_position().x;
@@ -176,7 +177,7 @@ void Player::save() {
 }
 
 void Player::load() {
-  PROFILE_FUNCTION()
+  PROFILE_FUNCTION();
   if (!std::filesystem::exists(savings_path)) {
     m_logger->warn("Save file not found");
     return;
@@ -296,7 +297,8 @@ void Player::flip_h() const {
   }
 }
 
-static bool ray_hits(Vector2 position, Vector2 target, Ref<World2D> world) {
+static bool ray_hits(Vector2 position, Vector2 target, const Ref<World2D>& world) {
+  PROFILE_FUNCTION();
   auto query = PhysicsRayQueryParameters2D::create(
       position, target, Player::block_collision_mask);
   query->set_hit_from_inside(true);
@@ -307,6 +309,7 @@ static bool ray_hits(Vector2 position, Vector2 target, Ref<World2D> world) {
 }
 
 bool Player::is_on_ground() const {
+  PROFILE_FUNCTION();
   auto pos              = get_global_position();
   auto world            = get_world_2d();
   auto const half_width = m_bounds.size.x / 2;

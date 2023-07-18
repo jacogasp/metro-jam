@@ -121,12 +121,10 @@ class TimerInstrument {
 } // namespace core_game
 
 #if CORE_GAME_PROFILING
-#  define PROFILE_FUNCTION()                                                   \
-    core_game::TimerInstrument timer(std::string{typeid(*this).name()}         \
-                                     + std::string{"::"}                       \
-                                     + std::string{__FUNCTION__});
+#  define PROFILE_SCOPE(name) core_game::TimerInstrument timer(name)
+#  define PROFILE_FUNCTION()  PROFILE_SCOPE(__FUNCTION__)
 #else
-#  define PROFILE_FUNCTION()
+#  define PROFILE_SCOPE (name)
 #endif
 
 #endif // COREGAME_PROFILER_HPP
