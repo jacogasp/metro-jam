@@ -3,11 +3,12 @@
 
 #include <godot_cpp/classes/node2d.hpp>
 #include <godot_cpp/classes/packed_scene.hpp>
+#include "macros.hpp"
 
 using namespace godot;
 
 class CoinSpawner : public Node2D {
-    GDCLASS(CoinSpawner, Node2D);
+    GDCLASS_V2(CoinSpawner, Node2D)
     Ref<PackedScene> m_packed_scene{nullptr};
     int m_quantity             = 0;
     static void _bind_methods();

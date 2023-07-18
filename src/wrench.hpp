@@ -2,6 +2,7 @@
 #define COREGAME_WRENCH_HPP
 
 #include "weapon.hpp"
+#include "macros.hpp"
 #include <godot_cpp/classes/node2d.hpp>
 #include <godot_cpp/classes/ray_cast2d.hpp>
 
@@ -10,7 +11,7 @@ using namespace godot;
 class Wrench
     : public Node2D
     , public Weapon {
-  GDCLASS(Wrench, Node2D)
+  GDCLASS_V2(Wrench, Node2D)
   static const uint32_t enemy_mask = 1 << 12;
 
  private:

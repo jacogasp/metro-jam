@@ -2,6 +2,7 @@
 #define COREGAME_MAIN_SCENE_HPP
 
 #include "logger.hpp"
+#include "macros.hpp"
 #include <godot_cpp/classes/canvas_layer.hpp>
 #include <godot_cpp/classes/node2d.hpp>
 
@@ -9,7 +10,7 @@ using namespace godot;
 class HUD;
 
 class MainScene : public Node2D {
-  GDCLASS(MainScene, Node2D)
+  GDCLASS_V2(MainScene, Node2D)
 
   core_game::Logger m_logger;
   HUD* m_hud{nullptr};

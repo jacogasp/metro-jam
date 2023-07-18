@@ -1,16 +1,17 @@
 #ifndef COREGAME_GRENADE_LAUNCHER_HPP
 #define COREGAME_GRENADE_LAUNCHER_HPP
 
+#include "macros.hpp"
 #include "weapon.hpp"
-#include <godot_cpp/classes/packed_scene.hpp>
 #include <godot_cpp/classes/node2d.hpp>
+#include <godot_cpp/classes/packed_scene.hpp>
 
 using namespace godot;
 
 class GrenadeLauncher
     : public Node2D
     , public Weapon {
-  GDCLASS(GrenadeLauncher, Node2D)
+  GDCLASS_V2(GrenadeLauncher, Node2D)
 
  private:
   Ref<PackedScene> m_grenade = nullptr;

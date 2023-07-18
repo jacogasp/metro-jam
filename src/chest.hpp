@@ -3,6 +3,7 @@
 
 #include "coin_spawner.hpp"
 #include "damageable.hpp"
+#include "macros.hpp"
 #include <godot_cpp/classes/static_body2d.hpp>
 #include <godot_cpp/classes/collision_shape2d.hpp>
 #include <godot_cpp/classes/packed_scene.hpp>
@@ -11,7 +12,7 @@
 using namespace godot;
 
 class Chest : public StaticBody2D, public Damageable {
-    GDCLASS(Chest, StaticBody2D);
+    GDCLASS_V2(Chest, StaticBody2D)
     int m_life{20};
     Ref<PackedScene> m_packed_scene{nullptr};
     int m_quantity{0};

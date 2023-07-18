@@ -5,13 +5,14 @@
 #include <godot_cpp/classes/collision_shape2d.hpp>
 #include <godot_cpp/classes/node2d.hpp>
 #include <godot_cpp/classes/packed_scene.hpp>
+#include "macros.hpp"
 
 namespace core_game {
 class LoggerService;
 }
 using namespace godot;
 class Gate : public Area2D {
-  GDCLASS(Gate, Area2D)
+  GDCLASS_V2(Gate, Area2D)
   std::string m_next_room;
   core_game::LoggerService* m_logger{nullptr};
   CollisionShape2D *m_collision_shape{nullptr};

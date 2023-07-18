@@ -2,6 +2,7 @@
 #define COREGAME_BUMBLEBEE_HPP
 
 #include "damageable.hpp"
+#include "macros.hpp"
 #include "timer.hpp"
 #include <godot_cpp/classes/animated_sprite2d.hpp>
 #include <godot_cpp/classes/animation_player.hpp>
@@ -21,8 +22,10 @@ using HealthBar = TextureProgressBar;
 class BumbleBeeState {
  public:
   virtual ~BumbleBeeState() = default;
-  virtual void handle_input(BumbleBee&, Input*) const {}
-  virtual void update(BumbleBee&) const {}
+  virtual void handle_input(BumbleBee&, Input*) const {
+  }
+  virtual void update(BumbleBee&) const {
+  }
 };
 
 class IdleState : public BumbleBeeState {
@@ -48,7 +51,7 @@ class DyingState : public BumbleBeeState {
 class BumbleBee final
     : public CharacterBody2D
     , public Damageable {
-  GDCLASS(BumbleBee, CharacterBody2D)
+  GDCLASS_V2(BumbleBee, CharacterBody2D)
 
   enum Direction { left = -1, right = 1 };
 

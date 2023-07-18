@@ -1,6 +1,7 @@
 #ifndef COREGAME_GRENADE_HPP
 #define COREGAME_GRENADE_HPP
 
+#include "macros.hpp"
 #include "timer.hpp"
 #include "weapon.hpp"
 #include <godot_cpp/classes/node2d.hpp>
@@ -10,7 +11,7 @@
 using namespace godot;
 
 class Grenade : public RigidBody2D {
-  GDCLASS(Grenade, RigidBody2D)
+  GDCLASS_V2(Grenade, RigidBody2D)
 
  private:
   Timer m_timer{};

@@ -2,6 +2,7 @@
 #define COREGAME_WORLD_HPP
 
 #include "gate.hpp"
+#include "macros.hpp"
 #include <godot_cpp/classes/node.hpp>
 #include <godot_cpp/classes/packed_scene.hpp>
 #include <array>
@@ -14,7 +15,7 @@ class LoggerService;
 
 class Player;
 class World : public Node2D {
-  GDCLASS(World, Node2D)
+  GDCLASS_V2(World, Node2D)
   struct NextSceneMessage {
     std::string next_scene;
     std::string gate_name;
@@ -36,7 +37,7 @@ class World : public Node2D {
   // Use set/get only for editor only
   Ref<PackedScene> get_packed_scene();
   void set_packed_scene(const Ref<PackedScene>& packed_scene);
-  void set_player(const NodePath &path);
+  void set_player(const NodePath& path);
   [[nodiscard]] NodePath get_player() const;
 
  public:

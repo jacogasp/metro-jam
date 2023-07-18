@@ -51,6 +51,7 @@ add_library(
         src/wrench.cpp
         src/grenade.cpp
         src/grenade_launcher.cpp
+        src/macros.cpp
 )
 
 if (MINGW)

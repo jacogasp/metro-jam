@@ -2,6 +2,7 @@
 #define PLAYER_HPP
 
 #include "grenade_launcher.hpp"
+#include "macros.hpp"
 #include "persist.hpp"
 #include "player_state.hpp"
 #include "types.hpp"
@@ -23,7 +24,7 @@ class LoggerService;
 class Player
     : public CharacterBody2D
     , public Persist {
-  GDCLASS(Player, CharacterBody2D)
+  GDCLASS_V2(Player, CharacterBody2D)
 
   enum Direction { left = -1, right = 1 };
   static constexpr int block_collision_mask = 1 << 4;
