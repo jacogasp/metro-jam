@@ -28,15 +28,6 @@ Path Player::savings_path = []() {
   return path;
 }();
 
-static void set_ray_h_length(RayCast2D& ray, float strength) {
-  auto position = ray.get_position();
-  Vector2 target_position;
-  target_position.x =
-      position.x > 0 ? position.x + strength : position.x - strength;
-  target_position.y = position.y;
-  ray.set_target_position(target_position);
-}
-
 static void flip_h(RayCast2D& ray) {
   auto position        = ray.get_position();
   auto target_position = ray.get_target_position();
