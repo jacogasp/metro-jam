@@ -298,7 +298,7 @@ void Player::flip_h() const {
 }
 
 static bool ray_hits(Vector2 position, Vector2 target,
-                     const Ref<World2D>& world) {
+                     Ref<World2D> const& world) {
   PROFILE_FUNCTION();
   auto query = PhysicsRayQueryParameters2D::create(
       position, target, Player::block_collision_mask);
