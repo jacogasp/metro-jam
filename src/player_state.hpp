@@ -8,43 +8,42 @@ class Input;
 }
 class Player;
 
-class PlayerState {
- public:
+struct PlayerState {
   virtual ~PlayerState() = default;
-  virtual void handleInput(Player& player, godot::Input& input){};
-  virtual void update(Player& player){};
+  virtual void handleInput(Player&, godot::Input&){}
+  virtual void update(Player&){}
 };
 
-class StandingState : public PlayerState {
+struct StandingState : public PlayerState {
   void handleInput(Player& player, godot::Input& input) override;
   void update(Player& player) override;
 };
 
-class RunningState : public PlayerState {
+struct RunningState : public PlayerState {
   void handleInput(Player& player, godot::Input& input) override;
   void update(Player& player) override;
 };
 
-class JumpingState : public PlayerState {
+struct JumpingState : public PlayerState {
   void handleInput(Player& player, godot::Input& input) override;
   void update(Player& player) override;
 };
 
-class FallingState : public PlayerState {
+struct FallingState : public PlayerState {
   void update(Player& player) override;
 };
 
-class AirJumpingState : public PlayerState {
+struct AirJumpingState : public PlayerState {
   void handleInput(Player& player, godot::Input& input) override;
   void update(Player& player) override;
 };
 
-class AttackState : public PlayerState {
+struct AttackState : public PlayerState {
   void handleInput(Player& player, godot::Input& input) override;
   void update(Player& player) override;
 };
 
-class SlideState : public PlayerState {
+struct SlideState : public PlayerState {
   void update(Player& player) override;
 };
 
