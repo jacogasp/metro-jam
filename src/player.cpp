@@ -289,8 +289,7 @@ void Player::flip_h() const {
   }
 }
 
-static bool ray_hits(Vector2 position, Vector2 target,
-                     Ref<World2D> const& world) {
+static bool ray_hits(Vector2 position, Vector2 target, Ref<World2D>& world) {
   PROFILE_FUNCTION();
   auto query = PhysicsRayQueryParameters2D::create(
       position, target, Player::block_collision_mask);
@@ -301,10 +300,10 @@ static bool ray_hits(Vector2 position, Vector2 target,
   return collider != nullptr;
 }
 
-bool Player::is_on_ground() const {
+bool Player::is_on_ground() {
   PROFILE_FUNCTION();
   auto const pos        = get_global_position();
-  auto const world      = get_world_2d();
+  auto world            = get_world_2d();
   auto const half_width = m_bounds.size.x / 2;
   Vector2 target_left{pos.x - half_width, pos.y + ground_skin_depth};
   Vector2 target_right{pos.x + half_width, pos.y + ground_skin_depth};

@@ -97,7 +97,7 @@ class Player
   void set_hit_animation_time(float t);
   [[nodiscard]] float get_hit_animation_time() const;
   [[nodiscard]] float get_ground_position() const;
-  [[nodiscard]] bool is_on_ground() const;
+  [[nodiscard]] bool is_on_ground();
   void flip_h() const;
   void hit();
   void save() override;
