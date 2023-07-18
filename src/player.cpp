@@ -262,7 +262,7 @@ float Player::get_hit_animation_time() const {
   if (m_material == nullptr)
     return 0.0f;
   auto const time = m_material->get_shader_parameter("time");
-  return (float)time;
+  return static_cast<float>(time);
 }
 
 float Player::get_slide_speed() const {
