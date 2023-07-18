@@ -173,7 +173,7 @@ void JumpCommand::operator()(BumbleBee& bumble_bee) const {
   bumble_bee.m_animated_sprite2D->play("JumpIn");
   auto direction     = static_cast<int>(bumble_bee.m_direction);
   auto jump_velocity = bumble_bee.m_jump_velocity;
-  jump_velocity.x *= (float)direction;
+  jump_velocity.x *= static_cast<float>(direction);
   auto velocity = bumble_bee.get_velocity() + jump_velocity;
   bumble_bee.set_velocity(velocity);
   bumble_bee.set_state(&BumbleBee::jumping);
@@ -192,7 +192,7 @@ void DieCommand::operator()(BumbleBee& bumble_bee) const {
 }
 
 // BumbleBee's States
-void IdleState::update(BumbleBee& bumble_bee) const {
+void IdleState::update(BumbleBee&) const {
 }
 
 void WalkingState::update(BumbleBee& bumble_bee) const {

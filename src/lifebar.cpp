@@ -47,8 +47,8 @@ void LifeBar::_ready() {
   m_life_full  = get_node<Sprite2D>("LifeFull");
   if (m_life_full == nullptr || m_life_empty == nullptr)
     return;
-  m_life_empty_width  = m_life_empty->get_rect().size.x;
-  m_life_full_width   = m_life_full->get_rect().size.x;
+  m_life_empty_width = m_life_empty->get_rect().size.x;
+  m_life_full_width  = m_life_full->get_rect().size.x;
   init();
 }
 
@@ -57,7 +57,9 @@ void LifeBar::init() {
     return;
 
   float current_x = 0;
-  for (size_t i = 0; i < m_current_life; ++i) {
+  assert(m_current_life > 0);
+
+  for (auto i = 0; i < m_current_life; ++i) {
     Vector2 position = Vector2{current_x, 0};
     current_x += m_life_full_width + m_offset;
     m_sprites.emplace_back(m_life_full->duplicate());
@@ -68,7 +70,7 @@ void LifeBar::init() {
   if (m_life_empty == nullptr)
     return;
 
-  for (size_t i = m_current_life; i < m_max_lives; ++i) {
+  for (int i = m_current_life; i < m_max_lives; ++i) {
     Vector2 position = Vector2{current_x, 0};
     current_x += m_life_empty_width + m_offset;
     auto instance = m_life_empty->duplicate();
@@ -81,11 +83,13 @@ void LifeBar::add_life() {
   ++m_current_life;
   if (m_life_empty == nullptr)
     return;
-  auto const position = m_sprites.at(m_current_life)->get("position");
-  m_sprites.at(m_current_life)->queue_free();
-  m_sprites.at(m_current_life) = m_life_full->duplicate();
-  m_sprites.at(m_current_life)->set("position", position);
-  add_child(m_sprites.at(m_current_life));
+
+  auto const index    = static_cast<size_t>(m_current_life);
+  auto const position = m_sprites.at(index)->get("position");
+  m_sprites.at(index)->queue_free();
+  m_sprites.at(index) = m_life_full->duplicate();
+  m_sprites.at(index)->set("position", position);
+  add_child(m_sprites.at(index));
 }
 
 void LifeBar::lose_life() {
@@ -97,9 +101,10 @@ void LifeBar::lose_life() {
   if (m_life_empty == nullptr)
     return;
 
-  auto const position = m_sprites.at(m_current_life)->get("position");
-  m_sprites.at(m_current_life)->queue_free();
-  m_sprites.at(m_current_life) = m_life_empty->duplicate();
-  m_sprites.at(m_current_life)->set("position", position);
-  add_child(m_sprites.at(m_current_life));
+  auto const index    = static_cast<size_t>(m_current_life);
+  auto const position = m_sprites.at(index)->get("position");
+  m_sprites.at(index)->queue_free();
+  m_sprites.at(index) = m_life_empty->duplicate();
+  m_sprites.at(index)->set("position", position);
+  add_child(m_sprites.at(index));
 }
