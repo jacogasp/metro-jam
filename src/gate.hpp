@@ -11,7 +11,7 @@ class LoggerService;
 }
 using namespace godot;
 class Gate : public Area2D {
-  GDCLASS(Gate, Area2D);
+  GDCLASS(Gate, Area2D)
   std::string m_next_room;
   core_game::LoggerService* m_logger{nullptr};
   CollisionShape2D *m_collision_shape{nullptr};
