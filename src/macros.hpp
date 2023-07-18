@@ -18,7 +18,7 @@
     _Pragma("GCC diagnostic ignored \"-Wall\"")                                \
     _Pragma("GCC diagnostic ignored \"-Wextra\"")                              \
     _Pragma("GCC diagnostic ignored \"-Wpedantic\"")                           \
-    _Pragma("GCC diagnostic ignored \"-Wsign-conversion\"")                                                                               \
+    _Pragma("GCC diagnostic ignored \"-Wsign-conversion\"")
 # define DISABLE_ALL_WARNINGS_END _Pragma("GCC diagnostic pop")
 #endif
 //clang-format on
