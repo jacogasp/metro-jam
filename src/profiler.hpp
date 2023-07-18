@@ -14,7 +14,7 @@ namespace core_game {
 struct ProfilerResult {
   std::string name;
   long long start, end;
-  uint32_t thread_id;
+  size_t thread_id;
 };
 
 struct InstrumentationSession {
@@ -32,8 +32,7 @@ class Instrumentor {
       : m_profile_count(0) {
   }
 
-  void begin_session(const std::string& name,
-                     const std::string& filepath = "profiler.json") {
+  void begin_session(const std::string& filepath = "profiler.json") {
     m_ostream.open(filepath);
     m_session = std::make_unique<InstrumentationSession>();
     write_header();
@@ -111,8 +110,7 @@ class TimerInstrument {
     long long end =
         time_point_cast<microseconds>(end_timepoint).time_since_epoch().count();
 
-    uint32_t threadID =
-        std::hash<std::thread::id>{}(std::this_thread::get_id());
+    auto threadID = std::hash<std::thread::id>{}(std::this_thread::get_id());
     Instrumentor::get().write_profile({m_name, start, end, threadID});
 
     m_stopped = true;
