@@ -7,12 +7,12 @@
 using namespace godot;
 
 class HUD : public CanvasLayer {
-  GDCLASS(HUD, CanvasLayer);
+  GDCLASS(HUD, CanvasLayer)
   LifeBar* m_lifebar{nullptr};
   static void _bind_methods();
   void _ready() override;
  public:
-  LifeBar* get_lifebar() const;
+  [[nodiscard]] LifeBar* get_lifebar() const;
 };
 
 #endif // COREGAME_HUD_HPP

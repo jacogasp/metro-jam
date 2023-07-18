@@ -10,7 +10,7 @@
 using namespace godot;
 
 class Grenade : public RigidBody2D {
-  GDCLASS(Grenade, RigidBody2D);
+  GDCLASS(Grenade, RigidBody2D)
 
  private:
   Timer m_timer{};
@@ -20,7 +20,7 @@ class Grenade : public RigidBody2D {
  public:
   Grenade();
   void _ready() override;
-  void _process(float delta);
+  void _process(double delta) override;
   void explode();
   void set_timeout(TimeDelta timeout);
   [[nodiscard]] TimeDelta get_timeout() const;

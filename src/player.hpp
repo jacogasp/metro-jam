@@ -51,16 +51,16 @@ class Player
 
   Wrench wrench_weapon{};
 
-  friend class IdleCommand;
-  friend class JumpCommand;
-  friend class FallCommand;
-  friend class AirJumpCommand;
-  friend class RunCommand;
-  friend class AttackCommand;
-  friend class GrenadeCommand;
-  friend class SlideCommand;
-  friend class AttackState;
-  friend class SlideState;
+  friend struct IdleCommand;
+  friend struct JumpCommand;
+  friend struct FallCommand;
+  friend struct AirJumpCommand;
+  friend struct RunCommand;
+  friend struct AttackCommand;
+  friend struct GrenadeCommand;
+  friend struct SlideCommand;
+  friend struct AttackState;
+  friend struct SlideState;
 
   static void _bind_methods();
 
@@ -74,11 +74,11 @@ class Player
   static SlideState sliding;
   static Path savings_path;
 
-  friend class PlayerState;
+  friend struct PlayerState;
 
   void _ready() override;
-  void _process(float delta);
-  void _physics_process(float delta);
+  void _process(double delta) override;
+  void _physics_process(double delta) override;
   [[nodiscard]] float get_speed() const;
   void set_speed(float speed);
   [[nodiscard]] float get_gravity() const;

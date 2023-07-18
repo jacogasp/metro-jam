@@ -28,7 +28,7 @@ void World::_ready() {
   m_logger->info("World ready!");
 }
 
-void World::_process(float) {
+void World::_process(double) {
   PROFILE_FUNCTION();
   for (int i = 0; i < m_pending_index; ++i) {
     auto const loader     = ResourceLoader::get_singleton();

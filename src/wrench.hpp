@@ -10,7 +10,7 @@ using namespace godot;
 class Wrench
     : public Node2D
     , public Weapon {
-  GDCLASS(Wrench, Node2D);
+  GDCLASS(Wrench, Node2D)
   static const uint32_t enemy_mask = 1 << 12;
 
  private:

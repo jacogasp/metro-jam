@@ -112,7 +112,7 @@ static bool check_interaction(Input& input, RayCast2D& ray) {
   return false;
 }
 
-void Player::_process(float delta) {
+void Player::_process(double) {
   PROFILE_FUNCTION();
   if (Engine::get_singleton()->is_editor_hint())
     return;
@@ -134,13 +134,13 @@ void Player::_process(float delta) {
   }
 }
 
-void Player::_physics_process(float delta) {
+void Player::_physics_process(double delta) {
   PROFILE_FUNCTION();
   assert(m_state);
   if (Engine::get_singleton()->is_editor_hint())
     return;
 
-  auto const g = get_velocity().y + m_gravity * delta;
+  auto const g = get_velocity().y + m_gravity * static_cast<float>(delta);
   Vector2 velocity{0, g};
 
   auto input = Input::get_singleton();
@@ -155,7 +155,8 @@ void Player::_physics_process(float delta) {
   m_state->handleInput(*this, *input);
   m_state->update(*this);
 
-  auto is_flipped = m_animatedSprite2D->is_flipped_h() && velocity.x == 0;
+  auto is_flipped = m_animatedSprite2D->is_flipped_h()
+                 && core_game::close_to(velocity.x, 0.f);
   m_animatedSprite2D->set_flip_h(velocity.x < 0 || is_flipped);
   move_and_slide();
 }
@@ -311,8 +312,8 @@ static bool ray_hits(Vector2 position, Vector2 target,
 
 bool Player::is_on_ground() const {
   PROFILE_FUNCTION();
-  auto pos              = get_global_position();
-  auto world            = get_world_2d();
+  auto const pos        = get_global_position();
+  auto const world      = get_world_2d();
   auto const half_width = m_bounds.size.x / 2;
   Vector2 target_left{pos.x - half_width, pos.y + ground_skin_depth};
   Vector2 target_right{pos.x + half_width, pos.y + ground_skin_depth};

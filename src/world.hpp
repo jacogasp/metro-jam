@@ -14,7 +14,7 @@ class LoggerService;
 
 class Player;
 class World : public Node2D {
-  GDCLASS(World, Node2D);
+  GDCLASS(World, Node2D)
   struct NextSceneMessage {
     std::string next_scene;
     std::string gate_name;
@@ -31,7 +31,7 @@ class World : public Node2D {
 
   static void _bind_methods();
   void _ready() override;
-  void _process(float);
+  void _process(double) override;
   void update_scene();
   // Use set/get only for editor only
   Ref<PackedScene> get_packed_scene();

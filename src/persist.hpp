@@ -3,7 +3,7 @@
 
 class Persist {
  public:
-  ~Persist()  = default;
+  virtual ~Persist()  = default;
   virtual void save() = 0;
   virtual void load() = 0;
 };

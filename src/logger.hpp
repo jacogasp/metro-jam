@@ -33,15 +33,15 @@ class LoggerService {
 class LoggerNull : public LoggerService {
  public:
   LoggerNull() = default;
-  void log(const std::string_view& msg, Level logLevel) const final {
+  void log(const std::string_view&, Level) const final {
   }
-  void debug(const std::string_view& msg) const final {
+  void debug(const std::string_view&) const final {
   }
-  void info(const std::string_view& msg) const final {
+  void info(const std::string_view&) const final {
   }
-  void warn(const std::string_view& msg) const final {
+  void warn(const std::string_view&) const final {
   }
-  void error(const std::string_view& msg) const final {
+  void error(const std::string_view&) const final {
   }
 };
 

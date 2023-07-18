@@ -20,7 +20,7 @@ void Grenade::_ready() {
   m_timer.start();
 }
 
-void Grenade::_process(float delta) {
+void Grenade::_process(double delta) {
   m_timer.tick(delta);
 }
 

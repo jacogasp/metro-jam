@@ -9,7 +9,7 @@ using namespace godot;
 class HUD;
 
 class MainScene : public Node2D {
-  GDCLASS(MainScene, Node2D);
+  GDCLASS(MainScene, Node2D)
 
   core_game::Logger m_logger;
   HUD* m_hud{nullptr};

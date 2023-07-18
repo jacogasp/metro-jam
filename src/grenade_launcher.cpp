@@ -34,8 +34,8 @@ Vector2 GrenadeLauncher::get_impulse() const {
   return m_impulse;
 }
 
-void GrenadeLauncher::_process(float t) {
+void GrenadeLauncher::_process(double t) {
   auto const position = get_global_position();
-  m_velocity          = (position - m_prev_position) / t;
+  m_velocity          = (position - m_prev_position) / static_cast<float>(t);
   m_prev_position     = position;
 }

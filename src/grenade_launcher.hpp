@@ -10,7 +10,7 @@ using namespace godot;
 class GrenadeLauncher
     : public Node2D
     , public Weapon {
-  GDCLASS(GrenadeLauncher, Node2D);
+  GDCLASS(GrenadeLauncher, Node2D)
 
  private:
   Ref<PackedScene> m_grenade = nullptr;
@@ -21,7 +21,7 @@ class GrenadeLauncher
   static void _bind_methods();
 
  public:
-  void _process(float);
+  void _process(double) override;
   void fire(Vector2 const&) override;
   void set_grenade(const Ref<PackedScene>& scene);
   [[nodiscard]] Ref<PackedScene> get_grenade() const;
