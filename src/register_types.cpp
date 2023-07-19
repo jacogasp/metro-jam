@@ -43,7 +43,7 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
   ClassDB::register_class<Grenade>();
 
 #ifdef CORE_GAME_PROFILING
-  core_game::Instrumentor::get().begin_session("Example session");
+  core_game::Instrumentor::get().begin_session();
 #endif
 }
 
