@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://0e7eflaq7ui6"]
+[gd_scene load_steps=15 format=3 uid="uid://0e7eflaq7ui6"]
 
 [ext_resource type="Texture2D" uid="uid://b2u8bgksqj83j" path="res://icon.svg" id="1_hkmiw"]
 [ext_resource type="Material" uid="uid://g3uwsdhmuuaj" path="res://shaders/Water.material" id="2_333v6"]
@@ -10,6 +10,8 @@
 [ext_resource type="PackedScene" uid="uid://cm30bx70vnhcg" path="res://scenes/steam_door.tscn" id="7_bjane"]
 [ext_resource type="PackedScene" uid="uid://byowg4tosyvo2" path="res://scenes/platform.tscn" id="7_mbcqu"]
 [ext_resource type="PackedScene" uid="uid://rknubmbqfi4w" path="res://scenes/shadow_area.tscn" id="9_tmsto"]
+[ext_resource type="Texture2D" uid="uid://dch5xho6lehap" path="res://assets/textures/light.png" id="11_stcul"]
+[ext_resource type="Texture2D" uid="uid://2vcybdhlfsdk" path="res://assets/light_bulb_sprite.png" id="12_yblow"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dbwxh"]
 size = Vector2(17.5, 64)
@@ -206,6 +208,56 @@ collision_mask = 256
 
 [node name="CollisionShape2D" parent="SteamDoor/Door/Area2D" index="0"]
 position = Vector2(0, -67.5)
+
+[node name="Lights" type="Node2D" parent="."]
+
+[node name="Light" type="Node2D" parent="Lights"]
+position = Vector2(1279, 2351)
+
+[node name="PointLight2D" type="PointLight2D" parent="Lights/Light"]
+position = Vector2(0, 101)
+scale = Vector2(0.875, 0.875)
+texture = ExtResource("11_stcul")
+
+[node name="Sprite2D" type="Sprite2D" parent="Lights/Light"]
+texture = ExtResource("12_yblow")
+
+[node name="Light2" type="Node2D" parent="Lights"]
+position = Vector2(1599, 2351)
+
+[node name="PointLight2D" type="PointLight2D" parent="Lights/Light2"]
+position = Vector2(0, 101)
+scale = Vector2(0.875, 0.875)
+texture = ExtResource("11_stcul")
+
+[node name="Sprite2D" type="Sprite2D" parent="Lights/Light2"]
+texture = ExtResource("12_yblow")
+
+[node name="Light3" type="Node2D" parent="Lights"]
+position = Vector2(1919, 2351)
+
+[node name="PointLight2D" type="PointLight2D" parent="Lights/Light3"]
+position = Vector2(0, 101)
+scale = Vector2(0.875, 0.875)
+texture = ExtResource("11_stcul")
+
+[node name="Sprite2D" type="Sprite2D" parent="Lights/Light3"]
+texture = ExtResource("12_yblow")
+
+[node name="Light4" type="Node2D" parent="Lights"]
+position = Vector2(2240, 2351)
+
+[node name="PointLight2D" type="PointLight2D" parent="Lights/Light4"]
+position = Vector2(0, 101)
+scale = Vector2(0.875, 0.875)
+texture = ExtResource("11_stcul")
+
+[node name="Sprite2D" type="Sprite2D" parent="Lights/Light4"]
+texture = ExtResource("12_yblow")
+
+[node name="DarkLight" type="DirectionalLight2D" parent="Lights"]
+energy = 0.32
+blend_mode = 1
 
 [connection signal="body_entered" from="GateDHall" to="GateDHall" method="_on_body_entered"]
 [connection signal="body_exited" from="GateDHall" to="GateDHall" method="_on_body_exited"]
