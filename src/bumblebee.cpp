@@ -43,6 +43,7 @@ void BumbleBee::_ready() {
   if (m_health_bar) {
     m_health_bar->set_max(m_total_health);
     m_health_bar->set_value(m_health);
+    m_health_bar->hide();
   }
 
   m_vfx = get_node<AnimationPlayer>("VFX");
@@ -53,6 +54,10 @@ void BumbleBee::_ready() {
   m_timer.stop();
   update_bounds();
   walk(*this);
+
+  m_health_bar_timer.set_callback([this]() { m_health_bar->hide(); });
+  m_health_bar_timer.set_timeout(m_health_bar_show_time);
+  m_health_bar_timer.start();
 }
 
 void BumbleBee::_process(double) {
@@ -69,6 +74,16 @@ void BumbleBee::_physics_process(double delta) {
   velocity.y += 980 * static_cast<float>(delta);
   set_velocity(velocity);
   m_timer.tick(delta);
+  if (m_health_bar->is_visible()) {
+    m_health_bar_timer.tick(delta);
+  }
+  // if (m_health_bar->is_visible()) {
+  //   m_health_bar_timer += delta;  
+  //   if (m_health_bar_timer >= 2) {
+  //     m_health_bar->hide();
+  //     m_health_bar_timer = 0;
+  //   }
+  // }
   m_state->update(*this);
   m_animated_sprite2D->set_flip_h(m_direction == left);
   move_and_slide();
@@ -103,11 +118,21 @@ void BumbleBee::on_body_entered(Node* node) {
 void BumbleBee::take_hit(int damage) {
   m_health -= damage;
   if (m_health_bar) {
+    if (!m_health_bar->is_visible()) {
+      m_health_bar->show();
+    }
+    m_health_bar_timer.start();
+    // if (m_health_bar->is_visible()) {
+    //   m_health_bar_timer = 0;
+    // } else {
+    //   m_health_bar->show();
+    // }
     m_health_bar->set_value(m_health);
   }
   if (m_vfx) {
     m_vfx->play("Hit");
   }
+  
   if (m_health <= 0) {
     die(*this);
   }

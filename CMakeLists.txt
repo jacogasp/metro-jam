@@ -24,33 +24,33 @@ endif ()
 include(cmake/deps.cmake)
 
 add_library(
-        ${PROJECT_NAME} SHARED
-        src/register_types.cpp
-        src/logger.cpp
-        src/main_scene.cpp
-        src/player.cpp
-        src/player_state.cpp
-        src/world.cpp
-        src/gate.cpp
-        src/coin.cpp
-        src/weapon.cpp
-        src/chest.cpp
-        src/damageable.cpp
-        src/coin_spawner.cpp
-        src/profiler.cpp
-        src/persist.cpp
-        src/io.cpp
-        src/lifebar.cpp
-        src/hud.cpp
-        src/types.cpp
-        src/player_commands.cpp
-        src/bumblebee.cpp
-        src/timer.cpp
-        src/weapon.hpp
-        src/wrench.cpp
-        src/grenade.cpp
-        src/grenade_launcher.cpp
-        src/macros.cpp
+		${PROJECT_NAME} SHARED
+		src/register_types.cpp
+		src/logger.cpp
+		src/main_scene.cpp
+		src/player.cpp
+		src/player_state.cpp
+		src/world.cpp
+		src/gate.cpp
+		src/coin.cpp
+		src/weapon.cpp
+		src/chest.cpp
+		src/damageable.cpp
+		src/coin_spawner.cpp
+		src/profiler.cpp
+		src/persist.cpp
+		src/io.cpp
+		src/lifebar.cpp
+		src/hud.cpp
+		src/types.cpp
+		src/player_commands.cpp
+		src/bumblebee.cpp
+		src/timer.cpp
+		src/weapon.hpp
+		src/wrench.cpp
+		src/grenade.cpp
+		src/grenade_launcher.cpp
+		src/macros.cpp
 )
 
 if (MINGW)
