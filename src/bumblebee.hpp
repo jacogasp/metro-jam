@@ -69,13 +69,13 @@ class BumbleBee final
   Node2D* m_target{nullptr};
 
   Timer m_timer{};
-  Direction m_direction        = left;
-  Vector2 m_jump_velocity      = Vector2{200, -200};
-  TimeDelta m_jump_interval_s  = 2;
-  Vector2 m_bounds             = Vector2{};
-  int m_total_health           = 100;
-  int m_health                 = 100;
   Timer m_health_bar_timer{};
+  Direction m_direction            = left;
+  Vector2 m_jump_velocity          = Vector2{200, -200};
+  TimeDelta m_jump_interval_s      = 2;
+  Vector2 m_bounds                 = Vector2{};
+  int m_total_health               = 100;
+  int m_health                     = 100;
   TimeDelta m_health_bar_show_time = 2;
 
   static void _bind_methods();

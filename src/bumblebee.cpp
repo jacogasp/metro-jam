@@ -77,13 +77,6 @@ void BumbleBee::_physics_process(double delta) {
   if (m_health_bar->is_visible()) {
     m_health_bar_timer.tick(delta);
   }
-  // if (m_health_bar->is_visible()) {
-  //   m_health_bar_timer += delta;  
-  //   if (m_health_bar_timer >= 2) {
-  //     m_health_bar->hide();
-  //     m_health_bar_timer = 0;
-  //   }
-  // }
   m_state->update(*this);
   m_animated_sprite2D->set_flip_h(m_direction == left);
   move_and_slide();
@@ -122,11 +115,6 @@ void BumbleBee::take_hit(int damage) {
       m_health_bar->show();
     }
     m_health_bar_timer.start();
-    // if (m_health_bar->is_visible()) {
-    //   m_health_bar_timer = 0;
-    // } else {
-    //   m_health_bar->show();
-    // }
     m_health_bar->set_value(m_health);
   }
   if (m_vfx) {
