@@ -52,6 +52,7 @@ add_library(
         src/grenade_launcher.cpp
         src/macros.cpp
         src/enemy_soldier.cpp
+        src/health_bar.cpp
 )
 
 if (MINGW)

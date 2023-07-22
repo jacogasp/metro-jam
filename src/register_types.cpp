@@ -12,6 +12,7 @@
 #include "enemy_soldier.hpp"
 #include "gate.hpp"
 #include "grenade.hpp"
+#include "health_bar.hpp"
 #include "hud.hpp"
 #include "io.hpp"
 #include "lifebar.hpp"
@@ -40,6 +41,7 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
   ClassDB::register_class<GrenadeLauncher>();
   ClassDB::register_class<Grenade>();
   ClassDB::register_class<EnemySoldier>();
+  ClassDB::register_class<HealthBar>();
 
 #ifdef CORE_GAME_PROFILING
   core_game::Instrumentor::get().begin_session();
