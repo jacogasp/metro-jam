@@ -1,8 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://0e7eflaq7ui6"]
+[gd_scene load_steps=16 format=3 uid="uid://0e7eflaq7ui6"]
 
 [ext_resource type="Texture2D" uid="uid://b2u8bgksqj83j" path="res://icon.svg" id="1_hkmiw"]
 [ext_resource type="Material" uid="uid://g3uwsdhmuuaj" path="res://shaders/Water.material" id="2_333v6"]
-[ext_resource type="TileSet" uid="uid://3wuav1or8q35" path="res://assets/tilesets/BgWall.tres" id="3_2q04h"]
+[ext_resource type="TileSet" uid="uid://3uhk4a3qtls6" path="res://assets/tilesets/BgWall.tres" id="3_2q04h"]
 [ext_resource type="PackedScene" uid="uid://b31qyx4laex5m" path="res://scenes/steam_jet.tscn" id="3_gaim7"]
 [ext_resource type="Material" uid="uid://bcw2f556s0rec" path="res://shaders/Fire.material" id="4_e56xf"]
 [ext_resource type="TileSet" uid="uid://0w2a5bo421v7" path="res://assets/tilesets/TilesetBlocks.tres" id="4_pyf6q"]
