@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://rknubmbqfi4w" path="res://scenes/shadow_area.tscn" id="9_tmsto"]
 [ext_resource type="Texture2D" uid="uid://dch5xho6lehap" path="res://assets/textures/light.png" id="11_stcul"]
 [ext_resource type="Texture2D" uid="uid://2vcybdhlfsdk" path="res://assets/light_bulb_sprite.png" id="12_yblow"]
+[ext_resource type="PackedScene" uid="uid://br4rfwsm3h8cw" path="res://scenes/enemy_soldier.tscn" id="13_r6kl5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dbwxh"]
 size = Vector2(17.5, 64)
@@ -258,6 +259,9 @@ texture = ExtResource("12_yblow")
 [node name="DarkLight" type="DirectionalLight2D" parent="Lights"]
 energy = 0.32
 blend_mode = 1
+
+[node name="EnemySoldier" parent="." instance=ExtResource("13_r6kl5")]
+position = Vector2(1645, 1993)
 
 [connection signal="body_entered" from="GateDHall" to="GateDHall" method="_on_body_entered"]
 [connection signal="body_exited" from="GateDHall" to="GateDHall" method="_on_body_exited"]
