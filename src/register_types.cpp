@@ -1,6 +1,5 @@
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/core/defs.hpp>
-#include <godot_cpp/godot.hpp>
 #include <gdextension_interface.h>
 
 #include "register_types.hpp"
@@ -21,7 +20,6 @@
 #include "world.hpp"
 #include "wrench.hpp"
 
-using namespace godot;
 
 void initialize_example_module(ModuleInitializationLevel p_level) {
   if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
