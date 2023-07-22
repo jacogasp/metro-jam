@@ -1,5 +1,4 @@
 #include "bumblebee.hpp"
-#include "io.hpp"
 #include <godot_cpp/classes/collision_shape2d.hpp>
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/shader_material.hpp>

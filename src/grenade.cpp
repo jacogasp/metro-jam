@@ -1,5 +1,4 @@
 #include "grenade.hpp"
-#include "io.hpp"
 
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/gpu_particles2d.hpp>

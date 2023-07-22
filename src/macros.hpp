@@ -28,4 +28,10 @@
   GDCLASS(Object, Type)                                                        \
   DISABLE_ALL_WARNINGS_END
 
+#define BIND_PROPERTY(object, varname, variant)                                \
+  ClassDB::bind_method(D_METHOD("set_" #varname), &object::set_##varname);     \
+  ClassDB::bind_method(D_METHOD("get_" #varname), &object::get_##varname);     \
+  ADD_PROPERTY(PropertyInfo(variant, #varname), "set_" #varname,               \
+               "get_" #varname)
+
 #endif // COREGAME_MACROS_HPP

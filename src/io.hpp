@@ -10,12 +10,6 @@
 #include <optional>
 #include <string>
 
-#define BIND_PROPERTY(object, varname, variant)                                \
-  ClassDB::bind_method(D_METHOD("set_" #varname), &object::set_##varname);     \
-  ClassDB::bind_method(D_METHOD("get_" #varname), &object::get_##varname);     \
-  ADD_PROPERTY(PropertyInfo(variant, #varname), "set_" #varname,               \
-               "get_" #varname)
-
 namespace core_game {
 
 godot::Dictionary json_to_dict(const std::string& s);
