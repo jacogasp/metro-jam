@@ -2,6 +2,7 @@
 #define COREGAME_BUMBLEBEE_HPP
 
 #include "damageable.hpp"
+#include "health_bar.hpp"
 #include "macros.hpp"
 #include "timer.hpp"
 #include <godot_cpp/classes/animated_sprite2d.hpp>
@@ -16,7 +17,6 @@
 using namespace godot;
 
 class BumbleBee;
-using HealthBar = TextureProgressBar;
 
 // States
 class BumbleBeeState {
@@ -70,13 +70,12 @@ class BumbleBee final
 
   Timer m_timer{};
   Timer m_health_bar_timer{};
-  Direction m_direction            = left;
-  Vector2 m_jump_velocity          = Vector2{200, -200};
-  TimeDelta m_jump_interval_s      = 2;
-  Vector2 m_bounds                 = Vector2{};
-  int m_total_health               = 100;
-  int m_health                     = 100;
-  TimeDelta m_health_bar_show_time = 2;
+  Direction m_direction       = left;
+  Vector2 m_jump_velocity     = Vector2{200, -200};
+  TimeDelta m_jump_interval_s = 2;
+  Vector2 m_bounds            = Vector2{};
+  int m_total_health          = 100;
+  int m_health                = 100;
 
   static void _bind_methods();
   void _ready() override;

@@ -157,7 +157,7 @@ collision_mask = 273
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_4dmxq")
 
-[node name="HealthBar" type="TextureProgressBar" parent="."]
+[node name="HealthBar" type="HealthBar" parent="."]
 offset_left = -16.0
 offset_top = -35.0
 offset_right = 16.0

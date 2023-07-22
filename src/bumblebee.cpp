@@ -53,10 +53,6 @@ void BumbleBee::_ready() {
   m_timer.stop();
   update_bounds();
   walk(*this);
-
-  m_health_bar_timer.set_callback([this]() { m_health_bar->hide(); });
-  m_health_bar_timer.set_timeout(m_health_bar_show_time);
-  m_health_bar_timer.start();
 }
 
 void BumbleBee::_process(double) {
@@ -110,10 +106,6 @@ void BumbleBee::on_body_entered(Node* node) {
 void BumbleBee::take_hit(int damage) {
   m_health -= damage;
   if (m_health_bar) {
-    if (!m_health_bar->is_visible()) {
-      m_health_bar->show();
-    }
-    m_health_bar_timer.start();
     m_health_bar->set_value(m_health);
   }
   if (m_vfx) {
