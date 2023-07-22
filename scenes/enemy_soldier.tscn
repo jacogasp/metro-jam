@@ -125,7 +125,7 @@ sprite_frames = SubResource("SpriteFrames_x7vc8")
 animation = &"Walk"
 frame = 5
 
-[node name="HealthBar" type="TextureProgressBar" parent="."]
+[node name="HealthBar" type="HealthBar" parent="."]
 offset_left = -16.0
 offset_top = -35.0
 offset_right = 16.0
