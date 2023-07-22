@@ -1,7 +1,8 @@
-[gd_scene load_steps=17 format=3 uid="uid://br4rfwsm3h8cw"]
+[gd_scene load_steps=18 format=3 uid="uid://br4rfwsm3h8cw"]
 
 [ext_resource type="Texture2D" uid="uid://b6itau5f6uom8" path="res://assets/characters/enemy_soldier_sprites.png" id="1_0oysq"]
 [ext_resource type="Texture2D" uid="uid://dju2wr2n2ml5k" path="res://assets/health_bar.png" id="2_08kpc"]
+[ext_resource type="PackedScene" uid="uid://cpjx76e8dyp5b" path="res://scenes/blob_granade.tscn" id="3_2t3kq"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kukua"]
 radius = 15.0
@@ -143,9 +144,12 @@ tint_under = Color(0.305882, 0, 0, 1)
 tint_progress = Color(1, 0, 0, 1)
 
 [node name="Area2D" type="Area2D" parent="."]
-visible = false
 collision_layer = 4096
 collision_mask = 273
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CapsuleShape2D_kukua")
+
+[node name="Gun" type="Gun" parent="."]
+bullet = ExtResource("3_2t3kq")
+position = Vector2(22, 0)

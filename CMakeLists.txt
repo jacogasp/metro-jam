@@ -54,6 +54,7 @@ add_library(
         src/enemy_soldier.cpp
         src/health_bar.cpp
         src/state.cpp
+        src/gun.cpp
 )
 
 if (MINGW)

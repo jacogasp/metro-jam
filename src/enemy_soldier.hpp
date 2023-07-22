@@ -6,6 +6,7 @@
 #include "damageable.hpp"
 #include "macros.hpp"
 #include "state.hpp"
+#include "timer.hpp"
 
 using namespace godot;
 
@@ -22,6 +23,8 @@ class EnemySoldier
   int m_total_health         = 100;
   int m_health               = 100;
   EnemySoldierState* m_state = &EnemySoldier::idle;
+  TimeDelta m_fire_rate      = 1;
+  Timer m_fire_timer;
 
   static void _bind_methods();
 
@@ -35,6 +38,9 @@ class EnemySoldier
   [[nodiscard]] float get_gravity() const;
   void set_total_health(int health);
   [[nodiscard]] int get_total_health() const;
+  void set_fire_rate(double rate);
+  [[nodiscard]] double get_fire_rate() const;
+  void fire();
 
   // States
   struct IdleState : EnemySoldierState {
