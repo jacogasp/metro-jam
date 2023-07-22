@@ -9,6 +9,7 @@
 #include "coin.hpp"
 #include "coin_spawner.hpp"
 #include "constants.hpp"
+#include "enemy_soldier.hpp"
 #include "gate.hpp"
 #include "grenade.hpp"
 #include "hud.hpp"
@@ -19,7 +20,6 @@
 #include "profiler.hpp"
 #include "world.hpp"
 #include "wrench.hpp"
-
 
 void initialize_example_module(ModuleInitializationLevel p_level) {
   if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
@@ -39,6 +39,7 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
   ClassDB::register_class<Wrench>();
   ClassDB::register_class<GrenadeLauncher>();
   ClassDB::register_class<Grenade>();
+  ClassDB::register_class<EnemySoldier>();
 
 #ifdef CORE_GAME_PROFILING
   core_game::Instrumentor::get().begin_session();
