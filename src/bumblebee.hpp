@@ -4,6 +4,7 @@
 #include "damageable.hpp"
 #include "health_bar.hpp"
 #include "macros.hpp"
+#include "state.hpp"
 #include "timer.hpp"
 #include <godot_cpp/classes/animated_sprite2d.hpp>
 #include <godot_cpp/classes/animation_player.hpp>
@@ -17,36 +18,7 @@
 using namespace godot;
 
 class BumbleBee;
-
-// States
-class BumbleBeeState {
- public:
-  virtual ~BumbleBeeState() = default;
-  virtual void handle_input(BumbleBee&, Input*) const {
-  }
-  virtual void update(BumbleBee&) const {
-  }
-};
-
-class IdleState : public BumbleBeeState {
-  void update(BumbleBee& bumble_bee) const override;
-};
-
-class WalkingState : public BumbleBeeState {
-  void update(BumbleBee& bumble_bee) const override;
-};
-
-class JumpState : public BumbleBeeState {
-  void update(BumbleBee& bumble_bee) const override;
-};
-
-class OnWallState : public BumbleBeeState {
-  void update(BumbleBee& bumble_bee) const override;
-};
-
-class DyingState : public BumbleBeeState {
-  void update(BumbleBee& bumble_bee) const override;
-};
+using BumbleBeeState = State<BumbleBee>;
 
 class BumbleBee final
     : public CharacterBody2D
@@ -55,12 +27,7 @@ class BumbleBee final
 
   enum Direction { left = -1, right = 1 };
 
-  static IdleState idle_state;
-  static WalkingState walking_state;
-  static JumpState jumping;
-  static OnWallState on_wall;
-  static DyingState dying;
-
+ private:
   BumbleBeeState* m_state{&BumbleBee::walking_state};
   AnimatedSprite2D* m_animated_sprite2D{nullptr};
   Area2D* m_aggro_area{nullptr};
@@ -78,6 +45,8 @@ class BumbleBee final
   int m_health                = 100;
 
   static void _bind_methods();
+
+ public:
   void _ready() override;
   void _process(double) override;
   void _physics_process(double delta) override;
@@ -94,28 +63,59 @@ class BumbleBee final
   void acquire_target(Node2D* node);
   void release_target(Node2D* node);
   void update_bounds();
-};
+  [[nodiscard]] AnimatedSprite2D* get_animated_sprite() const;
+  void set_direction(Direction const& direction);
+  [[nodiscard]] Direction const& get_direction() const;
 
-// Commands
+ private:
+  struct IdleState : public BumbleBeeState {
+    void update(BumbleBee& bumble_bee) const override;
+  };
 
-struct IdleCommand {
-  void operator()(BumbleBee& bumble_bee) const;
-};
+  class WalkingState : public BumbleBeeState {
+    void update(BumbleBee& bumble_bee) const override;
+  };
 
-struct WalkCommand {
-  void operator()(BumbleBee& bumble_bee) const;
-};
+  class JumpState : public BumbleBeeState {
+    void update(BumbleBee& bumble_bee) const override;
+  };
 
-struct JumpCommand {
-  void operator()(BumbleBee& bumble_bee) const;
-};
+  class OnWallState : public BumbleBeeState {
+    void update(BumbleBee& bumble_bee) const override;
+  };
 
-struct FlipCommand {
-  void operator()(BumbleBee& bumble_bee) const;
-};
+  class DyingState : public BumbleBeeState {
+    void update(BumbleBee& bumble_bee) const override;
+  };
 
-struct DieCommand {
-  void operator()(BumbleBee& bumble_bee) const;
+ public:
+  static IdleState idle_state;
+  static WalkingState walking_state;
+  static JumpState jumping;
+  static OnWallState on_wall;
+  static DyingState dying;
+
+
+  // Commands
+  struct IdleCommand {
+    void operator()(BumbleBee& bumble_bee) const;
+  };
+
+  struct WalkCommand {
+    void operator()(BumbleBee& bumble_bee) const;
+  };
+
+  struct JumpCommand {
+    void operator()(BumbleBee& bumble_bee) const;
+  };
+
+  struct FlipCommand {
+    void operator()(BumbleBee& bumble_bee) const;
+  };
+
+  struct DieCommand {
+    void operator()(BumbleBee& bumble_bee) const;
+  };
 };
 
 #endif // COREGAME_BUMBLEBEE_HPP

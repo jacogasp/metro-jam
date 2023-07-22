@@ -17,16 +17,16 @@ void BumbleBee::_bind_methods() {
   ClassDB::bind_method(D_METHOD("release_target"), &BumbleBee::release_target);
 }
 
-IdleState BumbleBee::idle_state       = IdleState();
-JumpState BumbleBee::jumping          = JumpState();
-WalkingState BumbleBee::walking_state = WalkingState();
-OnWallState BumbleBee::on_wall        = OnWallState();
-DyingState BumbleBee::dying           = DyingState();
-static auto constexpr idle            = IdleCommand();
-static auto constexpr walk            = WalkCommand();
-static auto constexpr jump            = JumpCommand();
-static auto constexpr flip            = FlipCommand();
-static auto constexpr die             = DieCommand();
+BumbleBee::IdleState BumbleBee::idle_state       = BumbleBee::IdleState();
+BumbleBee::JumpState BumbleBee::jumping          = BumbleBee::JumpState();
+BumbleBee::WalkingState BumbleBee::walking_state = BumbleBee::WalkingState();
+BumbleBee::OnWallState BumbleBee::on_wall        = BumbleBee::OnWallState();
+BumbleBee::DyingState BumbleBee::dying           = BumbleBee::DyingState();
+static auto constexpr idle                       = BumbleBee::IdleCommand();
+static auto constexpr walk                       = BumbleBee::WalkCommand();
+static auto constexpr jump                       = BumbleBee::JumpCommand();
+static auto constexpr flip                       = BumbleBee::FlipCommand();
+static auto constexpr die                        = BumbleBee::DieCommand();
 
 void BumbleBee::_ready() {
   if (Engine::get_singleton()->is_editor_hint())
@@ -60,7 +60,6 @@ void BumbleBee::_process(double) {
     look_at(m_target);
   }
 }
-
 
 void BumbleBee::_physics_process(double delta) {
   if (Engine::get_singleton()->is_editor_hint())
@@ -111,7 +110,7 @@ void BumbleBee::take_hit(int damage) {
   if (m_vfx) {
     m_vfx->play("Hit");
   }
-  
+
   if (m_health <= 0) {
     die(*this);
   }
@@ -160,46 +159,58 @@ void BumbleBee::update_bounds() {
   auto const pos  = get_position();
   m_bounds        = {pos.x - rect.size.x / 2, pos.x + rect.size.x / 2};
 }
+AnimatedSprite2D* BumbleBee::get_animated_sprite() const {
+  return m_animated_sprite2D;
+}
+
+void BumbleBee::set_direction(const BumbleBee::Direction& direction) {
+  m_direction = direction;
+}
+
+const BumbleBee::Direction& BumbleBee::get_direction() const {
+  return m_direction;
+}
 
 // Commands
-void IdleCommand::operator()(BumbleBee& bumble_bee) const {
-  bumble_bee.m_animated_sprite2D->play("Idle");
+void BumbleBee::IdleCommand::operator()(BumbleBee& bumble_bee) const {
+  bumble_bee.get_animated_sprite()->play("Idle");
   bumble_bee.set_velocity({0, 0});
   bumble_bee.set_state(&BumbleBee::idle_state);
 }
 
-void WalkCommand::operator()(BumbleBee& bumble_bee) const {
-  bumble_bee.m_animated_sprite2D->play("Walk");
+void BumbleBee::WalkCommand::operator()(BumbleBee& bumble_bee) const {
+  bumble_bee.get_animated_sprite()->play("Walk");
   bumble_bee.set_state(&BumbleBee::walking_state);
 }
 
-void JumpCommand::operator()(BumbleBee& bumble_bee) const {
-  bumble_bee.m_animated_sprite2D->play("JumpIn");
-  auto direction     = static_cast<int>(bumble_bee.m_direction);
-  auto jump_velocity = bumble_bee.m_jump_velocity;
+void BumbleBee::JumpCommand::operator()(BumbleBee& bumble_bee) const {
+  bumble_bee.get_animated_sprite()->play("JumpIn");
+  auto direction     = static_cast<int>(bumble_bee.get_direction());
+  auto jump_velocity = bumble_bee.get_jump_velocity();
   jump_velocity.x *= static_cast<float>(direction);
   auto velocity = bumble_bee.get_velocity() + jump_velocity;
   bumble_bee.set_velocity(velocity);
   bumble_bee.set_state(&BumbleBee::jumping);
 }
 
-void FlipCommand::operator()(BumbleBee& bumble_bee) const {
-  bumble_bee.m_direction = bumble_bee.m_direction == BumbleBee::Direction::right
-                             ? BumbleBee::Direction::left
-                             : BumbleBee::Direction::right;
+void BumbleBee::FlipCommand::operator()(BumbleBee& bumble_bee) const {
+  auto direction = bumble_bee.get_direction() == BumbleBee::Direction::right
+                     ? BumbleBee::Direction::left
+                     : BumbleBee::Direction::right;
+  bumble_bee.set_direction(direction);
   bumble_bee.set_state(&BumbleBee::on_wall);
 }
 
-void DieCommand::operator()(BumbleBee& bumble_bee) const {
-  bumble_bee.m_animated_sprite2D->play("Die");
+void BumbleBee::DieCommand::operator()(BumbleBee& bumble_bee) const {
+  bumble_bee.get_animated_sprite()->play("Die");
   bumble_bee.set_state(&BumbleBee::dying);
 }
 
 // BumbleBee's States
-void IdleState::update(BumbleBee&) const {
+void BumbleBee::IdleState::update(BumbleBee&) const {
 }
 
-void WalkingState::update(BumbleBee& bumble_bee) const {
+void BumbleBee::WalkingState::update(BumbleBee& bumble_bee) const {
   auto velocity    = bumble_bee.get_velocity();
   const auto speed = 25.f;
   velocity.x = bumble_bee.m_direction == BumbleBee::right ? speed : -speed;
@@ -216,7 +227,7 @@ void WalkingState::update(BumbleBee& bumble_bee) const {
   bumble_bee.set_velocity(velocity);
 }
 
-void JumpState::update(BumbleBee& bumble_bee) const {
+void BumbleBee::JumpState::update(BumbleBee& bumble_bee) const {
   if (bumble_bee.is_on_wall()) {
     flip(bumble_bee);
     return;
@@ -226,7 +237,7 @@ void JumpState::update(BumbleBee& bumble_bee) const {
   }
 }
 
-void OnWallState::update(BumbleBee& bumble_bee) const {
+void BumbleBee::OnWallState::update(BumbleBee& bumble_bee) const {
   if (bumble_bee.get_velocity().y < 0) {
     bumble_bee.set_state(&BumbleBee::jumping);
   } else if (bumble_bee.is_on_floor()) {
@@ -234,7 +245,7 @@ void OnWallState::update(BumbleBee& bumble_bee) const {
   }
 }
 
-void DyingState::update(BumbleBee& bumble_bee) const {
+void BumbleBee::DyingState::update(BumbleBee& bumble_bee) const {
   if (bumble_bee.m_animated_sprite2D->is_playing()
       && bumble_bee.m_animated_sprite2D->get_animation().match("Die")) {
     return;

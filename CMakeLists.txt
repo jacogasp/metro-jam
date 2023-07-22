@@ -53,6 +53,7 @@ add_library(
         src/macros.cpp
         src/enemy_soldier.cpp
         src/health_bar.cpp
+        src/state.cpp
 )
 
 if (MINGW)
