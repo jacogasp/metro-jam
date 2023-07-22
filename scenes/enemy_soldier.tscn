@@ -5,7 +5,7 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kukua"]
 radius = 15.0
-height = 46.0
+height = 45.2889
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jgffl"]
 atlas = ExtResource("1_0oysq")
@@ -115,6 +115,10 @@ animations = [{
 }]
 
 [node name="EnemySoldier" type="EnemySoldier"]
+position = Vector2(0, 4.35556)
+collision_layer = 4096
+collision_mask = 17
+velocity = Vector2(0, 16.3333)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_kukua")
@@ -139,6 +143,7 @@ tint_under = Color(0.305882, 0, 0, 1)
 tint_progress = Color(1, 0, 0, 1)
 
 [node name="Area2D" type="Area2D" parent="."]
+visible = false
 collision_layer = 4096
 collision_mask = 273
 
