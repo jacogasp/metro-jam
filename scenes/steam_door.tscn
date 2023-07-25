@@ -1,10 +1,10 @@
 [gd_scene load_steps=13 format=3 uid="uid://cm30bx70vnhcg"]
 
 [ext_resource type="Material" uid="uid://b2nx5n23nqg2u" path="res://shaders/SteamParticle.material" id="1_yk6uc"]
+[ext_resource type="Texture2D" uid="uid://brq77udpwpfat" path="res://assets/tilesets/Tileset.png" id="2_7mc53"]
 [ext_resource type="FontFile" uid="uid://ctpai807254id" path="res://assets/fonts/Pixeled.ttf" id="2_apamp"]
 [ext_resource type="Texture2D" uid="uid://bjjxt2cylw5jy" path="res://assets/textures/smoke.png" id="2_fl2t3"]
 [ext_resource type="Script" path="res://scripts/steam_door.gd" id="3_4b8t3"]
-[ext_resource type="Texture2D" uid="uid://dju2wr2n2ml5k" path="res://assets/health_bar.png" id="3_ypif0"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ogbvp"]
 font = ExtResource("2_apamp")
@@ -64,10 +64,12 @@ script = ExtResource("3_4b8t3")
 position = Vector2(224, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Lever"]
+position = Vector2(1.00001, -47)
 rotation = -1.0472
-scale = Vector2(1.79675, 1.53033)
-texture = ExtResource("3_ypif0")
-offset = Vector2(16, 0)
+texture = ExtResource("2_7mc53")
+offset = Vector2(0.0306396, -0.00267029)
+region_enabled = true
+region_rect = Rect2(32, 288, 32, 32)
 
 [node name="Label" type="Label" parent="Lever"]
 offset_left = -45.0
