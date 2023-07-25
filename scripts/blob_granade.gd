@@ -11,6 +11,9 @@ func _process(_delta):
 		queue_free()
 
 
-func detonate(_node):
+func detonate(node):
 	$AnimatedSprite2D.play()
 	exploding = true
+	sleeping = true
+	if node.is_in_group("Player"):
+		node.call("hit")
