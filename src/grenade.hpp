@@ -16,6 +16,7 @@ class Grenade : public RigidBody2D {
  private:
   Timer m_timer{};
   TimeDelta m_timeout{};
+  int m_damages = 50;
   static void _bind_methods();
 
  public:
@@ -25,6 +26,8 @@ class Grenade : public RigidBody2D {
   void explode();
   void set_timeout(TimeDelta timeout);
   [[nodiscard]] TimeDelta get_timeout() const;
+  void set_damages(int damages);
+  [[nodiscard]] int get_damages() const;
 };
 
 #endif // COREGAME_GRENADE_HPP
