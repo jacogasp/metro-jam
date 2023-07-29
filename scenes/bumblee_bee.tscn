@@ -1,6 +1,6 @@
 [gd_scene load_steps=20 format=3 uid="uid://cu0874vm7p4ku"]
 
-[ext_resource type="Texture2D" uid="uid://chhfkylu6ll30" path="res://assets/characters/bumblebee_sprites.png" id="1_jjk3y"]
+[ext_resource type="Texture2D" uid="uid://d3vr2w6tcjfgy" path="res://assets/characters/bumblebee_sprites.png" id="1_jjk3y"]
 [ext_resource type="Material" uid="uid://bqesh5ktv6wvb" path="res://shaders/Hit.material" id="1_y5ixb"]
 [ext_resource type="Texture2D" uid="uid://dju2wr2n2ml5k" path="res://assets/health_bar.png" id="2_2i0h8"]
 
