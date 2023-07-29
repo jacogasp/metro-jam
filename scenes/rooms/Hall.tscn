@@ -52,6 +52,9 @@ position = Vector2(2400, 2432)
 [node name="SteamJet" parent="SteamJet_line1" instance=ExtResource("3_gaim7")]
 position = Vector2(1118, 2432)
 
+[node name="SteamJet5" parent="SteamJet_line1" instance=ExtResource("3_gaim7")]
+position = Vector2(1118, 2432)
+
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("4_pyf6q")
 cell_quadrant_size = 32
@@ -118,38 +121,6 @@ collision_mask = 257
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GateCorridorHall"]
 position = Vector2(7, -25.5)
 shape = SubResource("RectangleShape2D_dbwxh")
-
-[node name="SteamJet_line2" type="Node" parent="."]
-
-[node name="SteamJet5" parent="SteamJet_line2" instance=ExtResource("3_gaim7")]
-position = Vector2(4367, 2463)
-
-[node name="SteamJet6" parent="SteamJet_line2" instance=ExtResource("3_gaim7")]
-position = Vector2(4399, 2463)
-
-[node name="SteamJet7" parent="SteamJet_line2" instance=ExtResource("3_gaim7")]
-position = Vector2(4431, 2463)
-
-[node name="SteamJet8" parent="SteamJet_line2" instance=ExtResource("3_gaim7")]
-position = Vector2(4463, 2400)
-
-[node name="SteamJet9" parent="SteamJet_line2" instance=ExtResource("3_gaim7")]
-position = Vector2(4495, 2400)
-
-[node name="SteamJet10" parent="SteamJet_line2" instance=ExtResource("3_gaim7")]
-position = Vector2(4527, 2400)
-
-[node name="SteamJet11" parent="SteamJet_line2" instance=ExtResource("3_gaim7")]
-position = Vector2(4559, 2400)
-
-[node name="SteamJet12" parent="SteamJet_line2" instance=ExtResource("3_gaim7")]
-position = Vector2(4593, 2464)
-
-[node name="SteamJet13" parent="SteamJet_line2" instance=ExtResource("3_gaim7")]
-position = Vector2(4624, 2464)
-
-[node name="SteamJet14" parent="SteamJet_line2" instance=ExtResource("3_gaim7")]
-position = Vector2(4655, 2464)
 
 [node name="PlatformSystem1" type="Node" parent="."]
 
