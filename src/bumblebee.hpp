@@ -43,7 +43,7 @@ class BumbleBee final
   Vector2 m_bounds            = Vector2{};
   int m_total_health          = 100;
   int m_health                = 100;
-
+  float m_hit_bounce_factor   = 1.0;
   static void _bind_methods();
 
  public:
@@ -66,6 +66,8 @@ class BumbleBee final
   [[nodiscard]] AnimatedSprite2D* get_animated_sprite() const;
   void set_direction(Direction const& direction);
   [[nodiscard]] Direction const& get_direction() const;
+  void set_hit_bounce_factor(float f);
+  [[nodiscard]] float get_hit_bounce_factor() const;
 
  private:
   struct IdleState : public BumbleBeeState {
@@ -95,7 +97,6 @@ class BumbleBee final
   static OnWallState on_wall;
   static DyingState dying;
 
-
   // Commands
   struct IdleCommand {
     void operator()(BumbleBee& bumble_bee) const;
@@ -107,6 +108,10 @@ class BumbleBee final
 
   struct JumpCommand {
     void operator()(BumbleBee& bumble_bee) const;
+  };
+
+  struct HitCommand {
+    void operator()(BumbleBee& bumble_bee, int damage) const;
   };
 
   struct FlipCommand {

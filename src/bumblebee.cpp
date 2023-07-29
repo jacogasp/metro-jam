@@ -8,6 +8,7 @@ void BumbleBee::_bind_methods() {
   BIND_PROPERTY(BumbleBee, jump_velocity, Variant::FLOAT);
   BIND_PROPERTY(BumbleBee, jump_interval, Variant::FLOAT);
   BIND_PROPERTY(BumbleBee, hit_animation_time, Variant::FLOAT);
+  BIND_PROPERTY(BumbleBee, hit_bounce_factor, Variant::FLOAT);
 
   ClassDB::bind_method(D_METHOD("on_body_entered"),
                        &BumbleBee::on_body_entered);
@@ -25,6 +26,7 @@ BumbleBee::DyingState BumbleBee::dying           = BumbleBee::DyingState();
 static auto constexpr idle                       = BumbleBee::IdleCommand();
 static auto constexpr walk                       = BumbleBee::WalkCommand();
 static auto constexpr jump                       = BumbleBee::JumpCommand();
+static auto constexpr hit                        = BumbleBee::HitCommand();
 static auto constexpr flip                       = BumbleBee::FlipCommand();
 static auto constexpr die                        = BumbleBee::DieCommand();
 
@@ -47,7 +49,11 @@ void BumbleBee::_ready() {
 
   m_vfx = get_node<AnimationPlayer>("VFX");
 
-  m_timer.set_callback([this]() { jump(*this); });
+  m_timer.set_callback([this]() {
+    if (m_state != &jumping) {
+      jump(*this);
+    }
+  });
   m_timer.set_timeout(m_jump_interval_s);
   m_timer.set_repeat(true);
   m_timer.stop();
@@ -103,6 +109,7 @@ void BumbleBee::on_body_entered(Node* node) {
 }
 
 void BumbleBee::take_hit(int damage) {
+  hit(*this, damage);
   m_health -= damage;
   if (m_health_bar) {
     m_health_bar->set_value(m_health);
@@ -170,6 +177,13 @@ void BumbleBee::set_direction(const BumbleBee::Direction& direction) {
 const BumbleBee::Direction& BumbleBee::get_direction() const {
   return m_direction;
 }
+void BumbleBee::set_hit_bounce_factor(float f) {
+  m_hit_bounce_factor = f;
+}
+
+float BumbleBee::get_hit_bounce_factor() const {
+  return m_hit_bounce_factor;
+}
 
 // Commands
 void BumbleBee::IdleCommand::operator()(BumbleBee& bumble_bee) const {
@@ -189,6 +203,19 @@ void BumbleBee::JumpCommand::operator()(BumbleBee& bumble_bee) const {
   auto jump_velocity = bumble_bee.get_jump_velocity();
   jump_velocity.x *= static_cast<float>(direction);
   auto velocity = bumble_bee.get_velocity() + jump_velocity;
+  bumble_bee.set_velocity(velocity);
+  bumble_bee.set_state(&BumbleBee::jumping);
+}
+
+void BumbleBee::HitCommand::operator()(BumbleBee& bumble_bee,
+                                       int damage) const {
+  bumble_bee.get_animated_sprite()->play("JumpIn");
+  auto const direction = -1.0f * static_cast<float>(bumble_bee.get_direction());
+  auto jump_velocity   = bumble_bee.get_jump_velocity();
+  jump_velocity.x *= direction;
+  auto velocity = bumble_bee.get_velocity();
+  velocity += jump_velocity * static_cast<float>(damage)
+            * bumble_bee.m_hit_bounce_factor / 100.0f;
   bumble_bee.set_velocity(velocity);
   bumble_bee.set_state(&BumbleBee::jumping);
 }
