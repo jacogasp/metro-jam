@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://0e7eflaq7ui6"]
+[gd_scene load_steps=19 format=3 uid="uid://0e7eflaq7ui6"]
 
 [ext_resource type="Texture2D" uid="uid://b2u8bgksqj83j" path="res://icon.svg" id="1_hkmiw"]
 [ext_resource type="Material" uid="uid://g3uwsdhmuuaj" path="res://shaders/Water.material" id="2_333v6"]
@@ -18,6 +18,23 @@ size = Vector2(31.75, 59)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o1tt3"]
 size = Vector2(20, 64)
+
+[sub_resource type="Gradient" id="Gradient_4h2e1"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_h254m"]
+gradient = SubResource("Gradient_4h2e1")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.75, 0.87)
+
+[sub_resource type="Gradient" id="Gradient_0r70x"]
+offsets = PackedFloat32Array(0, 0.589109, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.490196, 0.356863, 0.164706, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_167xo"]
+gradient = SubResource("Gradient_0r70x")
+fill_from = Vector2(1, 1)
 
 [node name="Hall" type="Node2D"]
 position = Vector2(-1, 0)
@@ -50,9 +67,6 @@ position = Vector2(2079, 2433)
 position = Vector2(2400, 2432)
 
 [node name="SteamJet" parent="SteamJet_line1" instance=ExtResource("3_gaim7")]
-position = Vector2(1118, 2432)
-
-[node name="SteamJet5" parent="SteamJet_line1" instance=ExtResource("3_gaim7")]
 position = Vector2(1118, 2432)
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -121,6 +135,38 @@ collision_mask = 257
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GateCorridorHall"]
 position = Vector2(7, -25.5)
 shape = SubResource("RectangleShape2D_dbwxh")
+
+[node name="SteamJet_line2" type="Node" parent="."]
+
+[node name="SteamJet5" parent="SteamJet_line2" instance=ExtResource("3_gaim7")]
+position = Vector2(4367, 2463)
+
+[node name="SteamJet6" parent="SteamJet_line2" instance=ExtResource("3_gaim7")]
+position = Vector2(4399, 2463)
+
+[node name="SteamJet7" parent="SteamJet_line2" instance=ExtResource("3_gaim7")]
+position = Vector2(4431, 2463)
+
+[node name="SteamJet8" parent="SteamJet_line2" instance=ExtResource("3_gaim7")]
+position = Vector2(4463, 2400)
+
+[node name="SteamJet9" parent="SteamJet_line2" instance=ExtResource("3_gaim7")]
+position = Vector2(4495, 2400)
+
+[node name="SteamJet10" parent="SteamJet_line2" instance=ExtResource("3_gaim7")]
+position = Vector2(4527, 2400)
+
+[node name="SteamJet11" parent="SteamJet_line2" instance=ExtResource("3_gaim7")]
+position = Vector2(4559, 2400)
+
+[node name="SteamJet12" parent="SteamJet_line2" instance=ExtResource("3_gaim7")]
+position = Vector2(4593, 2464)
+
+[node name="SteamJet13" parent="SteamJet_line2" instance=ExtResource("3_gaim7")]
+position = Vector2(4624, 2464)
+
+[node name="SteamJet14" parent="SteamJet_line2" instance=ExtResource("3_gaim7")]
+position = Vector2(4655, 2464)
 
 [node name="PlatformSystem1" type="Node" parent="."]
 
@@ -281,6 +327,89 @@ texture = ExtResource("11_stcul")
 [node name="Sprite2D" type="Sprite2D" parent="Lights/Light4"]
 texture = ExtResource("12_yblow")
 
+[node name="Light5" type="Node2D" parent="Lights"]
+position = Vector2(2655, 1904)
+
+[node name="PointLight2D" type="PointLight2D" parent="Lights/Light5"]
+position = Vector2(0, 101)
+scale = Vector2(0.875, 0.875)
+texture = ExtResource("11_stcul")
+
+[node name="Sprite2D" type="Sprite2D" parent="Lights/Light5"]
+texture = ExtResource("12_yblow")
+
+[node name="Light6" type="Node2D" parent="Lights"]
+position = Vector2(2177, 1904)
+
+[node name="PointLight2D" type="PointLight2D" parent="Lights/Light6"]
+position = Vector2(0, 101)
+scale = Vector2(0.875, 0.875)
+texture = ExtResource("11_stcul")
+
+[node name="Sprite2D" type="Sprite2D" parent="Lights/Light6"]
+texture = ExtResource("12_yblow")
+
+[node name="Light7" type="Node2D" parent="Lights"]
+position = Vector2(1890, 1891)
+
+[node name="PointLight2D" type="PointLight2D" parent="Lights/Light7"]
+position = Vector2(0, 101)
+scale = Vector2(0.875, 0.875)
+texture = ExtResource("11_stcul")
+
+[node name="Sprite2D" type="Sprite2D" parent="Lights/Light7"]
+texture = ExtResource("12_yblow")
+
+[node name="Light8" type="PointLight2D" parent="Lights"]
+position = Vector2(1122, 1562)
+scale = Vector2(10, 10)
+energy = 0.48
+texture = SubResource("GradientTexture2D_h254m")
+
+[node name="Light9" type="PointLight2D" parent="Lights"]
+position = Vector2(3137, 2157)
+scale = Vector2(13.5, 12.5469)
+color = Color(1, 0.823529, 0.74902, 1)
+energy = 0.86
+texture = SubResource("GradientTexture2D_h254m")
+
+[node name="Light10" type="PointLight2D" parent="Lights"]
+position = Vector2(4158, 2094)
+scale = Vector2(13.5, 12.5469)
+color = Color(1, 0.823529, 0.74902, 1)
+energy = 0.86
+texture = SubResource("GradientTexture2D_h254m")
+
+[node name="Light11" type="PointLight2D" parent="Lights"]
+position = Vector2(2108, 1086)
+scale = Vector2(37.2812, 7.125)
+texture = SubResource("GradientTexture2D_167xo")
+
+[node name="Light12" type="PointLight2D" parent="Lights"]
+position = Vector2(4016.5, 1607.5)
+scale = Vector2(20.6094, 3.39063)
+energy = 0.8
+texture = SubResource("GradientTexture2D_167xo")
+
+[node name="Light14" type="PointLight2D" parent="Lights"]
+position = Vector2(4016.5, 1336)
+scale = Vector2(20.6094, 3.39063)
+energy = 0.8
+texture = SubResource("GradientTexture2D_167xo")
+
+[node name="Light15" type="PointLight2D" parent="Lights"]
+position = Vector2(4016.5, 1076)
+scale = Vector2(20.6094, 3.39063)
+energy = 0.8
+texture = SubResource("GradientTexture2D_167xo")
+
+[node name="Light13" type="PointLight2D" parent="Lights"]
+position = Vector2(4293.41, 823)
+scale = Vector2(27.1875, 3.39063)
+energy = 0.8
+texture = SubResource("GradientTexture2D_167xo")
+offset = Vector2(-3.17818, -1.32718)
+
 [node name="DarkLight" type="DirectionalLight2D" parent="Lights"]
 energy = 0.32
 blend_mode = 1
@@ -288,41 +417,33 @@ blend_mode = 1
 [node name="EnemySoldier_collector" type="Node" parent="."]
 
 [node name="EnemySoldier1" parent="EnemySoldier_collector" instance=ExtResource("13_r6kl5")]
-visible = false
 position = Vector2(1644, 1985)
 
 [node name="EnemySoldier2" parent="EnemySoldier_collector" instance=ExtResource("13_r6kl5")]
-visible = false
 position = Vector2(2032, 1665)
 
 [node name="EnemySoldier3" parent="EnemySoldier_collector" instance=ExtResource("13_r6kl5")]
-visible = false
 position = Vector2(3626, 2433)
 
 [node name="Bumblee_collector" type="Node" parent="."]
 
 [node name="Bumblee1" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
-visible = false
 position = Vector2(2230, 1267)
 velocity = Vector2(-109800, -219600)
 
 [node name="Bumblee2" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
-visible = false
 position = Vector2(3719, 1616)
 velocity = Vector2(-109800, -219600)
 
 [node name="Bumblee3" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
-visible = false
 position = Vector2(4136, 1377)
 velocity = Vector2(-109800, -219600)
 
 [node name="Bumblee4" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
-visible = false
 position = Vector2(3689, 1128)
 velocity = Vector2(-109800, -219600)
 
 [node name="Bumblee5" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
-visible = false
 position = Vector2(4071, 890)
 velocity = Vector2(-109800, -219600)
 
