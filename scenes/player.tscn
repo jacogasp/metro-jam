@@ -7,7 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://d20t44iaf6fsx" path="res://assets/audio/jump.wav" id="5_fmb6a"]
 [ext_resource type="AudioStream" uid="uid://hy7safy44xk" path="res://assets/audio/ouch.wav" id="6_1j57y"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xc3kt"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_umiyv"]
 shader = ExtResource("1_m50du")
 shader_parameter/time = 0.0
 
@@ -308,6 +308,7 @@ _data = {
 speed = 300.0
 gravity = 2.08165e-12
 jump_force = 400.0
+attack_range = 80.0
 attack_strength = 25
 collision_layer = 256
 collision_mask = 17
@@ -326,11 +327,11 @@ stream = ExtResource("6_1j57y")
 volume_db = -10.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-material = SubResource("ShaderMaterial_xc3kt")
+material = SubResource("ShaderMaterial_umiyv")
 position = Vector2(-1, -32)
 sprite_frames = SubResource("SpriteFrames_0nsvt")
 animation = &"Idle"
-frame_progress = 0.483066
+frame_progress = 0.662501
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.0864906, -27.9619)
