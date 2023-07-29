@@ -266,7 +266,7 @@ energy = 0.32
 blend_mode = 1
 
 [node name="EnemySoldier" parent="." instance=ExtResource("13_r6kl5")]
-position = Vector2(1645, 1993)
+position = Vector2(1645, 1985)
 
 [connection signal="body_entered" from="GateDHall" to="GateDHall" method="_on_body_entered"]
 [connection signal="body_exited" from="GateDHall" to="GateDHall" method="_on_body_exited"]
