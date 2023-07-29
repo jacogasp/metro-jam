@@ -20,15 +20,15 @@ region = Rect2(1344, 0, 96, 96)
 atlas = ExtResource("1_0oysq")
 region = Rect2(1056, 0, 96, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_1qbd4"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ls4o"]
 atlas = ExtResource("1_0oysq")
 region = Rect2(0, 0, 96, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_bfjs2"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_biskd"]
 atlas = ExtResource("1_0oysq")
 region = Rect2(96, 0, 96, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6gwuf"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_sb8e4"]
 atlas = ExtResource("1_0oysq")
 region = Rect2(192, 0, 96, 96)
 
@@ -79,13 +79,13 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_1qbd4")
+"texture": SubResource("AtlasTexture_8ls4o")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_bfjs2")
+"texture": SubResource("AtlasTexture_biskd")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_6gwuf")
+"texture": SubResource("AtlasTexture_sb8e4")
 }],
 "loop": true,
 "name": &"Idle",
@@ -128,7 +128,7 @@ shape = SubResource("CapsuleShape2D_kukua")
 position = Vector2(3, -17)
 sprite_frames = SubResource("SpriteFrames_x7vc8")
 animation = &"Idle"
-frame_progress = 0.308774
+frame_progress = 0.95507
 
 [node name="HealthBar" type="HealthBar" parent="."]
 offset_left = -16.0
