@@ -108,7 +108,7 @@ void BumbleBee::on_body_entered(Node* node) {
   }
 }
 
-void BumbleBee::take_hit(int damage) {
+void BumbleBee::take_hit(int damage, Vector2 const& from_direction) {
   hit(*this, damage);
   m_health -= damage;
   if (m_health_bar) {

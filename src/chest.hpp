@@ -30,7 +30,7 @@ public:
     void set_packed_scene(const Ref<PackedScene>& packed_scene);
     Ref<PackedScene> get_packed_scene();
 
-    void take_hit(int damage) override;
+    void take_hit(int damage, Vector2 const& from_direction) override;
 };
 
 #endif // CHEST_HPP

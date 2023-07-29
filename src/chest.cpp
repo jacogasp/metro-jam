@@ -47,6 +47,6 @@ Ref<PackedScene> Chest::get_packed_scene() {
     return m_packed_scene;
 }
 
-void Chest::take_hit(int damage) {
+void Chest::take_hit(int damage, Vector2 const&) {
     m_life -= damage;
 }

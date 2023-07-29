@@ -13,8 +13,8 @@ void Wrench::fire(Vector2 const& target) {
   auto space_state = get_world_2d()->get_direct_space_state();
   auto result      = space_state->intersect_ray(query);
   if (!result.is_empty()) {
-    Node2D* collider   = cast_to<Node2D>(result["collider"]);
-    collider->call("take_hit", m_damages);
+    Node2D* collider = cast_to<Node2D>(result["collider"]);
+    collider->call("take_hit", m_damages, get_global_position());
   }
 }
 

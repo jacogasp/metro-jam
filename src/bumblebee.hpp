@@ -51,7 +51,7 @@ class BumbleBee final
   void _process(double) override;
   void _physics_process(double delta) override;
   void set_state(BumbleBeeState* state);
-  void take_hit(int damage) override;
+  void take_hit(int damage, Vector2 const& from_direction) override;
   void set_jump_velocity(Vector2 const& velocity);
   [[nodiscard]] Vector2 get_jump_velocity() const;
   void set_jump_interval(TimeDelta interval);

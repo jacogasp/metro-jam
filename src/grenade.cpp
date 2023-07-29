@@ -41,7 +41,7 @@ void Grenade::explode() {
       if (body->is_in_group("Player")) {
         body->call("hit");
       } else {
-        body->call("take_hit", m_damages);
+        body->call("take_hit", m_damages, get_global_position());
       }
     }
   }
