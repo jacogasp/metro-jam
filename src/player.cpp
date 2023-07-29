@@ -3,15 +3,13 @@
 #include "io.hpp"
 #include "logger.hpp"
 #include "profiler.hpp"
+#include "ray_cast.hpp"
 #include <godot_cpp/classes/animated_sprite2d.hpp>
 #include <godot_cpp/classes/area2d.hpp>
 #include <godot_cpp/classes/collision_shape2d.hpp>
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/input.hpp>
-#include <godot_cpp/classes/physics_direct_space_state2d.hpp>
-#include <godot_cpp/classes/physics_ray_query_parameters2d.hpp>
 #include <godot_cpp/classes/shape2d.hpp>
-#include <godot_cpp/classes/world2d.hpp>
 #include <cassert>
 
 StandingState Player::standing      = StandingState();
@@ -289,17 +287,6 @@ void Player::flip_h() const {
   }
 }
 
-static bool ray_hits(Vector2 position, Vector2 target, Ref<World2D>& world) {
-  PROFILE_FUNCTION();
-  auto query = PhysicsRayQueryParameters2D::create(
-      position, target, Player::block_collision_mask);
-  query->set_hit_from_inside(true);
-  auto const space_state = world->get_direct_space_state();
-  auto const result      = space_state->intersect_ray(query);
-  auto const collider    = Node::cast_to<Node2D>(result["collider"]);
-  return collider != nullptr;
-}
-
 bool Player::is_on_ground() {
   PROFILE_FUNCTION();
   auto const pos        = get_global_position();
@@ -307,7 +294,7 @@ bool Player::is_on_ground() {
   auto const half_width = m_bounds.size.x / 2;
   Vector2 target_left{pos.x - half_width, pos.y + ground_skin_depth};
   Vector2 target_right{pos.x + half_width, pos.y + ground_skin_depth};
-  auto hit_left  = ray_hits(pos, target_left, world);
-  auto hit_right = ray_hits(pos, target_right, world);
+  auto hit_left  = ray_hits(pos, target_left, block_collision_mask, world);
+  auto hit_right = ray_hits(pos, target_right, block_collision_mask, world);
   return hit_left || hit_right;
 }

@@ -14,7 +14,7 @@
 #include <godot_cpp/classes/character_body2d.hpp>
 #include <godot_cpp/classes/ray_cast2d.hpp>
 #include <godot_cpp/classes/shader_material.hpp>
-#include <memory>
+#include <cinttypes>
 
 using namespace godot;
 namespace core_game {
@@ -27,25 +27,25 @@ class Player
   GDCLASS_V2(Player, CharacterBody2D)
 
   enum Direction { left = -1, right = 1 };
-  static constexpr int block_collision_mask = 1 << 4;
-  static constexpr float ground_skin_depth  = 5;
-  float m_gravity                           = 500;
-  float m_jump_force                        = 350;
-  float m_air_jump_force                    = 350;
-  float m_speed                             = 0;
-  float m_slide_speed                       = 400;
-  float m_attack_range                      = 50;
-  int m_attack_strength                     = 25;
-  float m_object_interaction_range          = 150;
-  Direction m_direction                     = right;
-  core_game::LoggerService* m_logger        = nullptr;
-  AnimatedSprite2D* m_animatedSprite2D      = nullptr;
-  RayCast2D* m_interaction_ray              = nullptr;
-  GrenadeLauncher* m_grenade_launcher       = nullptr;
-  AnimationPlayer* m_vfx                    = nullptr;
-  Ref<ShaderMaterial> m_material            = nullptr;
-  AudioStreamPlayer* m_audio_footsteps      = nullptr;
-  AudioStreamPlayer* m_audio_jump           = nullptr;
+  static constexpr uint32_t block_collision_mask = 1 << 4;
+  static constexpr float ground_skin_depth       = 5;
+  float m_gravity                                = 500;
+  float m_jump_force                             = 350;
+  float m_air_jump_force                         = 350;
+  float m_speed                                  = 0;
+  float m_slide_speed                            = 400;
+  float m_attack_range                           = 50;
+  int m_attack_strength                          = 25;
+  float m_object_interaction_range               = 150;
+  Direction m_direction                          = right;
+  core_game::LoggerService* m_logger             = nullptr;
+  AnimatedSprite2D* m_animatedSprite2D           = nullptr;
+  RayCast2D* m_interaction_ray                   = nullptr;
+  GrenadeLauncher* m_grenade_launcher            = nullptr;
+  AnimationPlayer* m_vfx                         = nullptr;
+  Ref<ShaderMaterial> m_material                 = nullptr;
+  AudioStreamPlayer* m_audio_footsteps           = nullptr;
+  AudioStreamPlayer* m_audio_jump                = nullptr;
   PlayerState* m_state{&Player::standing};
 
   Rect2 m_bounds{};

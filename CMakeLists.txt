@@ -55,6 +55,7 @@ add_library(
         src/health_bar.cpp
         src/state.cpp
         src/gun.cpp
+        src/ray_cast.cpp
 )
 
 if (MINGW)
