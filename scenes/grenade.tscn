@@ -1,6 +1,42 @@
-[gd_scene load_steps=9 format=3 uid="uid://evwtb6jegk0f"]
+[gd_scene load_steps=14 format=3 uid="uid://evwtb6jegk0f"]
 
-[ext_resource type="Texture2D" uid="uid://b2u8bgksqj83j" path="res://icon.svg" id="1_bwh32"]
+[ext_resource type="Texture2D" uid="uid://blsrl315uk0fu" path="res://assets/characters/granade_sprites.png" id="1_wllh2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tajdc"]
+atlas = ExtResource("1_wllh2")
+region = Rect2(0, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2wyag"]
+atlas = ExtResource("1_wllh2")
+region = Rect2(64, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cdktl"]
+atlas = ExtResource("1_wllh2")
+region = Rect2(128, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0slot"]
+atlas = ExtResource("1_wllh2")
+region = Rect2(192, 0, 64, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_malfq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tajdc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2wyag")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cdktl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0slot")
+}],
+"loop": false,
+"name": &"Explode",
+"speed": 5.0
+}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5d1ew"]
 radius = 16.1245
@@ -38,18 +74,20 @@ collision_friction = 0.0
 collision_bounce = 0.5
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_71wr7"]
-radius = 243.002
+radius = 93.0484
 
 [node name="Grenade" type="Grenade"]
 timeout = 3.0
 collision_layer = 0
 collision_mask = 16
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.1875, 0.1875)
-texture = ExtResource("1_bwh32")
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.5625, 0.5625)
+sprite_frames = SubResource("SpriteFrames_malfq")
+animation = &"Explode"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.33, 0.33)
 shape = SubResource("CircleShape2D_5d1ew")
 
 [node name="Particles" type="GPUParticles2D" parent="."]
