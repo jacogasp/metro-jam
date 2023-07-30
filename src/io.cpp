@@ -35,6 +35,10 @@ bool close_to(double a, double b) {
   return abs(a - b) < UNIT_EPSILON;
 }
 
+const char* to_str(const godot::String& g_string) {
+  return g_string.utf8().get_data();
+}
+
 FileWriter::FileWriter(const std::filesystem::path& path)
     : m_ofstream{path} {
   if (!m_ofstream.is_open()) {

@@ -4,6 +4,7 @@
 #define COREGAME_IO_HPP
 
 #include <godot_cpp/variant/dictionary.hpp>
+#include <godot_cpp/variant/string.hpp>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -15,6 +16,7 @@ namespace core_game {
 godot::Dictionary json_to_dict(const std::string& s);
 std::string dict_to_json(const godot::Dictionary& d);
 void crate_savings_directory(const std::filesystem::path& path);
+const char* to_str(const godot::String& g_string);
 
 bool close_to(float a, float b);
 bool close_to(double a, double b);
