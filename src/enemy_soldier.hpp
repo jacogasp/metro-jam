@@ -28,6 +28,8 @@ class EnemySoldier
   TimeDelta m_fire_rate         = 1;
   Vector2 m_hit_bounce_velocity = {100, -100};
   Direction m_direction         = right;
+  Node2D* m_target              = nullptr;
+  float m_hit_animation_time    = 0;
   Timer m_fire_timer;
 
   static void _bind_methods();
@@ -46,7 +48,11 @@ class EnemySoldier
   [[nodiscard]] double get_fire_rate() const;
   void set_hit_bounce_velocity(Vector2 const& velocity);
   [[nodiscard]] Vector2 get_hit_bounce_velocity() const;
+  void set_hit_animation_time(float t) const;
+  [[nodiscard]] float get_hit_animation_time() const;
   [[nodiscard]] Direction get_direction() const;
+  void acquire_target(Node2D* target);
+  void release_target(Node2D* target);
 
   void fire();
 
@@ -59,6 +65,10 @@ class EnemySoldier
     void update(EnemySoldier& enemy) const override;
   };
 
+  struct FiringState : EnemySoldierState {
+    void update(EnemySoldier& enemy) const override;
+  };
+
   struct DyingState : EnemySoldierState {
     void update(EnemySoldier& enemy) const override;
   };
@@ -67,6 +77,11 @@ class EnemySoldier
   static IdleState idle;
   static DyingState dying;
   static FallingState falling;
+  static FiringState firing;
+
+  friend struct IdleState;
+  friend struct OpenFireCommand;
+  friend struct FiringState;
 
   // Commands
   struct IdleCommand {
@@ -79,6 +94,14 @@ class EnemySoldier
 
   struct HitCommand {
     void operator()(EnemySoldier& enemy, Vector2 const& from_direction) const;
+  };
+
+  struct OpenFireCommand {
+    void operator()(EnemySoldier& enemy) const;
+  };
+
+  struct CloseFireCommand {
+    void operator()(EnemySoldier& enemy) const;
   };
 };
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://br4rfwsm3h8cw"]
+[gd_scene load_steps=23 format=3 uid="uid://br4rfwsm3h8cw"]
 
 [ext_resource type="Texture2D" uid="uid://b6itau5f6uom8" path="res://assets/characters/enemy_soldier_sprites.png" id="1_0oysq"]
 [ext_resource type="Texture2D" uid="uid://dju2wr2n2ml5k" path="res://assets/health_bar.png" id="2_08kpc"]
@@ -7,6 +7,23 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kukua"]
 radius = 15.0
 height = 62.0
+
+[sub_resource type="Shader" id="Shader_wql7w"]
+code = "shader_type canvas_item;
+uniform float time : hint_range(0.0, 1.0) = 0.0;
+
+void fragment() {
+	// Place fragment code here.
+	vec4 color = texture(TEXTURE, UV);
+	vec4 white = vec4(1.0, 1.0, 1.0, color.a);
+	color = mix(color, white, time);
+	COLOR = color;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7ama5"]
+shader = SubResource("Shader_wql7w")
+shader_parameter/time = 2.08165e-12
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_auney"]
 atlas = ExtResource("1_0oysq")
@@ -115,9 +132,32 @@ animations = [{
 "speed": 1.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m087t"]
+size = Vector2(550, 153)
+
+[sub_resource type="Animation" id="Animation_mlkyu"]
+resource_name = "Hit"
+length = 0.15
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:hit_animation_time")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ktlxv"]
+_data = {
+"Hit": SubResource("Animation_mlkyu")
+}
+
 [node name="EnemySoldier" type="EnemySoldier"]
 gravity = 2000.0
-fire_rate = 10.0
 hit_bounce_velocity = Vector2(200, -200)
 position = Vector2(2.08165e-12, 2.08165e-12)
 collision_layer = 4096
@@ -128,10 +168,11 @@ velocity = Vector2(0, 16.3333)
 shape = SubResource("CapsuleShape2D_kukua")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_7ama5")
 position = Vector2(3, -17)
 sprite_frames = SubResource("SpriteFrames_x7vc8")
 animation = &"Idle"
-frame_progress = 0.183124
+frame_progress = 0.241181
 
 [node name="HealthBar" type="HealthBar" parent="."]
 offset_left = -16.0
@@ -156,4 +197,22 @@ shape = SubResource("CapsuleShape2D_kukua")
 
 [node name="Gun" type="Gun" parent="."]
 bullet = ExtResource("3_2t3kq")
+bullet_impulse = Vector2(500, 2.08165e-12)
 position = Vector2(22, 0)
+
+[node name="PatrolArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 256
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PatrolArea"]
+position = Vector2(0, -45.5)
+shape = SubResource("RectangleShape2D_m087t")
+debug_color = Color(0.968627, 0, 0.462745, 0.0196078)
+
+[node name="VFX" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ktlxv")
+}
+
+[connection signal="body_entered" from="PatrolArea" to="." method="acquire_target"]
+[connection signal="body_exited" from="PatrolArea" to="." method="release_target"]
