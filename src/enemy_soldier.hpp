@@ -24,6 +24,9 @@ class EnemySoldier
   float m_gravity               = 980;
   int m_total_health            = 100;
   int m_health                  = 100;
+  float m_shooting_range        = 100;
+  float m_target_lost_distance  = 300;
+  float m_running_speed         = 100;
   EnemySoldierState* m_state    = &EnemySoldier::idle;
   TimeDelta m_fire_rate         = 1;
   Vector2 m_hit_bounce_velocity = {100, -100};
@@ -34,6 +37,7 @@ class EnemySoldier
   static void _bind_methods();
 
  public:
+  ~EnemySoldier() override;
   void _ready() override;
   void _process(double) override;
   void _physics_process(double) override;
@@ -50,6 +54,12 @@ class EnemySoldier
   void set_hit_animation_time(float t) const;
   [[nodiscard]] float get_hit_animation_time() const;
   [[nodiscard]] Direction get_direction() const;
+  void set_running_speed(float speed);
+  [[nodiscard]] float get_running_speed() const;
+  void set_shooting_range(float distance);
+  [[nodiscard]] float get_shooting_range() const;
+  void set_target_lost_distance(float distance);
+  [[nodiscard]] float get_target_lost_distance() const;
   void set_direction(EnemySoldier::Direction direction);
   void acquire_target(Node2D* target);
   void release_target(Node2D* target);
@@ -73,6 +83,10 @@ class EnemySoldier
     void update(EnemySoldier& enemy) const override;
   };
 
+  struct ChasingState : EnemySoldierState {
+    void update(EnemySoldier& enemy) const override;
+  };
+
   struct DyingState : EnemySoldierState {
     void update(EnemySoldier& enemy) const override;
   };
@@ -82,6 +96,7 @@ class EnemySoldier
   static FallingState falling;
   static AlertState in_alert;
   static FiringState firing;
+  static ChasingState chasing;
   static DyingState dying;
 
   friend struct IdleState;

@@ -14,6 +14,7 @@ EnemySoldier::IdleState EnemySoldier::idle       = EnemySoldier::IdleState();
 EnemySoldier::FallingState EnemySoldier::falling = EnemySoldier::FallingState();
 EnemySoldier::AlertState EnemySoldier::in_alert  = EnemySoldier::AlertState();
 EnemySoldier::FiringState EnemySoldier::firing   = EnemySoldier::FiringState();
+EnemySoldier::ChasingState EnemySoldier::chasing = EnemySoldier::ChasingState();
 EnemySoldier::DyingState EnemySoldier::dying     = EnemySoldier::DyingState();
 static auto constexpr go_idle                    = EnemySoldier::IdleCommand();
 static auto constexpr fall                       = EnemySoldier::FallCommand();
@@ -22,12 +23,19 @@ static auto constexpr hit                        = EnemySoldier::HitCommand();
 static auto constexpr open_fire  = EnemySoldier::OpenFireCommand();
 static auto constexpr close_fire = EnemySoldier::CloseFireCommand();
 
+EnemySoldier::~EnemySoldier() {
+  release_target(m_target);
+}
+
 void EnemySoldier::_bind_methods() {
   BIND_PROPERTY(EnemySoldier, gravity, Variant::FLOAT);
   BIND_PROPERTY(EnemySoldier, total_health, Variant::INT);
   BIND_PROPERTY(EnemySoldier, fire_rate, Variant::FLOAT);
   BIND_PROPERTY(EnemySoldier, hit_bounce_velocity, Variant::VECTOR2);
   BIND_PROPERTY(EnemySoldier, hit_animation_time, Variant::FLOAT);
+  BIND_PROPERTY(EnemySoldier, running_speed, Variant::FLOAT);
+  BIND_PROPERTY(EnemySoldier, shooting_range, Variant::FLOAT);
+  BIND_PROPERTY(EnemySoldier, target_lost_distance, Variant::FLOAT);
   ClassDB::bind_method(D_METHOD("take_hit"), &EnemySoldier::take_hit);
   ClassDB::bind_method(D_METHOD("acquire_target"),
                        &EnemySoldier::acquire_target);
@@ -45,11 +53,7 @@ void EnemySoldier::_ready() {
   m_fire_timer.set_callback([&]() { fire(); });
   m_fire_timer.set_timeout(m_fire_rate);
   m_fire_timer.set_repeat(true);
-
-  auto animated_sprite = get_node<AnimatedSprite2D>("AnimatedSprite2D");
-  if (animated_sprite) {
-    animated_sprite->play("Idle");
-  }
+  go_idle(*this);
 }
 
 void EnemySoldier::_process(double delta) {
@@ -148,6 +152,30 @@ EnemySoldier::Direction EnemySoldier::get_direction() const {
   return m_direction;
 }
 
+void EnemySoldier::set_running_speed(float speed) {
+  m_running_speed = speed;
+}
+
+float EnemySoldier::get_running_speed() const {
+  return m_running_speed;
+}
+
+void EnemySoldier::set_shooting_range(float distance) {
+  m_shooting_range = distance;
+}
+
+float EnemySoldier::get_shooting_range() const {
+  return m_shooting_range;
+}
+
+void EnemySoldier::set_target_lost_distance(float distance) {
+  m_target_lost_distance = distance;
+}
+
+float EnemySoldier::get_target_lost_distance() const {
+  return m_target_lost_distance;
+}
+
 void EnemySoldier::set_direction(EnemySoldier::Direction direction) {
   m_direction = direction;
 }
@@ -162,21 +190,14 @@ void EnemySoldier::release_target(Node2D* target) {
   }
 }
 
-static bool player_is_visible(EnemySoldier& enemy, Node2D* target) {
+static Node2D* player_is_visible(EnemySoldier& enemy, Vector2 const& target) {
   static uint32_t collision_mask = 65535 ^ enemy.get_collision_layer();
   auto world                     = enemy.get_world_2d();
-  auto hit_target =
-      ray_hits(enemy.get_global_position(), target->get_global_position(),
-               collision_mask, world);
+  auto from                      = enemy.get_global_position();
+  auto hit_target = ray_hits(from, target, collision_mask, world);
 
-  if (hit_target && hit_target->is_in_group("Player")) {
-    auto const position   = enemy.get_global_position();
-    const auto player_pos = hit_target->get_global_position();
-    auto const direction =
-        position.x > player_pos.x ? EnemySoldier::left : EnemySoldier::right;
-    return enemy.get_direction() == direction;
-  }
-  return false;
+  return (hit_target && hit_target->is_in_group("Player")) ? hit_target
+                                                           : nullptr;
 }
 
 static void look_at(EnemySoldier& enemy, Node2D* target) {
@@ -205,7 +226,18 @@ static void look_at(EnemySoldier& enemy, Node2D* target) {
 
 // States
 void EnemySoldier::IdleState::update(EnemySoldier& enemy) const {
-  if (enemy.m_target && player_is_visible(enemy, enemy.m_target)) {
+  std::cout << "idle\n";
+  auto const enemy_pos = enemy.get_global_position();
+  auto target          = enemy_pos;
+  target.x += enemy.get_shooting_range() * enemy.get_scale().x;
+  auto player = player_is_visible(enemy, target);
+  enemy.acquire_target(player);
+  if (!player) {
+    return;
+  }
+  auto const player_pos = player->get_global_position();
+  auto const distance   = std::abs(player_pos.x - enemy_pos.x);
+  if (distance < enemy.get_shooting_range()) {
     open_fire(enemy);
   }
 }
@@ -220,33 +252,88 @@ void EnemySoldier::FallingState::update(EnemySoldier& enemy) const {
 }
 
 void EnemySoldier::AlertState::update(EnemySoldier& enemy) const {
+  std::cout << "alert\n";
   auto const v_y = enemy.get_velocity().y;
   if (!(v_y >= 0 && enemy.is_on_floor())) {
-    //    fall(enemy);
+    fall(enemy);
     return;
   }
 
   enemy.set_velocity({0, 0});
   auto target = enemy.m_target;
   if (target == nullptr) {
+    go_idle(enemy);
     return;
   }
-  ::look_at(enemy, target);
-  go_idle(enemy);
+  auto const player = player_is_visible(enemy, target->get_global_position());
+  if (player) {
+    ::look_at(enemy, player);
+  } else {
+    go_idle(enemy);
+  }
 }
 
 void EnemySoldier::FiringState::update(EnemySoldier& enemy) const {
-  auto const target = enemy.m_target;
-  if (target == nullptr) {
+  std::cout << "firing\n";
+  auto target = enemy.m_target;
+  ::look_at(enemy, target);
+
+  auto velocity = enemy.get_velocity();
+  velocity.x    = 0;
+  enemy.set_velocity(velocity);
+
+  auto const player = player_is_visible(enemy, target->get_global_position());
+  if (player == nullptr) {
+    return;
+  }
+
+  auto const distance =
+      std::abs(enemy.get_global_position().x - player->get_global_position().x);
+
+  if (distance > enemy.get_shooting_range()) {
+    enemy.set_state(&EnemySoldier::chasing);
     close_fire(enemy);
+    return;
+  }
+  if (distance > enemy.get_target_lost_distance()) {
+    go_idle(enemy);
+  }
+}
+
+void EnemySoldier::ChasingState::update(EnemySoldier& enemy) const {
+  std::cout << "chasing\n";
+  auto target       = enemy.m_target;
+  auto const player = player_is_visible(enemy, target->get_global_position());
+  if (!player) {
     go_idle(enemy);
     return;
   }
-  ::look_at(enemy, target);
-  if (!player_is_visible(enemy, target)) {
-    close_fire(enemy);
-    go_idle(enemy);
+  ::look_at(enemy, enemy.m_target);
+
+  auto const target_distance =
+      std::abs(enemy.get_global_position().x - player->get_global_position().x);
+  auto const lost_distance = enemy.get_target_lost_distance();
+
+  if (target_distance < enemy.get_shooting_range()) {
+    open_fire(enemy);
+    return;
   }
+
+  if (target_distance > lost_distance) {
+    enemy.release_target(player);
+    go_idle(enemy);
+    return;
+  }
+
+  auto animated_sprite = enemy.get_node<AnimatedSprite2D>("AnimatedSprite2D");
+  if (animated_sprite) {
+    animated_sprite->play("Run");
+  }
+  auto const running_speed = enemy.get_running_speed();
+  auto velocity            = enemy.get_velocity();
+  velocity.x = enemy.get_direction() == EnemySoldier::left ? -running_speed
+                                                           : running_speed;
+  enemy.set_velocity(velocity);
 }
 
 void EnemySoldier::DyingState::update(EnemySoldier& enemy) const {
@@ -266,6 +353,8 @@ void EnemySoldier::IdleCommand::operator()(EnemySoldier& enemy) const {
   }
   enemy.set_velocity({0, 0});
   enemy.set_state(&EnemySoldier::idle);
+  enemy.release_target(enemy.m_target);
+  close_fire(enemy);
 }
 
 void EnemySoldier::FallCommand::operator()(EnemySoldier& enemy) const {
@@ -303,6 +392,10 @@ void EnemySoldier::HitCommand::operator()(EnemySoldier& enemy,
 void EnemySoldier::OpenFireCommand::operator()(EnemySoldier& enemy) const {
   enemy.m_fire_timer.start();
   enemy.set_state(&EnemySoldier::firing);
+  auto const as = enemy.get_node<AnimatedSprite2D>("AnimatedSprite2D");
+  if (as) {
+    as->play("Idle");
+  }
 }
 
 void EnemySoldier::CloseFireCommand::operator()(EnemySoldier& enemy) const {
