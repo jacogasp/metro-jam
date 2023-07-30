@@ -73,14 +73,14 @@ position = Vector2(4416, 3104)
 [node name="SteamJet9" parent="SteamLine1" instance=ExtResource("2_t44ap")]
 position = Vector2(4544, 3104)
 
-[node name="GateDHall" type="Gate" parent="."]
+[node name="GateHallD" type="Gate" parent="."]
 next_room = "scenes/rooms/Hall.tscn"
 position = Vector2(738, 3121)
 collision_mask = 257
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GateDHall"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GateHallD"]
 position = Vector2(14, -31.6563)
 shape = SubResource("RectangleShape2D_egxwb")
 
-[connection signal="body_entered" from="GateDHall" to="GateDHall" method="_on_body_entered"]
-[connection signal="body_exited" from="GateDHall" to="GateDHall" method="_on_body_exited"]
+[connection signal="body_entered" from="GateHallD" to="GateHallD" method="_on_body_entered"]
+[connection signal="body_exited" from="GateHallD" to="GateHallD" method="_on_body_exited"]

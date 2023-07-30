@@ -118,13 +118,13 @@ material = ExtResource("4_e56xf")
 position = Vector2(1385, 2401)
 texture = ExtResource("1_hkmiw")
 
-[node name="GateDHall" type="Gate" parent="."]
+[node name="GateHallD" type="Gate" parent="."]
 next_room = "scenes/rooms/RoomD.tscn"
 position = Vector2(4905, 924)
 collision_layer = 0
 collision_mask = 256
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GateDHall"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GateHallD"]
 position = Vector2(7.125, -28)
 shape = SubResource("RectangleShape2D_dbwxh")
 
@@ -436,8 +436,8 @@ velocity = Vector2(-109800, -219600)
 position = Vector2(4071, 890)
 velocity = Vector2(-109800, -219600)
 
-[connection signal="body_entered" from="GateDHall" to="GateDHall" method="_on_body_entered"]
-[connection signal="body_exited" from="GateDHall" to="GateDHall" method="_on_body_exited"]
+[connection signal="body_entered" from="GateHallD" to="GateHallD" method="_on_body_entered"]
+[connection signal="body_exited" from="GateHallD" to="GateHallD" method="_on_body_exited"]
 [connection signal="body_entered" from="GateHallB1" to="GateHallB1" method="_on_body_entered"]
 [connection signal="body_exited" from="GateHallB1" to="GateHallB1" method="_on_body_exited"]
 [connection signal="body_entered" from="GateHallB2" to="GateHallB2" method="_on_body_entered"]
