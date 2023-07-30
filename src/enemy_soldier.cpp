@@ -258,19 +258,25 @@ void EnemySoldier::AlertState::update(EnemySoldier& enemy) const {
     fall(enemy);
     return;
   }
-
-  enemy.set_velocity({0, 0});
-  auto target = enemy.m_target;
-  if (target == nullptr) {
-    go_idle(enemy);
+  auto target = enemy.get_global_position();
+  target.x += enemy.get_shooting_range();
+  auto player = player_is_visible(enemy, target);
+  if (player) {
+    enemy.m_target = player;
+    open_fire(enemy);
     return;
   }
-  auto const player = player_is_visible(enemy, target->get_global_position());
+
+  target = enemy.get_global_position();
+  target.x -= enemy.get_shooting_range();
+  player = player_is_visible(enemy, target);
   if (player) {
-    ::look_at(enemy, player);
-  } else {
-    go_idle(enemy);
+    enemy.m_target = player;
+    open_fire(enemy);
+    return;
   }
+
+  enemy.set_velocity({0, 0});
 }
 
 void EnemySoldier::FiringState::update(EnemySoldier& enemy) const {
