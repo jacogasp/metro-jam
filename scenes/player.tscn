@@ -19,7 +19,7 @@ void fragment() {
 }
 "
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fj0w8"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vexqh"]
 shader = SubResource("Shader_xyd68")
 shader_parameter/time = 0.0
 
@@ -35,27 +35,27 @@ region = Rect2(5248, 0, 128, 128)
 atlas = ExtResource("2_7vcqu")
 region = Rect2(5376, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_hq0w2"]
-atlas = ExtResource("2_7vcqu")
-region = Rect2(1664, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fm1kv"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_s5jm5"]
 atlas = ExtResource("2_7vcqu")
 region = Rect2(1792, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_k42v7"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_x4lsp"]
 atlas = ExtResource("2_7vcqu")
 region = Rect2(1920, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_amiyq"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_hjq7f"]
 atlas = ExtResource("2_7vcqu")
-region = Rect2(1664, 0, 128, 128)
+region = Rect2(4736, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mkvdn"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_gar0c"]
+atlas = ExtResource("2_7vcqu")
+region = Rect2(4864, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_amtx3"]
 atlas = ExtResource("2_7vcqu")
 region = Rect2(2048, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_356ru"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_j1r3w"]
 atlas = ExtResource("2_7vcqu")
 region = Rect2(2176, 0, 128, 128)
 
@@ -157,13 +157,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hq0w2")
+"texture": SubResource("AtlasTexture_s5jm5")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_fm1kv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_k42v7")
+"texture": SubResource("AtlasTexture_x4lsp")
 }],
 "loop": false,
 "name": &"AttackH",
@@ -171,13 +168,21 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_amiyq")
+"texture": SubResource("AtlasTexture_hjq7f")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_mkvdn")
+"texture": SubResource("AtlasTexture_gar0c")
+}],
+"loop": true,
+"name": &"AttackS",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_amtx3")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_356ru")
+"texture": SubResource("AtlasTexture_j1r3w")
 }],
 "loop": false,
 "name": &"AttackV",
@@ -340,11 +345,10 @@ stream = ExtResource("6_1j57y")
 volume_db = -10.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-material = SubResource("ShaderMaterial_fj0w8")
+material = SubResource("ShaderMaterial_vexqh")
 position = Vector2(-1, -32)
 sprite_frames = SubResource("SpriteFrames_0nsvt")
-animation = &"Idle"
-frame_progress = 0.139018
+animation = &"AttackS"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.0864906, -27.9619)

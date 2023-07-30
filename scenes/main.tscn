@@ -18,6 +18,7 @@ gravity = 800.0
 jump_force = 350.0
 air_jump_force = 300.0
 slide_speed = 100.0
+attack_range = 120.0
 position = Vector2(1361, 2464)
 velocity = Vector2(0, 0)
 
