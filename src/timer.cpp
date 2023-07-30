@@ -47,3 +47,7 @@ void Timer::fire() {
 TimeDelta Timer::get_timeout() const {
   return m_timeout;
 }
+
+bool Timer::is_running() const {
+  return m_running;
+}

@@ -28,6 +28,7 @@ class Timer {
   void set_repeat(bool repeat);
   void set_timeout(TimeDelta timeout);
   [[nodiscard]] TimeDelta get_timeout() const;
+  [[nodiscard]] bool is_running() const;
 
  private:
   void fire();
