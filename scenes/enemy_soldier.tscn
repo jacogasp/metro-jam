@@ -128,8 +128,8 @@ animations = [{
 "texture": SubResource("AtlasTexture_osq46")
 }],
 "loop": true,
-"name": &"Walk",
-"speed": 1.0
+"name": &"Run",
+"speed": 7.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m087t"]
@@ -159,10 +159,11 @@ _data = {
 [node name="EnemySoldier" type="EnemySoldier"]
 gravity = 2000.0
 hit_bounce_velocity = Vector2(200, -200)
+shooting_range = 300.0
+target_lost_distance = 600.0
 position = Vector2(2.08165e-12, 2.08165e-12)
 collision_layer = 4096
 collision_mask = 17
-velocity = Vector2(0, 16.3333)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_kukua")
@@ -172,7 +173,6 @@ material = SubResource("ShaderMaterial_7ama5")
 position = Vector2(3, -17)
 sprite_frames = SubResource("SpriteFrames_x7vc8")
 animation = &"Idle"
-frame_progress = 0.241181
 
 [node name="HealthBar" type="HealthBar" parent="."]
 offset_left = -16.0
@@ -213,6 +213,3 @@ debug_color = Color(0.968627, 0, 0.462745, 0.0196078)
 libraries = {
 "": SubResource("AnimationLibrary_ktlxv")
 }
-
-[connection signal="body_entered" from="PatrolArea" to="." method="acquire_target"]
-[connection signal="body_exited" from="PatrolArea" to="." method="release_target"]
