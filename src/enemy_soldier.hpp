@@ -88,6 +88,11 @@ class EnemySoldier
     void operator()(EnemySoldier& enemy) const;
   };
 
+   struct FallCommand {
+    void operator()(EnemySoldier& enemy) const;
+  };
+
+
   struct DieCommand {
     void operator()(EnemySoldier& enemy) const;
   };

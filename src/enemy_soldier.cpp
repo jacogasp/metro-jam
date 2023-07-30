@@ -15,6 +15,7 @@ EnemySoldier::FallingState EnemySoldier::falling = EnemySoldier::FallingState();
 EnemySoldier::FiringState EnemySoldier::firing   = EnemySoldier::FiringState();
 EnemySoldier::DyingState EnemySoldier::dying     = EnemySoldier::DyingState();
 static auto constexpr go_idle                    = EnemySoldier::IdleCommand();
+static auto constexpr fall                       = EnemySoldier::FallCommand();
 static auto constexpr die                        = EnemySoldier::DieCommand();
 static auto constexpr hit                        = EnemySoldier::HitCommand();
 static auto constexpr open_fire  = EnemySoldier::OpenFireCommand();
@@ -156,50 +157,6 @@ void EnemySoldier::release_target(Node2D* target) {
   }
 }
 
-// Commands
-
-void EnemySoldier::IdleCommand::operator()(EnemySoldier& enemy) const {
-  auto animated_sprite = enemy.get_node<AnimatedSprite2D>("AnimatedSprite2D");
-  if (animated_sprite) {
-    animated_sprite->play("Idle");
-  }
-  enemy.set_velocity({0, 0});
-  enemy.set_state(&EnemySoldier::idle);
-}
-
-void EnemySoldier::DieCommand::operator()(EnemySoldier& enemy) const {
-  auto animated_sprite = enemy.get_node<AnimatedSprite2D>("AnimatedSprite2D");
-  if (animated_sprite) {
-    animated_sprite->play("Die");
-  }
-  enemy.set_state(&EnemySoldier::dying);
-}
-
-void EnemySoldier::HitCommand::operator()(EnemySoldier& enemy,
-                                          Vector2 const& from_direction) const {
-  auto const vfx       = enemy.get_node<AnimationPlayer>("VFX");
-  if (vfx) {
-    vfx->play("Hit");
-  }
-  auto const position  = enemy.get_global_position();
-  auto const direction = position.x > from_direction.x ? 1.0f : -1.0f;
-  auto bounce_velocity = enemy.get_hit_bounce_velocity();
-  bounce_velocity.x *= direction;
-  auto velocity = enemy.get_velocity();
-  velocity += bounce_velocity;
-  enemy.set_velocity(velocity);
-  enemy.set_state(&EnemySoldier::falling);
-}
-
-void EnemySoldier::OpenFireCommand::operator()(EnemySoldier& enemy) const {
-  enemy.m_fire_timer.start();
-  enemy.set_state(&EnemySoldier::firing);
-}
-
-void EnemySoldier::CloseFireCommand::operator()(EnemySoldier& enemy) const {
-  enemy.m_fire_timer.stop();
-}
-
 static bool player_is_visible(EnemySoldier& enemy, Node2D* target) {
   static uint32_t collision_mask = 65535 ^ enemy.get_collision_layer();
   auto world                     = enemy.get_world_2d();
@@ -230,11 +187,7 @@ void EnemySoldier::FallingState::update(EnemySoldier& enemy) const {
   if (v_y >= 0 && enemy.is_on_floor()) {
     go_idle(enemy);
   } else {
-    auto const animated_sprite =
-        enemy.get_node<AnimatedSprite2D>("AnimatedSprite2D");
-    if (animated_sprite) {
-      animated_sprite->play("Fall");
-    }
+    fall(enemy);
   }
 }
 
@@ -252,4 +205,56 @@ void EnemySoldier::DyingState::update(EnemySoldier& enemy) const {
     return;
   }
   enemy.queue_free();
+}
+
+// Commands
+
+void EnemySoldier::IdleCommand::operator()(EnemySoldier& enemy) const {
+  auto animated_sprite = enemy.get_node<AnimatedSprite2D>("AnimatedSprite2D");
+  if (animated_sprite) {
+    animated_sprite->play("Idle");
+  }
+  enemy.set_velocity({0, 0});
+  enemy.set_state(&EnemySoldier::idle);
+}
+
+void EnemySoldier::FallCommand::operator()(EnemySoldier& enemy) const {
+  auto const animated_sprite =
+      enemy.get_node<AnimatedSprite2D>("AnimatedSprite2D");
+  if (animated_sprite) {
+    animated_sprite->play("Fall");
+  }
+}
+
+void EnemySoldier::DieCommand::operator()(EnemySoldier& enemy) const {
+  auto animated_sprite = enemy.get_node<AnimatedSprite2D>("AnimatedSprite2D");
+  if (animated_sprite) {
+    animated_sprite->play("Die");
+  }
+  enemy.set_state(&EnemySoldier::dying);
+}
+
+void EnemySoldier::HitCommand::operator()(EnemySoldier& enemy,
+                                          Vector2 const& from_direction) const {
+  auto const vfx = enemy.get_node<AnimationPlayer>("VFX");
+  if (vfx) {
+    vfx->play("Hit");
+  }
+  auto const position      = enemy.get_global_position();
+  auto const hit_direction = position.x < from_direction.x ? left : right;
+  auto bounce_velocity     = enemy.get_hit_bounce_velocity();
+  bounce_velocity.x *= static_cast<float>(hit_direction);
+  auto velocity = enemy.get_velocity();
+  velocity += bounce_velocity;
+  enemy.set_velocity(velocity);
+  enemy.set_state(&EnemySoldier::falling);
+}
+
+void EnemySoldier::OpenFireCommand::operator()(EnemySoldier& enemy) const {
+  enemy.m_fire_timer.start();
+  enemy.set_state(&EnemySoldier::firing);
+}
+
+void EnemySoldier::CloseFireCommand::operator()(EnemySoldier& enemy) const {
+  enemy.m_fire_timer.stop();
 }
