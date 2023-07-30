@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://br4rfwsm3h8cw" path="res://scenes/enemy_soldier.tscn" id="13_r6kl5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dbwxh"]
-size = Vector2(31.75, 59)
+size = Vector2(31.75, 57.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o1tt3"]
 size = Vector2(20, 64)
@@ -121,10 +121,31 @@ texture = ExtResource("1_hkmiw")
 [node name="GateDHall" type="Gate" parent="."]
 next_room = "scenes/rooms/RoomD.tscn"
 position = Vector2(4905, 924)
-collision_mask = 257
+collision_layer = 0
+collision_mask = 256
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GateDHall"]
 position = Vector2(7.125, -28)
+shape = SubResource("RectangleShape2D_dbwxh")
+
+[node name="GateHallB1" type="Gate" parent="."]
+next_room = "scenes/rooms/RoomB.tscn"
+position = Vector2(4527, 2399)
+collision_layer = 0
+collision_mask = 256
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GateHallB1"]
+position = Vector2(0, -28.25)
+shape = SubResource("RectangleShape2D_dbwxh")
+
+[node name="GateHallB2" type="Gate" parent="."]
+next_room = "scenes/rooms/RoomB.tscn"
+position = Vector2(4816, 1727)
+collision_layer = 0
+collision_mask = 256
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GateHallB2"]
+position = Vector2(0, -28.25)
 shape = SubResource("RectangleShape2D_dbwxh")
 
 [node name="GateCorridorHall" type="Gate" parent="."]
@@ -318,7 +339,7 @@ texture = ExtResource("11_stcul")
 texture = ExtResource("12_yblow")
 
 [node name="Light7" type="Node2D" parent="Lights"]
-position = Vector2(1890, 1891)
+position = Vector2(1890, 1903)
 
 [node name="PointLight2D" type="PointLight2D" parent="Lights/Light7"]
 position = Vector2(0, 101)
@@ -417,6 +438,10 @@ velocity = Vector2(-109800, -219600)
 
 [connection signal="body_entered" from="GateDHall" to="GateDHall" method="_on_body_entered"]
 [connection signal="body_exited" from="GateDHall" to="GateDHall" method="_on_body_exited"]
+[connection signal="body_entered" from="GateHallB1" to="GateHallB1" method="_on_body_entered"]
+[connection signal="body_exited" from="GateHallB1" to="GateHallB1" method="_on_body_exited"]
+[connection signal="body_entered" from="GateHallB2" to="GateHallB2" method="_on_body_entered"]
+[connection signal="body_exited" from="GateHallB2" to="GateHallB2" method="_on_body_exited"]
 [connection signal="body_entered" from="GateCorridorHall" to="GateCorridorHall" method="_on_body_entered"]
 [connection signal="body_exited" from="GateCorridorHall" to="GateCorridorHall" method="_on_body_exited"]
 

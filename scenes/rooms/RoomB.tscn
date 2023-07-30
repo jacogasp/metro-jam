@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://byowg4tosyvo2" path="res://scenes/platform.tscn" id="2_w1ib7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1213o"]
-size = Vector2(8.875, 112)
+size = Vector2(32, 59)
 
 [node name="RoomB" type="Node2D"]
 metadata/_edit_vertical_guides_ = [8009.0]
@@ -31,12 +31,24 @@ layer_2/y_sort_origin = 0
 layer_2/z_index = -1
 layer_2/tile_data = PackedInt32Array(4980752, 262144, 7, 4915216, 262144, 7, 4849680, 262144, 7, 4849681, 262144, 7, 4849683, 262144, 7, 4849682, 262144, 7, 4915219, 262144, 7, 4980755, 262144, 7, 4915217, 720896, 4, 4980753, 720896, 5, 4915218, 851968, 4, 4980754, 851968, 5, 3473443, 262144, 7, 3407907, 262144, 7, 3342371, 262144, 7, 3342372, 262144, 7, 3342373, 262144, 7, 3342374, 262144, 7, 3407910, 262144, 7, 3473446, 262144, 7, 3407908, 720896, 4, 3473444, 720896, 5, 3407909, 851968, 4, 3473445, 851968, 5, 4980797, 262144, 7, 4980800, 262144, 7, 4784189, 983040, 2, 4849725, 983040, 1, 4653117, 983040, 2, 4718653, 983040, 1, 4522045, 983040, 2, 4587581, 983040, 1, 4390973, 983040, 2, 4456509, 983040, 1, 4259901, 983040, 2, 4325437, 983040, 1, 4128829, 983040, 2, 4194365, 983040, 1, 3997757, 983040, 2, 4063293, 983040, 1, 3866685, 983040, 2, 3932221, 983040, 1, 3735613, 983040, 2, 3801149, 983040, 1, 3604541, 983040, 2, 3670077, 983040, 1, 3473469, 983040, 2, 3539005, 983040, 1, 3342397, 983040, 2, 3407933, 983040, 1, 3211325, 983040, 2, 3276861, 983040, 1, 3145789, 262144, 7, 3145792, 262144, 7, 3211328, 983040, 2, 3276864, 983040, 1, 3342400, 983040, 2, 3407936, 983040, 1, 3473472, 983040, 2, 3539008, 983040, 1, 3604544, 983040, 2, 3670080, 983040, 1, 3735616, 983040, 2, 3801152, 983040, 1, 3866688, 983040, 2, 3932224, 983040, 1, 3997760, 983040, 2, 4063296, 983040, 1, 4128832, 983040, 2, 4194368, 983040, 1, 4259904, 983040, 2, 4325440, 983040, 1, 4390976, 983040, 2, 4456512, 983040, 1, 4522048, 983040, 2, 4587584, 983040, 1, 4653120, 983040, 2, 4718656, 983040, 1, 4784192, 983040, 2, 4849728, 983040, 1, 4915264, 983040, 2, 4915261, 983040, 2)
 
-[node name="GateA" type="Gate" parent="."]
-next_room = "scenes/rooms/RoomA.tscn"
-visible = false
+[node name="GateHallB1" type="Gate" parent="."]
+next_room = "scenes/rooms/Hall.tscn"
+position = Vector2(585, 2445)
+collision_layer = 0
+collision_mask = 256
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GateA"]
-position = Vector2(21, 296)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GateHallB1"]
+position = Vector2(7.5, -10.5)
+shape = SubResource("RectangleShape2D_1213o")
+
+[node name="GateHallB2" type="Gate" parent="."]
+next_room = "scenes/rooms/Hall.tscn"
+position = Vector2(1200, 1728)
+collision_layer = 0
+collision_mask = 256
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GateHallB2"]
+position = Vector2(0, -30)
 shape = SubResource("RectangleShape2D_1213o")
 
 [node name="Platform1" parent="." instance=ExtResource("2_w1ib7")]
@@ -46,5 +58,7 @@ collision_mask = 0
 amplitude = -400.0
 frequency = 0.7
 
-[connection signal="body_entered" from="GateA" to="GateA" method="_on_body_entered"]
-[connection signal="body_exited" from="GateA" to="GateA" method="_on_body_exited"]
+[connection signal="body_entered" from="GateHallB1" to="GateHallB1" method="_on_body_entered"]
+[connection signal="body_exited" from="GateHallB1" to="GateHallB1" method="_on_body_exited"]
+[connection signal="body_entered" from="GateHallB2" to="GateHallB2" method="_on_body_entered"]
+[connection signal="body_exited" from="GateHallB2" to="GateHallB2" method="_on_body_exited"]
