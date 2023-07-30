@@ -11,8 +11,8 @@
 
 using namespace godot;
 
-static inline bool ray_hits(Vector2 position, Vector2 target,
-                            uint32_t collision_mask, Ref<World2D>& world) {
+static inline Node2D* ray_hits(Vector2 position, Vector2 target,
+                               uint32_t collision_mask, Ref<World2D>& world) {
   PROFILE_FUNCTION();
   auto query =
       PhysicsRayQueryParameters2D::create(position, target, collision_mask);
@@ -20,7 +20,7 @@ static inline bool ray_hits(Vector2 position, Vector2 target,
   auto const space_state = world->get_direct_space_state();
   auto const result      = space_state->intersect_ray(query);
   auto const collider    = Node::cast_to<Node2D>(result["collider"]);
-  return collider != nullptr;
+  return collider;
 }
 
 #endif // COREGAME_RAY_CAST_HPP
