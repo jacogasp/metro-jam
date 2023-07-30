@@ -1,10 +1,66 @@
-[gd_scene load_steps=4 format=3 uid="uid://drapwmmn22gpw"]
+[gd_scene load_steps=16 format=3 uid="uid://drapwmmn22gpw"]
 
 [ext_resource type="TileSet" uid="uid://0w2a5bo421v7" path="res://assets/tilesets/TilesetBlocks.tres" id="1_ch5n7"]
 [ext_resource type="PackedScene" uid="uid://byowg4tosyvo2" path="res://scenes/platform.tscn" id="2_w1ib7"]
+[ext_resource type="Script" path="res://scripts/steam_door.gd" id="3_03xe7"]
+[ext_resource type="Texture2D" uid="uid://brq77udpwpfat" path="res://assets/tilesets/Tileset.png" id="4_3r5wv"]
+[ext_resource type="FontFile" uid="uid://ctpai807254id" path="res://assets/fonts/Pixeled.ttf" id="5_uyv4p"]
+[ext_resource type="Material" uid="uid://b2nx5n23nqg2u" path="res://shaders/SteamParticle.material" id="6_l3o1n"]
+[ext_resource type="Texture2D" uid="uid://bjjxt2cylw5jy" path="res://assets/textures/smoke.png" id="7_op60r"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1213o"]
 size = Vector2(32, 59)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ogbvp"]
+font = ExtResource("5_uyv4p")
+font_size = 12
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x6goh"]
+size = Vector2(178, 94)
+
+[sub_resource type="Animation" id="Animation_mktra"]
+resource_name = "Close"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [-2.0944, -1.0472]
+}
+
+[sub_resource type="Animation" id="Animation_eyy6y"]
+resource_name = "Open"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [-1.0472, -2.0944]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0mmlq"]
+_data = {
+"Close": SubResource("Animation_mktra"),
+"Open": SubResource("Animation_eyy6y")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aeug0"]
+size = Vector2(20, 130)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bvxkr"]
+size = Vector2(64, 135)
 
 [node name="RoomB" type="Node2D"]
 metadata/_edit_vertical_guides_ = [8009.0]
@@ -72,7 +128,72 @@ collision_mask = 256
 position = Vector2(0, -30)
 shape = SubResource("RectangleShape2D_1213o")
 
+[node name="SteamDoor" type="Node2D" parent="."]
+position = Vector2(1023, 2016)
+script = ExtResource("3_03xe7")
+
+[node name="Lever" type="Node2D" parent="SteamDoor"]
+position = Vector2(381, 1064)
+
+[node name="Sprite2D" type="Sprite2D" parent="SteamDoor/Lever"]
+position = Vector2(1, -40)
+rotation = -2.0944
+texture = ExtResource("4_3r5wv")
+offset = Vector2(0.0306396, -0.00267029)
+region_enabled = true
+region_rect = Rect2(32, 288, 32, 32)
+
+[node name="Label" type="Label" parent="SteamDoor/Lever"]
+offset_left = -45.0
+offset_top = -108.0
+offset_right = 58.0
+offset_bottom = -59.0
+text = "Press E"
+label_settings = SubResource("LabelSettings_ogbvp")
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Area2D" type="Area2D" parent="SteamDoor/Lever"]
+collision_layer = 65536
+collision_mask = 256
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SteamDoor/Lever/Area2D"]
+position = Vector2(0, -47)
+shape = SubResource("RectangleShape2D_x6goh")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="SteamDoor/Lever"]
+libraries = {
+"": SubResource("AnimationLibrary_0mmlq")
+}
+
+[node name="Door" type="Node2D" parent="SteamDoor"]
+position = Vector2(2512, 417)
+
+[node name="SteamParticles" type="GPUParticles2D" parent="SteamDoor/Door"]
+position = Vector2(0, -33)
+amount = 60
+process_material = ExtResource("6_l3o1n")
+texture = ExtResource("7_op60r")
+lifetime = 0.5
+
+[node name="StaticBody2D" type="StaticBody2D" parent="SteamDoor/Door"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SteamDoor/Door/StaticBody2D"]
+position = Vector2(0, -67)
+shape = SubResource("RectangleShape2D_aeug0")
+
+[node name="Area2D" type="Area2D" parent="SteamDoor/Door"]
+collision_layer = 0
+collision_mask = 256
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SteamDoor/Door/Area2D"]
+position = Vector2(0, -67.5)
+shape = SubResource("RectangleShape2D_bvxkr")
+
 [connection signal="body_entered" from="GateHallB1" to="GateHallB1" method="_on_body_entered"]
 [connection signal="body_exited" from="GateHallB1" to="GateHallB1" method="_on_body_exited"]
 [connection signal="body_entered" from="GateHallB2" to="GateHallB2" method="_on_body_entered"]
 [connection signal="body_exited" from="GateHallB2" to="GateHallB2" method="_on_body_exited"]
+[connection signal="body_entered" from="SteamDoor/Lever/Area2D" to="SteamDoor" method="show_label" flags=18]
+[connection signal="body_exited" from="SteamDoor/Lever/Area2D" to="SteamDoor" method="hide_label" flags=18]
+[connection signal="body_entered" from="SteamDoor/Door/Area2D" to="SteamDoor" method="on_body_entered" flags=18]
