@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=14 format=3 uid="uid://0w2a5bo421v7"]
+[gd_resource type="TileSet" load_steps=15 format=3 uid="uid://0w2a5bo421v7"]
 
 [ext_resource type="Texture2D" uid="uid://brq77udpwpfat" path="res://assets/tilesets/Tileset.png" id="1_khbx3"]
 
@@ -10,6 +10,9 @@ tile_data = PackedInt32Array(0, 0, 4, 65536, 0, 5, 1, 65536, 4, 65537, 65536, 5)
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_g2jup"]
 tile_data = PackedInt32Array(0, 0, 8, 65536, 0, 9, 1, 65536, 8, 2, 65536, 8, 3, 131072, 8, 65539, 0, 9)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_471og"]
+tile_data = PackedInt32Array(0, 131072, 0, 65536, 131072, 1, 131072, 327680, 4, 196608, 131072, 1, 262144, 131072, 1, 327680, 131072, 1, 393216, 327680, 4, 458752, 131072, 1, 524288, 131072, 1, 589824, 131072, 1, 655360, 327680, 3, 131073, 65536, 3, 393217, 65536, 3, 655361, 65536, 3, 131074, 131072, 3, 393218, 131072, 3, 655362, 131072, 3, 851973, 0, 0, 917509, 0, 1, 262150, 0, 3, 524294, 0, 3, 786438, 0, 0, 851974, 393216, 2, 917510, 65536, 1, 7, 0, 3, 262151, 65536, 3, 524295, 65536, 3, 786439, 65536, 0, 851975, 65536, 1, 917511, 65536, 1, 8, 393216, 0, 65544, 0, 1, 131080, 0, 1, 196616, 0, 1, 262152, 393216, 4, 327688, 0, 1, 393224, 0, 1, 458760, 0, 1, 524296, 393216, 4, 589832, 0, 1, 655368, 0, 1, 720904, 0, 1, 786440, 393216, 2, 851976, 65536, 1, 917512, 65536, 1)
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_abf6a"]
 tile_data = PackedInt32Array(0, 327680, 5, 65536, 327680, 6)
@@ -1152,3 +1155,4 @@ pattern_7 = SubResource("TileMapPattern_nx8y6")
 pattern_8 = SubResource("TileMapPattern_h6xk6")
 pattern_9 = SubResource("TileMapPattern_40j81")
 pattern_10 = SubResource("TileMapPattern_g2jup")
+pattern_11 = SubResource("TileMapPattern_471og")
