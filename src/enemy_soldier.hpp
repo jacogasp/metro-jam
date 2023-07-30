@@ -29,7 +29,6 @@ class EnemySoldier
   Vector2 m_hit_bounce_velocity = {100, -100};
   Direction m_direction         = right;
   Node2D* m_target              = nullptr;
-  float m_hit_animation_time    = 0;
   Timer m_fire_timer;
 
   static void _bind_methods();
