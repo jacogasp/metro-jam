@@ -62,7 +62,7 @@ void Player::_ready() {
   m_logger           = core_game::LoggerLocator::getService();
   m_animatedSprite2D = get_node<AnimatedSprite2D>("AnimatedSprite2D");
   m_animatedSprite2D->play("Idle");
-  m_material = m_animatedSprite2D->get_material()->duplicate();
+  m_material = m_animatedSprite2D->get_material();
   m_animatedSprite2D->set_material(m_material);
   m_grenade_launcher = get_node<GrenadeLauncher>("GrenadeLauncher");
   m_interaction_ray  = get_node<RayCast2D>("InteractionRay");
