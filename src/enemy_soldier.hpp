@@ -51,6 +51,7 @@ class EnemySoldier
   void set_hit_animation_time(float t) const;
   [[nodiscard]] float get_hit_animation_time() const;
   [[nodiscard]] Direction get_direction() const;
+  void set_direction(EnemySoldier::Direction direction);
   void acquire_target(Node2D* target);
   void release_target(Node2D* target);
 
@@ -65,6 +66,10 @@ class EnemySoldier
     void update(EnemySoldier& enemy) const override;
   };
 
+  struct AlertState : EnemySoldierState {
+    void update(EnemySoldier& enemy) const override;
+  };
+
   struct FiringState : EnemySoldierState {
     void update(EnemySoldier& enemy) const override;
   };
@@ -75,9 +80,10 @@ class EnemySoldier
 
  public:
   static IdleState idle;
-  static DyingState dying;
   static FallingState falling;
+  static AlertState in_alert;
   static FiringState firing;
+  static DyingState dying;
 
   friend struct IdleState;
   friend struct OpenFireCommand;
@@ -88,10 +94,9 @@ class EnemySoldier
     void operator()(EnemySoldier& enemy) const;
   };
 
-   struct FallCommand {
+  struct FallCommand {
     void operator()(EnemySoldier& enemy) const;
   };
-
 
   struct DieCommand {
     void operator()(EnemySoldier& enemy) const;

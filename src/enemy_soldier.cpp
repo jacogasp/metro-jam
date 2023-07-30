@@ -12,6 +12,7 @@ using core_game::to_str;
 
 EnemySoldier::IdleState EnemySoldier::idle       = EnemySoldier::IdleState();
 EnemySoldier::FallingState EnemySoldier::falling = EnemySoldier::FallingState();
+EnemySoldier::AlertState EnemySoldier::in_alert  = EnemySoldier::AlertState();
 EnemySoldier::FiringState EnemySoldier::firing   = EnemySoldier::FiringState();
 EnemySoldier::DyingState EnemySoldier::dying     = EnemySoldier::DyingState();
 static auto constexpr go_idle                    = EnemySoldier::IdleCommand();
@@ -147,6 +148,10 @@ EnemySoldier::Direction EnemySoldier::get_direction() const {
   return m_direction;
 }
 
+void EnemySoldier::set_direction(EnemySoldier::Direction direction) {
+  m_direction = direction;
+}
+
 void EnemySoldier::acquire_target(Node2D* target) {
   m_target = target;
 }
@@ -167,12 +172,35 @@ static bool player_is_visible(EnemySoldier& enemy, Node2D* target) {
   if (hit_target && hit_target->is_in_group("Player")) {
     auto const position   = enemy.get_global_position();
     const auto player_pos = hit_target->get_global_position();
-    auto const direction  = position.x > player_pos.x
-                              ? EnemySoldier::Direction::left
-                              : EnemySoldier::Direction::right;
+    auto const direction =
+        position.x > player_pos.x ? EnemySoldier::left : EnemySoldier::right;
     return enemy.get_direction() == direction;
   }
   return false;
+}
+
+static void look_at(EnemySoldier& enemy, Node2D* target) {
+  auto enemy_position          = enemy.get_global_position();
+  auto target_position         = target->get_global_position();
+  auto const direction         = target_position.x < enemy_position.x
+                                   ? EnemySoldier::left
+                                   : EnemySoldier::right;
+  auto const direction_changed = direction != enemy.get_direction();
+  enemy.set_direction(direction);
+
+  if (direction_changed) {
+    auto scale = enemy.get_scale();
+    scale.x *= -1;
+    enemy.set_scale(scale);
+
+    auto gun = enemy.get_node<Gun>("Gun");
+    if (gun) {
+      auto bullet_impulse = gun->get_bullet_impulse();
+      bullet_impulse.x *= -1;
+      std::cout << direction << ' ' << bullet_impulse.x << '\n';
+      gun->set_bullet_impulse(bullet_impulse);
+    }
+  }
 }
 
 // States
@@ -191,9 +219,31 @@ void EnemySoldier::FallingState::update(EnemySoldier& enemy) const {
   }
 }
 
+void EnemySoldier::AlertState::update(EnemySoldier& enemy) const {
+  auto const v_y = enemy.get_velocity().y;
+  if (!(v_y >= 0 && enemy.is_on_floor())) {
+    //    fall(enemy);
+    return;
+  }
+
+  enemy.set_velocity({0, 0});
+  auto target = enemy.m_target;
+  if (target == nullptr) {
+    return;
+  }
+  ::look_at(enemy, target);
+  go_idle(enemy);
+}
+
 void EnemySoldier::FiringState::update(EnemySoldier& enemy) const {
   auto const target = enemy.m_target;
-  if ((target && !player_is_visible(enemy, target)) || target == nullptr) {
+  if (target == nullptr) {
+    close_fire(enemy);
+    go_idle(enemy);
+    return;
+  }
+  ::look_at(enemy, target);
+  if (!player_is_visible(enemy, target)) {
     close_fire(enemy);
     go_idle(enemy);
   }
@@ -247,7 +297,7 @@ void EnemySoldier::HitCommand::operator()(EnemySoldier& enemy,
   auto velocity = enemy.get_velocity();
   velocity += bounce_velocity;
   enemy.set_velocity(velocity);
-  enemy.set_state(&EnemySoldier::falling);
+  enemy.set_state(&EnemySoldier::in_alert);
 }
 
 void EnemySoldier::OpenFireCommand::operator()(EnemySoldier& enemy) const {
