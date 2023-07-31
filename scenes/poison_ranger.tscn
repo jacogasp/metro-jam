@@ -1,6 +1,6 @@
 [gd_scene load_steps=24 format=3 uid="uid://br4rfwsm3h8cw"]
 
-[ext_resource type="Texture2D" uid="uid://b6itau5f6uom8" path="res://assets/characters/enemy_soldier_sprites.png" id="1_0oysq"]
+[ext_resource type="Texture2D" uid="uid://b6itau5f6uom8" path="res://assets/characters/poison_ranger_sprites.png" id="1_vfgx0"]
 [ext_resource type="Texture2D" uid="uid://dju2wr2n2ml5k" path="res://assets/health_bar.png" id="2_08kpc"]
 [ext_resource type="PackedScene" uid="uid://cpjx76e8dyp5b" path="res://scenes/blob_granade.tscn" id="3_2t3kq"]
 
@@ -26,55 +26,55 @@ shader = SubResource("Shader_wql7w")
 shader_parameter/time = 2.08165e-12
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_auney"]
-atlas = ExtResource("1_0oysq")
+atlas = ExtResource("1_vfgx0")
 region = Rect2(1248, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_23nlh"]
-atlas = ExtResource("1_0oysq")
+atlas = ExtResource("1_vfgx0")
 region = Rect2(1344, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8ls4o"]
-atlas = ExtResource("1_0oysq")
+atlas = ExtResource("1_vfgx0")
 region = Rect2(0, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_biskd"]
-atlas = ExtResource("1_0oysq")
+atlas = ExtResource("1_vfgx0")
 region = Rect2(96, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sb8e4"]
-atlas = ExtResource("1_0oysq")
+atlas = ExtResource("1_vfgx0")
 region = Rect2(192, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_afptp"]
-atlas = ExtResource("1_0oysq")
+atlas = ExtResource("1_vfgx0")
 region = Rect2(384, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_66hwe"]
-atlas = ExtResource("1_0oysq")
+atlas = ExtResource("1_vfgx0")
 region = Rect2(480, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u3lgd"]
-atlas = ExtResource("1_0oysq")
+atlas = ExtResource("1_vfgx0")
 region = Rect2(576, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tsqob"]
-atlas = ExtResource("1_0oysq")
+atlas = ExtResource("1_vfgx0")
 region = Rect2(672, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5bxar"]
-atlas = ExtResource("1_0oysq")
+atlas = ExtResource("1_vfgx0")
 region = Rect2(768, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_osq46"]
-atlas = ExtResource("1_0oysq")
+atlas = ExtResource("1_vfgx0")
 region = Rect2(864, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_c1olo"]
-atlas = ExtResource("1_0oysq")
+atlas = ExtResource("1_vfgx0")
 region = Rect2(1056, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lin6q"]
-atlas = ExtResource("1_0oysq")
+atlas = ExtResource("1_vfgx0")
 region = Rect2(0, 0, 96, 96)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_x7vc8"]
@@ -163,7 +163,7 @@ _data = {
 "Hit": SubResource("Animation_mlkyu")
 }
 
-[node name="EnemySoldier" type="EnemySoldier"]
+[node name="PoisonRanger" type="PoisonRanger"]
 gravity = 2000.0
 hit_bounce_velocity = Vector2(200, -200)
 shooting_range = 300.0
@@ -179,7 +179,8 @@ shape = SubResource("CapsuleShape2D_kukua")
 material = SubResource("ShaderMaterial_7ama5")
 position = Vector2(3, -17)
 sprite_frames = SubResource("SpriteFrames_x7vc8")
-animation = &"Shoot"
+animation = &"Idle"
+frame_progress = 0.202746
 
 [node name="HealthBar" type="HealthBar" parent="."]
 offset_left = -16.0

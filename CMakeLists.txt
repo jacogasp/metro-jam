@@ -50,7 +50,7 @@ add_library(
         src/wrench.cpp
         src/grenade.cpp
         src/macros.cpp
-        src/enemy_soldier.cpp
+        src/poison_ranger.cpp
         src/health_bar.cpp
         src/state.cpp
         src/gun.cpp

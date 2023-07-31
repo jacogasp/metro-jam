@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b6itau5f6uom8"
-path="res://.godot/imported/enemy_soldier_sprites.png-b50b31bb5496c7bcb3700daf1ec8ae26.ctex"
+path="res://.godot/imported/poison_ranger_sprites.png-bff045f28d278c3c26d2a83af6d1324a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/characters/enemy_soldier_sprites.png"
-dest_files=["res://.godot/imported/enemy_soldier_sprites.png-b50b31bb5496c7bcb3700daf1ec8ae26.ctex"]
+source_file="res://assets/characters/poison_ranger_sprites.png"
+dest_files=["res://.godot/imported/poison_ranger_sprites.png-bff045f28d278c3c26d2a83af6d1324a.ctex"]
 
 [params]
 

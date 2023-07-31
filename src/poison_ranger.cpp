@@ -1,4 +1,4 @@
-#include "enemy_soldier.hpp"
+#include "poison_ranger.hpp"
 #include "gun.hpp"
 #include "health_bar.hpp"
 #include "io.hpp"
@@ -10,40 +10,40 @@
 
 using core_game::to_str;
 
-EnemySoldier::IdleState EnemySoldier::idle       = EnemySoldier::IdleState();
-EnemySoldier::FallingState EnemySoldier::falling = EnemySoldier::FallingState();
-EnemySoldier::AlertState EnemySoldier::in_alert  = EnemySoldier::AlertState();
-EnemySoldier::FiringState EnemySoldier::firing   = EnemySoldier::FiringState();
-EnemySoldier::ChasingState EnemySoldier::chasing = EnemySoldier::ChasingState();
-EnemySoldier::DyingState EnemySoldier::dying     = EnemySoldier::DyingState();
-static auto constexpr go_idle                    = EnemySoldier::IdleCommand();
-static auto constexpr fall                       = EnemySoldier::FallCommand();
-static auto constexpr die                        = EnemySoldier::DieCommand();
-static auto constexpr hit                        = EnemySoldier::HitCommand();
-static auto constexpr open_fire  = EnemySoldier::OpenFireCommand();
-static auto constexpr close_fire = EnemySoldier::CloseFireCommand();
+PoisonRanger::IdleState PoisonRanger::idle       = PoisonRanger::IdleState();
+PoisonRanger::FallingState PoisonRanger::falling = PoisonRanger::FallingState();
+PoisonRanger::AlertState PoisonRanger::in_alert  = PoisonRanger::AlertState();
+PoisonRanger::FiringState PoisonRanger::firing   = PoisonRanger::FiringState();
+PoisonRanger::ChasingState PoisonRanger::chasing = PoisonRanger::ChasingState();
+PoisonRanger::DyingState PoisonRanger::dying     = PoisonRanger::DyingState();
+static auto constexpr go_idle                    = PoisonRanger::IdleCommand();
+static auto constexpr fall                       = PoisonRanger::FallCommand();
+static auto constexpr die                        = PoisonRanger::DieCommand();
+static auto constexpr hit                        = PoisonRanger::HitCommand();
+static auto constexpr open_fire  = PoisonRanger::OpenFireCommand();
+static auto constexpr close_fire = PoisonRanger::CloseFireCommand();
 
-EnemySoldier::~EnemySoldier() {
+PoisonRanger::~PoisonRanger() {
   release_target(m_target);
 }
 
-void EnemySoldier::_bind_methods() {
-  BIND_PROPERTY(EnemySoldier, gravity, Variant::FLOAT);
-  BIND_PROPERTY(EnemySoldier, total_health, Variant::INT);
-  BIND_PROPERTY(EnemySoldier, fire_rate, Variant::FLOAT);
-  BIND_PROPERTY(EnemySoldier, hit_bounce_velocity, Variant::VECTOR2);
-  BIND_PROPERTY(EnemySoldier, hit_animation_time, Variant::FLOAT);
-  BIND_PROPERTY(EnemySoldier, running_speed, Variant::FLOAT);
-  BIND_PROPERTY(EnemySoldier, shooting_range, Variant::FLOAT);
-  BIND_PROPERTY(EnemySoldier, target_lost_distance, Variant::FLOAT);
-  ClassDB::bind_method(D_METHOD("take_hit"), &EnemySoldier::take_hit);
+void PoisonRanger::_bind_methods() {
+  BIND_PROPERTY(PoisonRanger, gravity, Variant::FLOAT);
+  BIND_PROPERTY(PoisonRanger, total_health, Variant::INT);
+  BIND_PROPERTY(PoisonRanger, fire_rate, Variant::FLOAT);
+  BIND_PROPERTY(PoisonRanger, hit_bounce_velocity, Variant::VECTOR2);
+  BIND_PROPERTY(PoisonRanger, hit_animation_time, Variant::FLOAT);
+  BIND_PROPERTY(PoisonRanger, running_speed, Variant::FLOAT);
+  BIND_PROPERTY(PoisonRanger, shooting_range, Variant::FLOAT);
+  BIND_PROPERTY(PoisonRanger, target_lost_distance, Variant::FLOAT);
+  ClassDB::bind_method(D_METHOD("take_hit"), &PoisonRanger::take_hit);
   ClassDB::bind_method(D_METHOD("acquire_target"),
-                       &EnemySoldier::acquire_target);
+                       &PoisonRanger::acquire_target);
   ClassDB::bind_method(D_METHOD("release_target"),
-                       &EnemySoldier::release_target);
+                       &PoisonRanger::release_target);
 }
 
-void EnemySoldier::_ready() {
+void PoisonRanger::_ready() {
   m_health        = m_total_health;
   auto health_bar = get_node<HealthBar>("HealthBar");
   if (health_bar) {
@@ -56,13 +56,13 @@ void EnemySoldier::_ready() {
   go_idle(*this);
 }
 
-void EnemySoldier::_process(double delta) {
+void PoisonRanger::_process(double delta) {
   if (Engine::get_singleton()->is_editor_hint())
     return;
   m_fire_timer.tick(delta);
 }
 
-void EnemySoldier::_physics_process(double delta) {
+void PoisonRanger::_physics_process(double delta) {
   if (Engine::get_singleton()->is_editor_hint()) {
     return;
   }
@@ -74,7 +74,7 @@ void EnemySoldier::_physics_process(double delta) {
   move_and_slide();
 }
 
-void EnemySoldier::take_hit(int damage, Vector2 const& from_direction) {
+void PoisonRanger::take_hit(int damage, Vector2 const& from_direction) {
   m_health -= damage;
   hit(*this, from_direction);
   auto health_bar = get_node<HealthBar>("HealthBar");
@@ -86,7 +86,7 @@ void EnemySoldier::take_hit(int damage, Vector2 const& from_direction) {
   }
 }
 
-void EnemySoldier::set_hit_animation_time(float t) const {
+void PoisonRanger::set_hit_animation_time(float t) const {
   auto animated_sprite = get_node<AnimatedSprite2D>("AnimatedSprite2D");
   if (animated_sprite) {
     Ref<ShaderMaterial> material = animated_sprite->get_material();
@@ -94,7 +94,7 @@ void EnemySoldier::set_hit_animation_time(float t) const {
   }
 }
 
-float EnemySoldier::get_hit_animation_time() const {
+float PoisonRanger::get_hit_animation_time() const {
   auto animated_sprite = get_node<AnimatedSprite2D>("AnimatedSprite2D");
   if (animated_sprite == nullptr)
     return 0.0;
@@ -105,35 +105,35 @@ float EnemySoldier::get_hit_animation_time() const {
   return time;
 }
 
-void EnemySoldier::set_state(EnemySoldierState* state) {
+void PoisonRanger::set_state(PoisonRangerState* state) {
   m_state = state;
 }
 
-void EnemySoldier::set_gravity(float gravity) {
+void PoisonRanger::set_gravity(float gravity) {
   m_gravity = gravity;
 }
 
-float EnemySoldier::get_gravity() const {
+float PoisonRanger::get_gravity() const {
   return m_gravity;
 }
 
-void EnemySoldier::set_total_health(int health) {
+void PoisonRanger::set_total_health(int health) {
   m_total_health = health;
 }
 
-int EnemySoldier::get_total_health() const {
+int PoisonRanger::get_total_health() const {
   return m_total_health;
 }
 
-void EnemySoldier::set_fire_rate(double rate) {
+void PoisonRanger::set_fire_rate(double rate) {
   m_fire_rate = rate;
 }
 
-double EnemySoldier::get_fire_rate() const {
+double PoisonRanger::get_fire_rate() const {
   return m_fire_rate;
 }
 
-void EnemySoldier::fire() {
+void PoisonRanger::fire() {
   auto gun = get_node<Gun>("Gun");
   if (gun) {
     gun->fire({});
@@ -144,57 +144,57 @@ void EnemySoldier::fire() {
   }
 }
 
-void EnemySoldier::set_hit_bounce_velocity(const Vector2& velocity) {
+void PoisonRanger::set_hit_bounce_velocity(const Vector2& velocity) {
   m_hit_bounce_velocity = velocity;
 }
 
-Vector2 EnemySoldier::get_hit_bounce_velocity() const {
+Vector2 PoisonRanger::get_hit_bounce_velocity() const {
   return m_hit_bounce_velocity;
 }
 
-EnemySoldier::Direction EnemySoldier::get_direction() const {
+PoisonRanger::Direction PoisonRanger::get_direction() const {
   return m_direction;
 }
 
-void EnemySoldier::set_running_speed(float speed) {
+void PoisonRanger::set_running_speed(float speed) {
   m_running_speed = speed;
 }
 
-float EnemySoldier::get_running_speed() const {
+float PoisonRanger::get_running_speed() const {
   return m_running_speed;
 }
 
-void EnemySoldier::set_shooting_range(float distance) {
+void PoisonRanger::set_shooting_range(float distance) {
   m_shooting_range = distance;
 }
 
-float EnemySoldier::get_shooting_range() const {
+float PoisonRanger::get_shooting_range() const {
   return m_shooting_range;
 }
 
-void EnemySoldier::set_target_lost_distance(float distance) {
+void PoisonRanger::set_target_lost_distance(float distance) {
   m_target_lost_distance = distance;
 }
 
-float EnemySoldier::get_target_lost_distance() const {
+float PoisonRanger::get_target_lost_distance() const {
   return m_target_lost_distance;
 }
 
-void EnemySoldier::set_direction(EnemySoldier::Direction direction) {
+void PoisonRanger::set_direction(PoisonRanger::Direction direction) {
   m_direction = direction;
 }
 
-void EnemySoldier::acquire_target(Node2D* target) {
+void PoisonRanger::acquire_target(Node2D* target) {
   m_target = target;
 }
 
-void EnemySoldier::release_target(Node2D* target) {
+void PoisonRanger::release_target(Node2D* target) {
   if (target == m_target) {
     m_target = nullptr;
   }
 }
 
-static Node2D* player_is_visible(EnemySoldier& enemy, Vector2 const& target) {
+static Node2D* player_is_visible(PoisonRanger& enemy, Vector2 const& target) {
   static uint32_t collision_mask = 65535 ^ enemy.get_collision_layer();
   auto world                     = enemy.get_world_2d();
   auto from                      = enemy.get_global_position();
@@ -204,12 +204,12 @@ static Node2D* player_is_visible(EnemySoldier& enemy, Vector2 const& target) {
                                                            : nullptr;
 }
 
-static void look_at(EnemySoldier& enemy, Node2D* target) {
+static void look_at(PoisonRanger& enemy, Node2D* target) {
   auto enemy_position          = enemy.get_global_position();
   auto target_position         = target->get_global_position();
   auto const direction         = target_position.x < enemy_position.x
-                                   ? EnemySoldier::left
-                                   : EnemySoldier::right;
+                                   ? PoisonRanger::left
+                                   : PoisonRanger::right;
   auto const direction_changed = direction != enemy.get_direction();
   enemy.set_direction(direction);
 
@@ -229,7 +229,7 @@ static void look_at(EnemySoldier& enemy, Node2D* target) {
 }
 
 // States
-void EnemySoldier::IdleState::update(EnemySoldier& enemy) const {
+void PoisonRanger::IdleState::update(PoisonRanger& enemy) const {
   std::cout << "idle\n";
   auto const enemy_pos = enemy.get_global_position();
   auto target          = enemy_pos;
@@ -246,7 +246,7 @@ void EnemySoldier::IdleState::update(EnemySoldier& enemy) const {
   }
 }
 
-void EnemySoldier::FallingState::update(EnemySoldier& enemy) const {
+void PoisonRanger::FallingState::update(PoisonRanger& enemy) const {
   auto const v_y = enemy.get_velocity().y;
   if (v_y >= 0 && enemy.is_on_floor()) {
     go_idle(enemy);
@@ -255,7 +255,7 @@ void EnemySoldier::FallingState::update(EnemySoldier& enemy) const {
   }
 }
 
-void EnemySoldier::AlertState::update(EnemySoldier& enemy) const {
+void PoisonRanger::AlertState::update(PoisonRanger& enemy) const {
   std::cout << "alert\n";
   auto const v_y = enemy.get_velocity().y;
   if (!(v_y >= 0 && enemy.is_on_floor())) {
@@ -283,7 +283,7 @@ void EnemySoldier::AlertState::update(EnemySoldier& enemy) const {
   enemy.set_velocity({0, 0});
 }
 
-void EnemySoldier::FiringState::update(EnemySoldier& enemy) const {
+void PoisonRanger::FiringState::update(PoisonRanger& enemy) const {
   std::cout << "firing\n";
   auto target = enemy.m_target;
   ::look_at(enemy, target);
@@ -301,7 +301,7 @@ void EnemySoldier::FiringState::update(EnemySoldier& enemy) const {
       std::abs(enemy.get_global_position().x - player->get_global_position().x);
 
   if (distance > enemy.get_shooting_range()) {
-    enemy.set_state(&EnemySoldier::chasing);
+    enemy.set_state(&PoisonRanger::chasing);
     close_fire(enemy);
     return;
   }
@@ -310,7 +310,7 @@ void EnemySoldier::FiringState::update(EnemySoldier& enemy) const {
   }
 }
 
-void EnemySoldier::ChasingState::update(EnemySoldier& enemy) const {
+void PoisonRanger::ChasingState::update(PoisonRanger& enemy) const {
   std::cout << "chasing\n";
   auto target       = enemy.m_target;
   auto const player = player_is_visible(enemy, target->get_global_position());
@@ -341,12 +341,12 @@ void EnemySoldier::ChasingState::update(EnemySoldier& enemy) const {
   }
   auto const running_speed = enemy.get_running_speed();
   auto velocity            = enemy.get_velocity();
-  velocity.x = enemy.get_direction() == EnemySoldier::left ? -running_speed
+  velocity.x = enemy.get_direction() == PoisonRanger::left ? -running_speed
                                                            : running_speed;
   enemy.set_velocity(velocity);
 }
 
-void EnemySoldier::DyingState::update(EnemySoldier& enemy) const {
+void PoisonRanger::DyingState::update(PoisonRanger& enemy) const {
   auto animated_sprite = enemy.get_node<AnimatedSprite2D>("AnimatedSprite2D");
   if (animated_sprite && animated_sprite->is_playing()) {
     return;
@@ -356,29 +356,29 @@ void EnemySoldier::DyingState::update(EnemySoldier& enemy) const {
 
 // Commands
 
-void EnemySoldier::IdleCommand::operator()(EnemySoldier& enemy) const {
+void PoisonRanger::IdleCommand::operator()(PoisonRanger& enemy) const {
   auto animated_sprite = enemy.get_node<AnimatedSprite2D>("AnimatedSprite2D");
   if (animated_sprite) {
     animated_sprite->play("Idle");
   }
   enemy.set_velocity({0, 0});
-  enemy.set_state(&EnemySoldier::idle);
+  enemy.set_state(&PoisonRanger::idle);
   enemy.release_target(enemy.m_target);
   close_fire(enemy);
 }
 
-void EnemySoldier::FallCommand::operator()(EnemySoldier& enemy) const {
+void PoisonRanger::FallCommand::operator()(PoisonRanger& enemy) const {
 }
 
-void EnemySoldier::DieCommand::operator()(EnemySoldier& enemy) const {
+void PoisonRanger::DieCommand::operator()(PoisonRanger& enemy) const {
   auto animated_sprite = enemy.get_node<AnimatedSprite2D>("AnimatedSprite2D");
   if (animated_sprite) {
     animated_sprite->play("Die");
   }
-  enemy.set_state(&EnemySoldier::dying);
+  enemy.set_state(&PoisonRanger::dying);
 }
 
-void EnemySoldier::HitCommand::operator()(EnemySoldier& enemy,
+void PoisonRanger::HitCommand::operator()(PoisonRanger& enemy,
                                           Vector2 const& from_direction) const {
   auto const vfx = enemy.get_node<AnimationPlayer>("VFX");
   if (vfx) {
@@ -391,18 +391,18 @@ void EnemySoldier::HitCommand::operator()(EnemySoldier& enemy,
   auto velocity = enemy.get_velocity();
   velocity += bounce_velocity;
   enemy.set_velocity(velocity);
-  enemy.set_state(&EnemySoldier::in_alert);
+  enemy.set_state(&PoisonRanger::in_alert);
 }
 
-void EnemySoldier::OpenFireCommand::operator()(EnemySoldier& enemy) const {
+void PoisonRanger::OpenFireCommand::operator()(PoisonRanger& enemy) const {
   enemy.m_fire_timer.start();
-  enemy.set_state(&EnemySoldier::firing);
+  enemy.set_state(&PoisonRanger::firing);
   auto const as = enemy.get_node<AnimatedSprite2D>("AnimatedSprite2D");
   if (as) {
     as->play("Idle");
   }
 }
 
-void EnemySoldier::CloseFireCommand::operator()(EnemySoldier& enemy) const {
+void PoisonRanger::CloseFireCommand::operator()(PoisonRanger& enemy) const {
   enemy.m_fire_timer.stop();
 }

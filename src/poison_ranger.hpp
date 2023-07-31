@@ -1,5 +1,5 @@
-#ifndef COREGAME_ENEMY_SOLDIER_HPP
-#define COREGAME_ENEMY_SOLDIER_HPP
+#ifndef COREGAME_POISON_RANGER_HPP
+#define COREGAME_POISON_RANGER_HPP
 
 #include <godot_cpp/classes/character_body2d.hpp>
 
@@ -10,13 +10,13 @@
 
 using namespace godot;
 
-class EnemySoldier;
-using EnemySoldierState = State<EnemySoldier>;
+class PoisonRanger;
+using PoisonRangerState = State<PoisonRanger>;
 
-class EnemySoldier
+class PoisonRanger
     : public CharacterBody2D
     , public Damageable {
-  GDCLASS_V2(EnemySoldier, CharacterBody2D)
+  GDCLASS_V2(PoisonRanger, CharacterBody2D)
 
   enum Direction { left = -1, right = 1 };
 
@@ -27,7 +27,7 @@ class EnemySoldier
   float m_shooting_range        = 100;
   float m_target_lost_distance  = 300;
   float m_running_speed         = 100;
-  EnemySoldierState* m_state    = &EnemySoldier::idle;
+  PoisonRangerState* m_state    = &PoisonRanger::idle;
   TimeDelta m_fire_rate         = 1;
   Vector2 m_hit_bounce_velocity = {100, -100};
   Direction m_direction         = right;
@@ -37,11 +37,11 @@ class EnemySoldier
   static void _bind_methods();
 
  public:
-  ~EnemySoldier() override;
+  ~PoisonRanger() override;
   void _ready() override;
   void _process(double) override;
   void _physics_process(double) override;
-  void set_state(EnemySoldierState* state);
+  void set_state(PoisonRangerState* state);
   void take_hit(int damage, Vector2 const& from_direction) override;
   void set_gravity(float gravity);
   [[nodiscard]] float get_gravity() const;
@@ -60,35 +60,35 @@ class EnemySoldier
   [[nodiscard]] float get_shooting_range() const;
   void set_target_lost_distance(float distance);
   [[nodiscard]] float get_target_lost_distance() const;
-  void set_direction(EnemySoldier::Direction direction);
+  void set_direction(PoisonRanger::Direction direction);
   void acquire_target(Node2D* target);
   void release_target(Node2D* target);
 
   void fire();
 
   // States
-  struct IdleState : EnemySoldierState {
-    void update(EnemySoldier& enemy) const override;
+  struct IdleState : PoisonRangerState {
+    void update(PoisonRanger& enemy) const override;
   };
 
-  struct FallingState : EnemySoldierState {
-    void update(EnemySoldier& enemy) const override;
+  struct FallingState : PoisonRangerState {
+    void update(PoisonRanger& enemy) const override;
   };
 
-  struct AlertState : EnemySoldierState {
-    void update(EnemySoldier& enemy) const override;
+  struct AlertState : PoisonRangerState {
+    void update(PoisonRanger& enemy) const override;
   };
 
-  struct FiringState : EnemySoldierState {
-    void update(EnemySoldier& enemy) const override;
+  struct FiringState : PoisonRangerState {
+    void update(PoisonRanger& enemy) const override;
   };
 
-  struct ChasingState : EnemySoldierState {
-    void update(EnemySoldier& enemy) const override;
+  struct ChasingState : PoisonRangerState {
+    void update(PoisonRanger& enemy) const override;
   };
 
-  struct DyingState : EnemySoldierState {
-    void update(EnemySoldier& enemy) const override;
+  struct DyingState : PoisonRangerState {
+    void update(PoisonRanger& enemy) const override;
   };
 
  public:
@@ -105,28 +105,28 @@ class EnemySoldier
 
   // Commands
   struct IdleCommand {
-    void operator()(EnemySoldier& enemy) const;
+    void operator()(PoisonRanger& enemy) const;
   };
 
   struct FallCommand {
-    void operator()(EnemySoldier& enemy) const;
+    void operator()(PoisonRanger& enemy) const;
   };
 
   struct DieCommand {
-    void operator()(EnemySoldier& enemy) const;
+    void operator()(PoisonRanger& enemy) const;
   };
 
   struct HitCommand {
-    void operator()(EnemySoldier& enemy, Vector2 const& from_direction) const;
+    void operator()(PoisonRanger& enemy, Vector2 const& from_direction) const;
   };
 
   struct OpenFireCommand {
-    void operator()(EnemySoldier& enemy) const;
+    void operator()(PoisonRanger& enemy) const;
   };
 
   struct CloseFireCommand {
-    void operator()(EnemySoldier& enemy) const;
+    void operator()(PoisonRanger& enemy) const;
   };
 };
 
-#endif // COREGAME_ENEMY_SOLDIER_HPP
+#endif // COREGAME_POISON_RANGER_HPP

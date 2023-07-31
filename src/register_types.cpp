@@ -9,7 +9,6 @@
 #include "coin.hpp"
 #include "coin_spawner.hpp"
 #include "constants.hpp"
-#include "enemy_soldier.hpp"
 #include "gate.hpp"
 #include "grenade.hpp"
 #include "gun.hpp"
@@ -19,6 +18,7 @@
 #include "lifebar.hpp"
 #include "main_scene.hpp"
 #include "player.hpp"
+#include "poison_ranger.hpp"
 #include "profiler.hpp"
 #include "world.hpp"
 #include "wrench.hpp"
@@ -40,7 +40,7 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
   ClassDB::register_class<BumbleBee>();
   ClassDB::register_class<Wrench>();
   ClassDB::register_class<Grenade>();
-  ClassDB::register_class<EnemySoldier>();
+  ClassDB::register_class<PoisonRanger>();
   ClassDB::register_class<HealthBar>();
   ClassDB::register_class<Gun>();
 
