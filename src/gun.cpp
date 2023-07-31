@@ -4,6 +4,16 @@
 void Gun::_bind_methods() {
   BIND_PROPERTY(Gun, bullet, Variant::OBJECT);
   BIND_PROPERTY(Gun, bullet_impulse, Variant::VECTOR2);
+  BIND_PROPERTY(Gun, cooldown, Variant::FLOAT);
+}
+
+void Gun::_ready() {
+  m_cooldown_timer.set_repeat(false);
+  m_cooldown_timer.set_callback([&]() { m_cooling_down = false; });
+}
+
+void Gun::_process(double t) {
+  m_cooldown_timer.tick(t);
 }
 
 void Gun::set_bullet(const Ref<PackedScene>& scene) {
@@ -13,7 +23,15 @@ void Gun::set_bullet(const Ref<PackedScene>& scene) {
 Ref<PackedScene> Gun::get_bullet() const {
   return m_bullet;
 }
-void Gun::fire(const Vector2& target) {
+
+void Gun::fire(const Vector2&) {
+  if (cooling_down()) {
+    return;
+  }
+  if (m_cooldown_timer.get_timeout() > 0) {
+    m_cooling_down = true;
+    m_cooldown_timer.start();
+  }
   auto node    = m_bullet->instantiate();
   auto grenade = cast_to<RigidBody2D>(node);
   if (grenade) {
@@ -31,4 +49,16 @@ void Gun::set_bullet_impulse(const Vector2& impulse) {
 
 Vector2 Gun::get_bullet_impulse() const {
   return m_bullet_impulse;
+}
+
+void Gun::set_cooldown(double cooldown) {
+  m_cooldown_timer.set_timeout(cooldown);
+}
+
+double Gun::get_cooldown() const {
+  return m_cooldown_timer.get_timeout();
+}
+
+bool Gun::cooling_down() const {
+  return m_cooling_down;
 }

@@ -6,8 +6,8 @@
 radius = 16.1245
 
 [sub_resource type="Gradient" id="Gradient_0q3t1"]
-offsets = PackedFloat32Array(0.000968992, 0.705426, 1)
-colors = PackedColorArray(0.572549, 0, 0, 1, 0.721569, 0.317647, 0, 1, 1, 1, 1, 0)
+offsets = PackedFloat32Array(0.562827, 0.756545, 1)
+colors = PackedColorArray(1, 0.980392, 0, 1, 0.411765, 0.647059, 0, 1, 1, 1, 1, 0)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_aboet"]
 gradient = SubResource("Gradient_0q3t1")
@@ -23,7 +23,7 @@ curve = SubResource("Curve_b4ws1")
 lifetime_randomness = 0.5
 particle_flag_disable_z = true
 direction = Vector3(2.08165e-12, 2.08165e-12, 2.08165e-12)
-spread = 180.0
+spread = 85.68
 gravity = Vector3(0, 98, 0)
 initial_velocity_min = 200.0
 initial_velocity_max = 400.0
@@ -88,12 +88,14 @@ scale = Vector2(0.33, 0.33)
 shape = SubResource("CircleShape2D_5d1ew")
 
 [node name="Particles" type="GPUParticles2D" parent="."]
+rotation = -2.35619
 emitting = false
 amount = 50
 process_material = SubResource("ParticleProcessMaterial_6m2s0")
 lifetime = 0.5
 one_shot = true
 explosiveness = 1.0
+randomness = 0.21
 
 [node name="ExplosionArea" type="Area2D" parent="."]
 collision_layer = 0

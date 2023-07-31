@@ -42,7 +42,6 @@ class Player
   core_game::LoggerService* m_logger             = nullptr;
   AnimatedSprite2D* m_animatedSprite2D           = nullptr;
   RayCast2D* m_interaction_ray                   = nullptr;
-  Gun* m_gun                                     = nullptr;
   AnimationPlayer* m_vfx                         = nullptr;
   Ref<ShaderMaterial> m_material                 = nullptr;
   AudioStreamPlayer* m_audio_footsteps           = nullptr;

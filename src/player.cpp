@@ -69,7 +69,6 @@ void Player::_ready() {
   m_animatedSprite2D->play("Idle");
   m_material = m_animatedSprite2D->get_material();
   m_animatedSprite2D->set_material(m_material);
-  m_gun             = get_node<Gun>("Gun");
   m_interaction_ray = get_node<RayCast2D>("InteractionRay");
   m_vfx             = get_node<AnimationPlayer>("VFX");
   m_audio_footsteps = get_node<AudioStreamPlayer>("Audio/Footsteps");
@@ -149,10 +148,11 @@ void Player::set_direction(Player::Direction direction) {
   scale.x *= -1;
   set_scale(scale);
   ::flip_h(*m_interaction_ray);
-  if (m_gun) {
-    auto impulse = m_gun->get_bullet_impulse();
+  auto grenade_launcher = get_node<Gun>("GrenadeLauncher");
+  if (grenade_launcher) {
+    auto impulse = grenade_launcher->get_bullet_impulse();
     impulse.x *= -1;
-    m_gun->set_bullet_impulse(impulse);
+    grenade_launcher->set_bullet_impulse(impulse);
   }
 }
 

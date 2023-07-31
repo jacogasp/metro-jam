@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cmpgrq5ntb82m"]
+
+[ext_resource type="PackedScene" uid="uid://cpjx76e8dyp5b" path="res://scenes/blob_granade.tscn" id="1_1e2ie"]
+
+[node name="GrenadeLauncher" type="Gun"]
+bullet = ExtResource("1_1e2ie")
+bullet_impulse = Vector2(500, 2.08165e-12)
+cooldown_time = 5.0
+position = Vector2(22, 0)

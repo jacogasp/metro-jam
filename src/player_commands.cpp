@@ -58,10 +58,11 @@ void AttackCommand::operator()(Player& player) const {
 
 void GrenadeCommand::operator()(Player& player) const {
   PROFILE_FUNCTION();
-  player.m_animatedSprite2D->play("AttackGrenade");
   player.set_state(&Player::attacking);
-  if (player.m_gun) {
-    player.m_gun->fire({});
+  auto grenade_launcher = player.get_node<Gun>("GrenadeLauncher");
+  if (grenade_launcher && !grenade_launcher->cooling_down()) {
+    grenade_launcher->fire({});
+    player.m_animatedSprite2D->play("AttackGrenade");
   }
 }
 
