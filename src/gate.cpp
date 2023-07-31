@@ -8,8 +8,13 @@ void Gate::_bind_methods() {
   ClassDB::bind_method(D_METHOD("_on_body_exited"), &Gate::_on_body_exited);
   ClassDB::bind_method(D_METHOD("set_next_room"), &Gate::set_next_room);
   ClassDB::bind_method(D_METHOD("get_next_room"), &Gate::get_next_room);
+  ClassDB::bind_method(D_METHOD("get_direction"), &Gate::get_direction);
+  ClassDB::bind_method(D_METHOD("set_direction"), &Gate::set_direction);
   ADD_PROPERTY(PropertyInfo(Variant::STRING, "next_room"), "set_next_room",
                "get_next_room");
+  ADD_PROPERTY(PropertyInfo(Variant::INT, "exit_direction",
+                            PropertyHint::PROPERTY_HINT_ENUM, "Left, Right"),
+               "set_direction", "get_direction");
   ADD_SIGNAL(MethodInfo("go_to_next_room",
                         PropertyInfo(Variant::OBJECT, "next_room")));
 }
@@ -49,14 +54,22 @@ String Gate::get_next_room() const {
   return {m_next_room.c_str()};
 }
 
-Vector2 Gate::get_collision_shape_position() const {
-  return m_collision_shape->get_position();
-}
-
 bool Gate::is_closed() const {
   return m_closed;
 }
 
 void Gate::set_closed(bool closed) {
   m_closed = closed;
+}
+
+Gate::Direction Gate::get_exit_direction() const {
+  return m_exit_direction;
+}
+
+int Gate::get_direction() const {
+  return static_cast<int>(m_exit_direction);
+}
+
+void Gate::set_direction(int direction) {
+  m_exit_direction = static_cast<Direction>(direction);
 }
