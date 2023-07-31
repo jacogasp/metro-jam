@@ -229,6 +229,7 @@ amplitude = -150.0
 frequency = 0.4
 
 [node name="ShadowArea" parent="." instance=ExtResource("9_tmsto")]
+visible = false
 
 [node name="Area2D" type="Area2D" parent="ShadowArea"]
 position = Vector2(3654, 2272)
@@ -439,6 +440,14 @@ velocity = Vector2(-109800, -219600)
 [node name="Bumblee5" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
 position = Vector2(4071, 890)
 velocity = Vector2(-109800, -219600)
+
+[node name="Lever platform system activate" type="Label" parent="."]
+offset_left = 3617.0
+offset_top = 1833.0
+offset_right = 3857.0
+offset_bottom = 1859.0
+text = "Lever platform system activate
+"
 
 [connection signal="body_entered" from="GateHallD" to="GateHallD" method="_on_body_entered"]
 [connection signal="body_exited" from="GateHallD" to="GateHallD" method="_on_body_exited"]
