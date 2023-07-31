@@ -2,42 +2,6 @@
 
 [ext_resource type="Texture2D" uid="uid://blsrl315uk0fu" path="res://assets/characters/granade_sprites.png" id="1_wllh2"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_tajdc"]
-atlas = ExtResource("1_wllh2")
-region = Rect2(0, 0, 64, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2wyag"]
-atlas = ExtResource("1_wllh2")
-region = Rect2(64, 0, 64, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cdktl"]
-atlas = ExtResource("1_wllh2")
-region = Rect2(128, 0, 64, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0slot"]
-atlas = ExtResource("1_wllh2")
-region = Rect2(192, 0, 64, 32)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_malfq"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tajdc")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2wyag")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_cdktl")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_0slot")
-}],
-"loop": false,
-"name": &"Explode",
-"speed": 5.0
-}]
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_5d1ew"]
 radius = 16.1245
 
@@ -76,15 +40,48 @@ collision_bounce = 0.5
 [sub_resource type="CircleShape2D" id="CircleShape2D_71wr7"]
 radius = 93.0484
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_duocx"]
+atlas = ExtResource("1_wllh2")
+region = Rect2(0, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ew5bd"]
+atlas = ExtResource("1_wllh2")
+region = Rect2(64, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n41jl"]
+atlas = ExtResource("1_wllh2")
+region = Rect2(128, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q37oa"]
+atlas = ExtResource("1_wllh2")
+region = Rect2(192, 0, 64, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jol5l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_duocx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ew5bd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n41jl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q37oa")
+}],
+"loop": false,
+"name": &"Explode",
+"speed": 15.0
+}]
+
 [node name="Grenade" type="Grenade"]
-timeout = 3.0
+explode_on_collision = true
 collision_layer = 0
 collision_mask = 16
-
-[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.5625, 0.5625)
-sprite_frames = SubResource("SpriteFrames_malfq")
-animation = &"Explode"
+max_contacts_reported = 1
+contact_monitor = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(0.33, 0.33)
@@ -104,3 +101,11 @@ collision_mask = 4352
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExplosionArea"]
 shape = SubResource("CircleShape2D_71wr7")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.625, 0.625)
+sprite_frames = SubResource("SpriteFrames_jol5l")
+animation = &"Explode"
+frame_progress = 0.296563
+
+[connection signal="body_entered" from="." to="." method="body_entered"]

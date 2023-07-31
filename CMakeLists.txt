@@ -49,7 +49,6 @@ add_library(
         src/weapon.hpp
         src/wrench.cpp
         src/grenade.cpp
-        src/grenade_launcher.cpp
         src/macros.cpp
         src/enemy_soldier.cpp
         src/health_bar.cpp

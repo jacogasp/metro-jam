@@ -1,8 +1,8 @@
 [gd_scene load_steps=41 format=3 uid="uid://dibkh0kdqa671"]
 
 [ext_resource type="Texture2D" uid="uid://cq3js6pr88m2d" path="res://assets/characters/pg_sprites.png" id="2_7vcqu"]
-[ext_resource type="PackedScene" uid="uid://evwtb6jegk0f" path="res://scenes/grenade.tscn" id="3_meisq"]
 [ext_resource type="AudioStream" uid="uid://ccacc2nukk5o2" path="res://assets/audio/footsteps.wav" id="4_76t05"]
+[ext_resource type="PackedScene" uid="uid://evwtb6jegk0f" path="res://scenes/grenade.tscn" id="5_37qxl"]
 [ext_resource type="AudioStream" uid="uid://d20t44iaf6fsx" path="res://assets/audio/jump.wav" id="5_fmb6a"]
 [ext_resource type="AudioStream" uid="uid://hy7safy44xk" path="res://assets/audio/ouch.wav" id="6_1j57y"]
 
@@ -349,7 +349,8 @@ volume_db = -10.0
 material = SubResource("ShaderMaterial_vexqh")
 position = Vector2(-1, -32)
 sprite_frames = SubResource("SpriteFrames_0nsvt")
-animation = &"AttackS"
+animation = &"Idle"
+frame_progress = 0.866
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.0864906, -27.9619)
@@ -367,7 +368,7 @@ collision_mask = 65536
 hit_from_inside = true
 collide_with_areas = true
 
-[node name="GrenadeLauncher" type="GrenadeLauncher" parent="."]
-grenade = ExtResource("3_meisq")
-impulse = Vector2(500, -500)
-position = Vector2(0, -28)
+[node name="Gun" type="Gun" parent="."]
+bullet = ExtResource("5_37qxl")
+bullet_impulse = Vector2(200, -200)
+position = Vector2(12.34, -35.78)

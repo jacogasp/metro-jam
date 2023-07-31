@@ -39,7 +39,6 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
   ClassDB::register_class<HUD>();
   ClassDB::register_class<BumbleBee>();
   ClassDB::register_class<Wrench>();
-  ClassDB::register_class<GrenadeLauncher>();
   ClassDB::register_class<Grenade>();
   ClassDB::register_class<EnemySoldier>();
   ClassDB::register_class<HealthBar>();

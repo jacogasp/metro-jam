@@ -1,7 +1,7 @@
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
 
-#include "grenade_launcher.hpp"
+#include "gun.hpp"
 #include "macros.hpp"
 #include "persist.hpp"
 #include "player_state.hpp"
@@ -42,7 +42,7 @@ class Player
   core_game::LoggerService* m_logger             = nullptr;
   AnimatedSprite2D* m_animatedSprite2D           = nullptr;
   RayCast2D* m_interaction_ray                   = nullptr;
-  GrenadeLauncher* m_grenade_launcher            = nullptr;
+  Gun* m_gun                                     = nullptr;
   AnimationPlayer* m_vfx                         = nullptr;
   Ref<ShaderMaterial> m_material                 = nullptr;
   AudioStreamPlayer* m_audio_footsteps           = nullptr;
@@ -107,7 +107,7 @@ class Player
   void set_attack_range(float attack_range);
   [[nodiscard]] int get_attack_strength() const;
   void set_attack_strength(int attack_strength);
-  [[nodiscard]] float get_skin_depth () const;
+  [[nodiscard]] float get_skin_depth() const;
   void set_skin_depth(float depth);
   void set_state(PlayerState* state);
   void set_hit_animation_time(float t);
