@@ -30,6 +30,8 @@ class Player
   enum Direction { left, right };
   static constexpr uint32_t block_collision_mask = 1 << 4;
   static constexpr float ground_skin_depth       = 5;
+  int m_max_lives                                = 5;
+  int m_current_life                             = m_max_lives;
   float m_gravity                                = 500;
   float m_jump_force                             = 350;
   float m_air_jump_force                         = 350;
@@ -85,6 +87,12 @@ class Player
   void _physics_process(double delta) override;
   void set_direction(Direction direction);
   [[nodiscard]] Direction get_direction() const;
+  void set_max_lives(int lives);
+  [[nodiscard]] int get_max_lives() const;
+  [[nodiscard]] int get_current_life() const;
+  void add_life();
+  void loose_life();
+  [[nodiscard]] bool is_life_full() const;
   [[nodiscard]] float get_speed() const;
   void set_speed(float speed);
   [[nodiscard]] float get_gravity() const;

@@ -28,4 +28,5 @@ position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 editor_draw_limits = true
 
+[connection signal="player_gains_life" from="player" to="." method="on_player_gains_life"]
 [connection signal="player_hit" from="player" to="." method="on_player_hit"]

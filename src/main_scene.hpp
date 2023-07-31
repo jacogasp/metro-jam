@@ -3,6 +3,7 @@
 
 #include "logger.hpp"
 #include "macros.hpp"
+#include "player.hpp"
 #include <godot_cpp/classes/canvas_layer.hpp>
 #include <godot_cpp/classes/node2d.hpp>
 
@@ -14,6 +15,7 @@ class MainScene : public Node2D {
 
   core_game::Logger m_logger;
   HUD* m_hud{nullptr};
+  Player* m_player{nullptr};
 
   static void _bind_methods();
   MainScene();
@@ -21,6 +23,7 @@ class MainScene : public Node2D {
 
   void _ready() override;
   void on_player_hit() const;
+  void on_player_gains_life() const;
 };
 
 #endif // COREGAME_MAIN_SCENE_HPP

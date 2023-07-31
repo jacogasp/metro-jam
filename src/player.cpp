@@ -36,6 +36,7 @@ static void flip_h(RayCast2D& ray) {
 }
 
 void Player::_bind_methods() {
+  BIND_PROPERTY(Player, max_lives, Variant::INT);
   BIND_PROPERTY(Player, speed, Variant::FLOAT);
   BIND_PROPERTY(Player, gravity, Variant::FLOAT);
   BIND_PROPERTY(Player, jump_force, Variant::FLOAT);
@@ -50,11 +51,14 @@ void Player::_bind_methods() {
                        &Player::get_hit_animation_time);
 
   ClassDB::bind_method(D_METHOD("hit"), &Player::hit);
+  ClassDB::bind_method(D_METHOD("is_life_full"), &Player::is_life_full);
+  ClassDB::bind_method(D_METHOD("add_life"), &Player::add_life);
   ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "hit_animation_time",
                             PROPERTY_HINT_RANGE, "0,1,0.01"),
                "set_hit_animation_time", "get_hit_animation_time");
 
   ADD_SIGNAL(MethodInfo("player_hit"));
+  ADD_SIGNAL(MethodInfo("player_gains_life"));
 }
 
 void Player::_ready() {
@@ -155,6 +159,37 @@ Player::Direction Player::get_direction() const {
   return m_direction;
 }
 
+void Player::set_max_lives(int lives) {
+  m_max_lives = lives;
+}
+
+int Player::get_max_lives() const {
+  return m_max_lives;
+}
+
+int Player::get_current_life() const {
+  return m_current_life;
+}
+
+void Player::add_life() {
+  ++m_current_life;
+  if (m_current_life > m_max_lives) {
+    m_current_life = m_max_lives;
+  }
+  emit_signal("player_gains_life");
+}
+
+void Player::loose_life() {
+  --m_current_life;
+  if (m_current_life < 0) {
+    m_current_life = 0;
+  }
+}
+
+bool Player::is_life_full() const {
+  return m_current_life == m_max_lives;
+}
+
 void Player::save() {
   PROFILE_FUNCTION();
   try {
@@ -253,10 +288,12 @@ void Player::hit() {
   if (m_immunity.is_active()) {
     return;
   }
+  loose_life();
   emit_signal("player_hit");
   get_node<AudioStreamPlayer>("Audio/Ouch")->play();
   m_vfx->play("Hit");
 }
+
 
 void Player::set_hit_animation_time(float t) {
   if (m_animatedSprite2D == nullptr)

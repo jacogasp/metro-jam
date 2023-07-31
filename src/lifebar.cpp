@@ -81,7 +81,6 @@ void LifeBar::init() {
 }
 
 void LifeBar::add_life() {
-  ++m_current_life;
   if (m_life_empty == nullptr)
     return;
 
@@ -91,6 +90,9 @@ void LifeBar::add_life() {
   m_sprites.at(index) = m_life_full->duplicate();
   m_sprites.at(index)->set("position", position);
   add_child(m_sprites.at(index));
+  if (m_current_life < m_max_lives) {
+    m_current_life++;
+  }
 }
 
 void LifeBar::lose_life() {
