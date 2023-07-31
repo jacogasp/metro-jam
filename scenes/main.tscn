@@ -10,9 +10,9 @@
 
 [node name="World" type="World" parent="."]
 entry_room = ExtResource("2_vmhh1")
-player = NodePath("../player")
+player = NodePath("../Player")
 
-[node name="player" parent="." instance=ExtResource("2_5tq4j")]
+[node name="Player" parent="." instance=ExtResource("2_5tq4j")]
 speed = 280.0
 gravity = 800.0
 jump_force = 350.0
@@ -22,11 +22,11 @@ attack_range = 120.0
 position = Vector2(1361, 2464)
 velocity = Vector2(0, 0)
 
-[node name="Camera2D" type="Camera2D" parent="player"]
+[node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(0.0864868, -70.9238)
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 editor_draw_limits = true
 
-[connection signal="player_gains_life" from="player" to="." method="on_player_gains_life"]
-[connection signal="player_hit" from="player" to="." method="on_player_hit"]
+[connection signal="player_gains_life" from="Player" to="." method="on_player_gains_life"]
+[connection signal="player_hit" from="Player" to="." method="on_player_hit"]

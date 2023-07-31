@@ -19,7 +19,7 @@ MainScene::~MainScene() {
 
 void MainScene::_ready() {
   m_hud    = get_node<HUD>("HUD");
-  m_player = get_node<Player>("player");
+  m_player = get_node<Player>("Player");
   if (m_player) {
     m_hud->get_lifebar()->set_max_lives(m_player->get_max_lives());
     m_hud->get_lifebar()->set_current_life(m_player->get_max_lives());
