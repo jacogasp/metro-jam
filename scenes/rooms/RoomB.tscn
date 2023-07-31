@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://drapwmmn22gpw"]
+[gd_scene load_steps=19 format=3 uid="uid://drapwmmn22gpw"]
 
 [ext_resource type="TileSet" uid="uid://0w2a5bo421v7" path="res://assets/tilesets/TilesetBlocks.tres" id="1_ch5n7"]
 [ext_resource type="PackedScene" uid="uid://byowg4tosyvo2" path="res://scenes/platform.tscn" id="2_w1ib7"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bjjxt2cylw5jy" path="res://assets/textures/smoke.png" id="7_op60r"]
 [ext_resource type="Texture2D" uid="uid://dch5xho6lehap" path="res://assets/textures/light.png" id="8_cxe2q"]
 [ext_resource type="Texture2D" uid="uid://2vcybdhlfsdk" path="res://assets/light_bulb_sprite.png" id="9_yllm5"]
+[ext_resource type="PackedScene" uid="uid://b31qyx4laex5m" path="res://scenes/steam_jet.tscn" id="10_sx0bt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1213o"]
 size = Vector2(32, 59)
@@ -405,6 +406,23 @@ texture = ExtResource("8_cxe2q")
 
 [node name="Sprite2D" type="Sprite2D" parent="Lights/Light17"]
 texture = ExtResource("9_yllm5")
+
+[node name="SteamJets" type="Node" parent="."]
+
+[node name="SteamJet1" parent="SteamJets" instance=ExtResource("10_sx0bt")]
+position = Vector2(2223, 3665)
+
+[node name="SteamJet2" parent="SteamJets" instance=ExtResource("10_sx0bt")]
+position = Vector2(2415, 3667)
+
+[node name="SteamJet3" parent="SteamJets" instance=ExtResource("10_sx0bt")]
+position = Vector2(2610, 3667)
+
+[node name="SteamJet4" parent="SteamJets" instance=ExtResource("10_sx0bt")]
+position = Vector2(2800, 3667)
+
+[node name="SteamJet5" parent="SteamJets" instance=ExtResource("10_sx0bt")]
+position = Vector2(2991, 3667)
 
 [connection signal="body_entered" from="GateHallB1" to="GateHallB1" method="_on_body_entered"]
 [connection signal="body_exited" from="GateHallB1" to="GateHallB1" method="_on_body_exited"]
