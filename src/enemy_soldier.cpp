@@ -138,6 +138,10 @@ void EnemySoldier::fire() {
   if (gun) {
     gun->fire({});
   }
+  auto animated_sprite = get_node<AnimatedSprite2D>("AnimatedSprite2D");
+  if (animated_sprite) {
+    animated_sprite->play("Shoot");
+  }
 }
 
 void EnemySoldier::set_hit_bounce_velocity(const Vector2& velocity) {
@@ -364,11 +368,6 @@ void EnemySoldier::IdleCommand::operator()(EnemySoldier& enemy) const {
 }
 
 void EnemySoldier::FallCommand::operator()(EnemySoldier& enemy) const {
-  auto const animated_sprite =
-      enemy.get_node<AnimatedSprite2D>("AnimatedSprite2D");
-  if (animated_sprite) {
-    animated_sprite->play("Fall");
-  }
 }
 
 void EnemySoldier::DieCommand::operator()(EnemySoldier& enemy) const {
