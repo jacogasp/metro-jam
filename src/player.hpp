@@ -27,7 +27,7 @@ class Player
     , public Persist {
   GDCLASS_V2(Player, CharacterBody2D)
 
-  enum Direction { left = -1, right = 1 };
+  enum Direction { left, right };
   static constexpr uint32_t block_collision_mask = 1 << 4;
   static constexpr float ground_skin_depth       = 5;
   float m_gravity                                = 500;
@@ -83,6 +83,8 @@ class Player
   void _ready() override;
   void _process(double delta) override;
   void _physics_process(double delta) override;
+  void set_direction(Direction direction);
+  [[nodiscard]] Direction get_direction() const;
   [[nodiscard]] float get_speed() const;
   void set_speed(float speed);
   [[nodiscard]] float get_gravity() const;
@@ -102,7 +104,6 @@ class Player
   [[nodiscard]] float get_hit_animation_time() const;
   [[nodiscard]] float get_ground_position() const;
   [[nodiscard]] bool is_on_ground();
-  void flip_h() const;
   void hit();
   void save() override;
   void load() override;

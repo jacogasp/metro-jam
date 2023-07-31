@@ -105,22 +105,9 @@ void Player::_process(double) {
   PROFILE_FUNCTION();
   if (Engine::get_singleton()->is_editor_hint())
     return;
-  auto input                = Input::get_singleton();
-  auto const x_velocity     = get_velocity().x;
-  auto const prev_direction = m_direction;
-
+  auto input = Input::get_singleton();
   maybe_save(*this, *input);
   check_interaction(*input, *m_interaction_ray);
-
-  if (x_velocity > 0) {
-    m_direction = right;
-  } else if (x_velocity < 0) {
-    m_direction = left;
-  }
-
-  if (prev_direction != m_direction) {
-    flip_h();
-  }
 }
 
 void Player::_physics_process(double delta) {
@@ -136,18 +123,36 @@ void Player::_physics_process(double delta) {
 
   if (input->is_action_pressed("move_left")) {
     velocity.x = -m_speed;
+    set_direction(left);
   } else if (input->is_action_pressed("move_right")) {
     velocity.x = m_speed;
+    set_direction(right);
   }
-  set_velocity(velocity);
 
+  set_velocity(velocity);
   m_state->handleInput(*this, *input);
   m_state->update(*this);
-
-  auto is_flipped = m_animatedSprite2D->is_flipped_h()
-                 && core_game::close_to(velocity.x, 0.f);
-  m_animatedSprite2D->set_flip_h(velocity.x < 0 || is_flipped);
   move_and_slide();
+}
+
+void Player::set_direction(Player::Direction direction) {
+  if (direction == m_direction) {
+    return;
+  }
+  m_direction = direction;
+  auto scale  = get_scale();
+  scale.x *= -1;
+  set_scale(scale);
+  ::flip_h(*m_interaction_ray);
+  if (m_grenade_launcher) {
+    auto impulse = m_grenade_launcher->get_impulse();
+    impulse.x *= -1;
+    m_grenade_launcher->set_impulse(impulse);
+  }
+}
+
+Player::Direction Player::get_direction() const {
+  return m_direction;
 }
 
 void Player::save() {
@@ -279,15 +284,6 @@ float Player::get_ground_position() const {
   auto const shape = cs->get_shape();
   auto const rect  = shape->get_rect();
   return rect.position.y + rect.size.height / 2;
-}
-
-void Player::flip_h() const {
-  ::flip_h(*m_interaction_ray);
-  if (m_grenade_launcher) {
-    auto impulse = m_grenade_launcher->get_impulse();
-    impulse.x *= -1;
-    m_grenade_launcher->set_impulse(impulse);
-  }
 }
 
 bool Player::is_on_ground() {
