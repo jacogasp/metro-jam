@@ -44,6 +44,7 @@ void Player::_bind_methods() {
   BIND_PROPERTY(Player, slide_speed, Variant::FLOAT);
   BIND_PROPERTY(Player, attack_range, Variant::FLOAT);
   BIND_PROPERTY(Player, attack_strength, Variant::INT);
+  BIND_PROPERTY(Player, skin_depth, Variant::FLOAT);
 
   ClassDB::bind_method(D_METHOD("set_hit_animation_time"),
                        &Player::set_hit_animation_time);
@@ -272,6 +273,14 @@ void Player::set_attack_strength(int strength) {
   Player::wrench_weapon.set_damages(strength);
 }
 
+float Player::get_skin_depth() const {
+  return m_skin_depth;
+}
+
+void Player::set_skin_depth(float depth) {
+  m_skin_depth = depth;
+}
+
 void Player::set_state(PlayerState* state) {
   m_state = state;
 }
@@ -293,7 +302,6 @@ void Player::hit() {
   get_node<AudioStreamPlayer>("Audio/Ouch")->play();
   m_vfx->play("Hit");
 }
-
 
 void Player::set_hit_animation_time(float t) {
   if (m_animatedSprite2D == nullptr)
@@ -328,8 +336,8 @@ bool Player::is_on_ground() {
   auto const pos        = get_global_position();
   auto world            = get_world_2d();
   auto const half_width = m_bounds.size.x / 2;
-  Vector2 target_left{pos.x - half_width, pos.y + ground_skin_depth};
-  Vector2 target_right{pos.x + half_width, pos.y + ground_skin_depth};
+  Vector2 target_left{pos.x - half_width + m_skin_depth, pos.y + m_skin_depth};
+  Vector2 target_right{pos.x + half_width - m_skin_depth, pos.y + m_skin_depth};
   auto hit_left  = ray_hits(pos, target_left, block_collision_mask, world);
   auto hit_right = ray_hits(pos, target_right, block_collision_mask, world);
   return hit_left || hit_right;
