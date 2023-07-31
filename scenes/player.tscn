@@ -327,6 +327,7 @@ gravity = 2.08165e-12
 jump_force = 400.0
 attack_range = 80.0
 attack_strength = 25
+skin_depth = 1.0
 position = Vector2(1368.66, 2015.78)
 collision_layer = 256
 collision_mask = 17

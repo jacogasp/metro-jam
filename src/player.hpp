@@ -29,7 +29,6 @@ class Player
 
   enum Direction { left, right };
   static constexpr uint32_t block_collision_mask = 1 << 4;
-  static constexpr float ground_skin_depth       = 5;
   int m_max_lives                                = 5;
   int m_current_life                             = m_max_lives;
   float m_gravity                                = 500;
@@ -38,6 +37,7 @@ class Player
   float m_speed                                  = 0;
   float m_slide_speed                            = 400;
   float m_attack_range                           = 50;
+  float m_skin_depth                             = 5;
   Direction m_direction                          = right;
   core_game::LoggerService* m_logger             = nullptr;
   AnimatedSprite2D* m_animatedSprite2D           = nullptr;
@@ -107,6 +107,8 @@ class Player
   void set_attack_range(float attack_range);
   [[nodiscard]] int get_attack_strength() const;
   void set_attack_strength(int attack_strength);
+  [[nodiscard]] float get_skin_depth () const;
+  void set_skin_depth(float depth);
   void set_state(PlayerState* state);
   void set_hit_animation_time(float t);
   [[nodiscard]] float get_hit_animation_time() const;
