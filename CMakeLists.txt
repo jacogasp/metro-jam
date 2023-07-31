@@ -56,6 +56,7 @@ add_library(
         src/state.cpp
         src/gun.cpp
         src/ray_cast.cpp
+        src/superpowers.cpp
 )
 
 if (MINGW)

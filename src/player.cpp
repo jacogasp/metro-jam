@@ -245,6 +245,9 @@ void Player::set_gravity(float gravity) {
 }
 
 void Player::hit() {
+  if (m_immunity.is_active()) {
+    return;
+  }
   emit_signal("player_hit");
   get_node<AudioStreamPlayer>("Audio/Ouch")->play();
   m_vfx->play("Hit");

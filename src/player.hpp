@@ -5,6 +5,7 @@
 #include "macros.hpp"
 #include "persist.hpp"
 #include "player_state.hpp"
+#include "superpowers.hpp"
 #include "types.hpp"
 #include "wrench.hpp"
 
@@ -35,8 +36,6 @@ class Player
   float m_speed                                  = 0;
   float m_slide_speed                            = 400;
   float m_attack_range                           = 50;
-  int m_attack_strength                          = 25;
-  float m_object_interaction_range               = 150;
   Direction m_direction                          = right;
   core_game::LoggerService* m_logger             = nullptr;
   AnimatedSprite2D* m_animatedSprite2D           = nullptr;
@@ -46,6 +45,10 @@ class Player
   Ref<ShaderMaterial> m_material                 = nullptr;
   AudioStreamPlayer* m_audio_footsteps           = nullptr;
   AudioStreamPlayer* m_audio_jump                = nullptr;
+
+  // Superpowers
+  Immunity m_immunity;
+
   PlayerState* m_state{&Player::standing};
 
   Rect2 m_bounds{};

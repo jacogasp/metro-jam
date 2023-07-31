@@ -147,6 +147,7 @@ void SlideState::update(Player& player) {
     player.set_velocity(velocity);
     return;
   }
+  player.m_immunity.deactivate();
 
   if (velocity.y < 0) {
     return;
