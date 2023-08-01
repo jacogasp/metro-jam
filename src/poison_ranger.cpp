@@ -222,7 +222,6 @@ static void look_at(PoisonRanger& enemy, Node2D* target) {
     if (gun) {
       auto bullet_impulse = gun->get_bullet_impulse();
       bullet_impulse.x *= -1;
-      std::cout << direction << ' ' << bullet_impulse.x << '\n';
       gun->set_bullet_impulse(bullet_impulse);
     }
   }
@@ -230,7 +229,6 @@ static void look_at(PoisonRanger& enemy, Node2D* target) {
 
 // States
 void PoisonRanger::IdleState::update(PoisonRanger& enemy) const {
-  std::cout << "idle\n";
   auto const enemy_pos = enemy.get_global_position();
   auto target          = enemy_pos;
   target.x += enemy.get_shooting_range() * enemy.get_scale().x;
@@ -256,7 +254,6 @@ void PoisonRanger::FallingState::update(PoisonRanger& enemy) const {
 }
 
 void PoisonRanger::AlertState::update(PoisonRanger& enemy) const {
-  std::cout << "alert\n";
   auto const v_y = enemy.get_velocity().y;
   if (!(v_y >= 0 && enemy.is_on_floor())) {
     fall(enemy);
@@ -284,7 +281,6 @@ void PoisonRanger::AlertState::update(PoisonRanger& enemy) const {
 }
 
 void PoisonRanger::FiringState::update(PoisonRanger& enemy) const {
-  std::cout << "firing\n";
   auto target = enemy.m_target;
   ::look_at(enemy, target);
 
@@ -311,7 +307,6 @@ void PoisonRanger::FiringState::update(PoisonRanger& enemy) const {
 }
 
 void PoisonRanger::ChasingState::update(PoisonRanger& enemy) const {
-  std::cout << "chasing\n";
   auto target       = enemy.m_target;
   auto const player = player_is_visible(enemy, target->get_global_position());
   if (!player) {
