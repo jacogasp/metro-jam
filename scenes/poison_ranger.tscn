@@ -166,8 +166,9 @@ _data = {
 [node name="PoisonRanger" type="PoisonRanger"]
 gravity = 2000.0
 hit_bounce_velocity = Vector2(200, -200)
+running_speed = 150.0
 shooting_range = 300.0
-target_lost_distance = 600.0
+target_lost_distance = 1000.0
 position = Vector2(2.08165e-12, 2.08165e-12)
 collision_layer = 4096
 collision_mask = 17
@@ -180,7 +181,7 @@ material = SubResource("ShaderMaterial_7ama5")
 position = Vector2(3, -17)
 sprite_frames = SubResource("SpriteFrames_x7vc8")
 animation = &"Idle"
-frame_progress = 0.202746
+frame_progress = 0.244956
 
 [node name="HealthBar" type="HealthBar" parent="."]
 offset_left = -16.0

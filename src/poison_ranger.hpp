@@ -26,13 +26,15 @@ class PoisonRanger
   int m_health                  = 100;
   float m_shooting_range        = 100;
   float m_target_lost_distance  = 300;
+  float m_walking_speed         = 50;
   float m_running_speed         = 100;
-  PoisonRangerState* m_state    = &PoisonRanger::idle;
+  PoisonRangerState* m_state    = &PoisonRanger::patrolling;
   TimeDelta m_fire_rate         = 1;
   Vector2 m_hit_bounce_velocity = {100, -100};
   Direction m_direction         = right;
   Node2D* m_target              = nullptr;
   Timer m_fire_timer;
+  Vector2 m_bounds;
 
   static void _bind_methods();
 
@@ -54,6 +56,8 @@ class PoisonRanger
   void set_hit_animation_time(float t) const;
   [[nodiscard]] float get_hit_animation_time() const;
   [[nodiscard]] Direction get_direction() const;
+  void set_walking_speed(float speed);
+  [[nodiscard]] float get_walking_speed() const;
   void set_running_speed(float speed);
   [[nodiscard]] float get_running_speed() const;
   void set_shooting_range(float distance);
@@ -61,71 +65,55 @@ class PoisonRanger
   void set_target_lost_distance(float distance);
   [[nodiscard]] float get_target_lost_distance() const;
   void set_direction(PoisonRanger::Direction direction);
+  Node2D* get_target() const;
   void acquire_target(Node2D* target);
   void release_target(Node2D* target);
+  Vector2& get_bounds();
+  void update_bounds();
 
   void fire();
 
   // States
-  struct IdleState : PoisonRangerState {
-    void update(PoisonRanger& enemy) const override;
-  };
-
-  struct FallingState : PoisonRangerState {
-    void update(PoisonRanger& enemy) const override;
-  };
-
-  struct AlertState : PoisonRangerState {
-    void update(PoisonRanger& enemy) const override;
+  struct PatrollingState : PoisonRangerState {
+    void update(PoisonRanger& ranger) const override;
   };
 
   struct FiringState : PoisonRangerState {
-    void update(PoisonRanger& enemy) const override;
+    void update(PoisonRanger& ranger) const override;
   };
 
   struct ChasingState : PoisonRangerState {
-    void update(PoisonRanger& enemy) const override;
+    void update(PoisonRanger& ranger) const override;
   };
 
   struct DyingState : PoisonRangerState {
-    void update(PoisonRanger& enemy) const override;
+    void update(PoisonRanger& ranger) const override;
   };
 
  public:
-  static IdleState idle;
-  static FallingState falling;
-  static AlertState in_alert;
+  static PatrollingState patrolling;
   static FiringState firing;
   static ChasingState chasing;
   static DyingState dying;
 
-  friend struct IdleState;
   friend struct OpenFireCommand;
   friend struct FiringState;
 
   // Commands
-  struct IdleCommand {
-    void operator()(PoisonRanger& enemy) const;
-  };
-
-  struct FallCommand {
-    void operator()(PoisonRanger& enemy) const;
-  };
-
   struct DieCommand {
-    void operator()(PoisonRanger& enemy) const;
+    void operator()(PoisonRanger& ranger) const;
   };
 
   struct HitCommand {
-    void operator()(PoisonRanger& enemy, Vector2 const& from_direction) const;
+    void operator()(PoisonRanger& ranger, Vector2 const& from_direction) const;
   };
 
   struct OpenFireCommand {
-    void operator()(PoisonRanger& enemy) const;
+    void operator()(PoisonRanger& ranger) const;
   };
 
   struct CloseFireCommand {
-    void operator()(PoisonRanger& enemy) const;
+    void operator()(PoisonRanger& ranger) const;
   };
 };
 
