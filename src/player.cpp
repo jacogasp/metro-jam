@@ -148,11 +148,12 @@ void Player::set_direction(Player::Direction direction) {
   scale.x *= -1;
   set_scale(scale);
   ::flip_h(*m_interaction_ray);
+
   auto grenade_launcher = get_node<Gun>("GrenadeLauncher");
   if (grenade_launcher) {
-    auto impulse = grenade_launcher->get_bullet_impulse();
-    impulse.x *= -1;
-    grenade_launcher->set_bullet_impulse(impulse);
+    auto position = grenade_launcher->get_position();
+    position.x *= -1;
+    grenade_launcher->set_position(position);
   }
 }
 

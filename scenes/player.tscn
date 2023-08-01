@@ -350,7 +350,7 @@ material = SubResource("ShaderMaterial_vexqh")
 position = Vector2(-1, -32)
 sprite_frames = SubResource("SpriteFrames_0nsvt")
 animation = &"Idle"
-frame_progress = 0.818963
+frame_progress = 0.639227
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.0864906, -27.9619)
@@ -370,6 +370,6 @@ collide_with_areas = true
 
 [node name="GrenadeLauncher" type="Gun" parent="."]
 bullet = ExtResource("5_37qxl")
-bullet_impulse = Vector2(300, -300)
+bullet_speed = 600.0
 cooldown = 5.0
 position = Vector2(12.34, -35.78)

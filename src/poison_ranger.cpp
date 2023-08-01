@@ -139,9 +139,16 @@ double PoisonRanger::get_fire_rate() const {
 }
 
 void PoisonRanger::fire() {
-  auto gun = get_node<Gun>("Gun");
-  if (gun) {
-    gun->fire({});
+  auto const gun    = get_node<Gun>("Gun");
+  auto const target = get_target();
+  if (gun && target) {
+    auto target_pos = target->get_global_position();
+    auto const cs = get_node<CollisionShape2D>("CollisionShape2D");
+    if (cs) {
+      target_pos.y -= cs->get_shape()->get_rect().size.height * 0.5f;
+    }
+    auto const direction = target_pos - gun->get_global_position();
+    gun->fire(direction);
   }
   auto animated_sprite = get_node<AnimatedSprite2D>("AnimatedSprite2D");
   if (animated_sprite) {
@@ -202,9 +209,6 @@ void PoisonRanger::set_direction(PoisonRanger::Direction direction) {
   if (direction_changed) {
     auto gun = get_node<Gun>("Gun");
     if (gun) {
-      auto bullet_impulse = gun->get_bullet_impulse();
-      bullet_impulse.x *= -1;
-      gun->set_bullet_impulse(bullet_impulse);
       auto gun_position = gun->get_position();
       gun_position.x *= -1;
       gun->set_position(gun_position);

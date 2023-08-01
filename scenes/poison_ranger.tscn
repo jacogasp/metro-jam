@@ -206,7 +206,7 @@ shape = SubResource("CapsuleShape2D_kukua")
 
 [node name="Gun" type="Gun" parent="."]
 bullet = ExtResource("3_2t3kq")
-bullet_impulse = Vector2(500, 2.08165e-12)
+bullet_speed = 750.0
 position = Vector2(22, 0)
 
 [node name="PatrolArea" type="Area2D" parent="."]

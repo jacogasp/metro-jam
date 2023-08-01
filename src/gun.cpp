@@ -3,7 +3,7 @@
 
 void Gun::_bind_methods() {
   BIND_PROPERTY(Gun, bullet, Variant::OBJECT);
-  BIND_PROPERTY(Gun, bullet_impulse, Variant::VECTOR2);
+  BIND_PROPERTY(Gun, bullet_speed, Variant::FLOAT);
   BIND_PROPERTY(Gun, cooldown, Variant::FLOAT);
 }
 
@@ -24,7 +24,7 @@ Ref<PackedScene> Gun::get_bullet() const {
   return m_bullet;
 }
 
-void Gun::fire(const Vector2&) {
+void Gun::fire(const Vector2& direction) {
   if (cooling_down()) {
     return;
   }
@@ -32,23 +32,24 @@ void Gun::fire(const Vector2&) {
     m_cooling_down = true;
     m_cooldown_timer.start();
   }
-  auto node    = m_bullet->instantiate();
-  auto grenade = cast_to<RigidBody2D>(node);
-  if (grenade) {
-    get_parent()->get_parent()->add_child(grenade);
-    grenade->apply_impulse(m_bullet_impulse);
-    grenade->set_global_position(get_global_position());
+  auto node   = m_bullet->instantiate();
+  auto bullet = cast_to<RigidBody2D>(node);
+  if (bullet) {
+    get_parent()->get_parent()->add_child(bullet);
+    auto const impulse = direction.normalized() * m_bullet_speed;
+    bullet->apply_impulse(impulse);
+    bullet->set_global_position(get_global_position());
   } else {
     std::cerr << "Grenade Packed Scene must be of type Grenade\n";
   }
 }
 
-void Gun::set_bullet_impulse(const Vector2& impulse) {
-  m_bullet_impulse = impulse;
+void Gun::set_bullet_speed(float speed) {
+  m_bullet_speed = speed;
 }
 
-Vector2 Gun::get_bullet_impulse() const {
-  return m_bullet_impulse;
+float Gun::get_bullet_speed() const {
+  return m_bullet_speed;
 }
 
 void Gun::set_cooldown(double cooldown) {

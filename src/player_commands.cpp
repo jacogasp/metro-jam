@@ -61,7 +61,9 @@ void GrenadeCommand::operator()(Player& player) const {
   player.set_state(&Player::attacking);
   auto grenade_launcher = player.get_node<Gun>("GrenadeLauncher");
   if (grenade_launcher && !grenade_launcher->cooling_down()) {
-    grenade_launcher->fire({});
+    Vector2 target = player.get_direction() == Player::right ? Vector2{1, -1}
+                                                             : Vector2{-1, -1};
+    grenade_launcher->fire(target);
     player.m_animatedSprite2D->play("AttackGrenade");
   }
 }
