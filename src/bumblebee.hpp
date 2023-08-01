@@ -37,21 +37,24 @@ class BumbleBee final
 
   Timer m_timer{};
   Timer m_health_bar_timer{};
-  Direction m_direction       = left;
+  Direction m_direction       = right;
+  float m_speed               = 25;
   Vector2 m_jump_velocity     = Vector2{200, -200};
   TimeDelta m_jump_interval_s = 2;
   Vector2 m_bounds            = Vector2{};
   int m_total_health          = 100;
   int m_health                = 100;
   float m_hit_bounce_factor   = 1.0;
+
   static void _bind_methods();
 
  public:
   void _ready() override;
-  void _process(double) override;
   void _physics_process(double delta) override;
   void set_state(BumbleBeeState* state);
   void take_hit(int damage, Vector2 const& from_direction) override;
+  void set_speed(float speed);
+  [[nodiscard]] float get_speed() const;
   void set_jump_velocity(Vector2 const& velocity);
   [[nodiscard]] Vector2 get_jump_velocity() const;
   void set_jump_interval(TimeDelta interval);
@@ -68,6 +71,9 @@ class BumbleBee final
   [[nodiscard]] Direction const& get_direction() const;
   void set_hit_bounce_factor(float f);
   [[nodiscard]] float get_hit_bounce_factor() const;
+  [[nodiscard]] Node2D* get_target();
+  [[nodiscard]] Timer& get_attack_timer();
+  [[nodiscard]] Vector2& get_bounds();
 
  private:
   struct IdleState : public BumbleBeeState {
@@ -78,7 +84,11 @@ class BumbleBee final
     void update(BumbleBee& bumble_bee) const override;
   };
 
-  class JumpState : public BumbleBeeState {
+  struct AlertState : public BumbleBeeState {
+    void update(BumbleBee& bumble_bee) const override;
+  };
+
+  class AttackState : public BumbleBeeState {
     void update(BumbleBee& bumble_bee) const override;
   };
 
@@ -93,7 +103,7 @@ class BumbleBee final
  public:
   static IdleState idle_state;
   static WalkingState walking_state;
-  static JumpState jumping;
+  static AttackState attack_state;
   static OnWallState on_wall;
   static DyingState dying;
 
@@ -110,12 +120,16 @@ class BumbleBee final
     void operator()(BumbleBee& bumble_bee) const;
   };
 
-  struct HitCommand {
-    void operator()(BumbleBee& bumble_bee, int damage) const;
+  struct AlertCommand {
+    void operator()(BumbleBee& bumble_bee) const;
   };
 
-  struct FlipCommand {
+  struct AttackCommand {
     void operator()(BumbleBee& bumble_bee) const;
+  };
+
+  struct HitCommand {
+    void operator()(BumbleBee& bumble_bee, int damage) const;
   };
 
   struct DieCommand {

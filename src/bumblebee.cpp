@@ -1,11 +1,13 @@
 #include "bumblebee.hpp"
+#include "ray_cast.hpp"
 #include <godot_cpp/classes/collision_shape2d.hpp>
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/shader_material.hpp>
 #include <godot_cpp/classes/shape2d.hpp>
 
 void BumbleBee::_bind_methods() {
-  BIND_PROPERTY(BumbleBee, jump_velocity, Variant::FLOAT);
+  BIND_PROPERTY(BumbleBee, speed, Variant::FLOAT);
+  BIND_PROPERTY(BumbleBee, jump_velocity, Variant::VECTOR2);
   BIND_PROPERTY(BumbleBee, jump_interval, Variant::FLOAT);
   BIND_PROPERTY(BumbleBee, hit_animation_time, Variant::FLOAT);
   BIND_PROPERTY(BumbleBee, hit_bounce_factor, Variant::FLOAT);
@@ -19,15 +21,15 @@ void BumbleBee::_bind_methods() {
 }
 
 BumbleBee::IdleState BumbleBee::idle_state       = BumbleBee::IdleState();
-BumbleBee::JumpState BumbleBee::jumping          = BumbleBee::JumpState();
 BumbleBee::WalkingState BumbleBee::walking_state = BumbleBee::WalkingState();
+BumbleBee::AttackState BumbleBee::attack_state   = BumbleBee::AttackState();
 BumbleBee::OnWallState BumbleBee::on_wall        = BumbleBee::OnWallState();
 BumbleBee::DyingState BumbleBee::dying           = BumbleBee::DyingState();
 static auto constexpr idle                       = BumbleBee::IdleCommand();
-static auto constexpr walk                       = BumbleBee::WalkCommand();
+static auto constexpr go_walk                    = BumbleBee::WalkCommand();
 static auto constexpr jump                       = BumbleBee::JumpCommand();
+static auto constexpr attack                     = BumbleBee::AttackCommand();
 static auto constexpr hit                        = BumbleBee::HitCommand();
-static auto constexpr flip                       = BumbleBee::FlipCommand();
 static auto constexpr die                        = BumbleBee::DieCommand();
 
 void BumbleBee::_ready() {
@@ -38,6 +40,7 @@ void BumbleBee::_ready() {
   auto material = m_animated_sprite2D->get_material();
   m_animated_sprite2D->set_material(material->duplicate());
   set_velocity({0, 0});
+  set_direction(right);
 
   m_health     = m_total_health;
   m_health_bar = get_node<HealthBar>("HealthBar");
@@ -46,25 +49,13 @@ void BumbleBee::_ready() {
     m_health_bar->set_value(m_health);
     m_health_bar->hide();
   }
-
   m_vfx = get_node<AnimationPlayer>("VFX");
-
-  m_timer.set_callback([this]() {
-    if (m_state != &jumping) {
-      jump(*this);
-    }
-  });
+  m_timer.set_callback([this]() { jump(*this); });
   m_timer.set_timeout(m_jump_interval_s);
   m_timer.set_repeat(true);
   m_timer.stop();
   update_bounds();
-  walk(*this);
-}
-
-void BumbleBee::_process(double) {
-  if (m_target) {
-    look_at(m_target);
-  }
+  go_walk(*this);
 }
 
 void BumbleBee::_physics_process(double delta) {
@@ -78,12 +69,19 @@ void BumbleBee::_physics_process(double delta) {
     m_health_bar_timer.tick(delta);
   }
   m_state->update(*this);
-  m_animated_sprite2D->set_flip_h(m_direction == left);
   move_and_slide();
 }
 
 void BumbleBee::set_state(BumbleBeeState* state) {
   m_state = state;
+}
+
+void BumbleBee::set_speed(float speed) {
+  m_speed = speed;
+}
+
+float BumbleBee::get_speed() const {
+  return m_speed;
 }
 
 void BumbleBee::set_jump_velocity(Vector2 const& velocity) {
@@ -108,7 +106,7 @@ void BumbleBee::on_body_entered(Node* node) {
   }
 }
 
-void BumbleBee::take_hit(int damage, Vector2 const& from_direction) {
+void BumbleBee::take_hit(int damage, Vector2 const&) {
   hit(*this, damage);
   m_health -= damage;
   if (m_health_bar) {
@@ -143,18 +141,17 @@ float BumbleBee::get_hit_animation_time() const {
 void BumbleBee::look_at(Node2D* node) {
   auto position      = get_position();
   auto node_position = node->get_position();
-  m_direction        = node_position.x < position.x ? left : right;
+  set_direction(node_position.x < position.x ? left : right);
 }
 
 void BumbleBee::acquire_target(Node2D* node) {
-  m_timer.start();
   m_target = node;
 }
 
 void BumbleBee::release_target(Node2D* node) {
   m_timer.stop();
   update_bounds();
-  walk(*this);
+  go_walk(*this);
   if (m_target == node) {
     m_target = nullptr;
   }
@@ -171,18 +168,41 @@ AnimatedSprite2D* BumbleBee::get_animated_sprite() const {
 }
 
 void BumbleBee::set_direction(const BumbleBee::Direction& direction) {
+  auto velocity = get_velocity();
+  auto v_x      = abs(velocity.x);
+  if (direction == right) {
+    velocity.x = v_x;
+    m_animated_sprite2D->set_flip_h(false);
+  } else {
+    velocity.x = -v_x;
+    m_animated_sprite2D->set_flip_h(true);
+  }
+  set_velocity(velocity);
   m_direction = direction;
 }
 
 const BumbleBee::Direction& BumbleBee::get_direction() const {
   return m_direction;
 }
+
 void BumbleBee::set_hit_bounce_factor(float f) {
   m_hit_bounce_factor = f;
 }
 
 float BumbleBee::get_hit_bounce_factor() const {
   return m_hit_bounce_factor;
+}
+
+Node2D* BumbleBee::get_target() {
+  return m_target;
+}
+
+Timer& BumbleBee::get_attack_timer() {
+  return m_timer;
+}
+
+Vector2& BumbleBee::get_bounds() {
+  return m_bounds;
 }
 
 // Commands
@@ -194,17 +214,22 @@ void BumbleBee::IdleCommand::operator()(BumbleBee& bumble_bee) const {
 
 void BumbleBee::WalkCommand::operator()(BumbleBee& bumble_bee) const {
   bumble_bee.get_animated_sprite()->play("Walk");
-  bumble_bee.set_state(&BumbleBee::walking_state);
+  bumble_bee.get_attack_timer().stop();
 }
 
 void BumbleBee::JumpCommand::operator()(BumbleBee& bumble_bee) const {
   bumble_bee.get_animated_sprite()->play("JumpIn");
-  auto direction     = static_cast<int>(bumble_bee.get_direction());
   auto jump_velocity = bumble_bee.get_jump_velocity();
-  jump_velocity.x *= static_cast<float>(direction);
+  if (bumble_bee.get_direction() == left) {
+    jump_velocity.x *= -1;
+  }
   auto velocity = bumble_bee.get_velocity() + jump_velocity;
   bumble_bee.set_velocity(velocity);
-  bumble_bee.set_state(&BumbleBee::jumping);
+}
+
+void BumbleBee::AttackCommand::operator()(BumbleBee& bumble_bee) const {
+  bumble_bee.get_attack_timer().start();
+  bumble_bee.set_state(&BumbleBee::attack_state);
 }
 
 void BumbleBee::HitCommand::operator()(BumbleBee& bumble_bee,
@@ -217,15 +242,7 @@ void BumbleBee::HitCommand::operator()(BumbleBee& bumble_bee,
   velocity += jump_velocity * static_cast<float>(damage)
             * bumble_bee.m_hit_bounce_factor / 100.0f;
   bumble_bee.set_velocity(velocity);
-  bumble_bee.set_state(&BumbleBee::jumping);
-}
-
-void BumbleBee::FlipCommand::operator()(BumbleBee& bumble_bee) const {
-  auto direction = bumble_bee.get_direction() == BumbleBee::Direction::right
-                     ? BumbleBee::Direction::left
-                     : BumbleBee::Direction::right;
-  bumble_bee.set_direction(direction);
-  bumble_bee.set_state(&BumbleBee::on_wall);
+  bumble_bee.set_state(&BumbleBee::attack_state);
 }
 
 void BumbleBee::DieCommand::operator()(BumbleBee& bumble_bee) const {
@@ -233,40 +250,94 @@ void BumbleBee::DieCommand::operator()(BumbleBee& bumble_bee) const {
   bumble_bee.set_state(&BumbleBee::dying);
 }
 
+static Node2D* player_is_visible(BumbleBee& bumble_bee, Vector2 const& target) {
+  static uint32_t collision_mask = 65535 ^ bumble_bee.get_collision_layer();
+  auto world                     = bumble_bee.get_world_2d();
+  auto from                      = bumble_bee.get_global_position();
+  auto hit_target = ray_hits(from, target, collision_mask, world);
+
+  return (hit_target && hit_target->is_in_group("Player")) ? hit_target
+                                                           : nullptr;
+}
+
+static void flip(BumbleBee& bumble_bee) {
+  auto const new_direction = bumble_bee.get_direction() == BumbleBee::right
+                               ? BumbleBee::left
+                               : BumbleBee::right;
+  bumble_bee.set_direction(new_direction);
+  const auto offset = 1.0f;
+  auto position     = bumble_bee.get_position();
+  position.x += new_direction == BumbleBee::right ? +offset : -offset;
+  bumble_bee.set_position(position);
+}
+
+static void walk(BumbleBee& bumble_bee) {
+  auto velocity    = bumble_bee.get_velocity();
+  const auto speed = bumble_bee.get_speed();
+  velocity.x = bumble_bee.get_direction() == BumbleBee::right ? speed : -speed;
+  bumble_bee.set_velocity(velocity);
+  // Keep in aggro area
+  auto const x       = bumble_bee.get_position().x;
+  auto const& bounds = bumble_bee.get_bounds();
+
+  if (x < bounds.x || x > bounds.y || bumble_bee.is_on_wall()) {
+    flip(bumble_bee);
+    return;
+  }
+}
+
 // BumbleBee's States
 void BumbleBee::IdleState::update(BumbleBee&) const {
 }
 
 void BumbleBee::WalkingState::update(BumbleBee& bumble_bee) const {
-  auto velocity    = bumble_bee.get_velocity();
-  const auto speed = 25.f;
-  velocity.x = bumble_bee.m_direction == BumbleBee::right ? speed : -speed;
-
-  auto const x = bumble_bee.get_position().x;
-  if (x < bumble_bee.m_bounds.x) {
-    velocity.x *= -1;
-    bumble_bee.m_direction = BumbleBee::right;
-  } else if (x > bumble_bee.m_bounds.y) {
-    velocity.x *= -1;
-    bumble_bee.m_direction = BumbleBee::left;
+  auto const target = bumble_bee.get_target();
+  if (target) {
+    auto const player = player_is_visible(bumble_bee, target->get_position());
+    if (player) {
+      attack(bumble_bee);
+      bumble_bee.set_state(&BumbleBee::attack_state);
+      return;
+    }
   }
-
-  bumble_bee.set_velocity(velocity);
+  walk(bumble_bee);
 }
 
-void BumbleBee::JumpState::update(BumbleBee& bumble_bee) const {
-  if (bumble_bee.is_on_wall()) {
-    flip(bumble_bee);
+void BumbleBee::AttackState::update(BumbleBee& bumble_bee) const {
+  // If target lost, go idle (should never happen)
+  auto const target = bumble_bee.get_target();
+  if (target == nullptr) {
+    std::cerr << "target lost\n";
+    go_walk(bumble_bee);
     return;
   }
-  if (bumble_bee.get_velocity().y > 0 && bumble_bee.is_on_floor()) {
-    idle(bumble_bee);
+  // If player is hidden,walk
+  auto const player =
+      player_is_visible(bumble_bee, target->get_global_position());
+  if (player == nullptr) {
+    go_walk(bumble_bee);
+    bumble_bee.set_state(&BumbleBee::walking_state);
+    return;
+  }
+  // Player is now visible
+  if (bumble_bee.is_on_wall()) {
+    flip(bumble_bee);
+  }
+  // On Ground
+  if (bumble_bee.is_on_floor() && bumble_bee.get_velocity().y > 0) {
+    bumble_bee.set_velocity(Vector2{});
+    bumble_bee.look_at(target);
+    auto const animated_sprite =
+        bumble_bee.get_node<AnimatedSprite2D>("AnimatedSprite2D");
+    if (animated_sprite) {
+      animated_sprite->play("Idle");
+    }
   }
 }
 
 void BumbleBee::OnWallState::update(BumbleBee& bumble_bee) const {
   if (bumble_bee.get_velocity().y < 0) {
-    bumble_bee.set_state(&BumbleBee::jumping);
+    bumble_bee.set_state(&BumbleBee::attack_state);
   } else if (bumble_bee.is_on_floor()) {
     idle(bumble_bee);
   }
