@@ -11,6 +11,7 @@
 #include <godot_cpp/classes/input.hpp>
 #include <godot_cpp/classes/shape2d.hpp>
 #include <cassert>
+#include <memory>
 
 StandingState Player::standing      = StandingState();
 RunningState Player::running        = RunningState();
@@ -295,7 +296,8 @@ void Player::set_gravity(float gravity) {
 }
 
 void Player::hit() {
-  if (m_immunity.is_active()) {
+  auto immunity = m_power_ups.find(Superpower::Type::Immunity);
+  if (immunity != m_power_ups.end()) {
     return;
   }
   loose_life();

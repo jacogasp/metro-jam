@@ -47,8 +47,7 @@ class Player
   AudioStreamPlayer* m_audio_footsteps           = nullptr;
   AudioStreamPlayer* m_audio_jump                = nullptr;
 
-  // Superpowers
-  Immunity m_immunity;
+  PowerUps m_power_ups;
 
   PlayerState* m_state{&Player::standing};
 

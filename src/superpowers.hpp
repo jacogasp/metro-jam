@@ -1,11 +1,20 @@
 #ifndef COREGAME_SUPERPOWERS_HPP
 #define COREGAME_SUPERPOWERS_HPP
 
+#include <map>
+#include <memory>
+
+class Superpower;
+
 class Superpower {
  public:
-  virtual ~Superpower() = default;
+  enum Type { Immunity, Slide };
+  virtual ~Superpower()   = default;
   virtual void activate() = 0;
 };
+
+using PowerUps =
+    std::unordered_map<Superpower::Type, std::unique_ptr<Superpower>>;
 
 class Immunity : public Superpower {
   bool m_is_active = false;

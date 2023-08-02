@@ -73,5 +73,6 @@ void SlideCommand::operator()(Player& player) const {
   player.m_animatedSprite2D->play("Slide");
   player.set_state(&Player::sliding);
   player.m_audio_footsteps->stop();
-  player.m_immunity.activate();
+  player.m_power_ups.insert(
+      {Superpower::Type::Immunity, std::make_unique<Immunity>()});
 }
