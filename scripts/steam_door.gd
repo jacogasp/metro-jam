@@ -15,10 +15,10 @@ func hide_label(_body):
 	$Lever/Label.hide()
 
 func interact():
-	if closed:
-		close()
-	elif closed and not one_shot:
+	if closed and not one_shot:
 		open()
+	elif not closed:
+		close()
 
 func open():
 	$Lever/AnimationPlayer.play("Close")
