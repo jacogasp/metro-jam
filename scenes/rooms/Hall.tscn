@@ -161,7 +161,7 @@ collision_mask = 257
 position = Vector2(7, -25.5)
 shape = SubResource("RectangleShape2D_dbwxh")
 
-[node name="PlatformSystem1" type="Node" parent="."]
+[node name="PlatformSystem1" type="Node2D" parent="."]
 
 [node name="Platform1" parent="PlatformSystem1" instance=ExtResource("7_mbcqu")]
 position = Vector2(2880, 1952)
@@ -205,7 +205,7 @@ collision_mask = 0
 amplitude = 150.0
 frequency = 0.4
 
-[node name="PlatformSystem2" type="Node" parent="."]
+[node name="PlatformSystem2" type="Node2D" parent="."]
 
 [node name="Platform7" parent="PlatformSystem2" instance=ExtResource("7_mbcqu")]
 position = Vector2(3407, 1466)
@@ -456,6 +456,8 @@ offset_top = 521.0
 offset_right = 3189.0
 offset_bottom = 547.0
 text = "Use the key to open"
+
+[node name="Node2D" type="Node2D" parent="."]
 
 [connection signal="body_entered" from="GateHallD" to="GateHallD" method="_on_body_entered"]
 [connection signal="body_exited" from="GateHallD" to="GateHallD" method="_on_body_exited"]
