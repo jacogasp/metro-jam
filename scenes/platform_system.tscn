@@ -1,0 +1,137 @@
+[gd_scene load_steps=10 format=3 uid="uid://05k7cpio0i5w"]
+
+[ext_resource type="Script" path="res://scripts/PlatformSystem.gd" id="1_ujhtu"]
+[ext_resource type="PackedScene" uid="uid://byowg4tosyvo2" path="res://scenes/platform.tscn" id="2_77bgu"]
+[ext_resource type="Texture2D" uid="uid://brq77udpwpfat" path="res://assets/tilesets/Tileset.png" id="3_ltshs"]
+[ext_resource type="FontFile" uid="uid://ctpai807254id" path="res://assets/fonts/Pixeled.ttf" id="4_1eaik"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_opfmu"]
+size = Vector2(122, 69)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ogbvp"]
+font = ExtResource("4_1eaik")
+font_size = 12
+
+[sub_resource type="Animation" id="Animation_1diya"]
+resource_name = "Enable"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Anchor:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-0.523599, 0.523599]
+}
+
+[sub_resource type="Animation" id="Animation_6fu8h"]
+resource_name = "Disable"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Anchor:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.523599, -0.523599]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_h3beg"]
+_data = {
+"Disable": SubResource("Animation_6fu8h"),
+"Enable": SubResource("Animation_1diya")
+}
+
+[node name="PlatformSystem1" type="Node2D"]
+script = ExtResource("1_ujhtu")
+enabled = true
+
+[node name="Platforms" type="Node2D" parent="."]
+
+[node name="Platform1" parent="Platforms" instance=ExtResource("2_77bgu")]
+position = Vector2(2880, 1952)
+collision_layer = 16
+collision_mask = 0
+amplitude = -150.0
+frequency = 0.4
+
+[node name="Platform2" parent="Platforms" instance=ExtResource("2_77bgu")]
+position = Vector2(3008, 1951)
+collision_layer = 16
+collision_mask = 0
+amplitude = 150.0
+frequency = 0.4
+
+[node name="Platform3" parent="Platforms" instance=ExtResource("2_77bgu")]
+position = Vector2(2880, 1714)
+collision_layer = 16
+collision_mask = 0
+amplitude = -150.0
+frequency = 0.4
+
+[node name="Platform4" parent="Platforms" instance=ExtResource("2_77bgu")]
+position = Vector2(3008, 1714)
+collision_layer = 16
+collision_mask = 0
+amplitude = 150.0
+frequency = 0.4
+
+[node name="Platform5" parent="Platforms" instance=ExtResource("2_77bgu")]
+position = Vector2(2880, 1470)
+collision_layer = 16
+collision_mask = 0
+amplitude = -150.0
+frequency = 0.4
+
+[node name="Platform6" parent="Platforms" instance=ExtResource("2_77bgu")]
+position = Vector2(3008, 1470)
+collision_layer = 16
+collision_mask = 0
+amplitude = 150.0
+frequency = 0.4
+
+[node name="Handle" type="Node2D" parent="."]
+position = Vector2(3792, 1919)
+
+[node name="Anchor" type="Node2D" parent="Handle"]
+rotation = -0.523599
+
+[node name="Sprite2D" type="Sprite2D" parent="Handle/Anchor"]
+position = Vector2(0, -16)
+texture = ExtResource("3_ltshs")
+region_enabled = true
+region_rect = Rect2(288, 224, 32, 30)
+
+[node name="Area2D" type="Area2D" parent="Handle"]
+collision_layer = 65536
+collision_mask = 256
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Handle/Area2D"]
+position = Vector2(0, -33.5)
+shape = SubResource("RectangleShape2D_opfmu")
+
+[node name="Label" type="Label" parent="Handle"]
+offset_left = -45.0
+offset_top = -100.0
+offset_right = 58.0
+offset_bottom = -51.0
+text = "Press E"
+label_settings = SubResource("LabelSettings_ogbvp")
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Handle"]
+libraries = {
+"": SubResource("AnimationLibrary_h3beg")
+}
+
+[connection signal="body_entered" from="Handle/Area2D" to="." method="show_label"]
+[connection signal="body_exited" from="Handle/Area2D" to="." method="hide_label"]

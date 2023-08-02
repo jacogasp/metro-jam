@@ -1,13 +1,16 @@
-[gd_scene load_steps=19 format=3 uid="uid://0e7eflaq7ui6"]
+[gd_scene load_steps=27 format=3 uid="uid://0e7eflaq7ui6"]
 
 [ext_resource type="Texture2D" uid="uid://b2u8bgksqj83j" path="res://icon.svg" id="1_hkmiw"]
 [ext_resource type="Material" uid="uid://g3uwsdhmuuaj" path="res://shaders/Water.material" id="2_333v6"]
 [ext_resource type="PackedScene" uid="uid://b31qyx4laex5m" path="res://scenes/steam_jet.tscn" id="3_gaim7"]
 [ext_resource type="Material" uid="uid://bcw2f556s0rec" path="res://shaders/Fire.material" id="4_e56xf"]
 [ext_resource type="TileSet" uid="uid://0w2a5bo421v7" path="res://assets/tilesets/TilesetBlocks.tres" id="4_pyf6q"]
+[ext_resource type="Script" path="res://scripts/PlatformSystem.gd" id="6_j7fy6"]
 [ext_resource type="PackedScene" uid="uid://cu0874vm7p4ku" path="res://scenes/bumblee_bee.tscn" id="6_jj53g"]
 [ext_resource type="PackedScene" uid="uid://cm30bx70vnhcg" path="res://scenes/steam_door.tscn" id="7_bjane"]
 [ext_resource type="PackedScene" uid="uid://byowg4tosyvo2" path="res://scenes/platform.tscn" id="7_mbcqu"]
+[ext_resource type="Texture2D" uid="uid://brq77udpwpfat" path="res://assets/tilesets/Tileset.png" id="8_xsrxb"]
+[ext_resource type="FontFile" uid="uid://ctpai807254id" path="res://assets/fonts/Pixeled.ttf" id="9_6aqr4"]
 [ext_resource type="PackedScene" uid="uid://rknubmbqfi4w" path="res://scenes/shadow_area.tscn" id="9_tmsto"]
 [ext_resource type="Texture2D" uid="uid://dch5xho6lehap" path="res://assets/textures/light.png" id="11_stcul"]
 [ext_resource type="Texture2D" uid="uid://2vcybdhlfsdk" path="res://assets/light_bulb_sprite.png" id="12_yblow"]
@@ -15,6 +18,51 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dbwxh"]
 size = Vector2(31.75, 57.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_opfmu"]
+size = Vector2(122, 69)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ogbvp"]
+font = ExtResource("9_6aqr4")
+font_size = 12
+
+[sub_resource type="Animation" id="Animation_1diya"]
+resource_name = "Enable"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Anchor:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-0.523599, 0.523599]
+}
+
+[sub_resource type="Animation" id="Animation_6fu8h"]
+resource_name = "Disable"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Anchor:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.523599, -0.523599]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_h3beg"]
+_data = {
+"Disable": SubResource("Animation_6fu8h"),
+"Enable": SubResource("Animation_1diya")
+}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o1tt3"]
 size = Vector2(20, 64)
@@ -162,48 +210,87 @@ position = Vector2(7, -25.5)
 shape = SubResource("RectangleShape2D_dbwxh")
 
 [node name="PlatformSystem1" type="Node2D" parent="."]
+script = ExtResource("6_j7fy6")
+one_shot = true
 
-[node name="Platform1" parent="PlatformSystem1" instance=ExtResource("7_mbcqu")]
+[node name="Platforms" type="Node2D" parent="PlatformSystem1"]
+
+[node name="Platform1" parent="PlatformSystem1/Platforms" instance=ExtResource("7_mbcqu")]
 position = Vector2(2880, 1952)
 collision_layer = 16
 collision_mask = 0
 amplitude = -150.0
 frequency = 0.4
 
-[node name="Platform2" parent="PlatformSystem1" instance=ExtResource("7_mbcqu")]
+[node name="Platform2" parent="PlatformSystem1/Platforms" instance=ExtResource("7_mbcqu")]
 position = Vector2(3008, 1951)
 collision_layer = 16
 collision_mask = 0
 amplitude = 150.0
 frequency = 0.4
 
-[node name="Platform3" parent="PlatformSystem1" instance=ExtResource("7_mbcqu")]
+[node name="Platform3" parent="PlatformSystem1/Platforms" instance=ExtResource("7_mbcqu")]
 position = Vector2(2880, 1714)
 collision_layer = 16
 collision_mask = 0
 amplitude = -150.0
 frequency = 0.4
 
-[node name="Platform4" parent="PlatformSystem1" instance=ExtResource("7_mbcqu")]
+[node name="Platform4" parent="PlatformSystem1/Platforms" instance=ExtResource("7_mbcqu")]
 position = Vector2(3008, 1714)
 collision_layer = 16
 collision_mask = 0
 amplitude = 150.0
 frequency = 0.4
 
-[node name="Platform5" parent="PlatformSystem1" instance=ExtResource("7_mbcqu")]
+[node name="Platform5" parent="PlatformSystem1/Platforms" instance=ExtResource("7_mbcqu")]
 position = Vector2(2880, 1470)
 collision_layer = 16
 collision_mask = 0
 amplitude = -150.0
 frequency = 0.4
 
-[node name="Platform6" parent="PlatformSystem1" instance=ExtResource("7_mbcqu")]
+[node name="Platform6" parent="PlatformSystem1/Platforms" instance=ExtResource("7_mbcqu")]
 position = Vector2(3008, 1470)
 collision_layer = 16
 collision_mask = 0
 amplitude = 150.0
 frequency = 0.4
+
+[node name="Handle" type="Node2D" parent="PlatformSystem1"]
+position = Vector2(3792, 1919)
+
+[node name="Anchor" type="Node2D" parent="PlatformSystem1/Handle"]
+rotation = -0.523599
+
+[node name="Sprite2D" type="Sprite2D" parent="PlatformSystem1/Handle/Anchor"]
+position = Vector2(0, -16)
+texture = ExtResource("8_xsrxb")
+region_enabled = true
+region_rect = Rect2(288, 224, 32, 30)
+
+[node name="Area2D" type="Area2D" parent="PlatformSystem1/Handle"]
+collision_layer = 65536
+collision_mask = 256
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformSystem1/Handle/Area2D"]
+position = Vector2(0, -33.5)
+shape = SubResource("RectangleShape2D_opfmu")
+
+[node name="Label" type="Label" parent="PlatformSystem1/Handle"]
+offset_left = -45.0
+offset_top = -100.0
+offset_right = 58.0
+offset_bottom = -51.0
+text = "Press E"
+label_settings = SubResource("LabelSettings_ogbvp")
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PlatformSystem1/Handle"]
+libraries = {
+"": SubResource("AnimationLibrary_h3beg")
+}
 
 [node name="PlatformSystem2" type="Node2D" parent="."]
 
@@ -246,6 +333,7 @@ layer_0/tile_data = PackedInt32Array(3473512, 65536, 1, 3539048, 65536, 1, 36045
 
 [node name="SteamDoor" parent="." instance=ExtResource("7_bjane")]
 position = Vector2(1023, 2016)
+one_shot = true
 
 [node name="Lever" parent="SteamDoor" index="0"]
 position = Vector2(1312, -1280)
@@ -255,6 +343,10 @@ position = Vector2(1, -40)
 rotation = -2.0944
 
 [node name="Label" parent="SteamDoor/Lever" index="1"]
+offset_left = -53.0
+offset_top = -98.0
+offset_right = 50.0
+offset_bottom = -49.0
 metadata/_edit_use_anchors_ = true
 
 [node name="Door" parent="SteamDoor" index="1"]
@@ -441,23 +533,12 @@ velocity = Vector2(-109800, -219600)
 position = Vector2(4071, 890)
 velocity = Vector2(-109800, -219600)
 
-[node name="Lever platform system activate" type="Label" parent="."]
-offset_left = 3617.0
-offset_top = 1833.0
-offset_right = 3857.0
-offset_bottom = 1859.0
-text = "Lever platform system activate
-PRESS E
-"
-
 [node name="Exit" type="Label" parent="."]
 offset_left = 3035.0
 offset_top = 521.0
 offset_right = 3189.0
 offset_bottom = 547.0
 text = "Use the key to open"
-
-[node name="Node2D" type="Node2D" parent="."]
 
 [connection signal="body_entered" from="GateHallD" to="GateHallD" method="_on_body_entered"]
 [connection signal="body_exited" from="GateHallD" to="GateHallD" method="_on_body_exited"]
@@ -467,5 +548,7 @@ text = "Use the key to open"
 [connection signal="body_exited" from="GateHallB2" to="GateHallB2" method="_on_body_exited"]
 [connection signal="body_entered" from="GateCorridorHall" to="GateCorridorHall" method="_on_body_entered"]
 [connection signal="body_exited" from="GateCorridorHall" to="GateCorridorHall" method="_on_body_exited"]
+[connection signal="body_entered" from="PlatformSystem1/Handle/Area2D" to="PlatformSystem1" method="show_label"]
+[connection signal="body_exited" from="PlatformSystem1/Handle/Area2D" to="PlatformSystem1" method="hide_label"]
 
 [editable path="SteamDoor"]
