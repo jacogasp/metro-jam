@@ -43,6 +43,29 @@ void PoisonRanger::_bind_methods() {
                        &PoisonRanger::release_target);
 }
 
+static void go_patrolling(PoisonRanger& ranger) {
+  ranger.update_bounds();
+  close_fire(ranger);
+  auto const as = ranger.get_node<AnimatedSprite2D>("AnimatedSprite2D");
+  if (as) {
+    as->play("Run");
+  }
+}
+
+static Node2D* player_is_visible(PoisonRanger& ranger, Vector2 const& target) {
+  static uint32_t collision_mask = 65535 ^ ranger.get_collision_layer();
+  auto world                     = ranger.get_world_2d();
+  auto from                      = ranger.get_global_position();
+  auto const cs = ranger.get_node<CollisionShape2D>("CollisionShape2D");
+  if (cs) {
+    from.y -= cs->get_shape()->get_rect().size.y;
+  }
+  auto hit_target = ray_hits(from, target, collision_mask, world);
+
+  return (hit_target && hit_target->is_in_group("Player")) ? hit_target
+                                                           : nullptr;
+}
+
 void PoisonRanger::_ready() {
   m_health        = m_total_health;
   auto health_bar = get_node<HealthBar>("HealthBar");
@@ -54,7 +77,7 @@ void PoisonRanger::_ready() {
   m_fire_timer.set_timeout(m_fire_rate);
   m_fire_timer.set_repeat(true);
   set_direction(right);
-  update_bounds();
+  go_patrolling(*this);
 }
 
 void PoisonRanger::_process(double delta) {
@@ -78,6 +101,10 @@ void PoisonRanger::_physics_process(double delta) {
 void PoisonRanger::take_hit(int damage, Vector2 const& from_direction) {
   hit(*this, from_direction);
   open_fire(*this);
+  auto player = player_is_visible(*this, from_direction);
+  if (player) {
+    acquire_target(player);
+  }
   set_state(&PoisonRanger::firing);
 
   m_health -= damage;
@@ -143,7 +170,7 @@ void PoisonRanger::fire() {
   auto const target = get_target();
   if (gun && target) {
     auto target_pos = target->get_global_position();
-    auto const cs = get_node<CollisionShape2D>("CollisionShape2D");
+    auto const cs   = get_node<CollisionShape2D>("CollisionShape2D");
     if (cs) {
       target_pos.y -= cs->get_shape()->get_rect().size.height * 0.5f;
     }
@@ -226,7 +253,6 @@ void PoisonRanger::acquire_target(Node2D* target) {
 }
 
 void PoisonRanger::release_target(Node2D* target) {
-  update_bounds();
   if (target == m_target) {
     m_target = nullptr;
   }
@@ -245,16 +271,6 @@ void PoisonRanger::update_bounds() {
   }
 }
 
-static Node2D* player_is_visible(PoisonRanger& ranger, Vector2 const& target) {
-  static uint32_t collision_mask = 65535 ^ ranger.get_collision_layer();
-  auto world                     = ranger.get_world_2d();
-  auto from                      = ranger.get_global_position();
-  auto hit_target = ray_hits(from, target, collision_mask, world);
-
-  return (hit_target && hit_target->is_in_group("Player")) ? hit_target
-                                                           : nullptr;
-}
-
 static void look_at(PoisonRanger& ranger, Node2D* target) {
   auto ranger_position = ranger.get_global_position();
   auto target_position = target->get_global_position();
@@ -262,14 +278,6 @@ static void look_at(PoisonRanger& ranger, Node2D* target) {
                            ? PoisonRanger::left
                            : PoisonRanger::right;
   ranger.set_direction(direction);
-}
-
-static void go_patrolling(PoisonRanger& ranger) {
-  close_fire(ranger);
-  auto const as = ranger.get_node<AnimatedSprite2D>("AnimatedSprite2D");
-  if (as) {
-    as->play("Run");
-  }
 }
 
 static void flip(PoisonRanger& ranger) {
@@ -322,7 +330,6 @@ void PoisonRanger::PatrollingState::update(PoisonRanger& ranger) const {
 }
 
 void PoisonRanger::FiringState::update(PoisonRanger& ranger) const {
-  ranger.update_bounds();
   auto target = ranger.get_target();
   if (target == nullptr) {
     go_patrolling(ranger);
@@ -339,6 +346,7 @@ void PoisonRanger::FiringState::update(PoisonRanger& ranger) const {
 
   auto const player = player_is_visible(ranger, target->get_global_position());
   if (player == nullptr) {
+    ranger.release_target(target);
     return;
   }
 
@@ -358,7 +366,6 @@ void PoisonRanger::FiringState::update(PoisonRanger& ranger) const {
 }
 
 void PoisonRanger::ChasingState::update(PoisonRanger& ranger) const {
-  ranger.update_bounds();
   auto target       = ranger.m_target;
   auto const player = player_is_visible(ranger, target->get_global_position());
   if (!player) {
