@@ -128,11 +128,13 @@ void PoisonRanger::set_hit_animation_time(float t) const {
 
 float PoisonRanger::get_hit_animation_time() const {
   auto animated_sprite = get_node<AnimatedSprite2D>("AnimatedSprite2D");
-  if (animated_sprite == nullptr)
+  if (animated_sprite == nullptr) {
     return 0.0;
+  }
   Ref<ShaderMaterial> material = animated_sprite->get_material();
-  if (material == nullptr)
+  if (material == nullptr) {
     return 0.0;
+  }
   float const time = material->get_shader_parameter("time");
   return time;
 }
