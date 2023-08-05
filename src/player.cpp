@@ -47,6 +47,7 @@ void Player::_bind_methods() {
   BIND_PROPERTY(Player, attack_strength, Variant::INT);
   BIND_PROPERTY(Player, skin_depth, Variant::FLOAT);
 
+  ClassDB::bind_method(D_METHOD("pick"), &Player::pick);
   ClassDB::bind_method(D_METHOD("set_hit_animation_time"),
                        &Player::set_hit_animation_time);
   ClassDB::bind_method(D_METHOD("get_hit_animation_time"),
@@ -68,7 +69,6 @@ Player::Player() {
   immunity->set_name("Immunity");
   immunity->set_process(true);
   call_deferred("add_child", immunity);
-  immunity->set_owner(this);
 }
 
 void Player::_ready() {
@@ -301,6 +301,14 @@ float Player::get_gravity() const {
 
 void Player::set_gravity(float gravity) {
   m_gravity = gravity;
+}
+
+void Player::pick(Node2D* node) {
+  auto const position = node->get_global_position();
+  auto old_parent = node->get_parent();
+  old_parent->remove_child(node);
+  add_child(node);
+  node->set_global_position(position);
 }
 
 void Player::hit() {

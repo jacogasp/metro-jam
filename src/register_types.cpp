@@ -45,6 +45,7 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
   ClassDB::register_class<HealthBar>();
   ClassDB::register_class<Gun>();
   ClassDB::register_class<Immunity>();
+  ClassDB::register_class<SlidePower>();
 
 #ifdef CORE_GAME_PROFILING
   core_game::Instrumentor::get().begin_session();

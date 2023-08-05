@@ -110,6 +110,7 @@ class Player
   [[nodiscard]] float get_hit_animation_time() const;
   [[nodiscard]] float get_ground_position() const;
   [[nodiscard]] bool is_on_ground();
+  void pick(Node2D *node);
   void hit();
   void save() override;
   void load() override;
