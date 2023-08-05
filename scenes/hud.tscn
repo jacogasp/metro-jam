@@ -8,6 +8,7 @@
 position = Vector2(24, 24)
 
 [node name="PowerUpsContainer" type="VBoxContainer" parent="."]
-offset_top = 155.0
-offset_right = 18.0
-offset_bottom = 260.0
+offset_left = 13.0
+offset_top = 230.0
+offset_right = 31.0
+offset_bottom = 335.0
