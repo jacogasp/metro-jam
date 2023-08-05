@@ -13,7 +13,6 @@ using namespace godot;
 
 class Superpower {
  public:
-  enum Type { Immunity, Slide };
   virtual ~Superpower() = default;
 
  protected:
@@ -45,6 +44,19 @@ class Immunity
 
  private:
   void deactivate();
+};
+
+class SlidePower
+    : public Node2D
+    , public Superpower {
+  GDCLASS_V2(SlidePower, Node2D)
+
+ private:
+  static void _bind_methods();
+
+ public:
+  void activate() override;
+  void pick_me(Node2D* picker);
 };
 
 #endif // COREGAME_SUPERPOWERS_HPP

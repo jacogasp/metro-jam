@@ -1,4 +1,6 @@
 #include "superpowers.hpp"
+#include "player.hpp"
+#include <godot_cpp/classes/animated_sprite2d.hpp>
 
 void Immunity::_bind_methods() {
   BIND_PROPERTY(Immunity, duration, Variant::FLOAT);
@@ -49,4 +51,32 @@ bool Immunity::cooling_down() const {
 void Immunity::deactivate() {
   std::cerr << "Immunity deactivated\n";
   m_cooldown_timer.start();
+}
+
+// Slide Power
+void SlidePower::_bind_methods() {
+  ClassDB::bind_method(D_METHOD("pick_me"), &SlidePower::pick_me);
+}
+
+void SlidePower::activate() {
+  auto player = cast_to<Player>(get_parent());
+  if (player == nullptr) {
+    std::cerr << "Parent null\n";
+    return;
+  }
+
+  auto const as = player->get_node<AnimatedSprite2D>("AnimatedSprite2D");
+  if (as) {
+    as->play("Slide");
+  }
+  player->set_state(&Player::sliding);
+  player->m_audio_footsteps->stop();
+  auto immunity = player->get_node<Immunity>("Immunity");
+  if (immunity) {
+    immunity->activate();
+  }
+}
+
+void SlidePower::pick_me(Node2D* picker) {
+  picker->call_deferred("pick", this);
 }

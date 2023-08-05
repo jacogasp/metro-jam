@@ -70,9 +70,14 @@ void GrenadeCommand::operator()(Player& player) const {
 
 void SlideCommand::operator()(Player& player) const {
   PROFILE_FUNCTION();
-  player.m_animatedSprite2D->play("Slide");
-  player.set_state(&Player::sliding);
-  player.m_audio_footsteps->stop();
+  if (!player.has_node("Slide")) {
+    return;
+  }
+
+  auto slide = player.get_node<SlidePower>("Slide");
+  if (slide) {
+    slide->activate();
+  }
   auto immunity = player.get_node<Immunity>("Immunity");
   if (immunity) {
     immunity->activate();
