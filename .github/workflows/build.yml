@@ -169,6 +169,35 @@ jobs:
           path: |
             ${{ matrix.config.dist_dir }}/${{ matrix.config.executable }}
             ${{ matrix.config.dist_dir }}/${{ env.ARTIFACT_WINDOWS }}
+
+  deploy:
+    runs-on: "ubuntu-latest"
+    needs:
+      - build
+      - export
+    steps:
+      - name: Download macOS release
+        uses: actions/download-artifact@v3
+        with:
+          name: dist/macos/MetroidvaniaSuperJam.dmg
+      - name: Download Windows release
+        uses: actions/download-artifact@v3
+        with:
+          name: dist/window/MetroidvaniaSuperJam.exe
+      - name: Download Butler
+        run: |
+          wget https://broth.itch.ovh/butler/linux-amd64/15.21.0/archive/default butler.tar
+          tar -xvf butler.tar
+          export PATH=$PATH:$(pwd)/butler
+          butler --version
+      - name: Push macOS release to itch.io
+        run: |
+          butler push dist/macos johnnyparafango/wrenchman:macos
+      - name: Push Windows release to itch.io
+        run: |
+          butler push dist/windows johnnyparafango/wrenchman:windows
+          
+
 on:
   workflow_dispatch:
   push:
