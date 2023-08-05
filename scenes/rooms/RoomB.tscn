@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://drapwmmn22gpw"]
+[gd_scene load_steps=28 format=3 uid="uid://drapwmmn22gpw"]
 
 [ext_resource type="TileSet" uid="uid://0w2a5bo421v7" path="res://assets/tilesets/TilesetBlocks.tres" id="1_ch5n7"]
 [ext_resource type="PackedScene" uid="uid://byowg4tosyvo2" path="res://scenes/platform.tscn" id="2_w1ib7"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://b31qyx4laex5m" path="res://scenes/steam_jet.tscn" id="10_sx0bt"]
 [ext_resource type="PackedScene" uid="uid://br4rfwsm3h8cw" path="res://scenes/poison_ranger.tscn" id="11_iyxqx"]
 [ext_resource type="PackedScene" uid="uid://cu0874vm7p4ku" path="res://scenes/bumblee_bee.tscn" id="12_rty6k"]
+[ext_resource type="PackedScene" uid="uid://p4put2nhbvkm" path="res://scenes/Slide.tscn" id="13_d05p0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1213o"]
 size = Vector2(32, 59)
@@ -141,7 +142,6 @@ frequency = 0.7
 
 [node name="GateHallB1" type="Gate" parent="."]
 next_room = "scenes/rooms/Hall.tscn"
-exit_direction = 0
 position = Vector2(585, 2445)
 collision_layer = 0
 collision_mask = 256
@@ -152,7 +152,6 @@ shape = SubResource("RectangleShape2D_1213o")
 
 [node name="GateHallB2" type="Gate" parent="."]
 next_room = "scenes/rooms/Hall.tscn"
-exit_direction = 0
 position = Vector2(1200, 1728)
 collision_layer = 0
 collision_mask = 256
@@ -747,6 +746,9 @@ position = Vector2(3119, 3206)
 
 [node name="BumbleBee4" parent="Bumblebees" instance=ExtResource("12_rty6k")]
 position = Vector2(4099, 3207)
+
+[node name="Slide" parent="." instance=ExtResource("13_d05p0")]
+position = Vector2(1469, 2429)
 
 [connection signal="body_entered" from="GateHallB1" to="GateHallB1" method="_on_body_entered"]
 [connection signal="body_exited" from="GateHallB1" to="GateHallB1" method="_on_body_exited"]
