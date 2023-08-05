@@ -62,6 +62,7 @@ void Player::_bind_methods() {
 
   ADD_SIGNAL(MethodInfo("player_hit"));
   ADD_SIGNAL(MethodInfo("player_gains_life"));
+  ADD_SIGNAL(MethodInfo("got_powerup"));
 }
 
 Player::Player() {
@@ -304,11 +305,10 @@ void Player::set_gravity(float gravity) {
 }
 
 void Player::pick(Node2D* node) {
-  auto const position = node->get_global_position();
   auto old_parent = node->get_parent();
   old_parent->remove_child(node);
   add_child(node);
-  node->set_global_position(position);
+  emit_signal("got_powerup", node);
 }
 
 void Player::hit() {

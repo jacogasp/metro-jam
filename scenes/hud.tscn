@@ -6,3 +6,8 @@
 
 [node name="LifeBar" parent="." instance=ExtResource("1_dnl85")]
 position = Vector2(24, 24)
+
+[node name="PowerUpsContainer" type="VBoxContainer" parent="."]
+offset_top = 155.0
+offset_right = 18.0
+offset_bottom = 260.0
