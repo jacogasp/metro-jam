@@ -298,7 +298,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8ynl1"]
-height = 56.2236
+radius = 3.25342
+height = 38.0
 
 [sub_resource type="Animation" id="Animation_mlkyu"]
 resource_name = "Hit"
@@ -350,10 +351,10 @@ material = SubResource("ShaderMaterial_vexqh")
 position = Vector2(-1, -32)
 sprite_frames = SubResource("SpriteFrames_0nsvt")
 animation = &"Idle"
-frame_progress = 0.639227
+frame_progress = 0.196239
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.0864906, -27.9619)
+position = Vector2(-0.660091, -18.78)
 shape = SubResource("CapsuleShape2D_8ynl1")
 
 [node name="VFX" type="AnimationPlayer" parent="."]

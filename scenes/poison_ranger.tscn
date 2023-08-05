@@ -180,8 +180,8 @@ shape = SubResource("CapsuleShape2D_kukua")
 material = SubResource("ShaderMaterial_7ama5")
 position = Vector2(3, -17)
 sprite_frames = SubResource("SpriteFrames_x7vc8")
-animation = &"Idle"
-frame_progress = 0.244956
+animation = &"Run"
+frame_progress = 0.0441313
 
 [node name="HealthBar" type="HealthBar" parent="."]
 offset_left = -16.0
