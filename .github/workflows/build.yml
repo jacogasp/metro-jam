@@ -179,11 +179,11 @@ jobs:
       - name: Download macOS release
         uses: actions/download-artifact@v3
         with:
-          name: dist/macos/MetroidvaniaSuperJam.dmg
+          name: MetroidvaniaSuperJam.dmg
       - name: Download Windows release
         uses: actions/download-artifact@v3
         with:
-          name: dist/window/MetroidvaniaSuperJam.exe
+          name: MetroidvaniaSuperJam.exe
       - name: Download Butler
         run: |
           wget https://broth.itch.ovh/butler/linux-amd64/15.21.0/archive/default butler.tar
