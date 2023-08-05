@@ -80,6 +80,7 @@ animations = [{
 explode_on_collision = true
 collision_layer = 0
 collision_mask = 16
+gravity_scale = 1.4
 max_contacts_reported = 1
 contact_monitor = true
 
