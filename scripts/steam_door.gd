@@ -2,7 +2,9 @@ extends Node2D
 
 @export var closed = true
 @export var one_shot = false
+
 var collision_layer = 0
+var shutdown = false
 
 func _ready():
 	$Lever/Label.hide()
@@ -15,21 +17,15 @@ func hide_label(_body):
 	$Lever/Label.hide()
 
 func interact():
-	if closed and not one_shot:
+	if shutdown:
+		return
+		
+	if closed:
 		open()
 	elif not closed:
 		close()
 
 func open():
-	$Lever/AnimationPlayer.play("Close")
-	$Door/Area2D.monitoring = true
-	$Door/SteamParticles.emitting = true
-	$Door/StaticBody2D.set_physics_process(true)
-	$Door/StaticBody2D.collision_layer = collision_layer
-	$Door.show()
-	closed = true
-
-func close():
 	$Lever/AnimationPlayer.play("Open")
 	$Door/Area2D.monitoring = false
 	$Door/SteamParticles.emitting = false
@@ -40,6 +36,16 @@ func close():
 	if one_shot:
 		$Lever/Area2D.monitoring = false
 		hide_label(null)
+		shutdown = true
+
+func close():
+	$Lever/AnimationPlayer.play("Close")
+	$Door/Area2D.monitoring = true
+	$Door/SteamParticles.emitting = true
+	$Door/StaticBody2D.set_physics_process(true)
+	$Door/StaticBody2D.collision_layer = collision_layer
+	$Door.show()
+	closed = true
 
 func on_body_entered(body):
 	if (body.is_in_group("Player")):
