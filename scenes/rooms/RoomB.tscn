@@ -141,6 +141,7 @@ frequency = 0.7
 
 [node name="GateHallB1" type="Gate" parent="."]
 next_room = "scenes/rooms/Hall.tscn"
+exit_direction = 0
 position = Vector2(585, 2445)
 collision_layer = 0
 collision_mask = 256
@@ -151,6 +152,7 @@ shape = SubResource("RectangleShape2D_1213o")
 
 [node name="GateHallB2" type="Gate" parent="."]
 next_room = "scenes/rooms/Hall.tscn"
+exit_direction = 0
 position = Vector2(1200, 1728)
 collision_layer = 0
 collision_mask = 256
@@ -470,6 +472,18 @@ scale = Vector2(10, 10)
 energy = 0.48
 texture = SubResource("GradientTexture2D_e0nqw")
 
+[node name="Light52" type="PointLight2D" parent="Lights"]
+position = Vector2(1618, 3081)
+scale = Vector2(10, 10)
+energy = 0.48
+texture = SubResource("GradientTexture2D_e0nqw")
+
+[node name="Light53" type="PointLight2D" parent="Lights"]
+position = Vector2(1668, 3337)
+scale = Vector2(10, 10)
+energy = 0.48
+texture = SubResource("GradientTexture2D_e0nqw")
+
 [node name="Light23" type="PointLight2D" parent="Lights"]
 position = Vector2(5892, 2705)
 scale = Vector2(10, 10)
@@ -690,10 +704,40 @@ scale = Vector2(1.02796, 1.1004)
 [node name="PoisonRanger2" parent="PoisonRangers" instance=ExtResource("11_iyxqx")]
 position = Vector2(4698, 1954)
 
+[node name="PoisonRanger3" parent="PoisonRangers" instance=ExtResource("11_iyxqx")]
+position = Vector2(5414, 1946)
+
+[node name="PoisonRanger4" parent="PoisonRangers" instance=ExtResource("11_iyxqx")]
+position = Vector2(6007, 1476)
+
+[node name="PoisonRanger5" parent="PoisonRangers" instance=ExtResource("11_iyxqx")]
+position = Vector2(3405, 3598)
+
 [node name="Bumblebees" type="Node" parent="."]
 
 [node name="BumbleBee" parent="Bumblebees" instance=ExtResource("12_rty6k")]
 position = Vector2(6882, 1191)
+
+[node name="BumbleBee5" parent="Bumblebees" instance=ExtResource("12_rty6k")]
+position = Vector2(4026, 1473)
+
+[node name="BumbleBee6" parent="Bumblebees" instance=ExtResource("12_rty6k")]
+position = Vector2(4087, 1473)
+
+[node name="BumbleBee7" parent="Bumblebees" instance=ExtResource("12_rty6k")]
+position = Vector2(4144, 1466)
+
+[node name="BumbleBee8" parent="Bumblebees" instance=ExtResource("12_rty6k")]
+position = Vector2(4201, 1473)
+
+[node name="BumbleBee9" parent="Bumblebees" instance=ExtResource("12_rty6k")]
+position = Vector2(4265, 1470)
+
+[node name="BumbleBee10" parent="Bumblebees" instance=ExtResource("12_rty6k")]
+position = Vector2(4322, 1467)
+
+[node name="BumbleBee11" parent="Bumblebees" instance=ExtResource("12_rty6k")]
+position = Vector2(4379, 1470)
 
 [node name="BumbleBee2" parent="Bumblebees" instance=ExtResource("12_rty6k")]
 position = Vector2(6885, 1478)
