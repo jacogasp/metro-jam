@@ -1,4 +1,5 @@
 #include "timer.hpp"
+#include <cassert>
 
 void Timer::start() {
   m_elapsed_time = 0;
@@ -50,4 +51,10 @@ TimeDelta Timer::get_timeout() const {
 
 bool Timer::is_running() const {
   return m_running;
+}
+
+TimePoint Timer::remaining() const {
+  auto r = m_timeout - m_elapsed_time;
+  assert(r >= 0);
+  return r;
 }

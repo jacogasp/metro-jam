@@ -63,6 +63,14 @@ void Player::_bind_methods() {
   ADD_SIGNAL(MethodInfo("player_gains_life"));
 }
 
+Player::Player() {
+  Immunity* immunity = memnew(Immunity);
+  immunity->set_name("Immunity");
+  immunity->set_process(true);
+  call_deferred("add_child", immunity);
+  immunity->set_owner(this);
+}
+
 void Player::_ready() {
   PROFILE_FUNCTION();
   m_logger           = core_game::LoggerLocator::getService();
@@ -296,8 +304,8 @@ void Player::set_gravity(float gravity) {
 }
 
 void Player::hit() {
-  auto immunity = m_power_ups.find(Superpower::Type::Immunity);
-  if (immunity != m_power_ups.end()) {
+  auto immunity = get_node<Immunity>("Immunity");
+  if (immunity->is_active()) {
     return;
   }
   loose_life();

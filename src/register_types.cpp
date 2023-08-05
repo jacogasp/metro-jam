@@ -20,6 +20,7 @@
 #include "player.hpp"
 #include "poison_ranger.hpp"
 #include "profiler.hpp"
+#include "superpowers.hpp"
 #include "world.hpp"
 #include "wrench.hpp"
 
@@ -43,6 +44,7 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
   ClassDB::register_class<PoisonRanger>();
   ClassDB::register_class<HealthBar>();
   ClassDB::register_class<Gun>();
+  ClassDB::register_class<Immunity>();
 
 #ifdef CORE_GAME_PROFILING
   core_game::Instrumentor::get().begin_session();

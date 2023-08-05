@@ -148,13 +148,6 @@ void SlideState::update(Player& player) {
     return;
   }
 
-  // Remove immunity
-  auto& power_ups = player.m_power_ups;
-  if (auto immunity = power_ups.find(Superpower::Type::Immunity);
-      immunity != power_ups.end()) {
-    player.m_power_ups.erase(immunity);
-  }
-
   if (velocity.y < 0) {
     return;
   }

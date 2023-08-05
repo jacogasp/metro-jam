@@ -47,8 +47,6 @@ class Player
   AudioStreamPlayer* m_audio_footsteps           = nullptr;
   AudioStreamPlayer* m_audio_jump                = nullptr;
 
-  PowerUps m_power_ups;
-
   PlayerState* m_state{&Player::standing};
 
   Rect2 m_bounds{};
@@ -79,7 +77,7 @@ class Player
   static Path savings_path;
 
   friend struct PlayerState;
-
+  Player();
   void _ready() override;
   void _process(double delta) override;
   void _physics_process(double delta) override;
