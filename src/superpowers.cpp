@@ -1,6 +1,7 @@
 #include "superpowers.hpp"
 #include "player.hpp"
 #include <godot_cpp/classes/animated_sprite2d.hpp>
+#include <godot_cpp/classes/label.hpp>
 
 void Immunity::_bind_methods() {
   BIND_PROPERTY(Immunity, duration, Variant::FLOAT);
@@ -78,5 +79,9 @@ void SlidePower::activate() {
 }
 
 void SlidePower::pick_me(Node2D* picker) {
+  auto label = get_node<Label>("Label");
+  if (label) {
+    label->queue_free();
+  }
   picker->call_deferred("pick", this);
 }
