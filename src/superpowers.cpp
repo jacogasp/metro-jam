@@ -55,11 +55,38 @@ void Immunity::deactivate() {
 }
 
 // Slide Power
+static void set_icon_cooling_level(TextureRect& texture_rect, float level) {
+  Ref<ShaderMaterial> material = texture_rect.get_material();
+  material->set_shader_parameter("amount", level);
+}
+
 void SlidePower::_bind_methods() {
   ClassDB::bind_method(D_METHOD("pick_me"), &SlidePower::pick_me);
 }
 
+void SlidePower::_ready() {
+  m_texture_rect = get_node<TextureRect>("TextureRect");
+  m_cooldown_timer.set_timeout(5);
+  m_cooldown_timer.set_callback([&] {
+//    set_icon_cooling_level(*m_texture_rect, 0);
+    m_enabled = true;
+  });
+}
+
+void SlidePower::_process(double delta) {
+  m_cooldown_timer.tick(delta);
+  if (cooling_down() && m_texture_rect) {
+    auto const level = 1 - static_cast<float>(m_cooldown_timer.remaining()
+                                          / m_cooldown_timer.get_timeout());
+    set_icon_cooling_level(*m_texture_rect, level);
+  }
+}
+
 void SlidePower::activate() {
+  if (!m_enabled) {
+    return;
+  }
+
   auto player = cast_to<Player>(get_parent());
   if (player == nullptr) {
     std::cerr << "Parent null\n";
@@ -76,6 +103,10 @@ void SlidePower::activate() {
   if (immunity) {
     immunity->activate();
   }
+
+  set_icon_cooling_level(*m_texture_rect, 1);
+  m_enabled = false;
+  m_cooldown_timer.start();
 }
 
 void SlidePower::pick_me(Node2D* picker) {
@@ -84,4 +115,8 @@ void SlidePower::pick_me(Node2D* picker) {
     label->queue_free();
   }
   picker->call_deferred("pick", this);
+}
+
+bool SlidePower::cooling_down() const {
+  return m_cooldown_timer.is_running();
 }

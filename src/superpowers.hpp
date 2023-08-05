@@ -4,6 +4,7 @@
 #include "macros.hpp"
 #include "timer.hpp"
 #include <godot_cpp/classes/node2d.hpp>
+#include <godot_cpp/classes/texture_rect.hpp>
 #include <map>
 #include <memory>
 #include <unordered_map>
@@ -53,10 +54,16 @@ class SlidePower
 
  private:
   static void _bind_methods();
+  TextureRect* m_texture_rect;
+  Timer m_cooldown_timer;
+  bool m_enabled{true};
 
  public:
+  void _ready() override;
+  void _process(double) override;
   void activate() override;
   void pick_me(Node2D* picker);
+  bool cooling_down() const;
 };
 
 #endif // COREGAME_SUPERPOWERS_HPP
