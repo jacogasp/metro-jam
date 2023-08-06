@@ -28,5 +28,6 @@ position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 editor_draw_limits = true
 
+[connection signal="got_powerup" from="Player" to="HUD" method="on_player_got_powerup"]
 [connection signal="player_gains_life" from="Player" to="." method="on_player_gains_life"]
 [connection signal="player_hit" from="Player" to="." method="on_player_hit"]
