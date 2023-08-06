@@ -171,6 +171,7 @@ jobs:
             ${{ matrix.config.dist_dir }}/${{ env.ARTIFACT_WINDOWS }}
 
   deploy:
+    name: "Deploy to itch.io"
     runs-on: "ubuntu-latest"
     needs:
       - build
