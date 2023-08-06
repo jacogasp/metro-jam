@@ -198,7 +198,9 @@ jobs:
           timeout 180 godot --headless --quit --export-release ${{ matrix.config.export_preset }}
           ls -lah ${{ matrix.config.dist_dir }}
           if [ ${{ matrix.config.os }} == "windows-latest" ]
-            then 7z ${{ matrix.config.bundle }} ${{ matrix.config.executable }} ${{ env.ARTIFACT_WINDOWS }}
+            then
+              cd ${{ matrix.config.dist_dir }}
+              7z ${{ matrix.config.bundle }} ${{ matrix.config.executable }} ${{ env.ARTIFACT_WINDOWS }}
           fi
 
       - name: Upload executable artifact
@@ -206,7 +208,7 @@ jobs:
         with:
           name: ${{ matrix.config.bundle }}
           path:
-            ${{ matrix.config.bundle }}
+            ${{ matrix.config.dist_dir }}/${{ matrix.config.bundle }}
 
 
   deploy:
