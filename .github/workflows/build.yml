@@ -200,7 +200,7 @@ jobs:
           if [ ${{ matrix.config.os }} == "windows-latest" ]
             then
               cd ${{ matrix.config.dist_dir }}
-              7z ${{ matrix.config.bundle }} ${{ matrix.config.executable }} ${{ env.ARTIFACT_WINDOWS }}
+              7z a ${{ matrix.config.bundle }} ${{ matrix.config.executable }} ${{ env.ARTIFACT_WINDOWS }}
           fi
 
       - name: Upload executable artifact
