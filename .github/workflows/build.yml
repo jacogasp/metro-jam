@@ -195,12 +195,12 @@ jobs:
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
         run: |
-          butler push dist/macos johnnyparafango/wrenchman:macos
+          butler push MetroidvaniaSuperJam.dmg johnnyparafango/wrenchman:macos
       - name: Push Windows release to itch.io
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
         run: |
-          butler push dist/windows johnnyparafango/wrenchman:windows
+          butler push MetroidvaniaSuperJam.exe johnnyparafango/wrenchman:windows
 
 
 on:
