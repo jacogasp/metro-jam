@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://bdg1pub7dq7s0"]
+
+[ext_resource type="Shader" path="res://shaders/CoolDown.gdshader" id="1_35xs7"]
+[ext_resource type="Texture2D" uid="uid://d2rjs16821sx3" path="res://assets/icons/air_jump.png" id="2_5lmpm"]
+[ext_resource type="FontFile" uid="uid://ctpai807254id" path="res://assets/fonts/Pixeled.ttf" id="3_88ayj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4ykbm"]
+shader = ExtResource("1_35xs7")
+shader_parameter/mask_color = Color(0.164706, 0.164706, 0.164706, 1)
+shader_parameter/amount = 1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gfebg"]
+size = Vector2(22, 22)
+
+[node name="AirJump" type="AirJumpPower"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_4ykbm")
+offset_left = -12.0
+offset_top = -12.0
+offset_right = 12.0
+offset_bottom = 12.0
+texture = ExtResource("2_5lmpm")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 131072
+collision_mask = 256
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_gfebg")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -130.0
+offset_top = -120.0
+offset_right = 133.0
+offset_bottom = -22.0
+theme_override_fonts/font = ExtResource("3_88ayj")
+text = "Press Jump twice for Air Jump"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[connection signal="body_entered" from="Area2D" to="." method="pick_me"]

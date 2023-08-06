@@ -46,6 +46,7 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
   ClassDB::register_class<Gun>();
   ClassDB::register_class<Immunity>();
   ClassDB::register_class<SlidePower>();
+  ClassDB::register_class<AirJumpPower>();
 
 #ifdef CORE_GAME_PROFILING
   core_game::Instrumentor::get().begin_session();

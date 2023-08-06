@@ -66,4 +66,17 @@ class SlidePower
   bool cooling_down() const;
 };
 
+class AirJumpPower
+    : public Node2D
+    , public Superpower {
+  GDCLASS_V2(AirJumpPower, Node2D)
+
+ private:
+  static void _bind_methods();
+
+ public:
+  void activate() override;
+  void pick_me(Node2D* picker);
+};
+
 #endif // COREGAME_SUPERPOWERS_HPP

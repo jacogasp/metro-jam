@@ -43,7 +43,7 @@ void StandingState::update(Player& player) {
 
 void JumpingState::handleInput(Player& player, Input& input) {
   PROFILE_FUNCTION();
-  if (input.is_action_just_pressed("jump")) {
+  if (input.is_action_just_pressed("jump") && player.has_node("AirJump")) {
     air_jump(player);
   } else if (input.is_action_just_pressed("attack")) {
     attack(player);

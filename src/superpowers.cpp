@@ -67,16 +67,14 @@ void SlidePower::_bind_methods() {
 void SlidePower::_ready() {
   m_texture_rect = get_node<TextureRect>("TextureRect");
   m_cooldown_timer.set_timeout(5);
-  m_cooldown_timer.set_callback([&] {
-//    set_icon_cooling_level(*m_texture_rect, 0);
-    m_enabled = true;
-  });
+  m_cooldown_timer.set_callback([&] { m_enabled = true; });
 }
 
 void SlidePower::_process(double delta) {
   m_cooldown_timer.tick(delta);
   if (cooling_down() && m_texture_rect) {
-    auto const level = 1 - static_cast<float>(m_cooldown_timer.remaining()
+    auto const level = 1
+                     - static_cast<float>(m_cooldown_timer.remaining()
                                           / m_cooldown_timer.get_timeout());
     set_icon_cooling_level(*m_texture_rect, level);
   }
@@ -119,4 +117,19 @@ void SlidePower::pick_me(Node2D* picker) {
 
 bool SlidePower::cooling_down() const {
   return m_cooldown_timer.is_running();
+}
+
+void AirJumpPower::_bind_methods() {
+  ClassDB::bind_method(D_METHOD("pick_me"), &AirJumpPower::pick_me);
+}
+
+void AirJumpPower::activate() {
+}
+
+void AirJumpPower::pick_me(Node2D* picker) {
+  auto label = get_node<Label>("Label");
+  if (label) {
+    label->queue_free();
+  }
+  picker->call_deferred("pick", this);
 }
