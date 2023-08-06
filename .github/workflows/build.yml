@@ -187,9 +187,9 @@ jobs:
           name: MetroidvaniaSuperJam.exe
       - name: Download Butler
         run: |
-          wget https://broth.itch.ovh/butler/linux-amd64/15.21.0/archive/default -O butler.tar
-          tar -xvf butler.tar
-          export PATH=$PATH:$(pwd)/butler
+          wget https://broth.itch.ovh/butler/linux-amd64/15.21.0/archive/default -O butler.7z
+          7z x butler.7z
+          mv butler /usr/bin
           butler --version
       - name: Push macOS release to itch.io
         run: |
