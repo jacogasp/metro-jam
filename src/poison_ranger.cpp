@@ -119,18 +119,18 @@ void PoisonRanger::take_hit(int damage, Vector2 const& from_direction) {
 }
 
 void PoisonRanger::set_hit_animation_time(float t) const {
-  auto animated_sprite = get_node<AnimatedSprite2D>("AnimatedSprite2D");
-  if (animated_sprite) {
+  if (has_node("AnimatedSprite2D")) {
+    auto animated_sprite = get_node<AnimatedSprite2D>("AnimatedSprite2D");
     Ref<ShaderMaterial> material = animated_sprite->get_material();
     material->set_shader_parameter("time", t);
   }
 }
 
 float PoisonRanger::get_hit_animation_time() const {
-  auto animated_sprite = get_node<AnimatedSprite2D>("AnimatedSprite2D");
-  if (animated_sprite == nullptr) {
+  if (!has_node("AnimatedSprite2D")) {
     return 0.0;
   }
+  auto animated_sprite         = get_node<AnimatedSprite2D>("AnimatedSprite2D");
   Ref<ShaderMaterial> material = animated_sprite->get_material();
   if (material == nullptr) {
     return 0.0;
