@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://b56ma45dpjg8o"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u2s1j"]
+size = Vector2(82, 67.5)
+
+[node name="Wrench" type="Wrench"]
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4096
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(46, -37.25)
+shape = SubResource("RectangleShape2D_u2s1j")
+debug_color = Color(1, 0.45098, 0.854902, 0.211765)

@@ -83,9 +83,9 @@ void Player::_ready() {
   m_vfx             = get_node<AnimationPlayer>("VFX");
   m_audio_footsteps = get_node<AudioStreamPlayer>("Audio/Footsteps");
   m_audio_jump      = get_node<AudioStreamPlayer>("Audio/Jump");
+  m_wrench_weapon   = get_node<Wrench>("Wrench");
   auto shape = get_node<CollisionShape2D>("CollisionShape2D")->get_shape();
   m_bounds   = shape->get_rect();
-  add_child(&wrench_weapon);
   load();
   m_logger->info("Player ready.");
 }
@@ -277,11 +277,17 @@ void Player::set_attack_range(float attack_range) {
 }
 
 int Player::get_attack_strength() const {
-  return Player::wrench_weapon.get_damages();
+  if (Player::m_wrench_weapon) {
+    return Player::m_wrench_weapon->get_damages();
+  } else {
+    return 0;
+  }
 }
 
 void Player::set_attack_strength(int strength) {
-  Player::wrench_weapon.set_damages(strength);
+  if (Player::m_wrench_weapon) {
+    Player::m_wrench_weapon->set_damages(strength);
+  }
 }
 
 float Player::get_skin_depth() const {

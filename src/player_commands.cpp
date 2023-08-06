@@ -53,7 +53,7 @@ void AttackCommand::operator()(Player& player) const {
   auto target = player.get_global_position();
   target.x += player.m_direction == Player::right ? player.m_attack_range
                                                   : -player.m_attack_range;
-  player.wrench_weapon.fire(target);
+  player.m_wrench_weapon->fire(target);
 }
 
 void GrenadeCommand::operator()(Player& player) const {

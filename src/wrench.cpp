@@ -1,20 +1,21 @@
 #include "wrench.hpp"
+#include <godot_cpp/classes/area2d.hpp>
 #include <godot_cpp/classes/physics_direct_space_state2d.hpp>
 #include <godot_cpp/classes/physics_ray_query_parameters2d.hpp>
 #include <godot_cpp/classes/world2d.hpp>
 
 void Wrench::_bind_methods() {
+  BIND_PROPERTY(Wrench, damages, godot::Variant::FLOAT);
 }
 
-void Wrench::fire(Vector2 const& target) {
-  auto query = PhysicsRayQueryParameters2D::create(get_global_position(),
-                                                   target, enemy_mask);
-  query->set_hit_from_inside(true);
-  auto space_state = get_world_2d()->get_direct_space_state();
-  auto result      = space_state->intersect_ray(query);
-  if (!result.is_empty()) {
-    Node2D* collider = cast_to<Node2D>(result["collider"]);
-    collider->call("take_hit", m_damages, get_global_position());
+void Wrench::fire(Vector2 const&) {
+  auto area2d = get_node<Area2D>("Area2D");
+  if (area2d) {
+    auto bodies = area2d->get_overlapping_bodies();
+    for (auto i = 0; i < bodies.size(); ++i) {
+      auto body = cast_to<Node2D>(bodies[i]);
+      body->call("take_hit", m_damages, get_global_position());
+    }
   }
 }
 
