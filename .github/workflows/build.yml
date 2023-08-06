@@ -6,6 +6,8 @@ env:
   ARTIFACT_LINUX: libCoreGame.so
   ARTIFACT_MACOS: libCoreGame.dylib
   ARTIFACT_WINDOWS: libCoreGame.dll
+  RELEASE_MACOS: Wrenchman.dmg
+  RELEASE_WINDOWS: Wrenchman-win64.zip
   GODOT_VERSION: 4.1
 
 jobs:
@@ -124,13 +126,15 @@ jobs:
             export_preset: macOS
             build_dir: build/macos
             dist_dir: dist/macos
-            executable: MetroidvaniaSuperJam.dmg
+            executable: Wrenchman.dmg
+            bundle: Wrenchman.dmg
           - name: Export Windows
             os: windows-latest
             export_preset: Windows
             build_dir: build/windows
             dist_dir: dist/windows
-            executable: MetroidvaniaSuperJam.exe
+            executable: Wrenchman.exe
+            bundle: Wrenchman-win64.zip
     needs:
       - build
     steps:
@@ -193,14 +197,17 @@ jobs:
           mkdir ${{ matrix.config.dist_dir }}
           timeout 180 godot --headless --quit --export-release ${{ matrix.config.export_preset }}
           ls -lah ${{ matrix.config.dist_dir }}
+          if [ ${{ matrix.config.os }} == "windows-latest" ]
+            then zip ${{ matrix.config.bundle }} ${{ matrix.config.executable }} ${{ env.ARTIFACT_WINDOWS }}
+          fi
 
       - name: Upload executable artifact
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.config.executable }}
-          path: |
-            ${{ matrix.config.dist_dir }}/${{ matrix.config.executable }}
-            ${{ matrix.config.dist_dir }}/${{ env.ARTIFACT_WINDOWS }}
+          name: ${{ matrix.config.bundle }}
+          path:
+            ${{ matrix.config.bundle }}
+
 
   deploy:
     name: "Deploy to itch.io"
@@ -212,11 +219,11 @@ jobs:
       - name: Download macOS release
         uses: actions/download-artifact@v3
         with:
-          name: MetroidvaniaSuperJam.dmg
+          name: ${{ env.RELEASE_MACOS }}
       - name: Download Windows release
         uses: actions/download-artifact@v3
         with:
-          name: MetroidvaniaSuperJam.exe
+          name: ${{ env.RELEASE_WINDOWS }}
       - name: Download Butler
         run: |
           wget https://broth.itch.ovh/butler/linux-amd64/15.21.0/archive/default -O butler.7z
@@ -227,12 +234,12 @@ jobs:
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
         run: |
-          butler push MetroidvaniaSuperJam.dmg johnnyparafango/wrenchman:macos
+          butler push ${{ env.RELEASE_MACOS }} johnnyparafango/wrenchman:macos
       - name: Push Windows release to itch.io
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
         run: |
-          butler push MetroidvaniaSuperJam.exe johnnyparafango/wrenchman:windows
+          butler push ${{ env.RELEASE_WINDOWS }} johnnyparafango/wrenchman:windows
 
 
 on:
