@@ -54,7 +54,7 @@ class SlidePower
 
  private:
   static void _bind_methods();
-  TextureRect* m_texture_rect;
+  TextureRect* m_texture_rect{nullptr};
   Timer m_cooldown_timer;
   bool m_enabled{true};
 
