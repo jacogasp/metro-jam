@@ -2,10 +2,11 @@
 .godot/
 .vscode/
 .idea/
-build/
+build/*
 !build/macos/libCoreGame.dylib
 !build/windows/libCoreGame.dll
 !build/linux/libCoreGame.so
+!build/.gdignore
 dist/
 .DS_Store
 !.gdignore
