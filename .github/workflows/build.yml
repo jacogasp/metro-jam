@@ -90,12 +90,17 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: libCoreGame.dylib
-          path: build/macos/libCoreGame.dylib
+          path: build/macos
       - name: Download libCoreGame.dll
         uses: actions/download-artifact@v3
         with:
           name: libCoreGame.dll
-          path: build/windows/libCoreGame.dll
+          path: build/windows
+      - name: Download libCoreGame.so
+        uses: actions/download-artifact@v3
+        with:
+          name: libCoreGame.so
+          path: build/linux
       - name: "Commit build files"
         run: |
           git config --global user.name 'GitHub'
