@@ -172,6 +172,7 @@ shape = SubResource("RectangleShape2D_1213o")
 [node name="SteamDoor" type="Node2D" parent="."]
 position = Vector2(1023, 2016)
 script = ExtResource("3_03xe7")
+one_shot = true
 
 [node name="Lever" type="Node2D" parent="SteamDoor"]
 position = Vector2(381, 1064)
@@ -761,6 +762,9 @@ position = Vector2(1469, 2429)
 
 [node name="AirJump" parent="." instance=ExtResource("14_vc6ow")]
 position = Vector2(1047, 2433)
+
+[node name="BumbleBee" parent="." instance=ExtResource("12_rty6k")]
+position = Vector2(1292, 2342)
 
 [connection signal="body_entered" from="GateHallB1" to="GateHallB1" method="_on_body_entered"]
 [connection signal="body_exited" from="GateHallB1" to="GateHallB1" method="_on_body_exited"]
