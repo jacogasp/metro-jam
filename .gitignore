@@ -3,6 +3,9 @@
 .vscode/
 .idea/
 build/
+!build/macos/libCoreGame.dylib
+!build/windows/libCoreGame.dll
+!build/linux/libCoreGame.so
 dist/
 .DS_Store
 !.gdignore
