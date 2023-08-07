@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cqhkrnuchxrrm"]
+[gd_scene load_steps=24 format=3 uid="uid://cqhkrnuchxrrm"]
 
 [ext_resource type="TileSet" uid="uid://0w2a5bo421v7" path="res://assets/tilesets/TilesetBlocks.tres" id="1_hh4i0"]
 [ext_resource type="PackedScene" uid="uid://b31qyx4laex5m" path="res://scenes/steam_jet.tscn" id="2_t44ap"]
@@ -11,6 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://cu0874vm7p4ku" path="res://scenes/bumblee_bee.tscn" id="9_fykdt"]
 [ext_resource type="Texture2D" uid="uid://dch5xho6lehap" path="res://assets/textures/light.png" id="10_s8udk"]
 [ext_resource type="Texture2D" uid="uid://2vcybdhlfsdk" path="res://assets/light_bulb_sprite.png" id="11_2bac5"]
+[ext_resource type="PackedScene" uid="uid://bdg1pub7dq7s0" path="res://scenes/power_ups/air_jump.tscn" id="12_dm5vy"]
+[ext_resource type="PackedScene" uid="uid://p4put2nhbvkm" path="res://scenes/power_ups/Slide.tscn" id="13_hseid"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_egxwb"]
 size = Vector2(32, 64.6875)
@@ -98,7 +100,7 @@ layer_2/modulate = Color(1, 1, 1, 1)
 layer_2/y_sort_enabled = false
 layer_2/y_sort_origin = 0
 layer_2/z_index = -1
-layer_2/tile_data = PackedInt32Array(6160405, 262144, 7, 6225941, 262144, 7, 6291477, 262144, 7, 6160406, 262144, 7, 6225942, 720896, 4, 6291478, 720896, 5, 6160407, 262144, 7, 6225943, 851968, 4, 6291479, 851968, 5, 6160408, 262144, 7, 6225944, 262144, 7, 6291480, 262144, 7, 3539140, 524288, 5, 3604676, 524288, 6, 3539141, 589824, 6, 6226036, 524288, 5, 6291572, 524288, 6, 6226038, 524288, 5, 6291574, 524288, 6, 6226009, 524288, 5, 6291545, 524288, 6, 6225959, 524288, 5, 6291495, 524288, 6, 6225955, 524288, 5, 6291491, 524288, 6)
+layer_2/tile_data = PackedInt32Array(6160405, 262144, 7, 6225941, 262144, 7, 6291477, 262144, 7, 6160406, 262144, 7, 6225942, 720896, 4, 6291478, 720896, 5, 6160407, 262144, 7, 6225943, 851968, 4, 6291479, 851968, 5, 6160408, 262144, 7, 6225944, 262144, 7, 6291480, 262144, 7, 3539140, 524288, 5, 3604676, 524288, 6, 3539141, 589824, 6, 6226036, 524288, 5, 6291572, 524288, 6, 6226038, 524288, 5, 6291574, 524288, 6, 6226009, 524288, 5, 6291545, 524288, 6, 6225959, 524288, 5, 6291495, 524288, 6, 6225955, 524288, 5, 6291491, 524288, 6, 5177442, 524288, 5, 5242978, 524288, 6, 5177441, 589824, 6)
 layer_3/name = "Blocks"
 layer_3/enabled = true
 layer_3/modulate = Color(1, 1, 1, 1)
@@ -127,6 +129,18 @@ position = Vector2(2160, 3105)
 
 [node name="SteamJet4" parent="SteamJets" instance=ExtResource("2_t44ap")]
 position = Vector2(2417, 3107)
+
+[node name="SteamJet43" parent="SteamJets" instance=ExtResource("2_t44ap")]
+position = Vector2(1618, 2524)
+
+[node name="SteamJet44" parent="SteamJets" instance=ExtResource("2_t44ap")]
+position = Vector2(1746, 2558)
+
+[node name="SteamJet45" parent="SteamJets" instance=ExtResource("2_t44ap")]
+position = Vector2(2032, 2557)
+
+[node name="SteamJet46" parent="SteamJets" instance=ExtResource("2_t44ap")]
+position = Vector2(5488, 1241)
 
 [node name="SteamJet5" parent="SteamJets" instance=ExtResource("2_t44ap")]
 position = Vector2(2672, 3107)
@@ -252,23 +266,6 @@ collision_mask = 257
 position = Vector2(14, -31.6563)
 shape = SubResource("RectangleShape2D_egxwb")
 
-[node name="POWERUP SLIDE" type="Label" parent="."]
-offset_left = 3076.0
-offset_top = 2534.0
-offset_right = 3475.0
-offset_bottom = 2601.0
-theme_override_font_sizes/font_size = 46
-text = "POWERUP = SLIDE
-"
-
-[node name="POWERUP JUMP2" type="Label" parent="."]
-offset_left = 6202.0
-offset_top = 1717.0
-offset_right = 6621.0
-offset_bottom = 1784.0
-theme_override_font_sizes/font_size = 46
-text = "POWERUP = JUMP2"
-
 [node name="PoisonRangers" type="Node" parent="."]
 
 [node name="PoisonRanger1" parent="PoisonRangers" instance=ExtResource("4_1c2rf")]
@@ -279,6 +276,15 @@ position = Vector2(797, 2572)
 
 [node name="PoisonRanger3" parent="PoisonRangers" instance=ExtResource("4_1c2rf")]
 position = Vector2(2207, 2575)
+
+[node name="PoisonRanger4" parent="PoisonRangers" instance=ExtResource("4_1c2rf")]
+position = Vector2(1483, 1764)
+
+[node name="PoisonRanger5" parent="PoisonRangers" instance=ExtResource("4_1c2rf")]
+position = Vector2(1391, 2570)
+
+[node name="PoisonRanger6" parent="PoisonRangers" instance=ExtResource("4_1c2rf")]
+position = Vector2(2017, 3057)
 
 [node name="SteamDoor" type="Node2D" parent="."]
 position = Vector2(4675, 794)
@@ -350,6 +356,18 @@ position = Vector2(4748, 2667)
 [node name="BumbleBee2" parent="Bumblebees" instance=ExtResource("9_fykdt")]
 position = Vector2(5146, 2259)
 
+[node name="BumbleBee3" parent="Bumblebees" instance=ExtResource("9_fykdt")]
+position = Vector2(3016, 1777)
+
+[node name="BumbleBee4" parent="Bumblebees" instance=ExtResource("9_fykdt")]
+position = Vector2(4625, 1766)
+
+[node name="BumbleBee5" parent="Bumblebees" instance=ExtResource("9_fykdt")]
+position = Vector2(4085, 2678)
+
+[node name="BumbleBee6" parent="Bumblebees" instance=ExtResource("9_fykdt")]
+position = Vector2(3573, 3094)
+
 [node name="Lights" type="Node" parent="."]
 
 [node name="Light1" type="Node2D" parent="Lights"]
@@ -361,6 +379,17 @@ scale = Vector2(0.875, 0.875)
 texture = ExtResource("10_s8udk")
 
 [node name="Sprite2D" type="Sprite2D" parent="Lights/Light1"]
+texture = ExtResource("11_2bac5")
+
+[node name="Light4" type="Node2D" parent="Lights"]
+position = Vector2(3153, 2537)
+
+[node name="PointLight2D" type="PointLight2D" parent="Lights/Light4"]
+position = Vector2(0, 101)
+scale = Vector2(0.875, 0.875)
+texture = ExtResource("10_s8udk")
+
+[node name="Sprite2D" type="Sprite2D" parent="Lights/Light4"]
 texture = ExtResource("11_2bac5")
 
 [node name="Light2" type="Node2D" parent="Lights"]
@@ -474,6 +503,12 @@ position = Vector2(1033, 2335)
 scale = Vector2(10, 10)
 energy = 0.48
 texture = SubResource("GradientTexture2D_g4jgr")
+
+[node name="AirJump" parent="." instance=ExtResource("12_dm5vy")]
+position = Vector2(6322, 1754)
+
+[node name="Slide" parent="." instance=ExtResource("13_hseid")]
+position = Vector2(3122, 2558)
 
 [connection signal="body_entered" from="GateHallD" to="GateHallD" method="_on_body_entered"]
 [connection signal="body_exited" from="GateHallD" to="GateHallD" method="_on_body_exited"]
