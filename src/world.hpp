@@ -23,7 +23,7 @@ class World : public Node2D {
 
   core_game::LoggerService* m_logger{nullptr};
   Node* m_current_scene{nullptr};
-  Node* m_player{nullptr};
+  Player* m_player{nullptr};
   NodePath m_player_node_path{};
   Ref<PackedScene> m_packed_scene{nullptr};
 

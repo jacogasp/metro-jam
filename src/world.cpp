@@ -4,6 +4,7 @@
 #include "player.hpp"
 #include "profiler.hpp"
 #include <godot_cpp/classes/resource_loader.hpp>
+#include <godot_cpp/classes/resource_saver.hpp>
 
 std::array<World::NextSceneMessage, 16> World::m_pending{};
 size_t World::m_pending_index{0};
@@ -54,6 +55,22 @@ void World::_process(double) {
   m_pending_index = 0;
 }
 
+static void filter_superpowers(Player* player, Node* scene) {
+  auto superpowers_node = player->get_node<Node>("Superpowers");
+  if (superpowers_node == nullptr) {
+    return;
+  }
+  auto superpowers = superpowers_node->get_children();
+  for (auto i = 0; i < superpowers.size(); ++i) {
+    auto const superpower = Node2D::cast_to<Node2D>(superpowers[i]);
+    auto const name       = superpower->get_name().get_basename();
+    if (scene->has_node(name)) {
+      auto node = scene->get_node<Node2D>(name);
+      node->queue_free();
+    }
+  }
+}
+
 void World::update_scene() {
   PROFILE_FUNCTION();
 
@@ -63,6 +80,7 @@ void World::update_scene() {
   }
   auto old_scene  = m_current_scene;
   m_current_scene = m_packed_scene->instantiate();
+  filter_superpowers(m_player, m_current_scene);
   add_child(m_current_scene);
   if (old_scene) {
     old_scene->call_deferred("free");
