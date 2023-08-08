@@ -48,18 +48,19 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
   ClassDB::register_class<SlidePower>();
   ClassDB::register_class<AirJumpPower>();
 
-#ifdef CORE_GAME_PROFILING
+#ifdef DEBUG_ENABLED
   core_game::Instrumentor::get().begin_session();
 #endif
 }
 
 void uninitialize_example_module(ModuleInitializationLevel p_level) {
-#ifdef CORE_GAME_PROFILING
-  core_game::Instrumentor::get().end_session();
-#endif
   if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
     return;
   }
+#ifdef DEBUG_ENABLED
+  core_game::Instrumentor::get().end_session();
+#endif
+  core_game::purge_savings_directory(core_game::SAVINGS_DIRECTORY);
 }
 
 extern "C" {
