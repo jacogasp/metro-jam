@@ -202,7 +202,7 @@ bool Player::is_life_full() const {
   return m_current_life == m_max_lives;
 }
 
-void Player::save() {
+void Player::save() const {
   PROFILE_FUNCTION();
   try {
     Dictionary d{};
