@@ -3,6 +3,7 @@
 
 #include "gate.hpp"
 #include "macros.hpp"
+#include "persist.hpp"
 #include <godot_cpp/classes/node.hpp>
 #include <godot_cpp/classes/packed_scene.hpp>
 #include <array>
@@ -14,7 +15,9 @@ class LoggerService;
 }
 
 class Player;
-class World : public Node2D {
+class World
+    : public Node2D
+    , Persist {
   GDCLASS_V2(World, Node2D)
   struct NextSceneMessage {
     std::string next_scene;
@@ -34,6 +37,8 @@ class World : public Node2D {
   void _ready() override;
   void _process(double) override;
   void update_scene();
+  void save() const override;
+  void load() override;
   // Use set/get only for editor only
   Ref<PackedScene> get_packed_scene();
   void set_packed_scene(const Ref<PackedScene>& packed_scene);

@@ -1,4 +1,5 @@
 #include "world.hpp"
+#include "constants.hpp"
 #include "gate.hpp"
 #include "logger.hpp"
 #include "player.hpp"
@@ -85,6 +86,26 @@ void World::update_scene() {
   if (old_scene) {
     old_scene->call_deferred("free");
   }
+}
+
+void World::save() const {
+  try {
+    Dictionary d{};
+    d["pos.x"] = get_position().x;
+    d["pos.y"] = get_position().y;
+    auto path  = core_game::SAVINGS_DIRECTORY.path();
+    path.append("world.json");
+    core_game::FileWriter file{path};
+    file.write(core_game::dict_to_json(d));
+    const auto msg{std::string{"World state saved to "} + path.string()};
+    m_logger->info(msg);
+  } catch (const std::exception& e) {
+    m_logger->error(e.what());
+  }
+}
+
+void World::load() {
+  m_logger->info("Load scene");
 }
 
 void World::go_to_scene(const NextSceneMessage& next_scene_message) {
