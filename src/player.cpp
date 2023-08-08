@@ -22,7 +22,7 @@ AttackState Player::attacking       = AttackState();
 SlideState Player::sliding          = SlideState();
 
 Path Player::savings_path = []() {
-  auto path = core_game::SAVINGS_DIRECTORY;
+  auto path = core_game::SAVINGS_DIRECTORY.path();
   path.append("player.json");
   return path;
 }();
@@ -210,7 +210,7 @@ void Player::save() {
     d["pos.y"] = get_position().y;
     core_game::FileWriter file{savings_path};
     file.write(core_game::dict_to_json(d));
-    static const auto msg{std::string{"Player saved player state to "}
+    static const auto msg{std::string{"Player state saved to "}
                           + savings_path.string()};
     m_logger->info(msg);
   } catch (const std::exception& e) {
@@ -221,7 +221,7 @@ void Player::save() {
 void Player::load() {
   PROFILE_FUNCTION();
   if (!std::filesystem::exists(savings_path)) {
-    m_logger->warn("Save file not found");
+    m_logger->warn("Player save file not found");
     return;
   }
   try {

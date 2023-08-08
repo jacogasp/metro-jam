@@ -1,6 +1,7 @@
 #include "io.hpp"
 #include <godot_cpp/classes/json.hpp>
 #include <sstream>
+#include <system_error>
 
 namespace core_game {
 
@@ -15,15 +16,25 @@ std::string dict_to_json(const godot::Dictionary& d) {
   return result.utf8().get_data();
 }
 
-void crate_savings_directory(const std::filesystem::path& path) {
-  if (std::filesystem::exists(path)) {
+void crate_savings_directory(const Directory& directory) {
+  if (directory.exists()) {
     std::cerr << "Savings directory already exists, skip.\n";
     return;
   }
 
-  bool const success = std::filesystem::create_directories(path);
+  bool const success = std::filesystem::create_directories(directory);
   if (!success) {
-    std::cerr << "Cannot create directory " << path << '\n';
+    std::cerr << "Cannot create directory " << directory << '\n';
+  }
+}
+
+void purge_savings_directory(const Directory& directory) {
+  if (directory.exists()) {
+    std::filesystem::remove_all(directory);
+    std::cerr << "Savings directory removed.\n";
+  } else {
+    std::cerr << "Savings directory " << directory.path().c_str()
+              << " not found. Won't delete.\n";
   }
 }
 
