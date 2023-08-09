@@ -1,5 +1,6 @@
 #include "io.hpp"
 #include <godot_cpp/classes/json.hpp>
+#include <iostream>
 #include <sstream>
 #include <system_error>
 
@@ -33,7 +34,7 @@ void purge_savings_directory(const Directory& directory) {
     std::filesystem::remove_all(directory);
     std::cerr << "Savings directory removed.\n";
   } else {
-    std::cerr << "Savings directory " << directory.path().c_str()
+    std::cerr << "Savings directory " << directory
               << " not found. Won't delete.\n";
   }
 }
