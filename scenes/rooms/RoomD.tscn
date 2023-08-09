@@ -289,6 +289,7 @@ position = Vector2(2017, 3057)
 [node name="SteamDoor" type="Node2D" parent="."]
 position = Vector2(4675, 794)
 script = ExtResource("4_vhytv")
+one_shot = true
 
 [node name="Lever" type="Node2D" parent="SteamDoor"]
 position = Vector2(1854, 685)
