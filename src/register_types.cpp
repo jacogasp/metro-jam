@@ -53,8 +53,9 @@ void uninitialize_example_module(ModuleInitializationLevel p_level) {
   }
 #ifdef DEBUG_ENABLED
   core_game::Instrumentor::get().end_session();
-#endif
+#else
   core_game::purge_savings_directory(core_game::SAVINGS_DIRECTORY);
+#endif
 }
 
 extern "C" {
