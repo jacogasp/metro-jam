@@ -42,6 +42,8 @@ class World : public Node2D {
   void set_player(const NodePath& path);
   [[nodiscard]] NodePath get_player() const;
   void remove_powerup(String const& name) const;
+  String get_current_scene_file_path();
+  void load_scene_from_path(String const& filepath);
 
  public:
   // deferred method

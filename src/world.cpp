@@ -1,5 +1,6 @@
 #include "world.hpp"
 #include "gate.hpp"
+#include "io.hpp"
 #include "logger.hpp"
 #include "player.hpp"
 #include "profiler.hpp"
@@ -122,4 +123,16 @@ void World::remove_powerup(const String& name) const {
   } else {
     m_logger->debug(std::string{"Superpower "} + to_str(name) + " is null");
   }
+}
+
+String World::get_current_scene_file_path() {
+  return m_current_scene ? m_current_scene->get_scene_file_path() : String();
+}
+
+void World::load_scene_from_path(const String& filepath) {
+  auto const loader = ResourceLoader::get_singleton();
+  set_packed_scene(loader->load(filepath));
+  update_scene();
+  using core_game::to_str;
+  m_logger->info(std::string{"Loaded scene from "} + to_str(filepath));
 }

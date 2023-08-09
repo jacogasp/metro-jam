@@ -5,6 +5,7 @@
 #include "logger.hpp"
 #include "player.hpp"
 #include "world.hpp"
+#include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
 
 auto const SAVE_FILE = [] {
@@ -37,7 +38,9 @@ void MainScene::_ready() {
     m_hud->get_lifebar()->set_max_lives(m_player->get_max_lives());
     m_hud->get_lifebar()->set_current_life(m_player->get_max_lives());
   }
-  load();
+  if (!Engine::get_singleton()->is_editor_hint()) {
+    load();
+  }
   m_logger.info("Main scene initialized");
 }
 
@@ -77,6 +80,10 @@ void MainScene::save() const {
     }
     d["player"] = player;
 
+    Dictionary world{};
+    world["current_scene"] = m_world->get_current_scene_file_path();
+    d["world"]             = world;
+
     core_game::FileWriter file{SAVE_FILE};
     file.write(core_game::dict_to_json(d));
     static const auto msg{std::string{"Game state saved to "}
@@ -92,6 +99,11 @@ void load_state(Player& player, Dictionary const& state) {
   const float x = static_cast<float>(state["pos.x"]);
   const float y = static_cast<float>(state["pos.y"]);
   player.set_global_position({x, y});
+}
+
+void load_state(World& world, Dictionary const& state) {
+  String current_scene = state["current_scene"];
+  world.load_scene_from_path(current_scene);
 }
 
 static void add_superpower(String const& name, Player& player) {
@@ -125,8 +137,9 @@ void MainScene::load() {
       m_logger.error("Game saving data corrupted at " + SAVE_FILE.string());
       return;
     }
-    // Load Player state
+    // Load States
     load_state(*m_player, game_state["player"]);
+    load_state(*m_world, game_state["world"]);
     // Load Environment state
     if (game_state.has("superpowers")) {
       Array superpowers = game_state["superpowers"];
