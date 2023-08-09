@@ -30,7 +30,7 @@ void Logger::log(const std::string_view& msg, Level logLevel) const {
     return;
   auto currentTime = getCurrentTime().str();
   std::stringstream s{};
-  s << "[" << currentTime << "] " << m_levels[logLevel] << " " << msg << '\n';
+  s << "[" << currentTime << "] " << m_levels[logLevel] << " " << msg;
   godot::UtilityFunctions::print(s.str().c_str());
 }
 

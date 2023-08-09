@@ -377,3 +377,5 @@ position = Vector2(12.34, -35.78)
 
 [node name="Wrench" parent="." instance=ExtResource("6_fy4dl")]
 damages = 25
+
+[node name="Superpowers" type="Node" parent="."]

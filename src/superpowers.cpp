@@ -1,6 +1,7 @@
 #include "superpowers.hpp"
 #include "player.hpp"
 #include <godot_cpp/classes/animated_sprite2d.hpp>
+#include <godot_cpp/classes/area2d.hpp>
 #include <godot_cpp/classes/label.hpp>
 
 void Immunity::_bind_methods() {
@@ -85,7 +86,8 @@ void SlidePower::activate() {
     return;
   }
 
-  auto player = cast_to<Player>(get_parent());
+  // This is pretty bad
+  auto player = cast_to<Player>(get_parent()->get_parent());
   if (player == nullptr) {
     std::cerr << "Parent null\n";
     return;
@@ -112,6 +114,10 @@ void SlidePower::pick_me(Node2D* picker) {
   if (label) {
     label->queue_free();
   }
+  auto area = get_node<Area2D>("Area2D");
+  if (area) {
+    area->queue_free();
+  }
   picker->call_deferred("pick", this);
 }
 
@@ -130,6 +136,10 @@ void AirJumpPower::pick_me(Node2D* picker) {
   auto label = get_node<Label>("Label");
   if (label) {
     label->queue_free();
+  }
+  auto area = get_node<Area2D>("Area2D");
+  if (area) {
+    area->queue_free();
   }
   picker->call_deferred("pick", this);
 }

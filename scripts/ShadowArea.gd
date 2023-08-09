@@ -28,7 +28,6 @@ func _ready():
 	$Area2D.connect("body_entered", body_entered)
 	$Area2D.connect("body_exited", body_exited)
 	area_position = $Area2D/CollisionShape2D.global_position
-	print(area_position)
 
 
 func body_entered(body):

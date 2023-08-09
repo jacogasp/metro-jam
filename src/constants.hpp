@@ -4,7 +4,7 @@
 #include "types.hpp"
 
 namespace core_game {
-static const Path SAVINGS_DIRECTORY{
+static const Directory SAVINGS_DIRECTORY{
     std::filesystem::temp_directory_path().append("savings")};
 }
 

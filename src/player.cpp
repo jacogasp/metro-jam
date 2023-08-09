@@ -22,7 +22,7 @@ AttackState Player::attacking       = AttackState();
 SlideState Player::sliding          = SlideState();
 
 Path Player::savings_path = []() {
-  auto path = core_game::SAVINGS_DIRECTORY;
+  auto path = core_game::SAVINGS_DIRECTORY.path();
   path.append("player.json");
   return path;
 }();
@@ -202,7 +202,7 @@ bool Player::is_life_full() const {
   return m_current_life == m_max_lives;
 }
 
-void Player::save() {
+void Player::save() const {
   PROFILE_FUNCTION();
   try {
     Dictionary d{};
@@ -210,7 +210,7 @@ void Player::save() {
     d["pos.y"] = get_position().y;
     core_game::FileWriter file{savings_path};
     file.write(core_game::dict_to_json(d));
-    static const auto msg{std::string{"Player saved player state to "}
+    static const auto msg{std::string{"Player state saved to "}
                           + savings_path.string()};
     m_logger->info(msg);
   } catch (const std::exception& e) {
@@ -221,7 +221,7 @@ void Player::save() {
 void Player::load() {
   PROFILE_FUNCTION();
   if (!std::filesystem::exists(savings_path)) {
-    m_logger->warn("Save file not found");
+    m_logger->warn("Player save file not found");
     return;
   }
   try {
@@ -311,10 +311,13 @@ void Player::set_gravity(float gravity) {
 }
 
 void Player::pick(Node2D* node) {
-  auto old_parent = node->get_parent();
-  old_parent->remove_child(node);
-  add_child(node);
-  emit_signal("got_powerup", node);
+  auto superpowers = get_node<Node>("Superpowers");
+  if (superpowers) {
+    auto old_parent = node->get_parent();
+    old_parent->remove_child(node);
+    superpowers->add_child(node);
+    emit_signal("got_powerup", node);
+  }
 }
 
 void Player::hit() {

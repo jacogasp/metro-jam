@@ -5,9 +5,6 @@
 #include "register_types.hpp"
 
 #include "bumblebee.hpp"
-#include "chest.hpp"
-#include "coin.hpp"
-#include "coin_spawner.hpp"
 #include "constants.hpp"
 #include "gate.hpp"
 #include "grenade.hpp"
@@ -31,9 +28,6 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
   core_game::crate_savings_directory(core_game::SAVINGS_DIRECTORY);
   ClassDB::register_class<MainScene>();
   ClassDB::register_class<Player>();
-  ClassDB::register_class<Coin>();
-  ClassDB::register_class<CoinSpawner>();
-  ClassDB::register_class<Chest>();
   ClassDB::register_class<World>();
   ClassDB::register_class<Gate>();
   ClassDB::register_class<LifeBar>();
@@ -48,18 +42,19 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
   ClassDB::register_class<SlidePower>();
   ClassDB::register_class<AirJumpPower>();
 
-#ifdef CORE_GAME_PROFILING
+#ifdef DEBUG_ENABLED
   core_game::Instrumentor::get().begin_session();
 #endif
 }
 
 void uninitialize_example_module(ModuleInitializationLevel p_level) {
-#ifdef CORE_GAME_PROFILING
-  core_game::Instrumentor::get().end_session();
-#endif
   if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
     return;
   }
+#ifdef DEBUG_ENABLED
+  core_game::Instrumentor::get().end_session();
+#endif
+  core_game::purge_savings_directory(core_game::SAVINGS_DIRECTORY);
 }
 
 extern "C" {

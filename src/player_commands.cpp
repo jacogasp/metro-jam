@@ -70,11 +70,11 @@ void GrenadeCommand::operator()(Player& player) const {
 
 void SlideCommand::operator()(Player& player) const {
   PROFILE_FUNCTION();
-  if (!player.has_node("Slide")) {
+  if (!player.has_node("Superpowers/Slide")) {
     return;
   }
 
-  auto slide = player.get_node<SlidePower>("Slide");
+  auto slide = player.get_node<SlidePower>("Superpowers/Slide");
   if (slide) {
     slide->activate();
   }

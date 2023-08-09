@@ -112,7 +112,7 @@ class Player
   [[nodiscard]] bool is_on_ground();
   void pick(Node2D* node);
   void hit();
-  void save() override;
+  void save() const override;
   void load() override;
 };
 

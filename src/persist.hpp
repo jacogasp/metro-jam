@@ -4,7 +4,7 @@
 class Persist {
  public:
   virtual ~Persist()  = default;
-  virtual void save() = 0;
+  virtual void save() const = 0;
   virtual void load() = 0;
 };
 
