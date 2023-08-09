@@ -25,7 +25,7 @@ void crate_savings_directory(const Directory& directory) {
 
   bool const success = std::filesystem::create_directories(directory);
   if (!success) {
-    std::cerr << "Cannot create directory " << directory << '\n';
+    std::cerr << "Cannot create directory " << directory.path() << '\n';
   }
 }
 
