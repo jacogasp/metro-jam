@@ -6,15 +6,14 @@
 
 namespace core_game {
 
-godot::Dictionary json_to_dict(const std::string& s) {
-  auto d = godot::JSON::parse_string(s.c_str());
-  return d;
+godot::Dictionary json_to_dict(godot::String const& s) {
+  return godot::JSON::parse_string(s);
 }
 
-std::string dict_to_json(const godot::Dictionary& d) {
+godot::String dict_to_json(const godot::Dictionary& d) {
   auto json   = godot::JSON();
   auto result = godot::JSON::stringify(d);
-  return result.utf8().get_data();
+  return result;
 }
 
 void crate_savings_directory(const Directory& directory) {
@@ -50,37 +49,4 @@ bool close_to(double a, double b) {
 const char* to_str(const godot::String& g_string) {
   return g_string.utf8().get_data();
 }
-
-FileWriter::FileWriter(const std::filesystem::path& path)
-    : m_ofstream{path} {
-  if (!m_ofstream.is_open()) {
-    throw std::runtime_error("cannot open file");
-  }
-}
-
-FileWriter::~FileWriter() {
-  { m_ofstream.close(); }
-}
-
-void FileWriter::write(std::string_view s) {
-  m_ofstream << s;
-}
-
-FileReader::FileReader(const std::filesystem::path& path)
-    : m_ifstream{path} {
-  if (!m_ifstream.is_open()) {
-    throw std::runtime_error("cannot open file");
-  }
-}
-
-FileReader::~FileReader() {
-  { m_ifstream.close(); }
-}
-
-std::string FileReader::get() {
-  std::stringstream ss{};
-  ss << m_ifstream.rdbuf();
-  return ss.str();
-}
-
 } // namespace core_game

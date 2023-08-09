@@ -5,14 +5,12 @@
 #include "logger.hpp"
 #include "player.hpp"
 #include "world.hpp"
+#include <godot_cpp/classes/dir_access.hpp>
 #include <godot_cpp/classes/engine.hpp>
+#include <godot_cpp/classes/file_access.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
 
-auto const SAVE_FILE = [] {
-  auto path = core_game::SAVINGS_DIRECTORY.path();
-  path.append("wrenchman.json");
-  return path;
-}();
+static auto constexpr SAVE_FILE = "user://game.json";
 
 void MainScene::_bind_methods() {
   ClassDB::bind_method(D_METHOD("on_player_hit"), &MainScene::on_player_hit);
@@ -26,8 +24,14 @@ MainScene::MainScene()
     : m_logger(core_game::LoggerService::DEBUG) {
   core_game::LoggerLocator::registerService(&m_logger);
 }
+
 MainScene::~MainScene() {
   core_game::LoggerLocator::registerService(nullptr);
+  if (FileAccess::file_exists(SAVE_FILE)) {
+    auto dir = DirAccess::open("user://");
+    dir->remove(SAVE_FILE);
+    m_logger.debug(std::string{"File "} + SAVE_FILE + " removed");
+  }
 }
 
 void MainScene::_ready() {
@@ -84,10 +88,11 @@ void MainScene::save() const {
     world["current_scene"] = m_world->get_current_scene_file_path();
     d["world"]             = world;
 
-    core_game::FileWriter file{SAVE_FILE};
-    file.write(core_game::dict_to_json(d));
+    auto file = FileAccess::open(SAVE_FILE, FileAccess::WRITE);
+    file->store_string(core_game::dict_to_json(d));
+    using core_game::to_str;
     static const auto msg{std::string{"Game state saved to "}
-                          + SAVE_FILE.string()};
+                          + to_str(SAVE_FILE)};
     m_logger.info(msg);
   } catch (const std::exception& e) {
     m_logger.error(e.what());
@@ -125,16 +130,18 @@ static void add_superpower(String const& name, Player& player) {
 }
 
 void MainScene::load() {
-  if (!std::filesystem::exists(SAVE_FILE)) {
+  if (!FileAccess::file_exists(SAVE_FILE)) {
     m_logger.warn("Game save file not found");
     return;
   }
   try {
-    core_game::FileReader file{SAVE_FILE};
-    const auto body       = file.get();
+    auto file       = FileAccess::open(SAVE_FILE, godot::FileAccess::READ);
+    const auto body = file->get_as_text();
     const auto game_state = core_game::json_to_dict(body);
     if (!game_state.has("player")) {
-      m_logger.error("Game saving data corrupted at " + SAVE_FILE.string());
+      using core_game::to_str;
+      m_logger.error(std::string{"Game saving data corrupted at "}
+                     + to_str(SAVE_FILE));
       return;
     }
     // Load States
@@ -145,8 +152,9 @@ void MainScene::load() {
       Array superpowers = game_state["superpowers"];
       load_superpowers(superpowers);
     }
+    using core_game::to_str;
     static const auto msg{std::string{"Loaded saved game state from "}
-                          + SAVE_FILE.string()};
+                          + SAVE_FILE};
     m_logger.info(msg);
   } catch (const std::exception& e) {
     m_logger.error(e.what());
