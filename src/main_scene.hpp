@@ -28,6 +28,10 @@ class MainScene : public Node2D {
   void on_player_gains_life() const;
   void on_player_got_powerup(Node*) const;
   void save() const;
+  void load();
+
+ private:
+  void load_superpowers(const Array& superpowers) const;
 };
 
 #endif // COREGAME_MAIN_SCENE_HPP
