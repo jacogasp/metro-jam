@@ -108,3 +108,18 @@ void World::set_player(const NodePath& path) {
 NodePath World::get_player() const {
   return m_player_node_path;
 }
+
+void World::remove_powerup(const String& name) const {
+  using core_game::to_str;
+  if (m_current_scene && !m_current_scene->has_node(name)) {
+    m_logger->debug(std::string("World Superpower ") + name.utf8().get_data()
+                    + " not found");
+    return;
+  }
+  auto powerup = m_current_scene->get_node<Node2D>(name);
+  if (powerup) {
+    powerup->queue_free();
+  } else {
+    m_logger->debug(std::string{"Superpower "} + to_str(name) + " is null");
+  }
+}
