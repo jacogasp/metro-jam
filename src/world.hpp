@@ -15,9 +15,7 @@ class LoggerService;
 }
 
 class Player;
-class World
-    : public Node2D
-    , Persist {
+class World : public Node2D {
   GDCLASS_V2(World, Node2D)
   struct NextSceneMessage {
     std::string next_scene;
@@ -29,6 +27,7 @@ class World
   Player* m_player{nullptr};
   NodePath m_player_node_path{};
   Ref<PackedScene> m_packed_scene{nullptr};
+  Array m_powerups;
 
   static std::array<NextSceneMessage, 16> m_pending;
   static size_t m_pending_index;
@@ -37,13 +36,12 @@ class World
   void _ready() override;
   void _process(double) override;
   void update_scene();
-  void save() const override;
-  void load() override;
   // Use set/get only for editor only
   Ref<PackedScene> get_packed_scene();
   void set_packed_scene(const Ref<PackedScene>& packed_scene);
   void set_player(const NodePath& path);
   [[nodiscard]] NodePath get_player() const;
+  void remove_powerup(String const& name) const;
 
  public:
   // deferred method
