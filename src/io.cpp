@@ -34,7 +34,7 @@ void purge_savings_directory(const Directory& directory) {
     std::filesystem::remove_all(directory);
     std::cerr << "Savings directory removed.\n";
   } else {
-    std::cerr << "Savings directory " << directory
+    std::cerr << "Savings directory " << directory.path()
               << " not found. Won't delete.\n";
   }
 }
