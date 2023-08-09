@@ -304,11 +304,10 @@ void BumbleBee::WalkingState::update(BumbleBee& bumble_bee) const {
 }
 
 void BumbleBee::AttackState::update(BumbleBee& bumble_bee) const {
-  // If target lost, go idle (should never happen)
   auto const target = bumble_bee.get_target();
   if (target == nullptr) {
-    std::cerr << "target lost\n";
     go_walk(bumble_bee);
+    bumble_bee.set_state(&BumbleBee::walking_state);
     return;
   }
   // If player is hidden,walk
