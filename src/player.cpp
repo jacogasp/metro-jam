@@ -11,7 +11,6 @@
 #include <godot_cpp/classes/input.hpp>
 #include <godot_cpp/classes/shape2d.hpp>
 #include <cassert>
-#include <memory>
 
 StandingState Player::standing      = StandingState();
 RunningState Player::running        = RunningState();
@@ -86,16 +85,7 @@ void Player::_ready() {
   m_wrench_weapon   = get_node<Wrench>("Wrench");
   auto shape = get_node<CollisionShape2D>("CollisionShape2D")->get_shape();
   m_bounds   = shape->get_rect();
-  load();
   m_logger->info("Player ready.");
-}
-
-static void maybe_save(Player& player, Input& input) {
-  if (input.is_action_just_pressed("save")) {
-    player.save();
-  } else if (input.is_action_just_pressed("load")) {
-    player.load();
-  }
 }
 
 static bool check_interaction(Input& input, RayCast2D& ray) {
@@ -120,7 +110,6 @@ void Player::_process(double) {
   if (Engine::get_singleton()->is_editor_hint())
     return;
   auto input = Input::get_singleton();
-  maybe_save(*this, *input);
   check_interaction(*input, *m_interaction_ray);
 }
 
@@ -200,47 +189,6 @@ void Player::loose_life() {
 
 bool Player::is_life_full() const {
   return m_current_life == m_max_lives;
-}
-
-void Player::save() const {
-  PROFILE_FUNCTION();
-  try {
-    Dictionary d{};
-    d["pos.x"] = get_position().x;
-    d["pos.y"] = get_position().y;
-    core_game::FileWriter file{savings_path};
-    file.write(core_game::dict_to_json(d));
-    static const auto msg{std::string{"Player state saved to "}
-                          + savings_path.string()};
-    m_logger->info(msg);
-  } catch (const std::exception& e) {
-    m_logger->error(e.what());
-  }
-}
-
-void Player::load() {
-  PROFILE_FUNCTION();
-  if (!std::filesystem::exists(savings_path)) {
-    m_logger->warn("Player save file not found");
-    return;
-  }
-  try {
-    core_game::FileReader file{savings_path};
-    const auto body         = file.get();
-    const auto player_state = core_game::json_to_dict(body);
-    if (!player_state.has("pos.x")) {
-      m_logger->error("Player saving data corrupted");
-      return;
-    }
-    const float x = static_cast<float>(player_state["pos.x"]);
-    const float y = static_cast<float>(player_state["pos.y"]);
-    set_position({x, y});
-    static const auto msg{std::string{"Loaded saved player state from "}
-                          + savings_path.string()};
-    m_logger->info(msg);
-  } catch (const std::exception& e) {
-    m_logger->error(e.what());
-  }
 }
 
 // Setters and getters

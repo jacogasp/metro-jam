@@ -22,9 +22,7 @@ namespace core_game {
 class LoggerService;
 }
 
-class Player
-    : public CharacterBody2D
-    , public Persist {
+class Player : public CharacterBody2D {
   GDCLASS_V2(Player, CharacterBody2D)
 
   enum Direction { left, right };
@@ -112,8 +110,6 @@ class Player
   [[nodiscard]] bool is_on_ground();
   void pick(Node2D* node);
   void hit();
-  void save() const override;
-  void load() override;
 };
 
 #endif
