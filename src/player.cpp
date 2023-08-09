@@ -262,7 +262,9 @@ void Player::pick(Node2D* node) {
   auto superpowers = get_node<Node>("Superpowers");
   if (superpowers) {
     auto old_parent = node->get_parent();
-    old_parent->remove_child(node);
+    if (old_parent) {
+      old_parent->remove_child(node);
+    }
     superpowers->add_child(node);
     emit_signal("got_powerup", node);
   }
