@@ -26,8 +26,8 @@ class MainScene : public Node2D {
   void _ready() override;
   void on_player_hit() const;
   void on_player_gains_life() const;
-  void on_player_got_powerup(Node*) const;
-  void save() const;
+  void on_player_got_powerup(Node* node);
+  void save();
   void load();
 
  private:

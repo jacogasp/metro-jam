@@ -19,6 +19,7 @@ void MainScene::_bind_methods() {
                        &MainScene::on_player_gains_life);
   ClassDB::bind_method(D_METHOD("on_player_got_powerup"),
                        &MainScene::on_player_got_powerup);
+  ADD_SIGNAL(MethodInfo("save"));
 }
 
 MainScene::MainScene()
@@ -54,10 +55,9 @@ void MainScene::on_player_hit() const {
 
 void MainScene::on_player_gains_life() const {
   m_hud->get_lifebar()->add_life();
-  save();
 }
 
-void MainScene::on_player_got_powerup(Node* node) const {
+void MainScene::on_player_got_powerup(Node* node) {
   auto const name = node->get_name().get_basename();
   if (m_world) {
     m_world->remove_powerup(name);
@@ -65,7 +65,8 @@ void MainScene::on_player_got_powerup(Node* node) const {
   save();
 }
 
-void MainScene::save() const {
+void MainScene::save() {
+  emit_signal("save");
   try {
     Dictionary d{};
     Dictionary player{};
@@ -88,7 +89,7 @@ void MainScene::save() const {
     world["current_scene"] = m_world->get_current_scene_file_path();
     d["world"]             = world;
 
-    auto file = FileAccess::open(SAVE_FILE, FileAccess::WRITE);
+    auto file = FileAccess::open(SAVE_FILE.c_str(), FileAccess::WRITE);
     file->store_string(core_game::dict_to_json(d));
     using core_game::to_str;
     static const auto msg{std::string{"Game state saved to "} + SAVE_FILE};
