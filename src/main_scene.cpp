@@ -10,7 +10,8 @@
 #include <godot_cpp/classes/file_access.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
 
-static auto constexpr SAVE_FILE = "user://game.json";
+static auto SAVE_FILE =
+    std::string{core_game::SAVINGS_DIRECTORY} + "/game.json";
 
 void MainScene::_bind_methods() {
   ClassDB::bind_method(D_METHOD("on_player_hit"), &MainScene::on_player_hit);
@@ -27,11 +28,9 @@ MainScene::MainScene()
 
 MainScene::~MainScene() {
   core_game::LoggerLocator::registerService(nullptr);
-  if (FileAccess::file_exists(SAVE_FILE)) {
-    auto dir = DirAccess::open("user://");
-    dir->remove(SAVE_FILE);
-    m_logger.debug(std::string{"File "} + SAVE_FILE + " removed");
-  }
+#ifndef DEBUG_ENABLED
+  purge_savings_directory(core_game::SAVINGS_DIRECTORY);
+#endif
 }
 
 void MainScene::_ready() {
@@ -43,6 +42,7 @@ void MainScene::_ready() {
     m_hud->get_lifebar()->set_current_life(m_player->get_max_lives());
   }
   if (!Engine::get_singleton()->is_editor_hint()) {
+    create_savings_directory();
     load();
   }
   m_logger.info("Main scene initialized");
@@ -130,18 +130,17 @@ static void add_superpower(String const& name, Player& player) {
 }
 
 void MainScene::load() {
-  if (!FileAccess::file_exists(SAVE_FILE)) {
+  if (!FileAccess::file_exists(SAVE_FILE.c_str())) {
     m_logger.warn("Game save file not found");
     return;
   }
   try {
-    auto file       = FileAccess::open(SAVE_FILE, godot::FileAccess::READ);
-    const auto body = file->get_as_text();
+    auto file = FileAccess::open(SAVE_FILE.c_str(), godot::FileAccess::READ);
+    const auto body       = file->get_as_text();
     const auto game_state = core_game::json_to_dict(body);
     if (!game_state.has("player")) {
       using core_game::to_str;
-      m_logger.error(std::string{"Game saving data corrupted at "}
-                     + to_str(SAVE_FILE));
+      m_logger.error(std::string{"Game saving data corrupted at "} + SAVE_FILE);
       return;
     }
     // Load States
@@ -174,5 +173,24 @@ void MainScene::load_superpowers(const Array& superpowers) const {
     }
     m_logger.debug(std::string("Loaded superpower ")
                    + to_str(name.get_basename()));
+  }
+}
+
+void MainScene::create_savings_directory() {
+  auto dir = DirAccess::open("user://");
+  if (!dir->dir_exists(core_game::SAVINGS_DIRECTORY)) {
+    dir->make_dir(core_game::SAVINGS_DIRECTORY);
+  }
+}
+
+void MainScene::purge_savings_directory() {
+  auto& path = core_game::SAVINGS_DIRECTORY;
+  auto dir   = godot::DirAccess();
+  if (dir.dir_exists(path)) {
+    dir.remove(path);
+    std::cerr << "Savings directory removed.\n";
+  } else {
+    std::cerr << "Savings directory " << core_game::to_str(path)
+              << " not found. Won't delete.\n";
   }
 }

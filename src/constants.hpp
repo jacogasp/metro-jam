@@ -4,8 +4,7 @@
 #include "types.hpp"
 
 namespace core_game {
-static const Directory SAVINGS_DIRECTORY{
-    std::filesystem::temp_directory_path().append("savings")};
+static auto constexpr SAVINGS_DIRECTORY = "user://savings";
 }
 
 #endif // COREGAME_CONSTANTS_HPP

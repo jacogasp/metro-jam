@@ -5,13 +5,11 @@
 #include "register_types.hpp"
 
 #include "bumblebee.hpp"
-#include "constants.hpp"
 #include "gate.hpp"
 #include "grenade.hpp"
 #include "gun.hpp"
 #include "health_bar.hpp"
 #include "hud.hpp"
-#include "io.hpp"
 #include "lifebar.hpp"
 #include "main_scene.hpp"
 #include "player.hpp"
@@ -25,7 +23,7 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
   if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
     return;
   }
-  core_game::crate_savings_directory(core_game::SAVINGS_DIRECTORY);
+
   ClassDB::register_class<MainScene>();
   ClassDB::register_class<Player>();
   ClassDB::register_class<World>();
@@ -51,11 +49,6 @@ void uninitialize_example_module(ModuleInitializationLevel p_level) {
   if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
     return;
   }
-#ifdef DEBUG_ENABLED
-  core_game::Instrumentor::get().end_session();
-#else
-  core_game::purge_savings_directory(core_game::SAVINGS_DIRECTORY);
-#endif
 }
 
 extern "C" {

@@ -16,8 +16,8 @@ namespace core_game {
 
 godot::Dictionary json_to_dict(godot::String const& s);
 godot::String dict_to_json(const godot::Dictionary& d);
-void crate_savings_directory(const Directory& directory);
-void purge_savings_directory(const Directory& directory);
+void crate_savings_directory(godot::String const& path);
+void purge_savings_directory(godot::String const path);
 const char* to_str(const godot::String& g_string);
 
 bool close_to(float a, float b);

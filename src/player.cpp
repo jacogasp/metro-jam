@@ -20,11 +20,6 @@ AirJumpingState Player::air_jumping = AirJumpingState();
 AttackState Player::attacking       = AttackState();
 SlideState Player::sliding          = SlideState();
 
-Path Player::savings_path = []() {
-  auto path = core_game::SAVINGS_DIRECTORY.path();
-  path.append("player.json");
-  return path;
-}();
 
 static void flip_h(RayCast2D& ray) {
   auto position        = ray.get_position();

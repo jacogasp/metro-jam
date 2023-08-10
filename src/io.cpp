@@ -1,4 +1,5 @@
 #include "io.hpp"
+#include <godot_cpp/classes/dir_access.hpp>
 #include <godot_cpp/classes/json.hpp>
 #include <iostream>
 #include <sstream>
@@ -16,27 +17,6 @@ godot::String dict_to_json(const godot::Dictionary& d) {
   return result;
 }
 
-void crate_savings_directory(const Directory& directory) {
-  if (directory.exists()) {
-    std::cerr << "Savings directory already exists, skip.\n";
-    return;
-  }
-
-  bool const success = std::filesystem::create_directories(directory);
-  if (!success) {
-    std::cerr << "Cannot create directory " << directory.path() << '\n';
-  }
-}
-
-void purge_savings_directory(const Directory& directory) {
-  if (directory.exists()) {
-    std::filesystem::remove_all(directory);
-    std::cerr << "Savings directory removed.\n";
-  } else {
-    std::cerr << "Savings directory " << directory.path()
-              << " not found. Won't delete.\n";
-  }
-}
 
 bool close_to(float a, float b) {
   return abs(a - b) < CMP_EPSILON;
