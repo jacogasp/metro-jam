@@ -91,8 +91,7 @@ void MainScene::save() const {
     auto file = FileAccess::open(SAVE_FILE, FileAccess::WRITE);
     file->store_string(core_game::dict_to_json(d));
     using core_game::to_str;
-    static const auto msg{std::string{"Game state saved to "}
-                          + to_str(SAVE_FILE)};
+    static const auto msg{std::string{"Game state saved to "} + SAVE_FILE};
     m_logger.info(msg);
   } catch (const std::exception& e) {
     m_logger.error(e.what());
