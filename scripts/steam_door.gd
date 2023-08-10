@@ -5,13 +5,17 @@ extends Node2D
 
 var collision_layer = 0
 var shutdown = false
+var path = "user://savings/"
 
 func _ready():
+	print(get_path())
 	$Lever/Label.hide()
 	collision_layer = $Door/StaticBody2D.collision_layer
+	path += get_path().get_concatenated_names().replace("/", "-")
+	load_state()
 
 func show_label(_body):
-		$Lever/Label.show()
+	$Lever/Label.show()
 
 func hide_label(_body):
 	$Lever/Label.hide()
@@ -19,11 +23,11 @@ func hide_label(_body):
 func interact():
 	if shutdown:
 		return
-		
 	if closed:
 		open()
 	elif not closed:
 		close()
+	save_state()
 
 func open():
 	$Lever/AnimationPlayer.play("Open")
@@ -50,3 +54,32 @@ func close():
 func on_body_entered(body):
 	if (body.is_in_group("Player")):
 		body.call("hit"); # Replace with function body.
+
+func save_state():
+	var state = {
+		"closed": closed,
+		"one_shot": one_shot,
+		"shutdown": shutdown
+	}
+	var json = JSON.stringify(state)
+	var file = FileAccess.open(path, FileAccess.WRITE)
+	file.store_line(json)
+	print("SteamDoor state saved to ", path)
+
+func load_state():
+	if not FileAccess.file_exists(path):
+		print("SteamDoor save file not found")
+		return false
+	
+	var file = FileAccess.open(path, FileAccess.READ)
+	var buffer = file.get_as_text()
+	var json = JSON.parse_string(buffer)
+	closed = json["closed"]
+	one_shot = json["one_shot"]
+	shutdown = json["shutdown"]
+	if closed:
+		close()
+	else:
+		open()
+	print("SteamDoor state loaded from ", path)
+	return true
