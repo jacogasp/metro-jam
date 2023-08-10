@@ -25,19 +25,23 @@ void World::_ready() {
   PROFILE_FUNCTION();
   m_logger = core_game::LoggerLocator::getService();
   m_player = get_node<Player>(m_player_node_path);
-  update_scene();
+  if (m_current_scene == nullptr) {
+    update_scene("");
+  }
   m_logger->info("World ready!");
 }
 
 void World::_process(double) {
   PROFILE_FUNCTION();
   for (size_t i = 0; i < m_pending_index; ++i) {
-    auto const loader     = ResourceLoader::get_singleton();
-    auto const next_scene = m_pending.at(i).next_scene;
-    m_logger->info("Load new scene " + next_scene);
-    set_packed_scene(loader->load(next_scene.c_str()));
+    auto const loader       = ResourceLoader::get_singleton();
+    String const next_scene = String(m_pending.at(i).next_scene.c_str());
+    m_logger->info(std::string{"Load new scene "}
+                   + core_game::to_str(next_scene));
+    set_packed_scene(loader->load(next_scene));
     auto const new_gate_name = m_pending.at(i).gate_name;
-    update_scene();
+    auto scene_name          = next_scene.get_basename().get_file();
+    update_scene(scene_name);
     auto const new_gate =
         m_current_scene->get_node<Gate>(new_gate_name.c_str());
     if (new_gate) {
@@ -71,7 +75,7 @@ static void filter_superpowers(Player* player, Node* scene) {
   }
 }
 
-void World::update_scene() {
+void World::update_scene(String const& scene_name) {
   PROFILE_FUNCTION();
 
   if (m_packed_scene.is_null()) {
@@ -80,7 +84,15 @@ void World::update_scene() {
   }
   auto old_scene  = m_current_scene;
   m_current_scene = m_packed_scene->instantiate();
+  if (!scene_name.is_empty()) {
+    m_current_scene->set_name(scene_name);
+  }
   filter_superpowers(m_player, m_current_scene);
+  // If a node with the same path is present remove the old one
+  if (!scene_name.is_empty() && has_node(scene_name)) {
+    auto node = get_node<Node>(scene_name);
+    remove_child(node);
+  }
   add_child(m_current_scene);
   if (old_scene) {
     old_scene->call_deferred("free");
@@ -132,7 +144,8 @@ String World::get_current_scene_file_path() {
 void World::load_scene_from_path(const String& filepath) {
   auto const loader = ResourceLoader::get_singleton();
   set_packed_scene(loader->load(filepath));
-  update_scene();
+  auto scene_name = filepath.get_basename().get_file();
+  update_scene(scene_name);
   using core_game::to_str;
   m_logger->info(std::string{"Loaded scene from "} + to_str(filepath));
 }

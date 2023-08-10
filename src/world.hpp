@@ -35,7 +35,7 @@ class World : public Node2D {
   static void _bind_methods();
   void _ready() override;
   void _process(double) override;
-  void update_scene();
+  void update_scene(String const& scene_name);
   // Use set/get only for editor only
   Ref<PackedScene> get_packed_scene();
   void set_packed_scene(const Ref<PackedScene>& packed_scene);
