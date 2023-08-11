@@ -28,10 +28,13 @@ MainScene::MainScene()
 }
 
 MainScene::~MainScene() {
-  core_game::LoggerLocator::registerService(nullptr);
-#ifndef DEBUG_ENABLED
-  purge_savings_directory(core_game::SAVINGS_DIRECTORY);
-#endif
+  try {
+    core_game::LoggerLocator::registerService(nullptr);
+    // #ifndef DEBUG_ENABLED
+    purge_savings_directory();
+    // #endif
+  } catch (...) {
+  }
 }
 
 void MainScene::_ready() {
@@ -184,13 +187,30 @@ void MainScene::create_savings_directory() {
 }
 
 void MainScene::purge_savings_directory() {
-  auto& path = core_game::SAVINGS_DIRECTORY;
-  auto dir   = godot::DirAccess();
-  if (dir.dir_exists(path)) {
-    dir.remove(path);
-    std::cerr << "Savings directory removed.\n";
-  } else {
-    std::cerr << "Savings directory " << core_game::to_str(path)
+  using core_game::SAVINGS_DIRECTORY;
+  using core_game::to_str;
+
+  if (!DirAccess::dir_exists_absolute(SAVINGS_DIRECTORY)) {
+    std::cerr << "Savings directory " << core_game::SAVINGS_DIRECTORY
               << " not found. Won't delete.\n";
+    return;
+  }
+
+  auto dir = DirAccess::open(SAVINGS_DIRECTORY);
+  auto files = dir->get_files();
+  for (const auto& file : files) {
+    auto path  = String{SAVINGS_DIRECTORY} + "/" + file;
+    auto error = dir->remove(path);
+    if (error) {
+      std::cerr << "Cannot remove file " << to_str(path) << '\n';
+    }
+  }
+
+  auto error = dir->remove(SAVINGS_DIRECTORY);
+  if (error) {
+    std::cerr << "Removing directory " << SAVINGS_DIRECTORY
+              << " failed with error " << error << ".\n";
+  } else {
+    std::cerr << "Savings directory removed.\n";
   }
 }

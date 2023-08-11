@@ -32,8 +32,8 @@ class MainScene : public Node2D {
 
  private:
   void load_superpowers(const Array& superpowers) const;
-  void create_savings_directory();
-  void purge_savings_directory();
+  static void create_savings_directory();
+  static void purge_savings_directory();
 };
 
 #endif // COREGAME_MAIN_SCENE_HPP
