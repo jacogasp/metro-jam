@@ -2,6 +2,8 @@
 #include "ray_cast.hpp"
 #include <godot_cpp/classes/collision_shape2d.hpp>
 #include <godot_cpp/classes/engine.hpp>
+#include <godot_cpp/classes/packed_scene.hpp>
+#include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/classes/shader_material.hpp>
 #include <godot_cpp/classes/shape2d.hpp>
 
@@ -347,5 +349,10 @@ void BumbleBee::DyingState::update(BumbleBee& bumble_bee) const {
       && bumble_bee.m_animated_sprite2D->get_animation().match("Die")) {
     return;
   }
+  auto loader               = ResourceLoader::get_singleton();
+  Ref<PackedScene> resource = loader->load("res://scenes/life.tscn");
+  auto life                 = cast_to<Node2D>(resource->instantiate());
+  bumble_bee.get_parent()->add_child(life);
+  life->set_global_position(bumble_bee.get_global_position());
   bumble_bee.queue_free();
 }

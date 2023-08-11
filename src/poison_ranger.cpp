@@ -7,6 +7,7 @@
 #include <godot_cpp/classes/animation_player.hpp>
 #include <godot_cpp/classes/collision_shape2d.hpp>
 #include <godot_cpp/classes/engine.hpp>
+#include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/classes/shader_material.hpp>
 #include <godot_cpp/classes/shape2d.hpp>
 
@@ -409,6 +410,11 @@ void PoisonRanger::DyingState::update(PoisonRanger& ranger) const {
   if (animated_sprite && animated_sprite->is_playing()) {
     return;
   }
+  auto loader               = ResourceLoader::get_singleton();
+  Ref<PackedScene> resource = loader->load("res://scenes/life.tscn");
+  auto life                 = cast_to<Node2D>(resource->instantiate());
+  ranger.get_parent()->add_child(life);
+  life->set_global_position(ranger.get_global_position());
   ranger.queue_free();
 }
 
