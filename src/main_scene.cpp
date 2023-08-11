@@ -30,9 +30,9 @@ MainScene::MainScene()
 MainScene::~MainScene() {
   try {
     core_game::LoggerLocator::registerService(nullptr);
-    // #ifndef DEBUG_ENABLED
+#ifndef DEBUG_ENABLED
     purge_savings_directory();
-    // #endif
+#endif
   } catch (...) {
   }
 }
@@ -196,7 +196,7 @@ void MainScene::purge_savings_directory() {
     return;
   }
 
-  auto dir = DirAccess::open(SAVINGS_DIRECTORY);
+  auto dir   = DirAccess::open(SAVINGS_DIRECTORY);
   auto files = dir->get_files();
   for (const auto& file : files) {
     auto path  = String{SAVINGS_DIRECTORY} + "/" + file;
