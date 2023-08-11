@@ -6,12 +6,31 @@ extends Node2D
 var path = "user://savings/"
 
 var shutdown = false
+var label_text = ""
 
 func _ready():
 	update_platforms_state()
 	$Handle/Label.hide()
 	path += get_path().get_concatenated_names().replace("/", "-")
+	get_node("/root/Main").connect("using_joypad_changed", using_joypad_changed)
+	label_text = $Handle/Label.text
 	load_state()
+	
+func get_event_button(using_joypad: bool):
+	var events = InputMap.action_get_events("interact")
+	for event in events:
+		var event_name = event.as_text()
+		if not using_joypad:
+			return event_name.get_slice("(", 0);
+		if event_name.begins_with("Joypad"):
+			var start = event_name.find("Xbox ")
+			return event_name[start]
+
+func using_joypad_changed(using_joypad):
+	var button_name = get_event_button(using_joypad)
+	var text = label_text
+	text = text.replace("$BUTTON", button_name)
+	$Handle/Label.text = text
 
 func enable():
 	enabled = true
@@ -45,6 +64,12 @@ func interact():
 	else:
 		enable()
 	save_state()
+	get_interaction_key()
+
+func get_interaction_key():
+	var events = InputMap.action_get_events("interact")
+	for event in events:
+		print(event.as_text())
 
 func on_body_entered(body):
 	if (body.is_in_group("Player")):
