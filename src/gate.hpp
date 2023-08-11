@@ -20,7 +20,7 @@ class Gate : public Area2D {
   core_game::LoggerService* m_logger{nullptr};
   CollisionShape2D* m_collision_shape{nullptr};
   bool m_closed{false};
-  Direction m_exit_direction{right};
+  int m_exit_direction{1};  // Right
 
   GDCLASS_V2(Gate, Area2D)
   static void _bind_methods();

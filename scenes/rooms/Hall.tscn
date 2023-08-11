@@ -175,7 +175,7 @@ texture = ExtResource("1_hkmiw")
 
 [node name="GateHallD" type="Gate" parent="."]
 next_room = "scenes/rooms/RoomD.tscn"
-exit_direction = 1329
+exit_direction = 0
 position = Vector2(4905, 924)
 collision_layer = 0
 collision_mask = 256
@@ -186,7 +186,7 @@ shape = SubResource("RectangleShape2D_dbwxh")
 
 [node name="GateHallB1" type="Gate" parent="."]
 next_room = "scenes/rooms/RoomB.tscn"
-exit_direction = 503
+exit_direction = 0
 position = Vector2(4527, 2399)
 collision_layer = 0
 collision_mask = 256
@@ -197,7 +197,7 @@ shape = SubResource("RectangleShape2D_dbwxh")
 
 [node name="GateHallB2" type="Gate" parent="."]
 next_room = "scenes/rooms/RoomB.tscn"
-exit_direction = 408
+exit_direction = 0
 position = Vector2(4816, 1727)
 collision_layer = 0
 collision_mask = 256
@@ -208,7 +208,7 @@ shape = SubResource("RectangleShape2D_dbwxh")
 
 [node name="GateCorridorHall" type="Gate" parent="."]
 next_room = "scenes/rooms/Corridor.tscn"
-exit_direction = 1158
+exit_direction = 0
 position = Vector2(776, 2012)
 collision_mask = 257
 

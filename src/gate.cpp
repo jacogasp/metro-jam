@@ -63,13 +63,13 @@ void Gate::set_closed(bool closed) {
 }
 
 Gate::Direction Gate::get_exit_direction() const {
-  return m_exit_direction;
+  return static_cast<Direction>(m_exit_direction);
 }
 
 int Gate::get_direction() const {
-  return static_cast<int>(m_exit_direction);
+  return m_exit_direction;
 }
 
 void Gate::set_direction(int direction) {
-  m_exit_direction = static_cast<Direction>(direction);
+  m_exit_direction = direction;
 }

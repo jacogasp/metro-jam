@@ -258,7 +258,6 @@ position = Vector2(1199, 1722)
 
 [node name="GateHallD" type="Gate" parent="."]
 next_room = "scenes/rooms/Hall.tscn"
-exit_direction = 719
 position = Vector2(738, 3121)
 collision_mask = 257
 
