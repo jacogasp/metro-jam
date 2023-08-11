@@ -8,6 +8,10 @@
 #include <godot_cpp/classes/dir_access.hpp>
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/file_access.hpp>
+#include <godot_cpp/classes/input.hpp>
+#include <godot_cpp/classes/input_event_joypad_button.hpp>
+#include <godot_cpp/classes/input_event_joypad_motion.hpp>
+#include <godot_cpp/classes/input_event_key.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
 
 static auto SAVE_FILE =
@@ -20,6 +24,7 @@ void MainScene::_bind_methods() {
   ClassDB::bind_method(D_METHOD("on_player_got_powerup"),
                        &MainScene::on_player_got_powerup);
   ADD_SIGNAL(MethodInfo("save"));
+  ADD_SIGNAL(MethodInfo("using_joypad_changed"));
 }
 
 MainScene::MainScene()
@@ -49,9 +54,28 @@ void MainScene::_ready() {
     create_savings_directory();
     load();
   }
+  emit_signal("using_joypad_changed", m_using_joypad);
   m_logger.info("Main scene initialized");
 }
 
+void MainScene::_input(const Ref<InputEvent>& event) {
+  auto maybe_joypad_button = cast_to<InputEventJoypadButton>(event.ptr());
+  auto maybe_joypad_motion = cast_to<InputEventJoypadMotion>(event.ptr());
+  if (maybe_joypad_button || maybe_joypad_motion) {
+    if (!m_using_joypad) {
+      m_using_joypad = true;
+      emit_signal("using_joypad_changed", m_using_joypad);
+    }
+    return;
+  }
+  auto maybe_keyboard = cast_to<InputEventKey>(event.ptr());
+  if (maybe_keyboard) {
+    if (m_using_joypad) {
+      m_using_joypad = false;
+      emit_signal("using_joypad_changed", m_using_joypad);
+    }
+  }
+}
 void MainScene::on_player_hit() const {
   m_hud->get_lifebar()->lose_life();
 }
@@ -66,6 +90,10 @@ void MainScene::on_player_got_powerup(Node* node) {
     m_world->remove_powerup(name);
   }
   save();
+}
+
+bool MainScene::is_using_joypad() {
+  return false;
 }
 
 void MainScene::save() {

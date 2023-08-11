@@ -4,6 +4,7 @@
 #include "logger.hpp"
 #include "macros.hpp"
 #include <godot_cpp/classes/canvas_layer.hpp>
+#include <godot_cpp/classes/input_event.hpp>
 #include <godot_cpp/classes/node2d.hpp>
 
 using namespace godot;
@@ -15,18 +16,21 @@ class MainScene : public Node2D {
   GDCLASS_V2(MainScene, Node2D)
 
   core_game::Logger m_logger;
-  HUD* m_hud       = nullptr;
-  Player* m_player = nullptr;
-  World* m_world   = nullptr;
+  HUD* m_hud          = nullptr;
+  Player* m_player    = nullptr;
+  World* m_world      = nullptr;
+  bool m_using_joypad = false;
 
   static void _bind_methods();
   MainScene();
   ~MainScene() override;
 
   void _ready() override;
+  void _input(const Ref<InputEvent>& event) override;
   void on_player_hit() const;
   void on_player_gains_life() const;
   void on_player_got_powerup(Node* node);
+  [[nodiscard]] bool is_using_joypad();
   void save();
   void load();
 

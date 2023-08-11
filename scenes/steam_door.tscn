@@ -72,11 +72,11 @@ region_enabled = true
 region_rect = Rect2(32, 288, 32, 32)
 
 [node name="Label" type="Label" parent="Lever"]
-offset_left = -45.0
-offset_top = -108.0
-offset_right = 58.0
-offset_bottom = -59.0
-text = "Press E"
+offset_left = -69.0
+offset_top = -94.0
+offset_right = 88.0
+offset_bottom = -45.0
+text = "Press $BUTTON"
 label_settings = SubResource("LabelSettings_ogbvp")
 horizontal_alignment = 1
 

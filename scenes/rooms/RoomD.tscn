@@ -302,11 +302,11 @@ region_enabled = true
 region_rect = Rect2(32, 288, 32, 32)
 
 [node name="Label" type="Label" parent="SteamDoor/Lever"]
-offset_left = -45.0
-offset_top = -108.0
-offset_right = 58.0
-offset_bottom = -59.0
-text = "Press E"
+offset_left = -57.0
+offset_top = -88.0
+offset_right = 46.0
+offset_bottom = -39.0
+text = "Press $BUTTON"
 label_settings = SubResource("LabelSettings_f34io")
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
