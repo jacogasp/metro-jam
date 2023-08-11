@@ -52,8 +52,9 @@ void World::_process(double) {
       auto const new_x         = gate_position.x;
       auto const new_y         = gate_position.y - player_ground;
       player->set_position(Vector2{new_x, new_y});
-      player->set_direction(
-          static_cast<Player::Direction>(new_gate->get_exit_direction()));
+      player->set_direction(new_gate->get_exit_direction() == Gate::left
+                                ? Player::left
+                                : Player::right);
     }
   }
   m_pending_index = 0;
