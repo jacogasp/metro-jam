@@ -16,5 +16,7 @@ position = Vector2(46, -37.25)
 shape = SubResource("RectangleShape2D_u2s1j")
 debug_color = Color(1, 0.45098, 0.854902, 0.211765)
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="Audio" type="Node" parent="."]
+
+[node name="Fire" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("1_g0xf6")
