@@ -10,17 +10,27 @@ shader_parameter/mask_color = Color(0.164706, 0.164706, 0.164706, 1)
 shader_parameter/amount = 1.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gfebg"]
-size = Vector2(22, 22)
+size = Vector2(24, 24)
 
-[node name="AirJump" type="AirJumpPower"]
+[node name="AirJumpPower" type="AirJumpPower"]
 
 [node name="TextureRect" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_4ykbm")
-offset_left = -12.0
-offset_top = -12.0
-offset_right = 12.0
-offset_bottom = 12.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(49, 4)
+size_flags_horizontal = 4
 texture = ExtResource("2_5lmpm")
+stretch_mode = 4
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 131072
