@@ -4,6 +4,7 @@
 #include "logger.hpp"
 #include "player.hpp"
 #include "profiler.hpp"
+#include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
 
 std::array<World::NextSceneMessage, 16> World::m_pending{};
@@ -33,6 +34,9 @@ void World::_ready() {
 
 void World::_process(double) {
   PROFILE_FUNCTION();
+  if (Engine::get_singleton()->is_editor_hint()) {
+    return;
+  }
   for (size_t i = 0; i < m_pending_index; ++i) {
     auto const loader       = ResourceLoader::get_singleton();
     String const next_scene = String(m_pending.at(i).next_scene.c_str());
@@ -46,7 +50,7 @@ void World::_process(double) {
         m_current_scene->get_node<Gate>(new_gate_name.c_str());
     if (new_gate) {
       new_gate->set_closed(true);
-      auto player              = cast_to<Player>(m_player);
+      auto player              = get_node<Player>("/root/Main/Player");
       auto const player_ground = player->get_ground_position();
       auto const gate_position = new_gate->get_position();
       auto const new_x         = gate_position.x;
@@ -88,7 +92,10 @@ void World::update_scene(String const& scene_name) {
   if (!scene_name.is_empty()) {
     m_current_scene->set_name(scene_name);
   }
-  filter_superpowers(m_player, m_current_scene);
+  auto player = get_node<Player>("/root/Main/Player");
+  if (player) {
+    filter_superpowers(player, m_current_scene);
+  }
   // If a node with the same path is present remove the old one
   if (!scene_name.is_empty() && has_node(scene_name)) {
     auto node = get_node<Node>(scene_name);
@@ -148,5 +155,6 @@ void World::load_scene_from_path(const String& filepath) {
   auto scene_name = filepath.get_basename().get_file();
   update_scene(scene_name);
   using core_game::to_str;
-  m_logger->info(std::string{"Loaded scene from "} + filepath.utf8().get_data());
+  m_logger->info(std::string{"Loaded scene from "}
+                 + filepath.utf8().get_data());
 }
