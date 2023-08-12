@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cqhkrnuchxrrm"]
+[gd_scene load_steps=25 format=3 uid="uid://cqhkrnuchxrrm"]
 
 [ext_resource type="TileSet" uid="uid://0w2a5bo421v7" path="res://assets/tilesets/TilesetBlocks.tres" id="1_hh4i0"]
 [ext_resource type="PackedScene" uid="uid://b31qyx4laex5m" path="res://scenes/steam_jet.tscn" id="2_t44ap"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://2vcybdhlfsdk" path="res://assets/light_bulb_sprite.png" id="11_2bac5"]
 [ext_resource type="PackedScene" uid="uid://bdg1pub7dq7s0" path="res://scenes/superpowers/AirJumpPower.tscn" id="12_dm5vy"]
 [ext_resource type="PackedScene" uid="uid://p4put2nhbvkm" path="res://scenes/superpowers/Slide.tscn" id="13_hseid"]
+[ext_resource type="PackedScene" uid="uid://5ffcgqqdua1c" path="res://scenes/checkpoint.tscn" id="14_kbyol"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_egxwb"]
 size = Vector2(32, 64.6875)
@@ -509,6 +510,11 @@ position = Vector2(6322, 1754)
 
 [node name="Slide" parent="." instance=ExtResource("13_hseid")]
 position = Vector2(3122, 2558)
+
+[node name="Checkpoints" type="Node" parent="."]
+
+[node name="Checkpoint" parent="Checkpoints" instance=ExtResource("14_kbyol")]
+position = Vector2(1203, 3073)
 
 [connection signal="body_entered" from="GateHallD" to="GateHallD" method="_on_body_entered"]
 [connection signal="body_exited" from="GateHallD" to="GateHallD" method="_on_body_exited"]
