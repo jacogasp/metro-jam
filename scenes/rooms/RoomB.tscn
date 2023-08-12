@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://drapwmmn22gpw"]
+[gd_scene load_steps=28 format=3 uid="uid://drapwmmn22gpw"]
 
 [ext_resource type="TileSet" uid="uid://0w2a5bo421v7" path="res://assets/tilesets/TilesetBlocks.tres" id="1_ch5n7"]
 [ext_resource type="PackedScene" uid="uid://byowg4tosyvo2" path="res://scenes/platform.tscn" id="2_w1ib7"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://b31qyx4laex5m" path="res://scenes/steam_jet.tscn" id="10_sx0bt"]
 [ext_resource type="PackedScene" uid="uid://br4rfwsm3h8cw" path="res://scenes/poison_ranger.tscn" id="11_iyxqx"]
 [ext_resource type="PackedScene" uid="uid://cu0874vm7p4ku" path="res://scenes/bumblee_bee.tscn" id="12_rty6k"]
+[ext_resource type="PackedScene" uid="uid://cmpgrq5ntb82m" path="res://scenes/superpowers/GrenadeLauncher.tscn" id="13_o0q26"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1213o"]
 size = Vector2(32, 59)
@@ -229,13 +230,6 @@ collision_mask = 256
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SteamDoor/Door/Area2D"]
 position = Vector2(0, -67.5)
 shape = SubResource("RectangleShape2D_bvxkr")
-
-[node name="POWERUP GRENADE" type="Label" parent="."]
-offset_left = 6534.0
-offset_top = 949.0
-offset_right = 6789.0
-offset_bottom = 1093.0
-text = "POWERUP = GRENADE"
 
 [node name="POWERUP MAX LIFE POINTS +1" type="Label" parent="."]
 offset_left = 6009.0
@@ -757,6 +751,9 @@ position = Vector2(4099, 3207)
 
 [node name="BumbleBee12" parent="Bumblebees" instance=ExtResource("12_rty6k")]
 position = Vector2(1566, 2440)
+
+[node name="GrenadeLauncher" parent="." instance=ExtResource("13_o0q26")]
+position = Vector2(6591, 986)
 
 [connection signal="body_entered" from="GateHallB1" to="GateHallB1" method="_on_body_entered"]
 [connection signal="body_exited" from="GateHallB1" to="GateHallB1" method="_on_body_exited"]
