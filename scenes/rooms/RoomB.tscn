@@ -231,14 +231,6 @@ collision_mask = 256
 position = Vector2(0, -67.5)
 shape = SubResource("RectangleShape2D_bvxkr")
 
-[node name="POWERUP MAX LIFE POINTS +1" type="Label" parent="."]
-offset_left = 6009.0
-offset_top = 3162.0
-offset_right = 6264.0
-offset_bottom = 3306.0
-text = "POWERUP = MAX 
-LIFE POINTS +1"
-
 [node name="JUMP" type="Label" parent="."]
 offset_left = 5647.0
 offset_top = 1760.0
