@@ -1,13 +1,16 @@
 #include "hud.hpp"
 #include <godot_cpp/classes/box_container.hpp>
 #include <godot_cpp/classes/canvas_layer.hpp>
+#include <godot_cpp/classes/scene_tree.hpp>
 #include <godot_cpp/classes/texture_rect.hpp>
 
 void HUD::_bind_methods() {
   ClassDB::bind_method(D_METHOD("on_player_got_powerup"),
                        &HUD::on_player_got_powerup);
   ClassDB::bind_method(D_METHOD("start_game"), &HUD::start_game);
+  ClassDB::bind_method(D_METHOD("quit"), &HUD::quit);
   ADD_SIGNAL(MethodInfo("start_game"));
+  ADD_SIGNAL(MethodInfo("quit"));
 }
 
 void HUD::_ready() {
@@ -40,6 +43,10 @@ void HUD::show_start() {
   if (cl) {
     cl->show();
   }
+}
+
+void HUD::quit() {
+  emit_signal("quit");
 }
 
 void HUD::hide_start() {

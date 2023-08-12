@@ -27,6 +27,7 @@ void MainScene::_bind_methods() {
                        &MainScene::on_player_got_powerup);
   ClassDB::bind_method(D_METHOD("save"), &MainScene::save);
   ClassDB::bind_method(D_METHOD("start_game"), &MainScene::start_game);
+  ClassDB::bind_method(D_METHOD("quit"), &MainScene::quit);
   ADD_SIGNAL(MethodInfo("save"));
   ADD_SIGNAL(MethodInfo("using_joypad_changed"));
 }
@@ -95,6 +96,10 @@ void MainScene::on_player_got_powerup(Node* node) {
 
 bool MainScene::is_using_joypad() {
   return false;
+}
+
+void MainScene::quit() const {
+  get_tree()->quit();
 }
 
 void MainScene::save() {

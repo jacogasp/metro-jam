@@ -32,6 +32,7 @@ class MainScene : public Node2D {
   void on_player_gains_life() const;
   void on_player_got_powerup(Node* node);
   [[nodiscard]] bool is_using_joypad();
+  void quit() const;
   void save();
   void load();
   void pause() const;

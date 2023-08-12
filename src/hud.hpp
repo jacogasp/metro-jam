@@ -24,6 +24,7 @@ class HUD : public CanvasLayer {
   void on_player_got_powerup(Node2D* power_up);
   void start_game();
   void show_start();
+  void quit();
   void hide_start();
   void show_gameover();
   void hide_gameover();
