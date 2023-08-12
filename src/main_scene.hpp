@@ -21,6 +21,7 @@ class MainScene : public Node2D {
   World* m_world      = nullptr;
   bool m_using_joypad = false;
   bool m_loading      = false;
+  bool m_game_over    = false;
 
   static void _bind_methods();
   MainScene();
@@ -38,6 +39,7 @@ class MainScene : public Node2D {
   void pause() const;
   void resume() const;
   void start_game() const;
+  void game_over();
 
  private:
   void load_superpowers(const Array& superpowers) const;

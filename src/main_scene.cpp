@@ -27,6 +27,7 @@ void MainScene::_bind_methods() {
                        &MainScene::on_player_got_powerup);
   ClassDB::bind_method(D_METHOD("save"), &MainScene::save);
   ClassDB::bind_method(D_METHOD("start_game"), &MainScene::start_game);
+  ClassDB::bind_method(D_METHOD("game_over"), &MainScene::game_over);
   ClassDB::bind_method(D_METHOD("quit"), &MainScene::quit);
   ADD_SIGNAL(MethodInfo("save"));
   ADD_SIGNAL(MethodInfo("using_joypad_changed"));
@@ -223,6 +224,13 @@ void MainScene::start_game() const {
   m_hud->hide_start();
   m_hud->show_in_game();
   resume();
+}
+
+void MainScene::game_over() {
+  pause();
+  m_hud->hide_in_game();
+  m_hud->show_gameover();
+  m_game_over = true;
 }
 
 void MainScene::load_superpowers(const Array& superpowers) const {

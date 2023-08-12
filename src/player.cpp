@@ -19,6 +19,7 @@ FallingState Player::falling        = FallingState();
 AirJumpingState Player::air_jumping = AirJumpingState();
 AttackState Player::attacking       = AttackState();
 SlideState Player::sliding          = SlideState();
+DyingState Player::dying            = DyingState();
 
 static void flip_h(RayCast2D& ray) {
   auto position        = ray.get_position();
@@ -56,6 +57,7 @@ void Player::_bind_methods() {
   ADD_SIGNAL(MethodInfo("player_hit"));
   ADD_SIGNAL(MethodInfo("player_gains_life"));
   ADD_SIGNAL(MethodInfo("got_powerup"));
+  ADD_SIGNAL(MethodInfo("die"));
 }
 
 Player::Player() {
@@ -176,8 +178,9 @@ void Player::add_life() {
 
 void Player::loose_life() {
   --m_current_life;
-  if (m_current_life < 0) {
+  if (m_current_life <= 0) {
     m_current_life = 0;
+    set_state(&Player::dying);
   }
 }
 
