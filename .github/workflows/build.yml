@@ -214,6 +214,7 @@ jobs:
   deploy:
     name: "Deploy to itch.io"
     runs-on: "ubuntu-latest"
+    if: github.ref_name == 'main'
     needs:
       - build
       - export
@@ -244,10 +245,7 @@ jobs:
           butler push ${{ env.RELEASE_WINDOWS }} johnnyparafango/wrenchman:windows
 
 
-    on:
-      push:
-        branches:
-          - main
+
 on:
   workflow_dispatch:
   push:
