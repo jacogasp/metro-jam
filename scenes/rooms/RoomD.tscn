@@ -504,7 +504,7 @@ scale = Vector2(10, 10)
 energy = 0.48
 texture = SubResource("GradientTexture2D_g4jgr")
 
-[node name="AirJump" parent="." instance=ExtResource("12_dm5vy")]
+[node name="AirJumpPower" parent="." instance=ExtResource("12_dm5vy")]
 position = Vector2(6322, 1754)
 
 [node name="Slide" parent="." instance=ExtResource("13_hseid")]
