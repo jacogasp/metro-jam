@@ -30,6 +30,9 @@ class HUD : public CanvasLayer {
   void hide_gameover();
   void show_in_game();
   void hide_in_game();
+  void continue_game();
+  void restart_game();
+  void set_can_continue(bool can_continue);
 };
 
 #endif // COREGAME_HUD_HPP

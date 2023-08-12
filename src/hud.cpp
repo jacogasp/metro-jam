@@ -1,6 +1,8 @@
 #include "hud.hpp"
 #include <godot_cpp/classes/box_container.hpp>
 #include <godot_cpp/classes/canvas_layer.hpp>
+#include <godot_cpp/classes/packed_scene.hpp>
+#include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/classes/scene_tree.hpp>
 #include <godot_cpp/classes/texture_rect.hpp>
 
@@ -8,14 +10,17 @@ void HUD::_bind_methods() {
   ClassDB::bind_method(D_METHOD("on_player_got_powerup"),
                        &HUD::on_player_got_powerup);
   ClassDB::bind_method(D_METHOD("start_game"), &HUD::start_game);
+  ClassDB::bind_method(D_METHOD("continue_game"), &HUD::continue_game);
+  ClassDB::bind_method(D_METHOD("restart_game"), &HUD::restart_game);
   ClassDB::bind_method(D_METHOD("quit"), &HUD::quit);
   ADD_SIGNAL(MethodInfo("start_game"));
+  ADD_SIGNAL(MethodInfo("continue_game"));
+  ADD_SIGNAL(MethodInfo("restart_game"));
   ADD_SIGNAL(MethodInfo("quit"));
 }
 
 void HUD::_ready() {
-  m_lifebar         = get_node<LifeBar>("InGame/LifeBar");
-  auto start_button = get_node<Button>("Start/StartButton");
+  m_lifebar = get_node<LifeBar>("InGame/LifeBar");
 }
 
 LifeBar* HUD::get_lifebar() const {
@@ -55,6 +60,7 @@ void HUD::hide_start() {
     cl->hide();
   }
 }
+
 void HUD::show_gameover() {
   auto cl = get_node<CanvasLayer>("GameOver");
   if (cl) {
@@ -79,5 +85,20 @@ void HUD::hide_in_game() {
   auto cl = get_node<CanvasLayer>("InGame");
   if (cl) {
     cl->hide();
+  }
+}
+
+void HUD::continue_game() {
+  emit_signal("continue_game");
+}
+
+void HUD::restart_game() {
+  emit_signal("restart_game");
+}
+
+void HUD::set_can_continue(bool can_continue) {
+  auto button = get_node<Button>("GameOver/ContinueButton");
+  if (button) {
+    button->set_disabled(!can_continue);
   }
 }
