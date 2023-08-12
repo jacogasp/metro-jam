@@ -5,6 +5,7 @@ void Gun::_bind_methods() {
   BIND_PROPERTY(Gun, bullet, Variant::OBJECT);
   BIND_PROPERTY(Gun, bullet_speed, Variant::FLOAT);
   BIND_PROPERTY(Gun, cooldown, Variant::FLOAT);
+  ADD_SIGNAL(MethodInfo("cooling_down"));
 }
 
 void Gun::_ready() {
@@ -14,6 +15,11 @@ void Gun::_ready() {
 
 void Gun::_process(double t) {
   m_cooldown_timer.tick(t);
+  if (cooling_down()) {
+    auto const remaining = m_cooldown_timer.remaining();
+    auto const level     = 1 - remaining / m_cooldown_timer.get_timeout();
+    emit_signal("cooling_down", level);
+  }
 }
 
 void Gun::set_bullet(const Ref<PackedScene>& scene) {
@@ -35,10 +41,16 @@ void Gun::fire(const Vector2& direction) {
   auto node   = m_bullet->instantiate();
   auto bullet = cast_to<RigidBody2D>(node);
   if (bullet) {
-    get_parent()->get_parent()->add_child(bullet);
-    auto const impulse = direction.normalized() * m_bullet_speed;
-    bullet->apply_impulse(impulse);
-    bullet->set_global_position(get_global_position());
+    auto world = get_node<Node2D>("/root/Main/World");
+    if (world) {
+      world->add_child(bullet);
+      auto const impulse = direction.normalized() * m_bullet_speed;
+      bullet->apply_impulse(impulse);
+      bullet->set_global_position(get_global_position());
+      std::cerr << "grenade!\n";
+    } else {
+      std::cerr << "Cannot find World Node\n";
+    }
   } else {
     std::cerr << "Grenade Packed Scene must be of type Grenade\n";
   }
