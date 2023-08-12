@@ -1,14 +1,148 @@
-[gd_scene load_steps=2 format=3 uid="uid://j3sugn7p7jhf"]
+[gd_scene load_steps=7 format=3 uid="uid://j3sugn7p7jhf"]
 
 [ext_resource type="PackedScene" uid="uid://ctehtj158jgy2" path="res://scenes/LifeBar.tscn" id="1_dnl85"]
+[ext_resource type="Texture2D" uid="uid://cvam2fqmilx5s" path="res://assets/screens/bg_darkblue.png" id="2_faivf"]
+[ext_resource type="Texture2D" uid="uid://bthsfogatialq" path="res://assets/screens/start_screen.png" id="2_gm4l0"]
+[ext_resource type="FontFile" uid="uid://ctpai807254id" path="res://assets/fonts/Pixeled.ttf" id="2_tdjxd"]
+[ext_resource type="Texture2D" uid="uid://ksn83ylur68v" path="res://assets/screens/game_over_screen.png" id="5_dk5lr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0lbgs"]
+bg_color = Color(0.129412, 0.117647, 0.2, 1)
+border_width_left = 2
+border_width_bottom = 2
+border_color = Color(0.129412, 0.117647, 0.258824, 0.929412)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+shadow_size = 8
 
 [node name="HUD" type="HUD"]
+metadata/_edit_vertical_guides_ = [344.0, 302.0, 384.0]
 
 [node name="LifeBar" parent="." instance=ExtResource("1_dnl85")]
 position = Vector2(24, 24)
 
-[node name="PowerUpsContainer" type="VBoxContainer" parent="."]
-offset_left = 13.0
-offset_top = 230.0
-offset_right = 31.0
-offset_bottom = 335.0
+[node name="Start" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="MarginContainer" type="MarginContainer" parent="Start"]
+offset_right = 688.0
+offset_bottom = 384.0
+
+[node name="BgDarkblue" type="Sprite2D" parent="Start/MarginContainer"]
+position = Vector2(344, 192)
+texture = ExtResource("2_faivf")
+
+[node name="Wrenchman" type="Sprite2D" parent="Start/MarginContainer"]
+position = Vector2(344, 192)
+texture = ExtResource("2_gm4l0")
+
+[node name="Legenda" type="Label" parent="Start"]
+offset_top = 36.0
+offset_right = 688.0
+offset_bottom = 348.0
+theme_override_fonts/font = ExtResource("2_tdjxd")
+theme_override_font_sizes/font_size = 8
+text = "WASD/SpaceBar - Run/Jump, E - Interaction, Enter - Attack
+Unlockable: W - Double jump, S/down - evade, G - Grenades
+
+
+
+
+
+
+
+
+
+
+"
+horizontal_alignment = 1
+
+[node name="StartButton" type="Button" parent="Start"]
+offset_left = 302.0
+offset_top = 142.0
+offset_right = 384.0
+offset_bottom = 167.0
+theme_override_fonts/font = ExtResource("2_tdjxd")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_0lbgs")
+text = "Start"
+
+[node name="QuitButton" type="Button" parent="Start"]
+offset_left = 302.0
+offset_top = 342.0
+offset_right = 384.0
+offset_bottom = 367.0
+theme_override_fonts/font = ExtResource("2_tdjxd")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_0lbgs")
+text = "Quit
+"
+
+[node name="GameOver" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="MarginContainer" type="MarginContainer" parent="GameOver"]
+offset_right = 688.0
+offset_bottom = 384.0
+
+[node name="BgDarkblue" type="Sprite2D" parent="GameOver/MarginContainer"]
+position = Vector2(344, 192)
+texture = ExtResource("2_faivf")
+
+[node name="GameOverScreen" type="Sprite2D" parent="GameOver/MarginContainer"]
+position = Vector2(344, 192)
+texture = ExtResource("5_dk5lr")
+
+[node name="Legenda" type="Label" parent="GameOver"]
+offset_top = 36.0
+offset_right = 688.0
+offset_bottom = 348.0
+theme_override_fonts/font = ExtResource("2_tdjxd")
+theme_override_font_sizes/font_size = 8
+text = "WASD/SpaceBar - Run/Jump, E - Interaction, Enter - Attack
+Unlockable: W - Double jump, S/down - evade, G - Grenades
+
+
+
+
+
+
+
+
+
+
+"
+horizontal_alignment = 1
+
+[node name="RestartButton" type="Button" parent="GameOver"]
+offset_left = 302.0
+offset_top = 142.0
+offset_right = 384.0
+offset_bottom = 167.0
+theme_override_fonts/font = ExtResource("2_tdjxd")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_0lbgs")
+text = "Restart"
+
+[node name="ContinueButton" type="Button" parent="GameOver"]
+offset_left = 302.0
+offset_top = 111.0
+offset_right = 384.0
+offset_bottom = 136.0
+theme_override_fonts/font = ExtResource("2_tdjxd")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_0lbgs")
+text = "Continue"
+
+[node name="QuitButton" type="Button" parent="GameOver"]
+offset_left = 302.0
+offset_top = 342.0
+offset_right = 384.0
+offset_bottom = 367.0
+theme_override_fonts/font = ExtResource("2_tdjxd")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_0lbgs")
+text = "Quit
+"
