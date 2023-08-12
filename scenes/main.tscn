@@ -31,6 +31,7 @@ editor_draw_limits = true
 
 [node name="MainTheme" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_ske0o")
+volume_db = -10.0
 autoplay = true
 
 [connection signal="got_powerup" from="Player" to="." method="on_player_got_powerup"]

@@ -20,3 +20,4 @@ debug_color = Color(1, 0.45098, 0.854902, 0.211765)
 
 [node name="Fire" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("1_g0xf6")
+volume_db = -18.0
