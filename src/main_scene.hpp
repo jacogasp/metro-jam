@@ -34,6 +34,9 @@ class MainScene : public Node2D {
   [[nodiscard]] bool is_using_joypad();
   void save();
   void load();
+  void pause() const;
+  void resume() const;
+  void start_game() const;
 
  private:
   void load_superpowers(const Array& superpowers) const;

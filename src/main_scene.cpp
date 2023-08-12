@@ -14,6 +14,7 @@
 #include <godot_cpp/classes/input_event_key.hpp>
 #include <godot_cpp/classes/label.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
+#include <godot_cpp/classes/scene_tree.hpp>
 
 static auto SAVE_FILE =
     std::string{core_game::SAVINGS_DIRECTORY} + "/game.json";
@@ -25,6 +26,7 @@ void MainScene::_bind_methods() {
   ClassDB::bind_method(D_METHOD("on_player_got_powerup"),
                        &MainScene::on_player_got_powerup);
   ClassDB::bind_method(D_METHOD("save"), &MainScene::save);
+  ClassDB::bind_method(D_METHOD("start_game"), &MainScene::start_game);
   ADD_SIGNAL(MethodInfo("save"));
   ADD_SIGNAL(MethodInfo("using_joypad_changed"));
 }
@@ -55,6 +57,10 @@ void MainScene::_ready() {
   if (!Engine::get_singleton()->is_editor_hint()) {
     create_savings_directory();
     load();
+    pause();
+    m_hud->show_start();
+    m_hud->hide_in_game();
+    m_hud->hide_gameover();
   }
   m_logger.info("Main scene initialized");
 }
@@ -198,6 +204,20 @@ void MainScene::load() {
   }
   m_logger.info("Loading complete.");
   m_loading = false;
+}
+
+void MainScene::pause() const {
+  get_tree()->set_pause(true);
+}
+
+void MainScene::resume() const {
+  get_tree()->set_pause(false);
+}
+
+void MainScene::start_game() const {
+  m_hud->hide_start();
+  m_hud->show_in_game();
+  resume();
 }
 
 void MainScene::load_superpowers(const Array& superpowers) const {
