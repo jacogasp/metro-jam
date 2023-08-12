@@ -169,6 +169,5 @@ void DyingState::update(Player& player) {
       && player.m_animatedSprite2D->is_playing()) {
     return;
   }
-
   player.emit_signal("die");
 }
