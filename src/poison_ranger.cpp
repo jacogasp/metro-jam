@@ -81,7 +81,7 @@ void PoisonRanger::_ready() {
   go_patrolling(*this);
 }
 
-void PoisonRanger::_pMMirocess(double delta) {
+void PoisonRanger::_process(double delta) {
   if (Engine::get_singleton()->is_editor_hint()) {
     return;
   }
