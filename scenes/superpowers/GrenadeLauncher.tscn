@@ -12,7 +12,6 @@ shader_parameter/mask_color = Color(0, 0, 0, 0.266667)
 shader_parameter/amount = 1.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j31ro"]
-size = Vector2(22, 22)
 
 [node name="GrenadeLauncher" type="Node2D"]
 script = ExtResource("1_sqydn")
@@ -24,13 +23,12 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -11.0
-offset_top = -11.0
-offset_right = 29.0
-offset_bottom = 29.0
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.551099, 0.551099)
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("3_dikc4")
