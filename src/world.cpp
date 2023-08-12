@@ -148,5 +148,5 @@ void World::load_scene_from_path(const String& filepath) {
   auto scene_name = filepath.get_basename().get_file();
   update_scene(scene_name);
   using core_game::to_str;
-  m_logger->info(std::string{"Loaded scene from "} + to_str(filepath));
+  m_logger->info(std::string{"Loaded scene from "} + filepath.utf8().ptr());
 }
