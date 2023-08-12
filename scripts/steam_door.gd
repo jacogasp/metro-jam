@@ -17,6 +17,7 @@ func _ready():
 	var main_scene = get_node("/root/Main")
 	main_scene.connect("using_joypad_changed", using_joypad_changed)
 	main_scene.connect("save", save_state)
+	using_joypad_changed(false)
 	load_state()
 
 

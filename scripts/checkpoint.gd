@@ -7,6 +7,7 @@ func _ready():
 	label_text = $Label.text
 	var main_scene = get_node("/root/Main")
 	main_scene.connect("using_joypad_changed", using_joypad_changed)
+	using_joypad_changed(false)
 
 func interact():
 	var main_scene = get_node("/root/Main")

@@ -16,6 +16,7 @@ func _ready():
 	main_scene.connect("using_joypad_changed", using_joypad_changed)
 	main_scene.connect("save", save_state)
 	label_text = $Handle/Label.text
+	using_joypad_changed(false)
 	load_state()
 	
 func get_event_button(using_joypad: bool):
