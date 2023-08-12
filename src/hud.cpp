@@ -17,10 +17,10 @@ LifeBar* HUD::get_lifebar() const {
 
 void HUD::on_player_got_powerup(Node2D* power_up) {
   m_powerups.push_back(power_up);
-  auto container    = get_node<BoxContainer>("PowerUpsContainer");
-  auto texture_rect = power_up->get_node<TextureRect>("TextureRect");
-  if (container && texture_rect) {
-    auto old_parent = texture_rect->get_parent();
+  auto container = get_node<BoxContainer>("PowerUpsContainer");
+  if (power_up->has_node("TextureRect") && container) {
+    auto texture_rect = power_up->get_node<TextureRect>("TextureRect");
+    auto old_parent   = texture_rect->get_parent();
     old_parent->remove_child(texture_rect);
     container->add_child(texture_rect);
   }

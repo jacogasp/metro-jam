@@ -12,6 +12,7 @@
 #include <godot_cpp/classes/input_event_joypad_button.hpp>
 #include <godot_cpp/classes/input_event_joypad_motion.hpp>
 #include <godot_cpp/classes/input_event_key.hpp>
+#include <godot_cpp/classes/label.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
 
 static auto SAVE_FILE =
@@ -54,7 +55,7 @@ void MainScene::_ready() {
     create_savings_directory();
     load();
   }
-  emit_signal("using_joypad_changed", m_using_joypad);
+  //  emit_signal("using_joypad_changed", m_using_joypad);
   m_logger.info("Main scene initialized");
 }
 
@@ -106,7 +107,7 @@ void MainScene::save() {
     player["pos.x"] = m_player->get_global_position().x;
     player["pos.y"] = m_player->get_global_position().y;
 
-    auto superpowers = m_player->get_node<Node>("Superpowers");
+    auto superpowers = m_player->get_node<Node2D>("Superpowers");
     if (superpowers) {
       auto sp = superpowers->get_children();
       Array names;
@@ -144,22 +145,29 @@ void load_state(World& world, Dictionary const& state) {
   world.load_scene_from_path(current_scene);
 }
 
-static void add_superpower(String const& name, Player& player) {
-  auto sp = player.get_node<Node>("Superpowers");
+static Node2D* add_superpower(String const& name, Player& player) {
+  auto sp = player.get_node<Node2D>("Superpowers");
   if (sp == nullptr) {
     std::cerr << "Superpowers node not found\n";
-    return;
+    return nullptr;
   }
   auto loader        = ResourceLoader::get_singleton();
   auto resource_path = "res://scenes/superpowers/" + name + ".tscn";
   if (loader->exists(resource_path)) {
     Ref<PackedScene> superpower = loader->load(resource_path);
-    auto n = Node2D::cast_to<Node2D>(superpower->instantiate());
-    player.pick(n);
+    auto n     = Node2D::cast_to<Node2D>(superpower->instantiate());
+    auto area  = n->get_node<Area2D>("Area2D");
+    auto label = n->get_node<Label>("Label");
+    area->set_monitoring(false);
+    area->queue_free();
+    label->queue_free();
+    player.add_powerup(n);
+    return n;
   } else {
     std::cerr << "Resource not found " << resource_path.utf8().get_data()
               << '\n';
   }
+  return nullptr;
 }
 
 void MainScene::load() {
@@ -204,14 +212,15 @@ void MainScene::load_superpowers(const Array& superpowers) const {
   m_logger.info("Loading superpowers: " + std::to_string(superpowers.size()));
   for (auto i = 0; i < superpowers.size(); ++i) {
     auto const name = String(superpowers[i]);
-    if (m_player) {
-      add_superpower(name, *m_player);
-    }
-    if (m_world) {
+    if (m_player && m_world && m_hud) {
+      auto superpower = add_superpower(name, *m_player);
+      if (superpower) {
+        m_hud->on_player_got_powerup(superpower);
+      }
       m_world->remove_powerup(name);
+      m_logger.debug(std::string("Loaded superpower ")
+                     + to_str(name.get_basename()));
     }
-    m_logger.debug(std::string("Loaded superpower ")
-                   + to_str(name.get_basename()));
   }
 }
 
