@@ -47,7 +47,6 @@ void Gun::fire(const Vector2& direction) {
       auto const impulse = direction.normalized() * m_bullet_speed;
       bullet->apply_impulse(impulse);
       bullet->set_global_position(get_global_position());
-      std::cerr << "grenade!\n";
     } else {
       std::cerr << "Cannot find World Node\n";
     }
