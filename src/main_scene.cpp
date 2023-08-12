@@ -24,6 +24,7 @@ void MainScene::_bind_methods() {
                        &MainScene::on_player_gains_life);
   ClassDB::bind_method(D_METHOD("on_player_got_powerup"),
                        &MainScene::on_player_got_powerup);
+  ClassDB::bind_method(D_METHOD("save"), &MainScene::save);
   ADD_SIGNAL(MethodInfo("save"));
   ADD_SIGNAL(MethodInfo("using_joypad_changed"));
 }
@@ -89,9 +90,6 @@ void MainScene::on_player_got_powerup(Node* node) {
   auto const name = node->get_name().get_basename();
   if (m_world) {
     m_world->remove_powerup(name);
-  }
-  if (!m_loading) {
-    save();
   }
 }
 
