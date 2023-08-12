@@ -216,6 +216,15 @@ collision_mask = 257
 position = Vector2(7, -25.5)
 shape = SubResource("RectangleShape2D_dbwxh")
 
+[node name="GateEntranceHall" type="Gate" parent="."]
+next_room = "scenes/rooms/Entrance.tscn"
+position = Vector2(714, 2461)
+collision_mask = 257
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GateEntranceHall"]
+position = Vector2(7, -25.5)
+shape = SubResource("RectangleShape2D_dbwxh")
+
 [node name="PlatformSystem1" type="Node2D" parent="."]
 script = ExtResource("6_j7fy6")
 one_shot = true
@@ -569,6 +578,8 @@ text = "Use the lever to activate the elevator"
 [connection signal="body_exited" from="GateHallB2" to="GateHallB2" method="_on_body_exited"]
 [connection signal="body_entered" from="GateCorridorHall" to="GateCorridorHall" method="_on_body_entered"]
 [connection signal="body_exited" from="GateCorridorHall" to="GateCorridorHall" method="_on_body_exited"]
+[connection signal="body_entered" from="GateEntranceHall" to="GateEntranceHall" method="_on_body_entered"]
+[connection signal="body_exited" from="GateEntranceHall" to="GateEntranceHall" method="_on_body_exited"]
 [connection signal="body_entered" from="PlatformSystem1/Handle/Area2D" to="PlatformSystem1" method="show_label"]
 [connection signal="body_exited" from="PlatformSystem1/Handle/Area2D" to="PlatformSystem1" method="hide_label"]
 
