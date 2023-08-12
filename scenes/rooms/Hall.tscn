@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://0e7eflaq7ui6"]
+[gd_scene load_steps=28 format=3 uid="uid://0e7eflaq7ui6"]
 
 [ext_resource type="Texture2D" uid="uid://b2u8bgksqj83j" path="res://icon.svg" id="1_hkmiw"]
 [ext_resource type="Material" uid="uid://g3uwsdhmuuaj" path="res://shaders/Water.material" id="2_333v6"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://dch5xho6lehap" path="res://assets/textures/light.png" id="11_stcul"]
 [ext_resource type="Texture2D" uid="uid://2vcybdhlfsdk" path="res://assets/light_bulb_sprite.png" id="12_yblow"]
 [ext_resource type="PackedScene" uid="uid://br4rfwsm3h8cw" path="res://scenes/poison_ranger.tscn" id="13_r6kl5"]
+[ext_resource type="PackedScene" uid="uid://5ffcgqqdua1c" path="res://scenes/checkpoint.tscn" id="16_mluxe"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dbwxh"]
 size = Vector2(31.75, 57.5)
@@ -805,6 +806,8 @@ offset_top = 2146.0
 offset_right = 3102.0
 offset_bottom = 2172.0
 text = "Use the lever to activate the elevator"
+
+[node name="Checkpoint" parent="." instance=ExtResource("16_mluxe")]
 
 [connection signal="body_entered" from="GateHallD" to="GateHallD" method="_on_body_entered"]
 [connection signal="body_exited" from="GateHallD" to="GateHallD" method="_on_body_exited"]
