@@ -20,9 +20,6 @@ shadow_size = 8
 [node name="HUD" type="HUD"]
 metadata/_edit_vertical_guides_ = [344.0, 302.0, 384.0]
 
-[node name="LifeBar" parent="." instance=ExtResource("1_dnl85")]
-position = Vector2(24, 24)
-
 [node name="Start" type="CanvasLayer" parent="."]
 visible = false
 
@@ -146,3 +143,20 @@ theme_override_font_sizes/font_size = 8
 theme_override_styles/normal = SubResource("StyleBoxFlat_0lbgs")
 text = "Quit
 "
+
+[node name="InGame" type="CanvasLayer" parent="."]
+
+[node name="PowerUpsContainer" type="VBoxContainer" parent="InGame"]
+clip_contents = true
+custom_minimum_size = Vector2(32, 2.08165e-12)
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -65.5
+offset_right = 32.0
+offset_bottom = 65.5
+grow_vertical = 2
+size_flags_horizontal = 3
+
+[node name="LifeBar" parent="InGame" instance=ExtResource("1_dnl85")]
+position = Vector2(24, 24)

@@ -8,7 +8,7 @@ void HUD::_bind_methods() {
 }
 
 void HUD::_ready() {
-  m_lifebar = get_node<LifeBar>("LifeBar");
+  m_lifebar = get_node<LifeBar>("InGame/LifeBar");
 }
 
 LifeBar* HUD::get_lifebar() const {
@@ -17,7 +17,7 @@ LifeBar* HUD::get_lifebar() const {
 
 void HUD::on_player_got_powerup(Node2D* power_up) {
   m_powerups.push_back(power_up);
-  auto container = get_node<BoxContainer>("PowerUpsContainer");
+  auto container = get_node<BoxContainer>("InGame/PowerUpsContainer");
   if (power_up->has_node("TextureRect") && container) {
     auto texture_rect = power_up->get_node<TextureRect>("TextureRect");
     auto old_parent   = texture_rect->get_parent();
