@@ -20,6 +20,7 @@ class MainScene : public Node2D {
   Player* m_player    = nullptr;
   World* m_world      = nullptr;
   bool m_using_joypad = false;
+  bool m_loading      = false;
 
   static void _bind_methods();
   MainScene();

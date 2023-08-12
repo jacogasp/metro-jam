@@ -89,7 +89,9 @@ void MainScene::on_player_got_powerup(Node* node) {
   if (m_world) {
     m_world->remove_powerup(name);
   }
-  save();
+  if (!m_loading) {
+    save();
+  }
 }
 
 bool MainScene::is_using_joypad() {
@@ -161,8 +163,11 @@ static void add_superpower(String const& name, Player& player) {
 }
 
 void MainScene::load() {
+  m_loading = true;
+  m_logger.info("Start loading savings...");
   if (!FileAccess::file_exists(SAVE_FILE.c_str())) {
     m_logger.warn("Game save file not found");
+    m_loading = false;
     return;
   }
   try {
@@ -172,6 +177,7 @@ void MainScene::load() {
     if (!game_state.has("player")) {
       using core_game::to_str;
       m_logger.error(std::string{"Game saving data corrupted at "} + SAVE_FILE);
+      m_loading = false;
       return;
     }
     // Load States
@@ -189,6 +195,8 @@ void MainScene::load() {
   } catch (const std::exception& e) {
     m_logger.error(e.what());
   }
+  m_logger.info("Loading complete.");
+  m_loading = false;
 }
 
 void MainScene::load_superpowers(const Array& superpowers) const {
