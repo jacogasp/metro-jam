@@ -61,7 +61,7 @@ void World::_process(double) {
 }
 
 static void filter_superpowers(Player* player, Node* scene) {
-  auto superpowers_node = player->get_node<Node>("Superpowers");
+  auto superpowers_node = player->get_node<Node2D>("Superpowers");
   if (superpowers_node == nullptr) {
     return;
   }
