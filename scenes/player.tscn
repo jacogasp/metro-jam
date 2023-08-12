@@ -369,12 +369,6 @@ collision_mask = 65536
 hit_from_inside = true
 collide_with_areas = true
 
-[node name="GrenadeLauncher" type="Gun" parent="."]
-bullet = ExtResource("5_37qxl")
-bullet_speed = 600.0
-cooldown = 5.0
-position = Vector2(12.34, -35.78)
-
 [node name="Wrench" parent="." instance=ExtResource("6_fy4dl")]
 damages = 25
 
