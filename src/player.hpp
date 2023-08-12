@@ -112,6 +112,8 @@ class Player : public CharacterBody2D {
   bool add_powerup(Node2D* node) const;
   void pick(Node2D* node);
   void hit();
+  void restore_health();
+  void reset();
 };
 
 #endif

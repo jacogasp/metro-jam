@@ -180,7 +180,6 @@ void Player::loose_life() {
   --m_current_life;
   if (m_current_life <= 0) {
     m_current_life = 0;
-    set_state(&Player::dying);
   }
 }
 
@@ -276,14 +275,35 @@ void Player::pick(Node2D* node) {
 }
 
 void Player::hit() {
+  if (m_state == &Player::dying) {
+    return;
+  }
   auto immunity = get_node<Immunity>("Immunity");
   if (immunity->is_active()) {
     return;
   }
-  loose_life();
-  emit_signal("player_hit");
   get_node<AudioStreamPlayer>("Audio/Ouch")->play();
   m_vfx->play("Hit");
+  loose_life();
+  if (m_current_life == 0) {
+    set_state(&Player::dying);
+  } else {
+    emit_signal("player_hit");
+  }
+}
+
+void Player::restore_health() {
+  m_current_life = m_max_lives;
+}
+
+void Player::reset() {
+  restore_health();
+  set_global_position({});
+  set_state(&standing);
+  auto as = get_node<AnimatedSprite2D>("AnimatedSprite2D");
+  if (as) {
+    as->play("Idle");
+  }
 }
 
 void Player::set_hit_animation_time(float t) {
