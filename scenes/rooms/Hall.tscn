@@ -556,6 +556,242 @@ velocity = Vector2(-109800, -219600)
 position = Vector2(4071, 890)
 velocity = Vector2(-109800, -219600)
 
+[node name="Bumblee6" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(2204, 1976)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee7" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(2337, 1973)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee8" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(2086, 1989)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee9" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(1889, 1989)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee10" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(2261, 1976)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee11" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(2448, 1973)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee12" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(2578, 1973)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee13" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(2657, 1970)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee14" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(2511, 1973)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee15" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(2006, 1957)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee16" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(1759, 1985)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee17" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(1857, 1661)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee18" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(1960, 1662)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee19" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(2241, 1648)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee20" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(2295, 1667)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee21" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(2546, 1664)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee22" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(2631, 1674)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee23" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(2717, 1668)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee24" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(2514, 1258)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee25" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(2384, 1245)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee26" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(2073, 1242)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee27" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(1898, 1242)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee28" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(1777, 1261)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee29" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(1596, 1255)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee30" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(1444, 1255)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee31" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(1673, 1280)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee32" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(1375, 1261)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee33" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(1235, 1340)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee34" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(1756, 1248)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee35" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(2692, 1271)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee36" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(2451, 1255)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee37" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(2432, 1087)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee38" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(2480, 1071)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee39" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(2350, 1090)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee40" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(1763, 1068)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee41" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(1820, 1078)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee42" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(1642, 1081)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee43" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(1575, 1075)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee44" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(1470, 1062)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee45" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(3219, 1278)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee46" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(3206, 1608)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee47" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(1411, 1659)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee48" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(1496, 1668)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee49" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(1765, 1661)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee50" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(2095, 1658)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee51" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(2174, 1658)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee52" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(1659, 1654)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee53" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(1424, 1978)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee54" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(1481, 1973)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee55" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(1534, 1976)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee56" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(1717, 1972)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee57" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(1821, 1966)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee58" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(1821, 1966)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee59" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(1904, 1971)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee60" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(1598, 1950)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee61" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(2001, 1999)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee62" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(2424, 1973)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee63" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(2424, 1973)
+velocity = Vector2(-109800, -219600)
+
+[node name="Bumblee64" parent="Bumblee_collector" instance=ExtResource("6_jj53g")]
+position = Vector2(2670, 1654)
+velocity = Vector2(-109800, -219600)
+
 [node name="Exit" type="Label" parent="."]
 offset_left = 2947.0
 offset_top = 582.0
