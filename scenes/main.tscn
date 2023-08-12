@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://blkic257bpcco"]
+[gd_scene load_steps=5 format=3 uid="uid://blkic257bpcco"]
 
 [ext_resource type="PackedScene" uid="uid://dibkh0kdqa671" path="res://scenes/player.tscn" id="2_5tq4j"]
 [ext_resource type="PackedScene" uid="uid://drapwmmn22gpw" path="res://scenes/rooms/RoomB.tscn" id="2_vmhh1"]
 [ext_resource type="PackedScene" uid="uid://j3sugn7p7jhf" path="res://scenes/hud.tscn" id="3_b7rmp"]
+[ext_resource type="AudioStream" uid="uid://borvjyxrrh2xk" path="res://assets/audio/WrenchmanTheme.mp3" id="4_ske0o"]
 
 [node name="Main" type="MainScene"]
 
@@ -27,6 +28,10 @@ position = Vector2(0.0864868, -70.9238)
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 editor_draw_limits = true
+
+[node name="MainTheme" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_ske0o")
+autoplay = true
 
 [connection signal="got_powerup" from="Player" to="." method="on_player_got_powerup"]
 [connection signal="got_powerup" from="Player" to="HUD" method="on_player_got_powerup"]
