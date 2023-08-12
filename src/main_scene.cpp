@@ -27,6 +27,8 @@ void MainScene::_bind_methods() {
                        &MainScene::on_player_got_powerup);
   ClassDB::bind_method(D_METHOD("save"), &MainScene::save);
   ClassDB::bind_method(D_METHOD("start_game"), &MainScene::start_game);
+  ClassDB::bind_method(D_METHOD("continue_game"), &MainScene::continue_game);
+  ClassDB::bind_method(D_METHOD("restart_game"), &MainScene::restart_game);
   ClassDB::bind_method(D_METHOD("game_over"), &MainScene::game_over);
   ClassDB::bind_method(D_METHOD("quit"), &MainScene::quit);
   ADD_SIGNAL(MethodInfo("save"));
@@ -135,12 +137,14 @@ void MainScene::save() {
   } catch (const std::exception& e) {
     m_logger.error(e.what());
   }
+  m_saved = true;
   m_logger.info("Save game");
 }
 
 void load_state(Player& player, Dictionary const& state) {
   const float x = static_cast<float>(state["pos.x"]);
   const float y = static_cast<float>(state["pos.y"]);
+  player.restore_health();
   player.set_global_position({x, y});
 }
 
@@ -175,13 +179,13 @@ static Node2D* add_superpower(String const& name, Player& player) {
   return nullptr;
 }
 
-void MainScene::load() {
+bool MainScene::load() {
   m_loading = true;
   m_logger.info("Start loading savings...");
   if (!FileAccess::file_exists(SAVE_FILE.c_str())) {
     m_logger.warn("Game save file not found");
     m_loading = false;
-    return;
+    return false;
   }
   try {
     auto file = FileAccess::open(SAVE_FILE.c_str(), godot::FileAccess::READ);
@@ -191,11 +195,17 @@ void MainScene::load() {
       using core_game::to_str;
       m_logger.error(std::string{"Game saving data corrupted at "} + SAVE_FILE);
       m_loading = false;
-      return;
+      return false;
     }
     // Load States
-    load_state(*m_player, game_state["player"]);
-    load_state(*m_world, game_state["world"]);
+    auto player = get_node<Player>("Player");
+    if (player) {
+      load_state(*player, game_state["player"]);
+    }
+    auto world = get_node<World>("World");
+    if (world) {
+      load_state(*world, game_state["world"]);
+    }
     // Load Environment state
     if (game_state.has("superpowers")) {
       Array superpowers = game_state["superpowers"];
@@ -210,6 +220,7 @@ void MainScene::load() {
   }
   m_logger.info("Loading complete.");
   m_loading = false;
+  return true;
 }
 
 void MainScene::pause() const {
@@ -226,8 +237,29 @@ void MainScene::start_game() const {
   resume();
 }
 
+void MainScene::continue_game() {
+  m_player->reset();
+  if (!load()) {
+    get_tree()->reload_current_scene();
+  }
+  m_hud->hide_gameover();
+  m_hud->hide_start();
+  m_hud->show_in_game();
+  m_hud->get_lifebar()->reset();
+  resume();
+}
+
+void MainScene::restart_game() {
+  purge_savings_directory();
+  create_savings_directory();
+  m_saved = false;
+  call_deferred("continue_game");
+}
+
 void MainScene::game_over() {
+  m_player->set_position({});
   pause();
+  m_hud->set_can_continue(m_saved);
   m_hud->hide_in_game();
   m_hud->show_gameover();
   m_game_over = true;
