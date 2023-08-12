@@ -66,6 +66,7 @@ void LifeBar::init() {
     m_sprites.emplace_back(m_life_full->duplicate());
     m_sprites.back()->set("position", position);
     add_child(m_sprites.back());
+    m_sprites.back()->set("visible", true);
   }
 
   if (m_life_empty == nullptr)
@@ -88,6 +89,7 @@ void LifeBar::add_life() {
   auto const position = m_sprites.at(index)->get("position");
   m_sprites.at(index)->queue_free();
   m_sprites.at(index) = m_life_full->duplicate();
+  m_sprites.at(index)->set("visible", true);
   m_sprites.at(index)->set("position", position);
   add_child(m_sprites.at(index));
   if (m_current_life < m_max_lives) {
@@ -108,6 +110,7 @@ void LifeBar::lose_life() {
   auto const position = m_sprites.at(index)->get("position");
   m_sprites.at(index)->queue_free();
   m_sprites.at(index) = m_life_empty->duplicate();
+  m_sprites.at(index)->set("visible", true);
   m_sprites.at(index)->set("position", position);
   add_child(m_sprites.at(index));
 }

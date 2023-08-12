@@ -8,12 +8,13 @@ current_life = 5
 offset = -4.0
 
 [node name="LifeFull" type="Sprite2D" parent="."]
+visible = false
 texture = ExtResource("1_0166i")
 region_enabled = true
-region_rect = Rect2(321, 0, 32, 32)
+region_rect = Rect2(321, -1, 32, 32)
 
 [node name="LifeEmpty" type="Sprite2D" parent="."]
-position = Vector2(-1, 0)
+visible = false
 texture = ExtResource("1_0166i")
 region_enabled = true
-region_rect = Rect2(352, 0, 32, 32)
+region_rect = Rect2(353, -1, 32, 32)
