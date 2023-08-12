@@ -40,7 +40,7 @@ void Gun::fire(const Vector2& direction) {
   }
   auto node   = m_bullet->instantiate();
   auto bullet = cast_to<RigidBody2D>(node);
-  if (bullet) {
+  if (bullet && has_node("/root/Main/World")) {
     auto world = get_node<Node2D>("/root/Main/World");
     if (world) {
       world->add_child(bullet);
