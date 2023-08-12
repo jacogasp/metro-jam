@@ -108,6 +108,7 @@ class Player : public CharacterBody2D {
   [[nodiscard]] float get_hit_animation_time() const;
   [[nodiscard]] float get_ground_position() const;
   [[nodiscard]] bool is_on_ground();
+  bool add_powerup(Node2D *node) const;
   void pick(Node2D* node);
   void hit();
 };

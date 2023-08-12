@@ -252,7 +252,7 @@ void Player::set_gravity(float gravity) {
   m_gravity = gravity;
 }
 
-void Player::pick(Node2D* node) {
+bool Player::add_powerup(Node2D* node) const {
   auto superpowers = get_node<Node2D>("Superpowers");
   if (superpowers) {
     auto old_parent = node->get_parent();
@@ -261,6 +261,13 @@ void Player::pick(Node2D* node) {
     }
     superpowers->add_child(node);
     node->set_position({});
+    return true;
+  }
+  return false;
+}
+
+void Player::pick(Node2D* node) {
+  if (add_powerup(node)) {
     emit_signal("got_powerup", node);
   }
 }
