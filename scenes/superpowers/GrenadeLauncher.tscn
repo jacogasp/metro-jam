@@ -1,0 +1,64 @@
+[gd_scene load_steps=8 format=3 uid="uid://cmpgrq5ntb82m"]
+
+[ext_resource type="Script" path="res://scripts/grenade_launcher.gd" id="1_sqydn"]
+[ext_resource type="Shader" path="res://shaders/CoolDown.gdshader" id="2_nyr6t"]
+[ext_resource type="Texture2D" uid="uid://ddx7hd34r4ljh" path="res://assets/icons/grenade.png" id="3_dikc4"]
+[ext_resource type="PackedScene" uid="uid://evwtb6jegk0f" path="res://scenes/grenade.tscn" id="4_1hdfp"]
+[ext_resource type="FontFile" uid="uid://ctpai807254id" path="res://assets/fonts/Pixeled.ttf" id="5_xw3nb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0ftgp"]
+shader = ExtResource("2_nyr6t")
+shader_parameter/mask_color = Color(0, 0, 0, 0.266667)
+shader_parameter/amount = 1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j31ro"]
+size = Vector2(22, 22)
+
+[node name="GrenadeLauncher" type="Node2D"]
+script = ExtResource("1_sqydn")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_0ftgp")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -11.0
+offset_top = -11.0
+offset_right = 29.0
+offset_bottom = 29.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.551099, 0.551099)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("3_dikc4")
+stretch_mode = 4
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 256
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_j31ro")
+
+[node name="Gun" type="Gun" parent="."]
+bullet = ExtResource("4_1hdfp")
+bullet_speed = 600.0
+cooldown = 5.0
+position = Vector2(27, -31)
+
+[node name="Label" type="Label" parent="."]
+offset_left = -131.0
+offset_top = -92.0
+offset_right = 132.0
+offset_bottom = 6.0
+theme_override_constants/line_spacing = -11
+theme_override_fonts/font = ExtResource("5_xw3nb")
+text = "Press $BUTTON to throw a grenade"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[connection signal="body_entered" from="Area2D" to="." method="pick_me"]
+[connection signal="cooling_down" from="Gun" to="." method="_on_gun_cooling_down"]

@@ -59,12 +59,17 @@ void AttackCommand::operator()(Player& player) const {
 void GrenadeCommand::operator()(Player& player) const {
   PROFILE_FUNCTION();
   player.set_state(&Player::attacking);
-  auto grenade_launcher = player.get_node<Gun>("GrenadeLauncher");
-  if (grenade_launcher && !grenade_launcher->cooling_down()) {
-    Vector2 target = player.get_direction() == Player::right ? Vector2{1, -1}
-                                                             : Vector2{-1, -1};
-    grenade_launcher->fire(target);
-    player.m_animatedSprite2D->play("AttackGrenade");
+
+  if (player.has_node("Superpowers/GrenadeLauncher")) {
+    auto grenade_launcher =
+        player.get_node<Gun>("Superpowers/GrenadeLauncher/Gun");
+    if (!grenade_launcher->cooling_down()) {
+      Vector2 target = player.get_direction() == Player::right
+                         ? Vector2{1, -1}
+                         : Vector2{-1, -1};
+      grenade_launcher->fire(target);
+      player.m_animatedSprite2D->play("AttackGrenade");
+    }
   }
 }
 

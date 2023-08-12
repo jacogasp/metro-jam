@@ -20,7 +20,6 @@ AirJumpingState Player::air_jumping = AirJumpingState();
 AttackState Player::attacking       = AttackState();
 SlideState Player::sliding          = SlideState();
 
-
 static void flip_h(RayCast2D& ray) {
   auto position        = ray.get_position();
   auto target_position = ray.get_target_position();
@@ -143,9 +142,9 @@ void Player::set_direction(Player::Direction direction) {
   set_scale(scale);
   ::flip_h(*m_interaction_ray);
 
-  auto grenade_launcher = get_node<Gun>("GrenadeLauncher");
-  if (grenade_launcher) {
-    auto position = grenade_launcher->get_position();
+  if (has_node("Superpowers/GrenadeLauncher")) {
+    auto grenade_launcher = get_node<Node2D>("Superpowers/GrenadeLauncher");
+    auto position         = grenade_launcher->get_position();
     position.x *= -1;
     grenade_launcher->set_position(position);
   }
@@ -254,13 +253,14 @@ void Player::set_gravity(float gravity) {
 }
 
 void Player::pick(Node2D* node) {
-  auto superpowers = get_node<Node>("Superpowers");
+  auto superpowers = get_node<Node2D>("Superpowers");
   if (superpowers) {
     auto old_parent = node->get_parent();
     if (old_parent) {
       old_parent->remove_child(node);
     }
     superpowers->add_child(node);
+    node->set_position({});
     emit_signal("got_powerup", node);
   }
 }
