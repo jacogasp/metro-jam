@@ -161,6 +161,7 @@ static Node2D* add_superpower(String const& name, Player& player) {
     area->set_monitoring(false);
     area->queue_free();
     label->queue_free();
+    n->set_name(name);
     player.add_powerup(n);
     return n;
   } else {
@@ -213,6 +214,9 @@ void MainScene::load_superpowers(const Array& superpowers) const {
   for (auto i = 0; i < superpowers.size(); ++i) {
     auto const name = String(superpowers[i]);
     if (m_player && m_world && m_hud) {
+      if (m_player->has_node("Superpowers/" + name)) {
+        return;
+      }
       auto superpower = add_superpower(name, *m_player);
       if (superpower) {
         m_hud->on_player_got_powerup(superpower);
