@@ -56,7 +56,6 @@ void MainScene::_ready() {
     create_savings_directory();
     load();
   }
-  //  emit_signal("using_joypad_changed", m_using_joypad);
   m_logger.info("Main scene initialized");
 }
 
@@ -64,18 +63,13 @@ void MainScene::_input(const Ref<InputEvent>& event) {
   auto maybe_joypad_button = cast_to<InputEventJoypadButton>(event.ptr());
   auto maybe_joypad_motion = cast_to<InputEventJoypadMotion>(event.ptr());
   if (maybe_joypad_button || maybe_joypad_motion) {
-    if (!m_using_joypad) {
-      m_using_joypad = true;
-      emit_signal("using_joypad_changed", m_using_joypad);
-    }
-    return;
+    m_using_joypad = true;
+    emit_signal("using_joypad_changed", m_using_joypad);
   }
   auto maybe_keyboard = cast_to<InputEventKey>(event.ptr());
   if (maybe_keyboard) {
-    if (m_using_joypad) {
-      m_using_joypad = false;
-      emit_signal("using_joypad_changed", m_using_joypad);
-    }
+    m_using_joypad = false;
+    emit_signal("using_joypad_changed", m_using_joypad);
   }
 }
 void MainScene::on_player_hit() const {
