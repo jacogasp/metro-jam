@@ -37,6 +37,7 @@ class LifeBar : public Node2D {
  public:
   void add_life();
   void lose_life();
+  void reset();
 };
 
 #endif // COREGAME_LIFEBAR_HPP
