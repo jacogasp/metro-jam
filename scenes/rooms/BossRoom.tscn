@@ -160,319 +160,321 @@ collision_mask = 257
 position = Vector2(0, -29.25)
 shape = SubResource("RectangleShape2D_7o8qy")
 
-[node name="BumbleBee" parent="." instance=ExtResource("2_ww6tl")]
+[node name="Bumblebees" type="Node" parent="."]
+
+[node name="BumbleBee" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1757, 1928)
 
-[node name="BumbleBee2" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee2" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1914, 1939)
 
-[node name="BumbleBee3" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee3" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2071, 1932)
 
-[node name="BumbleBee4" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee4" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2071, 1932)
 
-[node name="BumbleBee5" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee5" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2071, 1932)
 
-[node name="BumbleBee6" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee6" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2203, 1943)
 
-[node name="BumbleBee7" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee7" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2256, 1939)
 
-[node name="BumbleBee8" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee8" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2338, 1964)
 
-[node name="BumbleBee9" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee9" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1476, 1897)
 
-[node name="BumbleBee10" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee10" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1590, 1956)
 
-[node name="BumbleBee11" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee11" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1392, 1939)
 
-[node name="BumbleBee12" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee12" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1239, 1943)
 
-[node name="BumbleBee13" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee13" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1492, 1943)
 
-[node name="BumbleBee14" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee14" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1622, 1933)
 
-[node name="BumbleBee15" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee15" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1773, 1939)
 
-[node name="BumbleBee16" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee16" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1887, 1957)
 
-[node name="BumbleBee17" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee17" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1460, 1928)
 
-[node name="BumbleBee18" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee18" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1207, 1988)
 
-[node name="BumbleBee19" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee19" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1111, 2012)
 
-[node name="BumbleBee20" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee20" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1271, 2012)
 
-[node name="BumbleBee21" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee21" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1392, 2012)
 
-[node name="BumbleBee22" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee22" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1492, 1988)
 
-[node name="BumbleBee23" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee23" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1649, 2006)
 
-[node name="BumbleBee24" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee24" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1809, 2006)
 
-[node name="BumbleBee25" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee25" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1927, 1999)
 
-[node name="BumbleBee26" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee26" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2109, 2013)
 
-[node name="BumbleBee27" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee27" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2212, 2024)
 
-[node name="BumbleBee28" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee28" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2265, 2013)
 
-[node name="BumbleBee29" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee29" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2265, 2013)
 
-[node name="BumbleBee30" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee30" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2397, 1995)
 
-[node name="BumbleBee31" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee31" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2507, 1995)
 
-[node name="BumbleBee32" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee32" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2614, 2006)
 
-[node name="BumbleBee33" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee33" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2614, 2006)
 
-[node name="BumbleBee34" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee34" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2578, 1906)
 
-[node name="BumbleBee35" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee35" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2678, 1927)
 
-[node name="BumbleBee36" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee36" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2771, 1984)
 
-[node name="BumbleBee37" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee37" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2457, 1902)
 
-[node name="BumbleBee38" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee38" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2288, 1959)
 
-[node name="BumbleBee39" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee39" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2109, 1948)
 
-[node name="BumbleBee40" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee40" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1930, 1912)
 
-[node name="BumbleBee41" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee41" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2051, 1926)
 
-[node name="BumbleBee42" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee42" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2019, 1959)
 
-[node name="BumbleBee43" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee43" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1841, 1959)
 
-[node name="BumbleBee44" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee44" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1558, 1939)
 
-[node name="BumbleBee45" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee45" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1366, 1914)
 
-[node name="BumbleBee46" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee46" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1633, 1971)
 
-[node name="BumbleBee47" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee47" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1733, 1985)
 
-[node name="BumbleBee48" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee48" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1492, 1892)
 
-[node name="BumbleBee49" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee49" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1649, 1862)
 
-[node name="BumbleBee50" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee50" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1813, 1883)
 
-[node name="BumbleBee51" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee51" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1485, 2418)
 
-[node name="BumbleBee52" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee52" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1724, 2486)
 
-[node name="BumbleBee53" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee53" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1898, 2486)
 
-[node name="BumbleBee54" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee54" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2141, 2418)
 
-[node name="BumbleBee55" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee55" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2269, 2504)
 
-[node name="BumbleBee56" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee56" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2413, 2504)
 
-[node name="BumbleBee57" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee57" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2523, 2486)
 
-[node name="BumbleBee58" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee58" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2630, 2486)
 
-[node name="BumbleBee59" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee59" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2039, 2486)
 
-[node name="BumbleBee60" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee60" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1765, 2479)
 
-[node name="BumbleBee61" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee61" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1408, 2486)
 
-[node name="BumbleBee62" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee62" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1175, 2473)
 
-[node name="BumbleBee63" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee63" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1175, 2473)
 
-[node name="BumbleBee64" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee64" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1549, 2491)
 
-[node name="BumbleBee65" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee65" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1977, 2505)
 
-[node name="BumbleBee66" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee66" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2125, 2529)
 
-[node name="BumbleBee67" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee67" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2365, 2553)
 
-[node name="BumbleBee68" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee68" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1813, 2553)
 
-[node name="BumbleBee69" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee69" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1633, 2553)
 
-[node name="BumbleBee70" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee70" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1440, 2498)
 
-[node name="BumbleBee71" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee71" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1303, 2469)
 
-[node name="BumbleBee72" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee72" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1606, 2469)
 
-[node name="BumbleBee73" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee73" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1725, 2469)
 
-[node name="BumbleBee74" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee74" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1895, 2469)
 
-[node name="BumbleBee75" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee75" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2039, 2479)
 
-[node name="BumbleBee76" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee76" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2157, 2486)
 
-[node name="BumbleBee77" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee77" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2288, 2460)
 
-[node name="BumbleBee78" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee78" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2035, 2451)
 
-[node name="BumbleBee79" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee79" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1895, 2444)
 
-[node name="BumbleBee80" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee80" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1749, 2425)
 
-[node name="BumbleBee81" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee81" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1638, 2411)
 
-[node name="BumbleBee82" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee82" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1460, 2409)
 
-[node name="BumbleBee83" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee83" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1350, 2409)
 
-[node name="BumbleBee84" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee84" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1492, 2434)
 
-[node name="BumbleBee85" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee85" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1574, 2438)
 
-[node name="BumbleBee86" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee86" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1670, 2431)
 
-[node name="BumbleBee87" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee87" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1805, 2438)
 
-[node name="BumbleBee88" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee88" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1946, 2420)
 
-[node name="BumbleBee89" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee89" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2089, 2420)
 
-[node name="BumbleBee90" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee90" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2212, 2407)
 
-[node name="BumbleBee91" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee91" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2349, 2431)
 
-[node name="BumbleBee92" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee92" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2491, 2460)
 
-[node name="BumbleBee93" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee93" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2646, 2470)
 
-[node name="BumbleBee94" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee94" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2732, 2438)
 
-[node name="BumbleBee95" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee95" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2550, 2541)
 
-[node name="BumbleBee96" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee96" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2621, 2512)
 
-[node name="BumbleBee97" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee97" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2682, 2512)
 
-[node name="BumbleBee98" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee98" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2589, 2398)
 
-[node name="BumbleBee99" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee99" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2425, 2430)
 
-[node name="BumbleBee100" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee100" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(2244, 2398)
 
-[node name="BumbleBee101" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee101" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1871, 2394)
 
-[node name="BumbleBee102" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee102" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1681, 2372)
 
-[node name="BumbleBee103" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee103" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1435, 2368)
 
-[node name="BumbleBee104" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee104" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1617, 2404)
 
-[node name="BumbleBee105" parent="." instance=ExtResource("2_ww6tl")]
+[node name="BumbleBee105" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1617, 2404)
 
 [connection signal="body_entered" from="GateCorridorBossRoom" to="GateCorridorBossRoom" method="_on_body_entered"]
