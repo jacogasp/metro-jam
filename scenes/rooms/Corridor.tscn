@@ -1,13 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://rqjulc0mjnve"]
+[gd_scene load_steps=4 format=3 uid="uid://rqjulc0mjnve"]
 
 [ext_resource type="TileSet" uid="uid://0w2a5bo421v7" path="res://assets/tilesets/TilesetBlocks.tres" id="1_knopg"]
 [ext_resource type="FontFile" uid="uid://ctpai807254id" path="res://assets/fonts/Pixeled.ttf" id="2_6mdl7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v5lfp"]
 size = Vector2(31.75, 58.5)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_b4g0c"]
-size = Vector2(30, 59)
 
 [node name="Corridor" type="Node2D"]
 position = Vector2(2, -1)
@@ -79,12 +76,16 @@ position = Vector2(0, -29.25)
 shape = SubResource("RectangleShape2D_v5lfp")
 
 [node name="GateCorridorBossRoom" type="Gate" parent="."]
-next_room = "scenes/rooms/BossRoom.tscn"
+next_room = "scenes/rooms/BossRom.tscn"
+exit_direction = 0
+position = Vector2(3536, 256)
 collision_mask = 257
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GateCorridorBossRoom"]
-position = Vector2(3536, 226.5)
-shape = SubResource("RectangleShape2D_b4g0c")
+position = Vector2(0, -29.25)
+shape = SubResource("RectangleShape2D_v5lfp")
 
 [connection signal="body_entered" from="GateCorridorHall" to="GateCorridorHall" method="_on_body_entered"]
 [connection signal="body_exited" from="GateCorridorHall" to="GateCorridorHall" method="_on_body_exited"]
+[connection signal="body_entered" from="GateCorridorBossRoom" to="GateCorridorBossRoom" method="_on_body_entered"]
+[connection signal="body_exited" from="GateCorridorBossRoom" to="GateCorridorBossRoom" method="_on_body_exited"]
