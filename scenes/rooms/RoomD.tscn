@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://cu0874vm7p4ku" path="res://scenes/bumblee_bee.tscn" id="9_fykdt"]
 [ext_resource type="Texture2D" uid="uid://dch5xho6lehap" path="res://assets/textures/light.png" id="10_s8udk"]
 [ext_resource type="Texture2D" uid="uid://2vcybdhlfsdk" path="res://assets/light_bulb_sprite.png" id="11_2bac5"]
-[ext_resource type="PackedScene" uid="uid://bdg1pub7dq7s0" path="res://scenes/superpowers/AirJump.tscn" id="12_dm5vy"]
+[ext_resource type="PackedScene" uid="uid://bdg1pub7dq7s0" path="res://scenes/superpowers/AirJumpPower.tscn" id="12_dm5vy"]
 [ext_resource type="PackedScene" uid="uid://p4put2nhbvkm" path="res://scenes/superpowers/Slide.tscn" id="13_hseid"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_egxwb"]
