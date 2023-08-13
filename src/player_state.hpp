@@ -47,4 +47,8 @@ struct SlideState : public PlayerState {
   void update(Player& player) override;
 };
 
+struct DyingState : public PlayerState {
+  void update(Player& player) override;
+};
+
 #endif // PLAYER_STATE_HPP

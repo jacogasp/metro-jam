@@ -72,6 +72,7 @@ class Player : public CharacterBody2D {
   static AirJumpingState air_jumping;
   static AttackState attacking;
   static SlideState sliding;
+  static DyingState dying;
   static Path savings_path;
 
   friend struct PlayerState;
@@ -108,9 +109,11 @@ class Player : public CharacterBody2D {
   [[nodiscard]] float get_hit_animation_time() const;
   [[nodiscard]] float get_ground_position() const;
   [[nodiscard]] bool is_on_ground();
-  bool add_powerup(Node2D *node) const;
+  bool add_powerup(Node2D* node) const;
   void pick(Node2D* node);
   void hit();
+  void restore_health();
+  void reset();
 };
 
 #endif

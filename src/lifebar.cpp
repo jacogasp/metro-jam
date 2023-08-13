@@ -114,3 +114,16 @@ void LifeBar::lose_life() {
   m_sprites.at(index)->set("position", position);
   add_child(m_sprites.at(index));
 }
+
+void LifeBar::reset() {
+  auto children = get_children();
+  for (auto i = 0; i < children.size(); ++i) {
+    auto child = cast_to<Node>(children[i]);
+    if (!child->get_name().begins_with("Life")) {
+      remove_child(child);
+    }
+  }
+  m_sprites.clear();
+  m_current_life = m_max_lives;
+  init();
+}

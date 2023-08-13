@@ -12,8 +12,11 @@ func _ready():
 	update_platforms_state()
 	$Handle/Label.hide()
 	path += get_path().get_concatenated_names().replace("/", "-")
-	get_node("/root/Main").connect("using_joypad_changed", using_joypad_changed)
+	var main_scene = get_node("/root/Main")
+	main_scene.connect("using_joypad_changed", using_joypad_changed)
+	main_scene.connect("save", save_state)
 	label_text = $Handle/Label.text
+	using_joypad_changed(false)
 	load_state()
 	
 func get_event_button(using_joypad: bool):

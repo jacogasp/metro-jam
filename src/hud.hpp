@@ -3,6 +3,7 @@
 
 #include "lifebar.hpp"
 #include "macros.hpp"
+#include <godot_cpp/classes/button.hpp>
 #include <godot_cpp/classes/canvas_layer.hpp>
 #include <vector>
 
@@ -21,6 +22,17 @@ class HUD : public CanvasLayer {
   void _ready() override;
   [[nodiscard]] LifeBar* get_lifebar() const;
   void on_player_got_powerup(Node2D* power_up);
+  void start_game();
+  void show_start();
+  void quit();
+  void hide_start();
+  void show_gameover();
+  void hide_gameover();
+  void show_in_game();
+  void hide_in_game();
+  void continue_game();
+  void restart_game();
+  void set_can_continue(bool can_continue);
 };
 
 #endif // COREGAME_HUD_HPP

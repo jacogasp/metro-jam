@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://5ffcgqqdua1c"]
+
+[ext_resource type="Script" path="res://scripts/checkpoint.gd" id="1_xl5he"]
+[ext_resource type="FontFile" uid="uid://ctpai807254id" path="res://assets/fonts/Pixeled.ttf" id="2_lfx67"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bppqb"]
+size = Vector2(132, 96)
+
+[sub_resource type="LabelSettings" id="LabelSettings_awude"]
+font = ExtResource("2_lfx67")
+font_size = 12
+
+[node name="Checkpoint" type="Node2D"]
+position = Vector2(2960, 2415)
+script = ExtResource("1_xl5he")
+
+[node name="StupidKeepMe" type="Node2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="StupidKeepMe"]
+collision_layer = 65536
+collision_mask = 256
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StupidKeepMe/Area2D"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_bppqb")
+debug_color = Color(0, 0.642065, 0.324033, 0.42)
+
+[node name="Label" type="Label" parent="."]
+offset_left = -79.0
+offset_top = -100.0
+offset_right = 78.0
+offset_bottom = -24.0
+text = "Press $BUTTON
+to save"
+label_settings = SubResource("LabelSettings_awude")
+horizontal_alignment = 1
+
+[connection signal="body_entered" from="StupidKeepMe/Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="StupidKeepMe/Area2D" to="." method="_on_area_2d_body_exited"]

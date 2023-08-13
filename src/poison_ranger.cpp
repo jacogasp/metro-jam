@@ -82,8 +82,9 @@ void PoisonRanger::_ready() {
 }
 
 void PoisonRanger::_process(double delta) {
-  if (Engine::get_singleton()->is_editor_hint())
+  if (Engine::get_singleton()->is_editor_hint()) {
     return;
+  }
   m_fire_timer.tick(delta);
 }
 

@@ -1,8 +1,7 @@
-[gd_scene load_steps=42 format=3 uid="uid://dibkh0kdqa671"]
+[gd_scene load_steps=44 format=3 uid="uid://dibkh0kdqa671"]
 
 [ext_resource type="Texture2D" uid="uid://cq3js6pr88m2d" path="res://assets/characters/pg_sprites.png" id="2_7vcqu"]
 [ext_resource type="AudioStream" uid="uid://ccacc2nukk5o2" path="res://assets/audio/footsteps.wav" id="4_76t05"]
-[ext_resource type="PackedScene" uid="uid://evwtb6jegk0f" path="res://scenes/grenade.tscn" id="5_37qxl"]
 [ext_resource type="AudioStream" uid="uid://d20t44iaf6fsx" path="res://assets/audio/jump.wav" id="5_fmb6a"]
 [ext_resource type="AudioStream" uid="uid://hy7safy44xk" path="res://assets/audio/ouch.wav" id="6_1j57y"]
 [ext_resource type="PackedScene" uid="uid://b56ma45dpjg8o" path="res://scenes/wrench.tscn" id="6_fy4dl"]
@@ -59,6 +58,18 @@ region = Rect2(2048, 0, 128, 128)
 [sub_resource type="AtlasTexture" id="AtlasTexture_j1r3w"]
 atlas = ExtResource("2_7vcqu")
 region = Rect2(2176, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rc338"]
+atlas = ExtResource("2_7vcqu")
+region = Rect2(3328, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_khycw"]
+atlas = ExtResource("2_7vcqu")
+region = Rect2(3456, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sg0oj"]
+atlas = ExtResource("2_7vcqu")
+region = Rect2(3584, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4hxh4"]
 atlas = ExtResource("2_7vcqu")
@@ -188,6 +199,20 @@ animations = [{
 "loop": false,
 "name": &"AttackV",
 "speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rc338")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_khycw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sg0oj")
+}],
+"loop": true,
+"name": &"Die",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -338,20 +363,22 @@ velocity = Vector2(0, 52514.6)
 
 [node name="Jump" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("5_fmb6a")
+volume_db = -8.0
 
 [node name="Footsteps" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("4_76t05")
+volume_db = -10.0
 
 [node name="Ouch" type="AudioStreamPlayer" parent="Audio"]
+process_mode = 3
 stream = ExtResource("6_1j57y")
-volume_db = -10.0
+volume_db = -15.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_vexqh")
 position = Vector2(-1, -32)
 sprite_frames = SubResource("SpriteFrames_0nsvt")
-animation = &"Idle"
-frame_progress = 0.266302
+animation = &"Die"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.660091, -18.78)

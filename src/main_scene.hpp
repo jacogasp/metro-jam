@@ -21,6 +21,8 @@ class MainScene : public Node2D {
   World* m_world      = nullptr;
   bool m_using_joypad = false;
   bool m_loading      = false;
+  bool m_saved        = false;
+  bool m_game_over    = false;
 
   static void _bind_methods();
   MainScene();
@@ -32,8 +34,15 @@ class MainScene : public Node2D {
   void on_player_gains_life() const;
   void on_player_got_powerup(Node* node);
   [[nodiscard]] bool is_using_joypad();
+  void quit() const;
   void save();
-  void load();
+  bool load();
+  void pause() const;
+  void resume() const;
+  void start_game() const;
+  void continue_game();
+  void restart_game();
+  void game_over();
 
  private:
   void load_superpowers(const Array& superpowers) const;

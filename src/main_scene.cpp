@@ -14,6 +14,7 @@
 #include <godot_cpp/classes/input_event_key.hpp>
 #include <godot_cpp/classes/label.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
+#include <godot_cpp/classes/scene_tree.hpp>
 
 static auto SAVE_FILE =
     std::string{core_game::SAVINGS_DIRECTORY} + "/game.json";
@@ -24,6 +25,12 @@ void MainScene::_bind_methods() {
                        &MainScene::on_player_gains_life);
   ClassDB::bind_method(D_METHOD("on_player_got_powerup"),
                        &MainScene::on_player_got_powerup);
+  ClassDB::bind_method(D_METHOD("save"), &MainScene::save);
+  ClassDB::bind_method(D_METHOD("start_game"), &MainScene::start_game);
+  ClassDB::bind_method(D_METHOD("continue_game"), &MainScene::continue_game);
+  ClassDB::bind_method(D_METHOD("restart_game"), &MainScene::restart_game);
+  ClassDB::bind_method(D_METHOD("game_over"), &MainScene::game_over);
+  ClassDB::bind_method(D_METHOD("quit"), &MainScene::quit);
   ADD_SIGNAL(MethodInfo("save"));
   ADD_SIGNAL(MethodInfo("using_joypad_changed"));
 }
@@ -54,8 +61,11 @@ void MainScene::_ready() {
   if (!Engine::get_singleton()->is_editor_hint()) {
     create_savings_directory();
     load();
+    pause();
+    m_hud->show_start();
+    m_hud->hide_in_game();
+    m_hud->hide_gameover();
   }
-  //  emit_signal("using_joypad_changed", m_using_joypad);
   m_logger.info("Main scene initialized");
 }
 
@@ -63,18 +73,13 @@ void MainScene::_input(const Ref<InputEvent>& event) {
   auto maybe_joypad_button = cast_to<InputEventJoypadButton>(event.ptr());
   auto maybe_joypad_motion = cast_to<InputEventJoypadMotion>(event.ptr());
   if (maybe_joypad_button || maybe_joypad_motion) {
-    if (!m_using_joypad) {
-      m_using_joypad = true;
-      emit_signal("using_joypad_changed", m_using_joypad);
-    }
-    return;
+    m_using_joypad = true;
+    emit_signal("using_joypad_changed", m_using_joypad);
   }
   auto maybe_keyboard = cast_to<InputEventKey>(event.ptr());
   if (maybe_keyboard) {
-    if (m_using_joypad) {
-      m_using_joypad = false;
-      emit_signal("using_joypad_changed", m_using_joypad);
-    }
+    m_using_joypad = false;
+    emit_signal("using_joypad_changed", m_using_joypad);
   }
 }
 void MainScene::on_player_hit() const {
@@ -90,13 +95,14 @@ void MainScene::on_player_got_powerup(Node* node) {
   if (m_world) {
     m_world->remove_powerup(name);
   }
-  if (!m_loading) {
-    save();
-  }
 }
 
 bool MainScene::is_using_joypad() {
   return false;
+}
+
+void MainScene::quit() const {
+  get_tree()->quit();
 }
 
 void MainScene::save() {
@@ -131,12 +137,14 @@ void MainScene::save() {
   } catch (const std::exception& e) {
     m_logger.error(e.what());
   }
+  m_saved = true;
   m_logger.info("Save game");
 }
 
 void load_state(Player& player, Dictionary const& state) {
   const float x = static_cast<float>(state["pos.x"]);
   const float y = static_cast<float>(state["pos.y"]);
+  player.restore_health();
   player.set_global_position({x, y});
 }
 
@@ -171,13 +179,13 @@ static Node2D* add_superpower(String const& name, Player& player) {
   return nullptr;
 }
 
-void MainScene::load() {
+bool MainScene::load() {
   m_loading = true;
   m_logger.info("Start loading savings...");
   if (!FileAccess::file_exists(SAVE_FILE.c_str())) {
     m_logger.warn("Game save file not found");
     m_loading = false;
-    return;
+    return false;
   }
   try {
     auto file = FileAccess::open(SAVE_FILE.c_str(), godot::FileAccess::READ);
@@ -187,11 +195,17 @@ void MainScene::load() {
       using core_game::to_str;
       m_logger.error(std::string{"Game saving data corrupted at "} + SAVE_FILE);
       m_loading = false;
-      return;
+      return false;
     }
     // Load States
-    load_state(*m_player, game_state["player"]);
-    load_state(*m_world, game_state["world"]);
+    auto player = get_node<Player>("Player");
+    if (player) {
+      load_state(*player, game_state["player"]);
+    }
+    auto world = get_node<World>("World");
+    if (world) {
+      load_state(*world, game_state["world"]);
+    }
     // Load Environment state
     if (game_state.has("superpowers")) {
       Array superpowers = game_state["superpowers"];
@@ -206,6 +220,49 @@ void MainScene::load() {
   }
   m_logger.info("Loading complete.");
   m_loading = false;
+  return true;
+}
+
+void MainScene::pause() const {
+  get_tree()->set_pause(true);
+}
+
+void MainScene::resume() const {
+  get_tree()->set_pause(false);
+}
+
+void MainScene::start_game() const {
+  m_hud->hide_start();
+  m_hud->show_in_game();
+  resume();
+}
+
+void MainScene::continue_game() {
+  m_player->reset();
+  if (!load()) {
+    get_tree()->reload_current_scene();
+  }
+  m_hud->hide_gameover();
+  m_hud->hide_start();
+  m_hud->show_in_game();
+  m_hud->get_lifebar()->reset();
+  resume();
+}
+
+void MainScene::restart_game() {
+  purge_savings_directory();
+  create_savings_directory();
+  m_saved = false;
+  call_deferred("continue_game");
+}
+
+void MainScene::game_over() {
+  m_player->set_position({});
+  pause();
+  m_hud->set_can_continue(m_saved);
+  m_hud->hide_in_game();
+  m_hud->show_gameover();
+  m_game_over = true;
 }
 
 void MainScene::load_superpowers(const Array& superpowers) const {

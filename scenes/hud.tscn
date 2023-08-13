@@ -18,6 +18,7 @@ corner_radius_bottom_left = 2
 shadow_size = 8
 
 [node name="HUD" type="HUD"]
+process_mode = 3
 metadata/_edit_vertical_guides_ = [344.0, 302.0, 384.0]
 
 [node name="Start" type="CanvasLayer" parent="."]
@@ -160,3 +161,9 @@ size_flags_horizontal = 3
 
 [node name="LifeBar" parent="InGame" instance=ExtResource("1_dnl85")]
 position = Vector2(24, 24)
+
+[connection signal="pressed" from="Start/StartButton" to="." method="start_game"]
+[connection signal="pressed" from="Start/QuitButton" to="." method="quit"]
+[connection signal="pressed" from="GameOver/RestartButton" to="." method="restart_game"]
+[connection signal="pressed" from="GameOver/ContinueButton" to="." method="continue_game"]
+[connection signal="pressed" from="GameOver/QuitButton" to="." method="quit"]
