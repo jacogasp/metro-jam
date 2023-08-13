@@ -11,6 +11,7 @@
 #include <godot_cpp/classes/input.hpp>
 #include <godot_cpp/classes/input_event_joypad_button.hpp>
 #include <godot_cpp/classes/input_event_joypad_motion.hpp>
+#include <godot_cpp/classes/input_event_mouse_motion.hpp>
 #include <godot_cpp/classes/input_event_key.hpp>
 #include <godot_cpp/classes/label.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
@@ -75,13 +76,21 @@ void MainScene::_input(const Ref<InputEvent>& event) {
     return;
   }
 
-  auto maybe_joypad_button = cast_to<InputEventJoypadButton>(event.ptr());
-  auto maybe_joypad_motion = cast_to<InputEventJoypadMotion>(event.ptr());
+  auto event_ptr = event.ptr();
+  auto maybe_mouse = cast_to<InputEventMouseMotion>(event_ptr);
+  if (maybe_mouse) {
+    Input::get_singleton()->set_mouse_mode(Input::MOUSE_MODE_VISIBLE);
+  } else {
+    Input::get_singleton()->set_mouse_mode(Input::MOUSE_MODE_HIDDEN);
+  }
+
+  auto maybe_joypad_button = cast_to<InputEventJoypadButton>(event_ptr);
+  auto maybe_joypad_motion = cast_to<InputEventJoypadMotion>(event_ptr);
   if (maybe_joypad_button || maybe_joypad_motion) {
     m_using_joypad = true;
     emit_signal("using_joypad_changed", m_using_joypad);
   }
-  auto maybe_keyboard = cast_to<InputEventKey>(event.ptr());
+  auto maybe_keyboard = cast_to<InputEventKey>(event_ptr);
   if (maybe_keyboard) {
     m_using_joypad = false;
     emit_signal("using_joypad_changed", m_using_joypad);
