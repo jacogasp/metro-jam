@@ -40,6 +40,7 @@ horizontal_alignment = 1
 
 [node name="Interact" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("3_x3u0d")
+volume_db = -10.0
 
 [connection signal="body_entered" from="StupidKeepMe/Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="StupidKeepMe/Area2D" to="." method="_on_area_2d_body_exited"]

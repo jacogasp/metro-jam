@@ -27,6 +27,7 @@ region_rect = Rect2(321, -1, 32, 32)
 
 [node name="BottlePop" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("3_ukdeg")
+volume_db = -10.0
 
 [connection signal="body_entered" from="Area2D" to="." method="body_entered"]
 [connection signal="finished" from="Audio/BottlePop" to="." method="destroy"]

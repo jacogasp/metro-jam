@@ -382,6 +382,7 @@ stream = ExtResource("4_8xf3l")
 
 [node name="Pick" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("5_2vtad")
+volume_db = -10.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_vexqh")
