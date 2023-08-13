@@ -20,12 +20,59 @@ void HUD::_bind_methods() {
   ADD_SIGNAL(MethodInfo("quit"));
 }
 
+void HUD::go_to(HUD::State state) {
+  auto children = get_children();
+  for (auto i = 0; i < children.size(); ++i) {
+    auto child = cast_to<CanvasLayer>(children[i]);
+    if (child) {
+      child->hide();
+    }
+  }
+  m_active_buttons.clear();
+  m_active_button_idx = 0;
+  switch (state) {
+  case start: {
+    m_state = start;
+    auto cl = get_node<CanvasLayer>("Start");
+    if (cl) {
+      cl->show();
+      auto start_button = cl->get_node<Button>("StartButton");
+      auto quit_button  = cl->get_node<Button>("QuitButton");
+      m_active_buttons  = Buttons{start_button, quit_button};
+      m_active_buttons[m_active_button_idx]->grab_focus();
+    }
+  } break;
+  case in_game: {
+    m_state = in_game;
+    auto cl = get_node<CanvasLayer>("InGame");
+    if (cl) {
+      cl->show();
+    }
+  } break;
+  case pause:
+    m_state = pause;
+    break;
+  case game_over: {
+    m_state = game_over;
+    auto cl = get_node<CanvasLayer>("GameOver");
+    if (cl) {
+      cl->show();
+      auto continue_button = cl->get_node<Button>("ContinueButton");
+      auto restart_button  = cl->get_node<Button>("RestartButton");
+      auto quit_button     = cl->get_node<Button>("QuitButton");
+      m_active_buttons = Buttons{continue_button, restart_button, quit_button};
+      m_active_buttons[m_active_button_idx]->grab_focus();
+    }
+  } break;
+  }
+}
+
 void HUD::_ready() {
   m_lifebar = get_node<LifeBar>("InGame/LifeBar");
 }
 
 void HUD::_input(const Ref<InputEvent>& inputEvent) {
-  if (m_in_game) {
+  if (m_state == in_game) {
     return;
   }
   auto old_index = m_active_button_idx;
@@ -40,6 +87,7 @@ void HUD::_input(const Ref<InputEvent>& inputEvent) {
       m_active_button_idx = 0;
     }
   }
+
   if (inputEvent->is_action_released("ui_up")) {
     if (m_active_button_idx == 0) {
       m_active_button_idx = m_active_buttons.size();
@@ -47,6 +95,7 @@ void HUD::_input(const Ref<InputEvent>& inputEvent) {
       m_active_button_idx--;
     }
   }
+
   if (inputEvent->is_action_released("ui_accept")) {
     auto active_button = m_active_buttons.at(m_active_button_idx);
     active_button->_pressed();
@@ -79,62 +128,10 @@ void HUD::start_game() {
 }
 
 void HUD::show_start() {
-  auto cl = get_node<CanvasLayer>("Start");
-  if (cl) {
-    cl->show();
-    auto start_button   = cl->get_node<Button>("StartButton");
-    auto quit_button    = cl->get_node<Button>("QuitButton");
-    m_active_buttons    = Buttons{start_button, quit_button};
-    m_active_button_idx = 0;
-    m_active_buttons[m_active_button_idx]->grab_focus();
-  }
 }
 
 void HUD::quit() {
   emit_signal("quit");
-}
-
-void HUD::hide_start() {
-  auto cl = get_node<CanvasLayer>("Start");
-  if (cl) {
-    cl->hide();
-  }
-}
-
-void HUD::show_gameover() {
-  auto cl = get_node<CanvasLayer>("GameOver");
-  if (cl) {
-    cl->show();
-    auto continue_button = cl->get_node<Button>("ContinueButton");
-    auto restart_button  = cl->get_node<Button>("RestartButton");
-    auto quit_button     = cl->get_node<Button>("QuitButton");
-    m_active_buttons    = Buttons{continue_button, restart_button, quit_button};
-    m_active_button_idx = 0;
-    m_active_buttons[m_active_button_idx]->grab_focus();
-  }
-}
-void HUD::hide_gameover() {
-  auto cl = get_node<CanvasLayer>("GameOver");
-  if (cl) {
-    cl->hide();
-  }
-}
-
-void HUD::show_in_game() {
-  m_in_game = true;
-  auto cl   = get_node<CanvasLayer>("InGame");
-  if (cl) {
-    cl->show();
-  }
-  m_active_buttons.clear();
-}
-
-void HUD::hide_in_game() {
-  auto cl = get_node<CanvasLayer>("InGame");
-  if (cl) {
-    cl->hide();
-  }
-  m_in_game = false;
 }
 
 void HUD::continue_game() {

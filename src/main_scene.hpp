@@ -41,6 +41,7 @@ class MainScene : public Node2D {
   void resume() const;
   void start_game() const;
   void continue_game();
+  void complete_game();
   void restart_game();
   void game_over();
 

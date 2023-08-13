@@ -28,6 +28,7 @@ void MainScene::_bind_methods() {
   ClassDB::bind_method(D_METHOD("save"), &MainScene::save);
   ClassDB::bind_method(D_METHOD("start_game"), &MainScene::start_game);
   ClassDB::bind_method(D_METHOD("continue_game"), &MainScene::continue_game);
+  ClassDB::bind_method(D_METHOD("complete_game"), &MainScene::complete_game);
   ClassDB::bind_method(D_METHOD("restart_game"), &MainScene::restart_game);
   ClassDB::bind_method(D_METHOD("game_over"), &MainScene::game_over);
   ClassDB::bind_method(D_METHOD("quit"), &MainScene::quit);
@@ -62,9 +63,7 @@ void MainScene::_ready() {
     create_savings_directory();
     load();
     pause();
-    m_hud->show_start();
-    m_hud->hide_in_game();
-    m_hud->hide_gameover();
+    m_hud->go_to(HUD::start);
   }
   m_logger.info("Main scene initialized");
 }
@@ -232,8 +231,7 @@ void MainScene::resume() const {
 }
 
 void MainScene::start_game() const {
-  m_hud->hide_start();
-  m_hud->show_in_game();
+  m_hud->go_to(HUD::in_game);
   resume();
 }
 
@@ -242,11 +240,13 @@ void MainScene::continue_game() {
   if (!load()) {
     get_tree()->reload_current_scene();
   }
-  m_hud->hide_gameover();
-  m_hud->hide_start();
-  m_hud->show_in_game();
+  m_hud->go_to(HUD::in_game);
   m_hud->get_lifebar()->reset();
   resume();
+}
+
+void MainScene::complete_game() {
+  std::cerr << "complete!! bravo!\n";
 }
 
 void MainScene::restart_game() {
@@ -260,8 +260,7 @@ void MainScene::game_over() {
   m_player->set_position({});
   pause();
   m_hud->set_can_continue(m_saved);
-  m_hud->hide_in_game();
-  m_hud->show_gameover();
+  m_hud->go_to(HUD::game_over);
   m_game_over = true;
 }
 
