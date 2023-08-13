@@ -86,6 +86,7 @@ void HUD::show_start() {
     auto quit_button    = cl->get_node<Button>("QuitButton");
     m_active_buttons    = Buttons{start_button, quit_button};
     m_active_button_idx = 0;
+    m_active_buttons[m_active_button_idx]->grab_focus();
   }
 }
 
@@ -109,6 +110,7 @@ void HUD::show_gameover() {
     auto quit_button     = cl->get_node<Button>("QuitButton");
     m_active_buttons    = Buttons{continue_button, restart_button, quit_button};
     m_active_button_idx = 0;
+    m_active_buttons[m_active_button_idx]->grab_focus();
   }
 }
 void HUD::hide_gameover() {
