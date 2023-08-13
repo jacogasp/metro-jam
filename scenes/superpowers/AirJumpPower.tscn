@@ -44,7 +44,7 @@ offset_top = -120.0
 offset_right = 133.0
 offset_bottom = -22.0
 theme_override_fonts/font = ExtResource("3_88ayj")
-text = "Press Jump twice for Air Jump"
+text = "Press $BUTTON twice for Air Jump"
 horizontal_alignment = 1
 autowrap_mode = 2
 

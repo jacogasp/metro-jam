@@ -2,7 +2,27 @@
 #include "player.hpp"
 #include <godot_cpp/classes/animated_sprite2d.hpp>
 #include <godot_cpp/classes/area2d.hpp>
+#include <godot_cpp/classes/engine.hpp>
+#include <godot_cpp/classes/input_event.hpp>
+#include <godot_cpp/classes/input_map.hpp>
 #include <godot_cpp/classes/label.hpp>
+
+String get_event_button(bool using_joypad, String const& action_name) {
+  auto input_map    = InputMap::get_singleton();
+  auto const events = input_map->action_get_events(action_name);
+  for (auto i = 0; i < events.size(); ++i) {
+    auto const event = Object::cast_to<InputEvent>(events[0]);
+    auto const name  = event->as_text();
+    if (!using_joypad) {
+      return name.get_slice("(", 0);
+    }
+    if (name.begins_with("Joypad")) {
+      auto start = name.find("Xbox ");
+      return name.substr(start, start + 1);
+    }
+  }
+  return "";
+}
 
 void Immunity::_bind_methods() {
   BIND_PROPERTY(Immunity, duration, Variant::FLOAT);
@@ -63,12 +83,28 @@ static void set_icon_cooling_level(TextureRect& texture_rect, float level) {
 
 void SlidePower::_bind_methods() {
   ClassDB::bind_method(D_METHOD("pick_me"), &SlidePower::pick_me);
+  ClassDB::bind_method(D_METHOD("using_joypad_changed"),
+                       &SlidePower::using_joypad_changed);
 }
 
 void SlidePower::_ready() {
+  if (Engine::get_singleton()->is_editor_hint()) {
+    return;
+  }
   m_texture_rect = get_node<TextureRect>("TextureRect");
   m_cooldown_timer.set_timeout(5);
   m_cooldown_timer.set_callback([&] { m_enabled = true; });
+
+  auto main_scene = get_node<Node2D>("/root/Main");
+  if (main_scene) {
+    main_scene->connect("using_joypad_changed",
+                        Callable(this, "using_joypad_changed"));
+  }
+  if (has_node("Label")) {
+    auto label   = get_node<Label>("Label");
+    m_label_text = label->get_text();
+    using_joypad_changed(false);
+  }
 }
 
 void SlidePower::_process(double delta) {
@@ -125,14 +161,45 @@ bool SlidePower::cooling_down() const {
   return m_cooldown_timer.is_running();
 }
 
+void SlidePower::using_joypad_changed(bool using_joypad) {
+  if (!has_node("Label")) {
+    return;
+  }
+  auto button_name = get_event_button(using_joypad, "slide");
+  auto text        = m_label_text.replace("$BUTTON", button_name);
+  auto label       = get_node<Label>("Label");
+  label->set_text(text);
+}
+
 void AirJumpPower::_bind_methods() {
   ClassDB::bind_method(D_METHOD("pick_me"), &AirJumpPower::pick_me);
+  ClassDB::bind_method(D_METHOD("using_joypad_changed"),
+                       &AirJumpPower::using_joypad_changed);
+}
+
+void AirJumpPower::_ready() {
+  if (Engine::get_singleton()->is_editor_hint()) {
+    return;
+  }
+  auto main_scene = get_node<Node2D>("/root/Main");
+  if (main_scene) {
+    main_scene->connect("using_joypad_changed",
+                        Callable(this, "using_joypad_changed"));
+  }
+  if (has_node("Label")) {
+    auto label   = get_node<Label>("Label");
+    m_label_text = label->get_text();
+    using_joypad_changed(false);
+  }
 }
 
 void AirJumpPower::activate() {
 }
 
 void AirJumpPower::pick_me(Node2D* picker) {
+  if (picker == nullptr) {
+    return;
+  }
   auto label = get_node<Label>("Label");
   if (label) {
     label->queue_free();
@@ -142,4 +209,14 @@ void AirJumpPower::pick_me(Node2D* picker) {
     area->queue_free();
   }
   picker->call_deferred("pick", this);
+}
+
+void AirJumpPower::using_joypad_changed(bool using_joypad) {
+  if (!has_node("Label")) {
+    return;
+  }
+  auto button_name = get_event_button(using_joypad, "jump");
+  auto text        = m_label_text.replace("$BUTTON", button_name);
+  auto label       = get_node<Label>("Label");
+  label->set_text(text);
 }

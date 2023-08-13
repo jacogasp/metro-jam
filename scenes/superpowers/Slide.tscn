@@ -27,7 +27,7 @@ offset_top = -64.0
 offset_right = 136.0
 offset_bottom = -15.0
 theme_override_fonts/font = ExtResource("2_4ism7")
-text = "Press down to slide"
+text = "Press $BUTTON to slide"
 
 [node name="TextureRect" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_nd5au")
