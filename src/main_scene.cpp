@@ -27,6 +27,7 @@ void MainScene::_bind_methods() {
                        &MainScene::on_player_got_powerup);
   ClassDB::bind_method(D_METHOD("save"), &MainScene::save);
   ClassDB::bind_method(D_METHOD("start_game"), &MainScene::start_game);
+  ClassDB::bind_method(D_METHOD("resume_game"), &MainScene::resume);
   ClassDB::bind_method(D_METHOD("continue_game"), &MainScene::continue_game);
   ClassDB::bind_method(D_METHOD("complete_game"), &MainScene::complete_game);
   ClassDB::bind_method(D_METHOD("restart_game"), &MainScene::restart_game);
@@ -69,6 +70,11 @@ void MainScene::_ready() {
 }
 
 void MainScene::_input(const Ref<InputEvent>& event) {
+  if (event->is_action_released("pause")) {
+    pause();
+    return;
+  }
+
   auto maybe_joypad_button = cast_to<InputEventJoypadButton>(event.ptr());
   auto maybe_joypad_motion = cast_to<InputEventJoypadMotion>(event.ptr());
   if (maybe_joypad_button || maybe_joypad_motion) {
@@ -224,10 +230,12 @@ bool MainScene::load() {
 
 void MainScene::pause() const {
   get_tree()->set_pause(true);
+  m_hud->go_to(HUD::pause);
 }
 
 void MainScene::resume() const {
   get_tree()->set_pause(false);
+  m_hud->go_to(HUD::in_game);
 }
 
 void MainScene::start_game() const {

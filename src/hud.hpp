@@ -27,17 +27,18 @@ class HUD : public CanvasLayer {
 
   static void _bind_methods();
 
+  void start_game();
+  void resume_game();
+  void continue_game();
+  void restart_game();
+
  public:
   void _ready() override;
   void _input(Ref<InputEvent> const& inputEvent) override;
   [[nodiscard]] LifeBar* get_lifebar() const;
   void on_player_got_powerup(Node2D* power_up);
   void go_to(State state);
-  void start_game();
-  void show_start();
   void quit();
-  void continue_game();
-  void restart_game();
   void set_can_continue(bool can_continue);
 };
 

@@ -284,6 +284,7 @@ position = Vector2(24, 24)
 [connection signal="pressed" from="GameOver/ContinueButton" to="." method="continue_game"]
 [connection signal="pressed" from="GameOver/QuitButton" to="." method="quit"]
 [connection signal="pressed" from="Pause/RestartButton" to="." method="restart_game"]
+[connection signal="pressed" from="Pause/ResumeButton" to="." method="resume_game"]
 [connection signal="pressed" from="Pause/QuitButton" to="." method="quit"]
 [connection signal="pressed" from="TheEnd/RestartButton" to="." method="restart_game"]
 [connection signal="pressed" from="TheEnd/QuitButton" to="." method="quit"]

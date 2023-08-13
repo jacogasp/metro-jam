@@ -11,10 +11,12 @@ void HUD::_bind_methods() {
   ClassDB::bind_method(D_METHOD("on_player_got_powerup"),
                        &HUD::on_player_got_powerup);
   ClassDB::bind_method(D_METHOD("start_game"), &HUD::start_game);
+  ClassDB::bind_method(D_METHOD("resume_game"), &HUD::resume_game);
   ClassDB::bind_method(D_METHOD("continue_game"), &HUD::continue_game);
   ClassDB::bind_method(D_METHOD("restart_game"), &HUD::restart_game);
   ClassDB::bind_method(D_METHOD("quit"), &HUD::quit);
   ADD_SIGNAL(MethodInfo("start_game"));
+  ADD_SIGNAL(MethodInfo("resume_game"));
   ADD_SIGNAL(MethodInfo("continue_game"));
   ADD_SIGNAL(MethodInfo("restart_game"));
   ADD_SIGNAL(MethodInfo("quit"));
@@ -49,9 +51,18 @@ void HUD::go_to(HUD::State state) {
       cl->show();
     }
   } break;
-  case pause:
+  case pause: {
     m_state = pause;
-    break;
+    auto cl = get_node<CanvasLayer>("Pause");
+    if (cl) {
+      cl->show();
+      auto resume_button  = cl->get_node<Button>("ResumeButton");
+      auto restart_button = cl->get_node<Button>("RestartButton");
+      auto quit_button    = cl->get_node<Button>("QuitButton");
+      m_active_buttons    = Buttons{resume_button, restart_button, quit_button};
+      m_active_buttons[m_active_button_idx]->grab_focus();
+    }
+  } break;
   case game_over: {
     m_state = game_over;
     auto cl = get_node<CanvasLayer>("GameOver");
@@ -71,6 +82,13 @@ void HUD::_ready() {
   m_lifebar = get_node<LifeBar>("InGame/LifeBar");
 }
 
+void change_focus(Buttons const& buttons, size_t old_index, size_t new_index) {
+  auto old_button    = buttons.at(old_index);
+  auto active_button = buttons.at(new_index);
+  old_button->release_focus();
+  active_button->grab_focus();
+}
+
 void HUD::_input(const Ref<InputEvent>& inputEvent) {
   if (m_state == in_game) {
     return;
@@ -86,25 +104,18 @@ void HUD::_input(const Ref<InputEvent>& inputEvent) {
     if (m_active_button_idx >= m_active_buttons.size()) {
       m_active_button_idx = 0;
     }
-  }
-
-  if (inputEvent->is_action_released("ui_up")) {
+    change_focus(m_active_buttons, old_index, m_active_button_idx);
+  } else if (inputEvent->is_action_released("ui_up")) {
     if (m_active_button_idx == 0) {
-      m_active_button_idx = m_active_buttons.size();
+      m_active_button_idx = m_active_buttons.size() - 1;
     } else {
       m_active_button_idx--;
     }
-  }
-
-  if (inputEvent->is_action_released("ui_accept")) {
+    change_focus(m_active_buttons, old_index, m_active_button_idx);
+  } else if (inputEvent->is_action_released("ui_accept")) {
     auto active_button = m_active_buttons.at(m_active_button_idx);
     active_button->_pressed();
-    return;
   }
-  auto old_button    = m_active_buttons.at(old_index);
-  auto active_button = m_active_buttons.at(m_active_button_idx);
-  old_button->release_focus();
-  active_button->grab_focus();
 }
 
 LifeBar* HUD::get_lifebar() const {
@@ -127,7 +138,8 @@ void HUD::start_game() {
   emit_signal("start_game");
 }
 
-void HUD::show_start() {
+void HUD::resume_game() {
+  emit_signal("resume_game");
 }
 
 void HUD::quit() {
