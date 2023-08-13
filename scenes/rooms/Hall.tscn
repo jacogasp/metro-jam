@@ -794,17 +794,19 @@ position = Vector2(2670, 1654)
 velocity = Vector2(-109800, -219600)
 
 [node name="Exit" type="Label" parent="."]
-offset_left = 2947.0
-offset_top = 582.0
-offset_right = 3101.0
-offset_bottom = 608.0
-text = "Use the key to open"
+offset_left = 3043.0
+offset_top = 536.0
+offset_right = 3207.0
+offset_bottom = 585.0
+theme_override_fonts/font = ExtResource("9_6aqr4")
+text = "Find the key"
 
-[node name="Label" type="Label" parent="."]
-offset_left = 2817.0
-offset_top = 2146.0
-offset_right = 3102.0
-offset_bottom = 2172.0
+[node name="Use" type="Label" parent="."]
+offset_left = 2766.0
+offset_top = 2072.0
+offset_right = 3298.0
+offset_bottom = 2170.0
+theme_override_fonts/font = ExtResource("9_6aqr4")
 text = "Use the lever to activate the elevator"
 
 [node name="Checkpoint" parent="." instance=ExtResource("16_mluxe")]
