@@ -248,6 +248,8 @@ jobs:
 
 on:
   workflow_dispatch:
+  pull_request:
+    types: [ closed ]
   push:
     paths-ignore:
       - .githooks/
