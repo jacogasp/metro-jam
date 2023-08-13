@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://0e7eflaq7ui6"]
+[gd_scene load_steps=29 format=3 uid="uid://0e7eflaq7ui6"]
 
 [ext_resource type="Texture2D" uid="uid://b2u8bgksqj83j" path="res://icon.svg" id="1_hkmiw"]
 [ext_resource type="Material" uid="uid://g3uwsdhmuuaj" path="res://shaders/Water.material" id="2_333v6"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://dch5xho6lehap" path="res://assets/textures/light.png" id="11_stcul"]
 [ext_resource type="Texture2D" uid="uid://2vcybdhlfsdk" path="res://assets/textures/light_bulb_sprite.png" id="12_yblow"]
 [ext_resource type="PackedScene" uid="uid://br4rfwsm3h8cw" path="res://scenes/poison_ranger.tscn" id="13_r6kl5"]
+[ext_resource type="PackedScene" uid="uid://mpw57k5hf1d6" path="res://scenes/autohide_label.tscn" id="14_iiokk"]
 [ext_resource type="PackedScene" uid="uid://5ffcgqqdua1c" path="res://scenes/checkpoint.tscn" id="16_mluxe"]
 [ext_resource type="Script" path="res://scenes/ExitDoor.gd" id="17_nohjs"]
 
@@ -741,21 +742,23 @@ velocity = Vector2(-109800, -219600)
 position = Vector2(2670, 1654)
 velocity = Vector2(-109800, -219600)
 
-[node name="Exit" type="Label" parent="."]
-offset_left = 3043.0
-offset_top = 536.0
-offset_right = 3207.0
-offset_bottom = 585.0
-theme_override_fonts/font = ExtResource("9_6aqr4")
+[node name="ExitLabel" parent="." instance=ExtResource("14_iiokk")]
+position = Vector2(3121, 593)
+
+[node name="Label" parent="ExitLabel" index="1"]
 text = "Find the key"
 
-[node name="Use" type="Label" parent="."]
-offset_left = 2766.0
-offset_top = 2072.0
-offset_right = 3298.0
-offset_bottom = 2170.0
-theme_override_fonts/font = ExtResource("9_6aqr4")
+[node name="UseLabel" parent="." instance=ExtResource("14_iiokk")]
+position = Vector2(3087, 2132)
+
+[node name="Label" parent="UseLabel" index="1"]
+offset_left = -205.0
+offset_top = -72.0
+offset_right = 158.0
+offset_bottom = 22.0
+theme_override_constants/line_spacing = -10
 text = "Use the lever to activate the elevator"
+autowrap_mode = 2
 
 [node name="Checkpoint" parent="." instance=ExtResource("16_mluxe")]
 
@@ -806,4 +809,6 @@ position = Vector2(1327, -1241)
 [connection signal="body_entered" from="ExitDoor/StupidKeepMe/Area2D" to="ExitDoor" method="body_entered"]
 [connection signal="body_exited" from="ExitDoor/StupidKeepMe/Area2D" to="ExitDoor" method="body_exited"]
 
+[editable path="ExitLabel"]
+[editable path="UseLabel"]
 [editable path="SteamDoor"]
