@@ -9,7 +9,7 @@ size = Vector2(26, 24)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nd5au"]
 shader = ExtResource("2_55i25")
-shader_parameter/mask_color = Color(0.164706, 0.164706, 0.164706, 1)
+shader_parameter/mask_color = Color(0.0196078, 0.0196078, 0.0196078, 1)
 shader_parameter/amount = 1.0
 
 [node name="Slide" type="SlidePower" groups=["PowerUp"]]

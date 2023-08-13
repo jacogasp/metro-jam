@@ -8,7 +8,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0ftgp"]
 shader = ExtResource("2_nyr6t")
-shader_parameter/mask_color = Color(0, 0, 0, 0.266667)
+shader_parameter/mask_color = Color(0, 0, 0, 1)
 shader_parameter/amount = 1.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j31ro"]
