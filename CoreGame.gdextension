@@ -5,6 +5,6 @@ compatibility_minimum = 4.1
 
 [libraries]
 
-linux.64="res://build/linux/libCoreGame.so"
+linux="res://build/linux/libCoreGame.so"
 windows.x86_64="res://build/windows/libCoreGame.dll"
 macos="res://build/macos/libCoreGame.dylib"
