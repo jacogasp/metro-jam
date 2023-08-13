@@ -1,0 +1,47 @@
+[gd_scene load_steps=5 format=3 uid="uid://s5lp7thn4w32"]
+
+[ext_resource type="Script" path="res://scripts/ExitKey.gd" id="1_ech5d"]
+[ext_resource type="Texture2D" uid="uid://c0i4npbsjb2s7" path="res://assets/textures/key_sprite.png" id="2_tu7fa"]
+[ext_resource type="FontFile" uid="uid://ctpai807254id" path="res://assets/fonts/Pixeled.ttf" id="3_efpi4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_koqox"]
+size = Vector2(36, 42)
+
+[node name="ExitKey" type="Node2D"]
+position = Vector2(1749, 2529)
+script = ExtResource("1_ech5d")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_tu7fa")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 256
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_koqox")
+debug_color = Color(0, 0.552941, 0.905882, 0.419608)
+
+[node name="Label" type="Label" parent="."]
+offset_left = -130.0
+offset_top = -57.0
+offset_right = 133.0
+offset_bottom = -11.0
+theme_override_constants/line_spacing = -11
+theme_override_fonts/font = ExtResource("3_efpi4")
+text = "Collect the Key"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[connection signal="body_entered" from="Area2D" to="." method="body_entered"]
