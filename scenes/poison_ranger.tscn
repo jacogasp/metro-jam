@@ -8,7 +8,7 @@
 radius = 15.0
 height = 62.0
 
-[sub_resource type="Shader" id="Shader_wql7w"]
+[sub_resource type="Shader" id="Shader_x6pa4"]
 code = "shader_type canvas_item;
 uniform float time : hint_range(0.0, 1.0) = 0.0;
 
@@ -21,8 +21,9 @@ void fragment() {
 }
 "
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7ama5"]
-shader = SubResource("Shader_wql7w")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ru6wv"]
+resource_local_to_scene = true
+shader = SubResource("Shader_x6pa4")
 shader_parameter/time = 2.08165e-12
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_auney"]
@@ -177,11 +178,11 @@ collision_mask = 17
 shape = SubResource("CapsuleShape2D_kukua")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-material = SubResource("ShaderMaterial_7ama5")
+material = SubResource("ShaderMaterial_ru6wv")
 position = Vector2(3, -17)
 sprite_frames = SubResource("SpriteFrames_x7vc8")
-animation = &"Idle"
-frame_progress = 0
+animation = &"Run"
+frame_progress = 0.626564
 
 [node name="HealthBar" type="HealthBar" parent="."]
 offset_left = -16.0
