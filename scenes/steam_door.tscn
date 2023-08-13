@@ -60,10 +60,10 @@ size = Vector2(64, 135)
 [node name="SteamDoor" type="Node2D"]
 script = ExtResource("3_4b8t3")
 
-[node name="Lever" type="Node2D" parent="."]
+[node name="Valve" type="Node2D" parent="."]
 position = Vector2(224, 0)
 
-[node name="Sprite2D" type="Sprite2D" parent="Lever"]
+[node name="Sprite2D" type="Sprite2D" parent="Valve"]
 position = Vector2(1.00001, -47)
 rotation = -1.0472
 texture = ExtResource("2_7mc53")
@@ -71,7 +71,7 @@ offset = Vector2(0.0306396, -0.00267029)
 region_enabled = true
 region_rect = Rect2(32, 288, 32, 32)
 
-[node name="Label" type="Label" parent="Lever"]
+[node name="Label" type="Label" parent="Valve"]
 offset_left = -69.0
 offset_top = -94.0
 offset_right = 88.0
@@ -80,15 +80,15 @@ text = "Press $BUTTON"
 label_settings = SubResource("LabelSettings_ogbvp")
 horizontal_alignment = 1
 
-[node name="Area2D" type="Area2D" parent="Lever"]
+[node name="Area2D" type="Area2D" parent="Valve"]
 collision_layer = 65536
 collision_mask = 256
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Lever/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Valve/Area2D"]
 position = Vector2(0, -47)
 shape = SubResource("RectangleShape2D_x6goh")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Lever"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Valve"]
 libraries = {
 "": SubResource("AnimationLibrary_0mmlq")
 }
@@ -96,22 +96,26 @@ libraries = {
 [node name="Door" type="Node2D" parent="."]
 
 [node name="SteamParticles" type="GPUParticles2D" parent="Door"]
-amount = 30
+position = Vector2(0, -8)
+amount = 60
 process_material = ExtResource("1_yk6uc")
 texture = ExtResource("2_fl2t3")
+lifetime = 0.5
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Door"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Door/StaticBody2D"]
-position = Vector2(0, -178)
+position = Vector2(0, -65)
 shape = SubResource("RectangleShape2D_aeug0")
 
 [node name="Area2D" type="Area2D" parent="Door"]
+collision_layer = 0
+collision_mask = 256
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Door/Area2D"]
-position = Vector2(0, -177)
+position = Vector2(0, -68)
 shape = SubResource("RectangleShape2D_bvxkr")
 
-[connection signal="body_entered" from="Lever/Area2D" to="." method="show_label"]
-[connection signal="body_exited" from="Lever/Area2D" to="." method="hide_label"]
+[connection signal="body_entered" from="Valve/Area2D" to="." method="show_label"]
+[connection signal="body_exited" from="Valve/Area2D" to="." method="hide_label"]
 [connection signal="body_entered" from="Door/Area2D" to="." method="on_body_entered"]
