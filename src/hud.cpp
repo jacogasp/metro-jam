@@ -75,6 +75,17 @@ void HUD::go_to(HUD::State state) {
       m_active_buttons[m_active_button_idx]->grab_focus();
     }
   } break;
+  case the_end: {
+    m_state = the_end;
+    auto cl = get_node<CanvasLayer>("TheEnd");
+    if (cl) {
+      cl->show();
+      auto restart_button = cl->get_node<Button>("RestartButton");
+      auto quit_button    = cl->get_node<Button>("QuitButton");
+      m_active_buttons    = Buttons{restart_button, quit_button};
+      m_active_buttons[m_active_button_idx]->grab_focus();
+    }
+  } break;
   }
 }
 

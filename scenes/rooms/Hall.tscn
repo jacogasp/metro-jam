@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://0e7eflaq7ui6"]
+[gd_scene load_steps=30 format=3 uid="uid://0e7eflaq7ui6"]
 
 [ext_resource type="Texture2D" uid="uid://b2u8bgksqj83j" path="res://icon.svg" id="1_hkmiw"]
 [ext_resource type="Material" uid="uid://g3uwsdhmuuaj" path="res://shaders/Water.material" id="2_333v6"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://2vcybdhlfsdk" path="res://assets/textures/light_bulb_sprite.png" id="12_yblow"]
 [ext_resource type="PackedScene" uid="uid://br4rfwsm3h8cw" path="res://scenes/poison_ranger.tscn" id="13_r6kl5"]
 [ext_resource type="PackedScene" uid="uid://5ffcgqqdua1c" path="res://scenes/checkpoint.tscn" id="16_mluxe"]
+[ext_resource type="Script" path="res://scenes/ExitDoor.gd" id="17_nohjs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dbwxh"]
 size = Vector2(31.75, 57.5)
@@ -84,6 +85,9 @@ colors = PackedColorArray(0, 0, 0, 1, 0.490196, 0.356863, 0.164706, 1, 0, 0, 0, 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_167xo"]
 gradient = SubResource("Gradient_byqd4")
 fill_from = Vector2(1, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_arome"]
+size = Vector2(95, 58)
 
 [node name="Hall" type="Node2D"]
 position = Vector2(-1, 0)
@@ -811,6 +815,31 @@ text = "Use the lever to activate the elevator"
 
 [node name="Checkpoint" parent="." instance=ExtResource("16_mluxe")]
 
+[node name="ExitDoor" type="Node2D" parent="."]
+position = Vector2(3217, 608)
+script = ExtResource("17_nohjs")
+
+[node name="StupidKeepMe" type="Node2D" parent="ExitDoor"]
+
+[node name="Area2D" type="Area2D" parent="ExitDoor/StupidKeepMe"]
+collision_layer = 65536
+collision_mask = 256
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitDoor/StupidKeepMe/Area2D"]
+position = Vector2(0, -29)
+shape = SubResource("RectangleShape2D_arome")
+
+[node name="Label" type="Label" parent="ExitDoor"]
+offset_left = -92.0
+offset_top = -122.0
+offset_right = 117.0
+offset_bottom = -24.0
+theme_override_constants/line_spacing = -20
+theme_override_fonts/font = ExtResource("9_6aqr4")
+text = "Press $BUTTON
+to exit"
+horizontal_alignment = 1
+
 [connection signal="body_entered" from="GateHallD" to="GateHallD" method="_on_body_entered"]
 [connection signal="body_exited" from="GateHallD" to="GateHallD" method="_on_body_exited"]
 [connection signal="body_entered" from="GateHallB1" to="GateHallB1" method="_on_body_entered"]
@@ -823,5 +852,7 @@ text = "Use the lever to activate the elevator"
 [connection signal="body_exited" from="GateEntranceHall" to="GateEntranceHall" method="_on_body_exited"]
 [connection signal="body_entered" from="PlatformSystem1/Handle/Area2D" to="PlatformSystem1" method="show_label"]
 [connection signal="body_exited" from="PlatformSystem1/Handle/Area2D" to="PlatformSystem1" method="hide_label"]
+[connection signal="body_entered" from="ExitDoor/StupidKeepMe/Area2D" to="ExitDoor" method="body_entered"]
+[connection signal="body_exited" from="ExitDoor/StupidKeepMe/Area2D" to="ExitDoor" method="body_exited"]
 
 [editable path="SteamDoor"]

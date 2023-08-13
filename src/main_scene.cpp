@@ -228,8 +228,12 @@ bool MainScene::load() {
   return true;
 }
 
-void MainScene::pause() const {
+void MainScene::_pause() const {
   get_tree()->set_pause(true);
+}
+
+void MainScene::pause() const {
+  _pause();
   m_hud->go_to(HUD::pause);
 }
 
@@ -239,7 +243,6 @@ void MainScene::resume() const {
 }
 
 void MainScene::start_game() const {
-  m_hud->go_to(HUD::in_game);
   resume();
 }
 
@@ -254,7 +257,8 @@ void MainScene::continue_game() {
 }
 
 void MainScene::complete_game() {
-  std::cerr << "complete!! bravo!\n";
+  m_hud->go_to(HUD::the_end);
+  _pause();
 }
 
 void MainScene::restart_game() {
@@ -265,11 +269,9 @@ void MainScene::restart_game() {
 }
 
 void MainScene::game_over() {
-  m_player->set_position({});
-  pause();
   m_hud->set_can_continue(m_saved);
   m_hud->go_to(HUD::game_over);
-  m_game_over = true;
+  _pause();
 }
 
 void MainScene::load_superpowers(const Array& superpowers) const {

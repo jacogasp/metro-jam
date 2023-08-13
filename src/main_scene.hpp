@@ -14,7 +14,7 @@ class World;
 
 class MainScene : public Node2D {
   GDCLASS_V2(MainScene, Node2D)
-
+ private:
   core_game::Logger m_logger;
   HUD* m_hud          = nullptr;
   Player* m_player    = nullptr;
@@ -22,9 +22,11 @@ class MainScene : public Node2D {
   bool m_using_joypad = false;
   bool m_loading      = false;
   bool m_saved        = false;
-  bool m_game_over    = false;
 
   static void _bind_methods();
+  void _pause() const;
+
+ public:
   MainScene();
   ~MainScene() override;
 

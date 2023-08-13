@@ -16,7 +16,7 @@ using Buttons  = std::vector<Button*>;
 class HUD : public CanvasLayer {
   GDCLASS_V2(HUD, CanvasLayer)
 
-  enum State { start, in_game, pause, game_over };
+  enum State { start, in_game, pause, game_over, the_end };
 
  private:
   LifeBar* m_lifebar{nullptr};
