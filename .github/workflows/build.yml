@@ -83,6 +83,7 @@ jobs:
   commit_build:
     name: "Commit built shared libraries"
     runs-on: "ubuntu-latest"
+    if: github.ref_name == 'dev'
     needs:
       - build
     steps:

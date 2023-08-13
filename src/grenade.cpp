@@ -2,6 +2,7 @@
 
 #include <godot_cpp/classes/animated_sprite2d.hpp>
 #include <godot_cpp/classes/area2d.hpp>
+#include <godot_cpp/classes/audio_stream_player.hpp>
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/gpu_particles2d.hpp>
 
@@ -78,10 +79,18 @@ static void play_animation(Grenade& grenade) {
   }
 }
 
+static void play_audio(Grenade const& grenade) {
+  auto const audio = grenade.get_node<AudioStreamPlayer>("Audio/Explosion");
+  if (audio) {
+    audio->play();
+  }
+}
+
 void Grenade::explode() {
   play_particles(*this);
   make_damages(*this);
   play_animation(*this);
+  play_audio(*this);
   m_exploding = true;
 }
 

@@ -269,6 +269,10 @@ bool Player::add_powerup(Node2D* node) const {
 }
 
 void Player::pick(Node2D* node) {
+  auto audio = get_node<AudioStreamPlayer>("Audio/Pick");
+  if (audio) {
+    audio->play();
+  }
   if (add_powerup(node)) {
     emit_signal("got_powerup", node);
   }

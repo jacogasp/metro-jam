@@ -112,7 +112,9 @@ sprite_frames = SubResource("SpriteFrames_jol5l")
 animation = &"Explode"
 frame_progress = 0.296563
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="Audio" type="Node" parent="."]
+
+[node name="Explosion" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("2_gvhxj")
 volume_db = -10.0
 
