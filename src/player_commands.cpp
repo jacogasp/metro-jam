@@ -88,3 +88,12 @@ void SlideCommand::operator()(Player& player) const {
     immunity->activate();
   }
 }
+
+void DieCommand::operator()(Player& player) const {
+  PROFILE_FUNCTION();
+  auto as = player.get_node<AnimatedSprite2D>("AnimatedSprite2D");
+  if (as) {
+    as->play("Die");
+  }
+  // TODO die sound
+}
