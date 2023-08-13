@@ -446,6 +446,20 @@ void PoisonRanger::HitCommand::operator()(PoisonRanger& ranger,
 }
 
 void PoisonRanger::OpenFireCommand::operator()(PoisonRanger& ranger) const {
+  auto target = ranger.get_target();
+  if (target) {
+    auto const player =
+        player_is_visible(ranger, target->get_global_position());
+    if (!player) {
+      return;
+    }
+    auto const distance = std::abs(ranger.get_global_position().x
+                                   - player->get_global_position().x);
+
+    if (distance < ranger.get_shooting_range()) {
+      ranger.fire();
+    }
+  }
   ranger.m_fire_timer.start();
   ranger.set_velocity({});
   auto const as = ranger.get_node<AnimatedSprite2D>("AnimatedSprite2D");
