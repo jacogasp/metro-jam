@@ -92,8 +92,8 @@ void World::update_scene(String const& scene_name) {
   if (!scene_name.is_empty()) {
     m_current_scene->set_name(scene_name);
   }
-  auto player = get_node<Player>("/root/Main/Player");
-  if (player) {
+  if (has_node("/root/Main/Player")) {
+    auto player = get_node<Player>("/root/Main/Player");
     filter_superpowers(player, m_current_scene);
   }
   // If a node with the same path is present remove the old one
