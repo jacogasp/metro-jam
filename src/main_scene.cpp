@@ -11,6 +11,7 @@
 #include <godot_cpp/classes/input.hpp>
 #include <godot_cpp/classes/input_event_joypad_button.hpp>
 #include <godot_cpp/classes/input_event_joypad_motion.hpp>
+#include <godot_cpp/classes/input_event_mouse_motion.hpp>
 #include <godot_cpp/classes/input_event_key.hpp>
 #include <godot_cpp/classes/label.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
@@ -27,7 +28,9 @@ void MainScene::_bind_methods() {
                        &MainScene::on_player_got_powerup);
   ClassDB::bind_method(D_METHOD("save"), &MainScene::save);
   ClassDB::bind_method(D_METHOD("start_game"), &MainScene::start_game);
+  ClassDB::bind_method(D_METHOD("resume_game"), &MainScene::resume);
   ClassDB::bind_method(D_METHOD("continue_game"), &MainScene::continue_game);
+  ClassDB::bind_method(D_METHOD("complete_game"), &MainScene::complete_game);
   ClassDB::bind_method(D_METHOD("restart_game"), &MainScene::restart_game);
   ClassDB::bind_method(D_METHOD("game_over"), &MainScene::game_over);
   ClassDB::bind_method(D_METHOD("quit"), &MainScene::quit);
@@ -62,21 +65,32 @@ void MainScene::_ready() {
     create_savings_directory();
     load();
     pause();
-    m_hud->show_start();
-    m_hud->hide_in_game();
-    m_hud->hide_gameover();
+    m_hud->go_to(HUD::start);
   }
   m_logger.info("Main scene initialized");
 }
 
 void MainScene::_input(const Ref<InputEvent>& event) {
-  auto maybe_joypad_button = cast_to<InputEventJoypadButton>(event.ptr());
-  auto maybe_joypad_motion = cast_to<InputEventJoypadMotion>(event.ptr());
+  if (event->is_action_released("pause")) {
+    pause();
+    return;
+  }
+
+  auto event_ptr = event.ptr();
+  auto maybe_mouse = cast_to<InputEventMouseMotion>(event_ptr);
+  if (maybe_mouse) {
+    Input::get_singleton()->set_mouse_mode(Input::MOUSE_MODE_VISIBLE);
+  } else {
+    Input::get_singleton()->set_mouse_mode(Input::MOUSE_MODE_HIDDEN);
+  }
+
+  auto maybe_joypad_button = cast_to<InputEventJoypadButton>(event_ptr);
+  auto maybe_joypad_motion = cast_to<InputEventJoypadMotion>(event_ptr);
   if (maybe_joypad_button || maybe_joypad_motion) {
     m_using_joypad = true;
     emit_signal("using_joypad_changed", m_using_joypad);
   }
-  auto maybe_keyboard = cast_to<InputEventKey>(event.ptr());
+  auto maybe_keyboard = cast_to<InputEventKey>(event_ptr);
   if (maybe_keyboard) {
     m_using_joypad = false;
     emit_signal("using_joypad_changed", m_using_joypad);
@@ -223,17 +237,21 @@ bool MainScene::load() {
   return true;
 }
 
-void MainScene::pause() const {
+void MainScene::_pause() const {
   get_tree()->set_pause(true);
+}
+
+void MainScene::pause() const {
+  _pause();
+  m_hud->go_to(HUD::pause);
 }
 
 void MainScene::resume() const {
   get_tree()->set_pause(false);
+  m_hud->go_to(HUD::in_game);
 }
 
 void MainScene::start_game() const {
-  m_hud->hide_start();
-  m_hud->show_in_game();
   resume();
 }
 
@@ -242,11 +260,14 @@ void MainScene::continue_game() {
   if (!load()) {
     get_tree()->reload_current_scene();
   }
-  m_hud->hide_gameover();
-  m_hud->hide_start();
-  m_hud->show_in_game();
+  m_hud->go_to(HUD::in_game);
   m_hud->get_lifebar()->reset();
   resume();
+}
+
+void MainScene::complete_game() {
+  m_hud->go_to(HUD::the_end);
+  _pause();
 }
 
 void MainScene::restart_game() {
@@ -257,12 +278,9 @@ void MainScene::restart_game() {
 }
 
 void MainScene::game_over() {
-  m_player->set_position({});
-  pause();
   m_hud->set_can_continue(m_saved);
-  m_hud->hide_in_game();
-  m_hud->show_gameover();
-  m_game_over = true;
+  m_hud->go_to(HUD::game_over);
+  _pause();
 }
 
 void MainScene::load_superpowers(const Array& superpowers) const {

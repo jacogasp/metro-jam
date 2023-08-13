@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://j3sugn7p7jhf"]
+[gd_scene load_steps=8 format=3 uid="uid://j3sugn7p7jhf"]
 
 [ext_resource type="PackedScene" uid="uid://ctehtj158jgy2" path="res://scenes/LifeBar.tscn" id="1_dnl85"]
 [ext_resource type="Texture2D" uid="uid://cvam2fqmilx5s" path="res://assets/screens/bg_darkblue.png" id="2_faivf"]
 [ext_resource type="Texture2D" uid="uid://bthsfogatialq" path="res://assets/screens/start_screen.png" id="2_gm4l0"]
 [ext_resource type="FontFile" uid="uid://ctpai807254id" path="res://assets/fonts/Pixeled.ttf" id="2_tdjxd"]
 [ext_resource type="Texture2D" uid="uid://ksn83ylur68v" path="res://assets/screens/game_over_screen.png" id="5_dk5lr"]
+[ext_resource type="Texture2D" uid="uid://cs7h803hy3qh2" path="res://assets/screens/theend_screen.png" id="5_yai1f"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0lbgs"]
 bg_color = Color(0.129412, 0.117647, 0.2, 1)
@@ -42,7 +43,7 @@ offset_right = 688.0
 offset_bottom = 348.0
 theme_override_fonts/font = ExtResource("2_tdjxd")
 theme_override_font_sizes/font_size = 8
-text = "WASD/SpaceBar - Run/Jump, E - Interaction, Enter - Attack
+text = "WASD/SpaceBar - Run/Jump, E - Interaction, Enter - Attack, Esc - Pause
 Unlockable: W - Double jump, S/down - evade, G - Grenades
 
 
@@ -99,7 +100,7 @@ offset_right = 688.0
 offset_bottom = 348.0
 theme_override_fonts/font = ExtResource("2_tdjxd")
 theme_override_font_sizes/font_size = 8
-text = "WASD/SpaceBar - Run/Jump, E - Interaction, Enter - Attack
+text = "WASD/SpaceBar - Run/Jump, E - Interaction, Enter - Attack, Esc - Pause
 Unlockable: W - Double jump, S/down - evade, G - Grenades
 
 
@@ -145,7 +146,122 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_0lbgs")
 text = "Quit
 "
 
+[node name="Pause" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="MarginContainer" type="MarginContainer" parent="Pause"]
+offset_right = 688.0
+offset_bottom = 384.0
+
+[node name="BgDarkblue" type="Sprite2D" parent="Pause/MarginContainer"]
+position = Vector2(344, 192)
+texture = ExtResource("2_faivf")
+
+[node name="StartScreen" type="Sprite2D" parent="Pause/MarginContainer"]
+position = Vector2(344, 192)
+texture = ExtResource("2_gm4l0")
+
+[node name="Legenda" type="Label" parent="Pause"]
+offset_top = 36.0
+offset_right = 688.0
+offset_bottom = 348.0
+theme_override_fonts/font = ExtResource("2_tdjxd")
+theme_override_font_sizes/font_size = 8
+text = "WASD/SpaceBar - Run/Jump, E - Interaction, Enter - Attack, Esc - Pause
+Unlockable: W - Double jump, S/down - evade, G - Grenades
+GAME PAUSED
+
+
+
+
+
+
+
+
+
+
+"
+horizontal_alignment = 1
+
+[node name="RestartButton" type="Button" parent="Pause"]
+offset_left = 302.0
+offset_top = 142.0
+offset_right = 384.0
+offset_bottom = 167.0
+theme_override_fonts/font = ExtResource("2_tdjxd")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_0lbgs")
+text = "Restart"
+
+[node name="ResumeButton" type="Button" parent="Pause"]
+offset_left = 302.0
+offset_top = 111.0
+offset_right = 384.0
+offset_bottom = 136.0
+theme_override_fonts/font = ExtResource("2_tdjxd")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_0lbgs")
+text = "Resume"
+
+[node name="QuitButton" type="Button" parent="Pause"]
+offset_left = 302.0
+offset_top = 342.0
+offset_right = 384.0
+offset_bottom = 367.0
+theme_override_fonts/font = ExtResource("2_tdjxd")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_0lbgs")
+text = "Quit
+"
+
+[node name="TheEnd" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="MarginContainer" type="MarginContainer" parent="TheEnd"]
+offset_right = 688.0
+offset_bottom = 384.0
+
+[node name="BgDarkblue" type="Sprite2D" parent="TheEnd/MarginContainer"]
+position = Vector2(344, 192)
+texture = ExtResource("2_faivf")
+
+[node name="TheendScreen" type="Sprite2D" parent="TheEnd/MarginContainer"]
+position = Vector2(344, 192)
+texture = ExtResource("5_yai1f")
+
+[node name="Credits" type="Label" parent="TheEnd"]
+offset_top = 36.0
+offset_right = 688.0
+offset_bottom = 348.0
+theme_override_fonts/font = ExtResource("2_tdjxd")
+theme_override_font_sizes/font_size = 8
+text = "Thanks for playing
+Created by: @johnnyparafango and @MejoXP"
+horizontal_alignment = 1
+
+[node name="RestartButton" type="Button" parent="TheEnd"]
+offset_left = 302.0
+offset_top = 93.0
+offset_right = 384.0
+offset_bottom = 118.0
+theme_override_fonts/font = ExtResource("2_tdjxd")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_0lbgs")
+text = "Restart"
+
+[node name="QuitButton" type="Button" parent="TheEnd"]
+offset_left = 302.0
+offset_top = 342.0
+offset_right = 384.0
+offset_bottom = 367.0
+theme_override_fonts/font = ExtResource("2_tdjxd")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_0lbgs")
+text = "Quit
+"
+
 [node name="InGame" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="PowerUpsContainer" type="VBoxContainer" parent="InGame"]
 clip_contents = true
@@ -167,3 +283,8 @@ position = Vector2(24, 24)
 [connection signal="pressed" from="GameOver/RestartButton" to="." method="restart_game"]
 [connection signal="pressed" from="GameOver/ContinueButton" to="." method="continue_game"]
 [connection signal="pressed" from="GameOver/QuitButton" to="." method="quit"]
+[connection signal="pressed" from="Pause/RestartButton" to="." method="restart_game"]
+[connection signal="pressed" from="Pause/ResumeButton" to="." method="resume_game"]
+[connection signal="pressed" from="Pause/QuitButton" to="." method="quit"]
+[connection signal="pressed" from="TheEnd/RestartButton" to="." method="restart_game"]
+[connection signal="pressed" from="TheEnd/QuitButton" to="." method="quit"]

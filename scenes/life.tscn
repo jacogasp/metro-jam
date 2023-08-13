@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://te3s1dup3dl7"]
+[gd_scene load_steps=5 format=3 uid="uid://te3s1dup3dl7"]
 
 [ext_resource type="Texture2D" uid="uid://brq77udpwpfat" path="res://assets/tilesets/Tileset.png" id="1_4nspm"]
 [ext_resource type="Script" path="res://scripts/life.gd" id="1_xu6tx"]
+[ext_resource type="AudioStream" uid="uid://brduxk7xj8awm" path="res://assets/audio/bottle_pop.wav" id="3_ukdeg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3csff"]
 size = Vector2(34, 30)
@@ -22,4 +23,11 @@ texture = ExtResource("1_4nspm")
 region_enabled = true
 region_rect = Rect2(321, -1, 32, 32)
 
+[node name="Audio" type="Node" parent="."]
+
+[node name="BottlePop" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("3_ukdeg")
+volume_db = -10.0
+
 [connection signal="body_entered" from="Area2D" to="." method="body_entered"]
+[connection signal="finished" from="Audio/BottlePop" to="." method="destroy"]

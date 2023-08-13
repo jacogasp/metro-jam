@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://c4w1tkrrm3puk"]
+[gd_scene load_steps=4 format=3 uid="uid://c4w1tkrrm3puk"]
 
 [ext_resource type="TileSet" uid="uid://0w2a5bo421v7" path="res://assets/tilesets/TilesetBlocks.tres" id="1_s54h4"]
+[ext_resource type="FontFile" uid="uid://ctpai807254id" path="res://assets/fonts/Pixeled.ttf" id="2_0ad37"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8rmxr"]
 size = Vector2(31.75, 57.5)
@@ -53,6 +54,23 @@ collision_mask = 256
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GateEntranceHall"]
 position = Vector2(7, -25.5)
 shape = SubResource("RectangleShape2D_8rmxr")
+
+[node name="Run" type="Label" parent="."]
+offset_left = -510.0
+offset_top = 399.0
+offset_right = -151.0
+offset_bottom = 448.0
+theme_override_fonts/font = ExtResource("2_0ad37")
+text = "It's time to run outta here"
+
+[node name="Find" type="Label" parent="."]
+offset_left = 2082.0
+offset_top = 359.0
+offset_right = 2441.0
+offset_bottom = 457.0
+theme_override_fonts/font = ExtResource("2_0ad37")
+text = "Find the exit
+Wrench'em all!"
 
 [connection signal="body_entered" from="GateEntranceHall" to="GateEntranceHall" method="_on_body_entered"]
 [connection signal="body_exited" from="GateEntranceHall" to="GateEntranceHall" method="_on_body_exited"]
