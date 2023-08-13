@@ -43,7 +43,7 @@ shape = SubResource("RectangleShape2D_j31ro")
 
 [node name="Gun" type="Gun" parent="."]
 bullet = ExtResource("4_1hdfp")
-bullet_speed = 400.0
+bullet_speed = 550.0
 cooldown = 3.0
 position = Vector2(27, -31)
 
