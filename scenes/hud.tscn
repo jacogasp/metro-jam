@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://j3sugn7p7jhf"]
+[gd_scene load_steps=8 format=3 uid="uid://j3sugn7p7jhf"]
 
 [ext_resource type="PackedScene" uid="uid://ctehtj158jgy2" path="res://scenes/LifeBar.tscn" id="1_dnl85"]
 [ext_resource type="Texture2D" uid="uid://cvam2fqmilx5s" path="res://assets/screens/bg_darkblue.png" id="2_faivf"]
 [ext_resource type="Texture2D" uid="uid://bthsfogatialq" path="res://assets/screens/start_screen.png" id="2_gm4l0"]
 [ext_resource type="FontFile" uid="uid://ctpai807254id" path="res://assets/fonts/Pixeled.ttf" id="2_tdjxd"]
 [ext_resource type="Texture2D" uid="uid://ksn83ylur68v" path="res://assets/screens/game_over_screen.png" id="5_dk5lr"]
+[ext_resource type="Texture2D" uid="uid://b8l7s68l3ihj6" path="res://assets/screens/youwin_screen.png" id="5_ghs75"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0lbgs"]
 bg_color = Color(0.129412, 0.117647, 0.2, 1)
@@ -145,6 +146,52 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_0lbgs")
 text = "Quit
 "
 
+[node name="YouWin" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="MarginContainer" type="MarginContainer" parent="YouWin"]
+offset_right = 688.0
+offset_bottom = 384.0
+
+[node name="BgDarkblue" type="Sprite2D" parent="YouWin/MarginContainer"]
+position = Vector2(344, 192)
+texture = ExtResource("2_faivf")
+
+[node name="YouwinScreen" type="Sprite2D" parent="YouWin/MarginContainer"]
+position = Vector2(344, 192)
+texture = ExtResource("5_ghs75")
+
+[node name="Credits" type="Label" parent="YouWin"]
+offset_top = 36.0
+offset_right = 688.0
+offset_bottom = 348.0
+theme_override_fonts/font = ExtResource("2_tdjxd")
+theme_override_font_sizes/font_size = 8
+text = "Thanks for playing
+Created by: @johnnyparafango and @MejoXP"
+horizontal_alignment = 1
+
+[node name="RestartButton" type="Button" parent="YouWin"]
+offset_left = 302.0
+offset_top = 93.0
+offset_right = 384.0
+offset_bottom = 118.0
+theme_override_fonts/font = ExtResource("2_tdjxd")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_0lbgs")
+text = "Restart"
+
+[node name="QuitButton" type="Button" parent="YouWin"]
+offset_left = 302.0
+offset_top = 342.0
+offset_right = 384.0
+offset_bottom = 367.0
+theme_override_fonts/font = ExtResource("2_tdjxd")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_0lbgs")
+text = "Quit
+"
+
 [node name="InGame" type="CanvasLayer" parent="."]
 
 [node name="PowerUpsContainer" type="VBoxContainer" parent="InGame"]
@@ -167,3 +214,5 @@ position = Vector2(24, 24)
 [connection signal="pressed" from="GameOver/RestartButton" to="." method="restart_game"]
 [connection signal="pressed" from="GameOver/ContinueButton" to="." method="continue_game"]
 [connection signal="pressed" from="GameOver/QuitButton" to="." method="quit"]
+[connection signal="pressed" from="YouWin/RestartButton" to="." method="restart_game"]
+[connection signal="pressed" from="YouWin/QuitButton" to="." method="quit"]
