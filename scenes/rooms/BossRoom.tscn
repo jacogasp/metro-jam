@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://5v0wnrisffs"]
+[gd_scene load_steps=8 format=3 uid="uid://5v0wnrisffs"]
 
 [ext_resource type="TileSet" uid="uid://0w2a5bo421v7" path="res://assets/tilesets/TilesetBlocks.tres" id="1_g6otn"]
 [ext_resource type="PackedScene" uid="uid://cu0874vm7p4ku" path="res://scenes/bumblee_bee.tscn" id="2_ww6tl"]
 [ext_resource type="PackedScene" uid="uid://s5lp7thn4w32" path="res://scenes/exit_key.tscn" id="3_0o0td"]
+[ext_resource type="PackedScene" uid="uid://5ffcgqqdua1c" path="res://scenes/checkpoint.tscn" id="4_aaks0"]
 
 [sub_resource type="Gradient" id="Gradient_6orgm"]
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
@@ -39,7 +40,7 @@ layer_2/modulate = Color(1, 1, 1, 1)
 layer_2/y_sort_enabled = false
 layer_2/y_sort_origin = 0
 layer_2/z_index = -2
-layer_2/tile_data = PackedInt32Array(2687083, 262144, 7, 2621548, 720896, 4, 2687084, 720896, 5, 2621549, 851968, 4, 2687085, 851968, 5, 2621547, 262144, 7, 2556011, 262144, 7, 2556012, 262144, 7, 2556013, 262144, 7, 2556014, 262144, 7, 2621550, 262144, 7, 2687086, 262144, 7)
+layer_2/tile_data = PackedInt32Array(2687083, 262144, 7, 2621548, 720896, 4, 2687084, 720896, 5, 2621549, 851968, 4, 2687085, 851968, 5, 2621547, 262144, 7, 2556011, 262144, 7, 2556012, 262144, 7, 2556013, 262144, 7, 2556014, 262144, 7, 2621550, 262144, 7, 2687086, 262144, 7, 2949227, 1245184, 7, 3014763, 1245184, 8, 3080299, 1245184, 9, 2949228, 1310720, 7, 3014764, 1310720, 8, 3080300, 1310720, 9, 2949229, 1376256, 7, 3014765, 1376256, 8, 3080301, 1376256, 9)
 layer_3/name = "Robots"
 layer_3/enabled = true
 layer_3/modulate = Color(1, 1, 1, 1)
@@ -480,6 +481,9 @@ position = Vector2(1617, 2404)
 position = Vector2(1617, 2404)
 
 [node name="ExitKey" parent="." instance=ExtResource("3_0o0td")]
+
+[node name="Checkpoint" parent="." instance=ExtResource("4_aaks0")]
+position = Vector2(3475, 1486)
 
 [connection signal="body_entered" from="GateCorridorBossRoom" to="GateCorridorBossRoom" method="_on_body_entered"]
 [connection signal="body_exited" from="GateCorridorBossRoom" to="GateCorridorBossRoom" method="_on_body_exited"]

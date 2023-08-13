@@ -82,9 +82,9 @@ position = Vector2(0, -29.25)
 shape = SubResource("RectangleShape2D_v5lfp")
 
 [node name="GateCorridorBossRoom" type="Gate" parent="."]
-next_room = "scenes/rooms/BossRom.tscn"
+next_room = "scenes/rooms/BossRoom.tscn"
 exit_direction = 0
-position = Vector2(3536, 256)
+position = Vector2(3536, 258)
 collision_mask = 257
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GateCorridorBossRoom"]
