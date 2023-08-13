@@ -95,5 +95,8 @@ void DieCommand::operator()(Player& player) const {
   if (as) {
     as->play("Die");
   }
-  // TODO die sound
+  auto audio = player.get_node<AudioStreamPlayer>("Audio/Die");
+  if (audio) {
+    audio->play();
+  }
 }
