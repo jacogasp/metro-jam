@@ -160,12 +160,7 @@ void SlideState::update(Player& player) {
 }
 
 void DyingState::update(Player& player) {
-  auto as = player.get_node<AnimatedSprite2D>("AnimatedSprite2D");
-  if (as) {
-    as->play("Die");
-  }
-
-  if (player.m_animatedSprite2D->get_animation().begins_with("Attack")
+  if (player.m_animatedSprite2D->get_animation().begins_with("Die")
       && player.m_animatedSprite2D->is_playing()) {
     return;
   }

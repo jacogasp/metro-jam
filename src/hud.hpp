@@ -5,21 +5,28 @@
 #include "macros.hpp"
 #include <godot_cpp/classes/button.hpp>
 #include <godot_cpp/classes/canvas_layer.hpp>
+#include <godot_cpp/classes/input_event.hpp>
 #include <vector>
 
 using namespace godot;
 
 using Powerups = std::vector<Node2D*>;
+using Buttons  = std::vector<Button*>;
 
 class HUD : public CanvasLayer {
   GDCLASS_V2(HUD, CanvasLayer)
  private:
   LifeBar* m_lifebar{nullptr};
+  Buttons m_active_buttons;
+  size_t m_active_button_idx = 0;
+  bool m_in_game = false;
   Powerups m_powerups;
+
   static void _bind_methods();
 
  public:
   void _ready() override;
+  void _input(Ref<InputEvent> const& inputEvent) override;
   [[nodiscard]] LifeBar* get_lifebar() const;
   void on_player_got_powerup(Node2D* power_up);
   void start_game();

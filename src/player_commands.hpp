@@ -10,6 +10,7 @@ struct JumpOutCommand;
 struct AirJumpCommand;
 struct AttackCommand;
 struct SlideCommand;
+struct DieCommand;
 
 struct IdleCommand {
   void operator()(Player& player) const;
@@ -40,6 +41,10 @@ struct GrenadeCommand {
 };
 
 struct SlideCommand {
+  void operator()(Player& player) const;
+};
+
+struct DieCommand {
   void operator()(Player& player) const;
 };
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b3argiortbcna"
-path="res://.godot/imported/crate.png-b083c7143ec8103676df154d007e744f.ctex"
+uid="uid://2vcybdhlfsdk"
+path="res://.godot/imported/light_bulb_sprite.png-a4b627fe57f95d46dd1dd0d2db43e39d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/crate.png"
-dest_files=["res://.godot/imported/crate.png-b083c7143ec8103676df154d007e744f.ctex"]
+source_file="res://assets/textures/light_bulb_sprite.png"
+dest_files=["res://.godot/imported/light_bulb_sprite.png-a4b627fe57f95d46dd1dd0d2db43e39d.ctex"]
 
 [params]
 

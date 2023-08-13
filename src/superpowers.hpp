@@ -55,6 +55,7 @@ class SlidePower
  private:
   static void _bind_methods();
   TextureRect* m_texture_rect{nullptr};
+  String m_label_text;
   Timer m_cooldown_timer;
   bool m_enabled{true};
 
@@ -64,6 +65,7 @@ class SlidePower
   void activate() override;
   void pick_me(Node2D* picker);
   bool cooling_down() const;
+  void using_joypad_changed(bool using_joypad);
 };
 
 class AirJumpPower
@@ -72,11 +74,15 @@ class AirJumpPower
   GDCLASS_V2(AirJumpPower, Node2D)
 
  private:
+  String m_label_text;
+
   static void _bind_methods();
 
  public:
+  void _ready() override;
   void activate() override;
   void pick_me(Node2D* picker);
+  void using_joypad_changed(bool using_joypad);
 };
 
 #endif // COREGAME_SUPERPOWERS_HPP

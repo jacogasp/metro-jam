@@ -1,7 +1,7 @@
 #include "player.hpp"
-#include "constants.hpp"
 #include "io.hpp"
 #include "logger.hpp"
+#include "player_commands.hpp"
 #include "profiler.hpp"
 #include "ray_cast.hpp"
 #include <godot_cpp/classes/animated_sprite2d.hpp>
@@ -274,6 +274,8 @@ void Player::pick(Node2D* node) {
   }
 }
 
+constexpr auto die = DieCommand();
+
 void Player::hit() {
   if (m_state == &Player::dying) {
     return;
@@ -286,6 +288,7 @@ void Player::hit() {
   m_vfx->play("Hit");
   loose_life();
   if (m_current_life == 0) {
+    die(*this);
     set_state(&Player::dying);
   } else {
     emit_signal("player_hit");
