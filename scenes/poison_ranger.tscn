@@ -1,7 +1,7 @@
 [gd_scene load_steps=24 format=3 uid="uid://br4rfwsm3h8cw"]
 
 [ext_resource type="Texture2D" uid="uid://b6itau5f6uom8" path="res://assets/characters/poison_ranger_sprites.png" id="1_vfgx0"]
-[ext_resource type="Texture2D" uid="uid://dju2wr2n2ml5k" path="res://assets/health_bar.png" id="2_08kpc"]
+[ext_resource type="Texture2D" uid="uid://dju2wr2n2ml5k" path="res://assets/textures/health_bar.png" id="2_08kpc"]
 [ext_resource type="PackedScene" uid="uid://cpjx76e8dyp5b" path="res://scenes/blob_granade.tscn" id="3_2t3kq"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kukua"]
