@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://5ffcgqqdua1c"]
+[gd_scene load_steps=6 format=3 uid="uid://5ffcgqqdua1c"]
 
 [ext_resource type="Script" path="res://scripts/checkpoint.gd" id="1_xl5he"]
 [ext_resource type="FontFile" uid="uid://ctpai807254id" path="res://assets/fonts/Pixeled.ttf" id="2_lfx67"]
+[ext_resource type="AudioStream" uid="uid://qbswjdij7s46" path="res://assets/audio/checkpoint.wav" id="3_x3u0d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bppqb"]
 size = Vector2(132, 96)
@@ -34,6 +35,11 @@ text = "Press $BUTTON
 to save"
 label_settings = SubResource("LabelSettings_awude")
 horizontal_alignment = 1
+
+[node name="Audio" type="Node" parent="."]
+
+[node name="Interact" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("3_x3u0d")
 
 [connection signal="body_entered" from="StupidKeepMe/Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="StupidKeepMe/Area2D" to="." method="_on_area_2d_body_exited"]

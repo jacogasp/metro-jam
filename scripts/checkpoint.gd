@@ -12,6 +12,7 @@ func _ready():
 func interact():
 	var main_scene = get_node("/root/Main")
 	main_scene.call("save")
+	$Audio/Interact.play()
 
 
 func _on_area_2d_body_entered(_body):
