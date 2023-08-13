@@ -2,7 +2,7 @@
 
 [ext_resource type="TileSet" uid="uid://0w2a5bo421v7" path="res://assets/tilesets/TilesetBlocks.tres" id="1_ch5n7"]
 [ext_resource type="PackedScene" uid="uid://byowg4tosyvo2" path="res://scenes/platform.tscn" id="2_w1ib7"]
-[ext_resource type="FontFile" uid="uid://ctpai807254id" path="res://assets/fonts/Pixeled.ttf" id="5_uyv4p"]
+[ext_resource type="PackedScene" uid="uid://mpw57k5hf1d6" path="res://scenes/autohide_label.tscn" id="3_ivvmi"]
 [ext_resource type="Texture2D" uid="uid://dch5xho6lehap" path="res://assets/textures/light.png" id="8_cxe2q"]
 [ext_resource type="Texture2D" uid="uid://2vcybdhlfsdk" path="res://assets/textures/light_bulb_sprite.png" id="9_yllm5"]
 [ext_resource type="PackedScene" uid="uid://b31qyx4laex5m" path="res://scenes/steam_jet.tscn" id="10_sx0bt"]
@@ -115,16 +115,18 @@ collision_mask = 256
 position = Vector2(0, -30)
 shape = SubResource("RectangleShape2D_1213o")
 
-[node name="JUMP" type="Label" parent="."]
-offset_left = 5645.0
-offset_top = 1785.0
-offset_right = 6081.0
-offset_bottom = 1981.0
-theme_override_fonts/font = ExtResource("5_uyv4p")
-text = "Remeber
-Your manager is not responsible
+[node name="JUMP" parent="." instance=ExtResource("3_ivvmi")]
+position = Vector2(5615, 1840)
+
+[node name="Label" parent="JUMP" index="1"]
+offset_left = 30.0
+offset_top = -54.0
+offset_right = 363.0
+offset_bottom = 142.0
+text = "Remeber .Your manager is not responsible
 for personal injuries
 Jump at your own risk"
+autowrap_mode = 2
 
 [node name="Lights" type="Node2D" parent="."]
 
@@ -829,4 +831,5 @@ position = Vector2(61, -14)
 [connection signal="body_entered" from="GateHallB2" to="GateHallB2" method="_on_body_entered"]
 [connection signal="body_exited" from="GateHallB2" to="GateHallB2" method="_on_body_exited"]
 
+[editable path="JUMP"]
 [editable path="SteamDoor"]
