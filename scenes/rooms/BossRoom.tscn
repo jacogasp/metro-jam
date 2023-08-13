@@ -1,10 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://5v0wnrisffs"]
+[gd_scene load_steps=7 format=3 uid="uid://5v0wnrisffs"]
 
 [ext_resource type="TileSet" uid="uid://0w2a5bo421v7" path="res://assets/tilesets/TilesetBlocks.tres" id="1_g6otn"]
 [ext_resource type="PackedScene" uid="uid://cu0874vm7p4ku" path="res://scenes/bumblee_bee.tscn" id="2_ww6tl"]
-[ext_resource type="Script" path="res://scripts/ExitKey.gd" id="3_0ka6c"]
-[ext_resource type="FontFile" uid="uid://ctpai807254id" path="res://assets/fonts/Pixeled.ttf" id="3_5x1ps"]
-[ext_resource type="Texture2D" uid="uid://c0i4npbsjb2s7" path="res://assets/textures/key_sprite.png" id="3_kpspl"]
+[ext_resource type="PackedScene" uid="uid://s5lp7thn4w32" path="res://scenes/exit_key.tscn" id="3_0o0td"]
 
 [sub_resource type="Gradient" id="Gradient_6orgm"]
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
@@ -481,24 +479,7 @@ position = Vector2(1617, 2404)
 [node name="BumbleBee105" parent="Bumblebees" instance=ExtResource("2_ww6tl")]
 position = Vector2(1617, 2404)
 
-[node name="ExitKey" type="Node2D" parent="."]
-position = Vector2(1749, 2458)
-script = ExtResource("3_0ka6c")
-
-[node name="Label" type="Label" parent="ExitKey"]
-offset_left = 88.0
-offset_top = -54.0
-offset_right = 351.0
-offset_bottom = -8.0
-theme_override_constants/line_spacing = -11
-theme_override_fonts/font = ExtResource("3_5x1ps")
-text = "Collect the Key"
-horizontal_alignment = 1
-autowrap_mode = 2
-
-[node name="Sprite2D" type="Sprite2D" parent="ExitKey"]
-position = Vector2(211, 14)
-texture = ExtResource("3_kpspl")
+[node name="ExitKey" parent="." instance=ExtResource("3_0o0td")]
 
 [connection signal="body_entered" from="GateCorridorBossRoom" to="GateCorridorBossRoom" method="_on_body_entered"]
 [connection signal="body_exited" from="GateCorridorBossRoom" to="GateCorridorBossRoom" method="_on_body_exited"]
