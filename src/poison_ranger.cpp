@@ -101,6 +101,9 @@ void PoisonRanger::_physics_process(double delta) {
 }
 
 void PoisonRanger::take_hit(int damage, Vector2 const& from_direction) {
+  if (m_state == &PoisonRanger::dying) {
+    return;
+  }
   hit(*this, from_direction);
   open_fire(*this);
   auto player = player_is_visible(*this, from_direction);
