@@ -2,8 +2,8 @@
 
 [ext_resource type="TileSet" uid="uid://0w2a5bo421v7" path="res://assets/tilesets/TilesetBlocks.tres" id="1_knopg"]
 [ext_resource type="PackedScene" uid="uid://b31qyx4laex5m" path="res://scenes/steam_jet.tscn" id="1_n6r3k"]
-[ext_resource type="FontFile" uid="uid://ctpai807254id" path="res://assets/fonts/Pixeled.ttf" id="2_6mdl7"]
 [ext_resource type="PackedScene" uid="uid://5ffcgqqdua1c" path="res://scenes/checkpoint.tscn" id="2_8iei1"]
+[ext_resource type="PackedScene" uid="uid://mpw57k5hf1d6" path="res://scenes/autohide_label.tscn" id="3_a2oej"]
 [ext_resource type="PackedScene" uid="uid://cu0874vm7p4ku" path="res://scenes/bumblee_bee.tscn" id="3_u6obn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v5lfp"]
@@ -53,24 +53,28 @@ layer_4/tile_data = PackedInt32Array(262242, 1114112, 2, 327778, 1114112, 3, 393
 [node name="Checkpoint" parent="." instance=ExtResource("2_8iei1")]
 position = Vector2(3598, 1665)
 
-[node name="Corridor" type="Label" parent="."]
-offset_left = 3300.0
-offset_top = 1688.0
-offset_right = 3717.0
-offset_bottom = 1884.0
-theme_override_fonts/font = ExtResource("2_6mdl7")
-text = "PATH TO THE ASSEMBLY AREA"
+[node name="AutohideLabel" parent="." instance=ExtResource("3_a2oej")]
+position = Vector2(3470, 306)
 
-[node name="Danger" type="Label" parent="."]
-offset_left = 3261.0
-offset_top = 203.0
-offset_right = 3678.0
-offset_bottom = 399.0
-theme_override_fonts/font = ExtResource("2_6mdl7")
+[node name="Label" parent="AutohideLabel" index="1"]
+offset_left = -219.0
+offset_top = -93.0
+offset_right = 28.0
+offset_bottom = 103.0
 text = "DANGER!!!
 RESTRICTED AREA
 ACCESS ONLY WITH
- PROPER EQUIPMENT"
+PROPER EQUIPMENT"
+
+[node name="Corridor" parent="." instance=ExtResource("3_a2oej")]
+position = Vector2(3665, 1688)
+
+[node name="Label" parent="Corridor" index="1"]
+offset_left = -324.0
+offset_top = -2.0
+offset_right = -19.0
+offset_bottom = 47.0
+text = "TO THE ASSEMBLY AREA"
 
 [node name="GateCorridorHall" type="Gate" parent="."]
 next_room = "scenes/rooms/Hall.tscn"
@@ -353,7 +357,14 @@ position = Vector2(2195, 653)
 [node name="SteamJet56" parent="SteamJets" instance=ExtResource("1_n6r3k")]
 position = Vector2(2874, 525)
 
+[connection signal="body_entered" from="AutohideLabel/Area2D" to="AutohideLabel" method="body_entered" flags=18]
+[connection signal="body_exited" from="AutohideLabel/Area2D" to="AutohideLabel" method="body_exited" flags=18]
+[connection signal="body_entered" from="Corridor/Area2D" to="Corridor" method="body_entered" flags=18]
+[connection signal="body_exited" from="Corridor/Area2D" to="Corridor" method="body_exited" flags=18]
 [connection signal="body_entered" from="GateCorridorHall" to="GateCorridorHall" method="_on_body_entered"]
 [connection signal="body_exited" from="GateCorridorHall" to="GateCorridorHall" method="_on_body_exited"]
 [connection signal="body_entered" from="GateCorridorBossRoom" to="GateCorridorBossRoom" method="_on_body_entered"]
 [connection signal="body_exited" from="GateCorridorBossRoom" to="GateCorridorBossRoom" method="_on_body_exited"]
+
+[editable path="AutohideLabel"]
+[editable path="Corridor"]

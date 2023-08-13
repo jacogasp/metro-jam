@@ -4,7 +4,7 @@
 [ext_resource type="FontFile" uid="uid://ctpai807254id" path="res://assets/fonts/Pixeled.ttf" id="2_y4iu6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5i4f8"]
-size = Vector2(144, 110)
+size = Vector2(80, 110)
 
 [node name="AutohideLabel" type="Node2D"]
 script = ExtResource("1_2abrl")
