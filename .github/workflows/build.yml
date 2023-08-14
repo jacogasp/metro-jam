@@ -8,6 +8,7 @@ env:
   ARTIFACT_WINDOWS: libCoreGame.dll
   RELEASE_MACOS: Wrenchman.dmg
   RELEASE_WINDOWS: Wrenchman-win64.zip
+  RELEASE_LINUX: Wrenchman-linux64.zip
   GODOT_VERSION: 4.1
 
 jobs:
@@ -136,6 +137,13 @@ jobs:
             dist_dir: dist/windows
             executable: Wrenchman.exe
             bundle: Wrenchman-win64.zip
+          - name: Export Ubuntu
+            os: ubuntu-latest
+            export_preset: Linux
+            build_dir: build/linux
+            dist_dir: dist/linux
+            executable: Wrenchman.zip
+            bundle: Wrenchman-linux64.zip
     needs:
       - build
     steps:
@@ -149,6 +157,15 @@ jobs:
           case $RUNNER_OS in
           Linux)
             sudo apt update && sudo apt install -y wget unzip
+            echo "Downloading Godot ${GODOT_VERSION}"
+            wget "https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+            unzip "Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+            ln -s $(pwd)/Godot_v4.1-stable_linux.x86_64 /usr/local/bin/godot
+            echo "Downloading Export Templates for Godot ${GODOT_VERSION}"
+            wget "https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
+            unzip "Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
+            mkdir -p $HOME/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
+            mv templates/linux_* $HOME/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
             artifact=${ARTIFACT_LINUX}
             ;;
           macOS)
@@ -228,22 +245,31 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: ${{ env.RELEASE_WINDOWS }}
+      - name: Download macOS release
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ env.RELEASE_LINUX }}
       - name: Download Butler
         run: |
           wget https://broth.itch.ovh/butler/linux-amd64/15.21.0/archive/default -O butler.7z
           7z x butler.7z
           sudo mv butler /usr/bin
           butler --version
-      - name: Push macOS release to itch.io
+#      - name: Push macOS release to itch.io
+#        env:
+#          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+#        run: |
+#          butler push ${{ env.RELEASE_MACOS }} johnnyparafango/wrenchman:macos
+#      - name: Push Windows release to itch.io
+#        env:
+#          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+#        run: |
+#          butler push ${{ env.RELEASE_WINDOWS }} johnnyparafango/wrenchman:windows
+      - name: Push Ubuntu release to itch.io
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
         run: |
-          butler push ${{ env.RELEASE_MACOS }} johnnyparafango/wrenchman:macos
-      - name: Push Windows release to itch.io
-        env:
-          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
-        run: |
-          butler push ${{ env.RELEASE_WINDOWS }} johnnyparafango/wrenchman:windows
+          butler push ${{ env.RELEASE_LINUX }} johnnyparafango/wrenchman:linux
 
 
 
