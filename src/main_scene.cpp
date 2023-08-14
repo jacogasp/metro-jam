@@ -87,13 +87,17 @@ void MainScene::_input(const Ref<InputEvent>& event) {
   auto maybe_joypad_button = cast_to<InputEventJoypadButton>(event_ptr);
   auto maybe_joypad_motion = cast_to<InputEventJoypadMotion>(event_ptr);
   if (maybe_joypad_button || maybe_joypad_motion) {
+    if (m_using_joypad) {
+      emit_signal("using_joypad_changed", true);
+    }
     m_using_joypad = true;
-    emit_signal("using_joypad_changed", m_using_joypad);
   }
   auto maybe_keyboard = cast_to<InputEventKey>(event_ptr);
   if (maybe_keyboard) {
+    if (!m_using_joypad) {
+      emit_signal("using_joypad_changed", false);
+    }
     m_using_joypad = false;
-    emit_signal("using_joypad_changed", m_using_joypad);
   }
 }
 void MainScene::on_player_hit() const {
