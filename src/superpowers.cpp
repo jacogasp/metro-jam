@@ -11,14 +11,14 @@ String get_event_button(bool using_joypad, String const& action_name) {
   auto input_map    = InputMap::get_singleton();
   auto const events = input_map->action_get_events(action_name);
   for (auto i = 0; i < events.size(); ++i) {
-    auto const event = Object::cast_to<InputEvent>(events[0]);
+    auto const event = Object::cast_to<InputEvent>(events[i]);
     auto const name  = event->as_text();
     if (!using_joypad) {
       return name.get_slice("(", 0);
     }
     if (name.begins_with("Joypad")) {
       auto start = name.find("Xbox ") + 5;
-      return name.substr(start, start + 1);
+      return name.substr(start, 1);
     }
   }
   return "";
