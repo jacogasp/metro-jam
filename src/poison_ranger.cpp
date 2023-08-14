@@ -59,12 +59,7 @@ static Node2D* player_is_visible(PoisonRanger& ranger, Vector2 const& target) {
   static uint32_t collision_mask = 65535 ^ ranger.get_collision_layer();
   auto world                     = ranger.get_world_2d();
   auto from                      = ranger.get_global_position();
-  auto const cs = ranger.get_node<CollisionShape2D>("CollisionShape2D");
-  if (cs) {
-    from.y -= cs->get_shape()->get_rect().size.y;
-  }
   auto hit_target = ray_hits(from, target, collision_mask, world);
-
   return (hit_target && hit_target->is_in_group("Player")) ? hit_target
                                                            : nullptr;
 }
