@@ -149,6 +149,13 @@ jobs:
           case $RUNNER_OS in
           Linux)
             sudo apt update && sudo apt install -y wget unzip
+            echo "Downloading Godot ${GODOT_VERSION}"
+            wget "https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+            unzip "Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+            ln -s $(pwd)/Godot_v4.1-stable_linux.x86_64 /usr/local/bin/godot
+            echo "Downloading Export Templates for Godot ${GODOT_VERSION}"
+            wget "https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
+            unzip "Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
             artifact=${ARTIFACT_LINUX}
             ;;
           macOS)
