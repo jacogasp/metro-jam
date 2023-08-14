@@ -164,6 +164,7 @@ jobs:
             echo "Downloading Export Templates for Godot ${GODOT_VERSION}"
             wget "https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
             unzip "Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
+            mkdir -p $HOME/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
             mv templates/linux_* $HOME/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
             artifact=${ARTIFACT_LINUX}
             ;;
