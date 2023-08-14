@@ -143,7 +143,7 @@ void SlideState::update(Player& player) {
   auto velocity = player.get_velocity();
   if (player.m_animatedSprite2D->is_playing()
       && player.m_animatedSprite2D->get_animation().begins_with("Slide")) {
-    auto const direction = static_cast<float>(player.m_direction);
+    auto const direction = player.m_direction == Player::right ? 1.f : -1.f;
     velocity += Vector2{direction * player.m_slide_speed, 0};
     player.set_velocity(velocity);
     return;

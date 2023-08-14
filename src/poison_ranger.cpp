@@ -38,6 +38,8 @@ void PoisonRanger::_bind_methods() {
   BIND_PROPERTY(PoisonRanger, shooting_range, Variant::FLOAT);
   BIND_PROPERTY(PoisonRanger, target_lost_distance, Variant::FLOAT);
   ClassDB::bind_method(D_METHOD("take_hit"), &PoisonRanger::take_hit);
+  ClassDB::bind_method(D_METHOD("on_body_entered"),
+                       &PoisonRanger::on_body_entered);
   ClassDB::bind_method(D_METHOD("acquire_target"),
                        &PoisonRanger::acquire_target);
   ClassDB::bind_method(D_METHOD("release_target"),
@@ -57,12 +59,7 @@ static Node2D* player_is_visible(PoisonRanger& ranger, Vector2 const& target) {
   static uint32_t collision_mask = 65535 ^ ranger.get_collision_layer();
   auto world                     = ranger.get_world_2d();
   auto from                      = ranger.get_global_position();
-  auto const cs = ranger.get_node<CollisionShape2D>("CollisionShape2D");
-  if (cs) {
-    from.y -= cs->get_shape()->get_rect().size.y;
-  }
   auto hit_target = ray_hits(from, target, collision_mask, world);
-
   return (hit_target && hit_target->is_in_group("Player")) ? hit_target
                                                            : nullptr;
 }
@@ -101,6 +98,9 @@ void PoisonRanger::_physics_process(double delta) {
 }
 
 void PoisonRanger::take_hit(int damage, Vector2 const& from_direction) {
+  if (m_state == &PoisonRanger::dying) {
+    return;
+  }
   hit(*this, from_direction);
   open_fire(*this);
   auto player = player_is_visible(*this, from_direction);
@@ -117,6 +117,12 @@ void PoisonRanger::take_hit(int damage, Vector2 const& from_direction) {
   if (m_health <= 0) {
     die(*this);
     set_state(&PoisonRanger::dying);
+  }
+}
+
+void PoisonRanger::on_body_entered(Node2D* body) {
+  if (body->is_in_group("Player")) {
+    body->call("hit");
   }
 }
 

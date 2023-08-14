@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://c4w1tkrrm3puk"]
 
 [ext_resource type="TileSet" uid="uid://0w2a5bo421v7" path="res://assets/tilesets/TilesetBlocks.tres" id="1_s54h4"]
-[ext_resource type="FontFile" uid="uid://ctpai807254id" path="res://assets/fonts/Pixeled.ttf" id="2_0ad37"]
+[ext_resource type="PackedScene" uid="uid://mpw57k5hf1d6" path="res://scenes/autohide_label.tscn" id="3_kti23"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8rmxr"]
 size = Vector2(31.75, 57.5)
@@ -55,22 +55,32 @@ collision_mask = 256
 position = Vector2(7, -25.5)
 shape = SubResource("RectangleShape2D_8rmxr")
 
-[node name="Run" type="Label" parent="."]
-offset_left = -510.0
-offset_top = 399.0
-offset_right = -151.0
-offset_bottom = 448.0
-theme_override_fonts/font = ExtResource("2_0ad37")
+[node name="Run" parent="." instance=ExtResource("3_kti23")]
+position = Vector2(-496, 469)
+
+[node name="CollisionShape2D" parent="Run/Area2D" index="0"]
+position = Vector2(42.5, -13)
+
+[node name="Label" parent="Run" index="1"]
+offset_left = -14.0
+offset_top = -70.0
+offset_right = 345.0
+offset_bottom = -21.0
 text = "It's time to run outta here"
 
-[node name="Find" type="Label" parent="."]
-offset_left = 2082.0
-offset_top = 359.0
-offset_right = 2441.0
-offset_bottom = 457.0
-theme_override_fonts/font = ExtResource("2_0ad37")
+[node name="Find" parent="." instance=ExtResource("3_kti23")]
+position = Vector2(2292, 469)
+
+[node name="Label" parent="Find" index="1"]
+offset_left = -211.0
+offset_top = -110.0
+offset_right = 1.0
+offset_bottom = -12.0
 text = "Find the exit
 Wrench'em all!"
 
 [connection signal="body_entered" from="GateEntranceHall" to="GateEntranceHall" method="_on_body_entered"]
 [connection signal="body_exited" from="GateEntranceHall" to="GateEntranceHall" method="_on_body_exited"]
+
+[editable path="Run"]
+[editable path="Find"]

@@ -9,16 +9,19 @@ var path = "user://savings/"
 var label_text = ""
 
 func _ready():
-	print(get_path())
-	$Lever/Label.hide()
-	label_text = $Lever/Label.text
+	$Valve/Label.hide()
+	label_text = $Valve/Label.text
 	collision_layer = $Door/StaticBody2D.collision_layer
 	path += get_path().get_concatenated_names().replace("/", "-")
 	var main_scene = get_node("/root/Main")
 	main_scene.connect("using_joypad_changed", using_joypad_changed)
 	main_scene.connect("save", save_state)
 	using_joypad_changed(false)
-	load_state()
+	if not load_state():
+		if closed:
+			close()
+		else:
+			open()
 
 
 func get_event_button(using_joypad: bool):
@@ -33,10 +36,10 @@ func get_event_button(using_joypad: bool):
 		
 
 func show_label(_body):
-	$Lever/Label.show()
+	$Valve/Label.show()
 
 func hide_label(_body):
-	$Lever/Label.hide()
+	$Valve/Label.hide()
 
 func interact():
 	if shutdown:
@@ -48,7 +51,7 @@ func interact():
 	save_state()
 
 func open():
-	$Lever/AnimationPlayer.play("Open")
+	$Valve/AnimationPlayer.play("Open")
 	$Door/Area2D.monitoring = false
 	$Door/SteamParticles.emitting = false
 	$Door/StaticBody2D.set_physics_process(false)
@@ -56,12 +59,12 @@ func open():
 	$Door.hide()
 	closed = false
 	if one_shot:
-		$Lever/Area2D.monitoring = false
+		$Valve/Area2D.monitoring = false
 		hide_label(null)
 		shutdown = true
 
 func close():
-	$Lever/AnimationPlayer.play("Close")
+	$Valve/AnimationPlayer.play("Close")
 	$Door/Area2D.monitoring = true
 	$Door/SteamParticles.emitting = true
 	$Door/StaticBody2D.set_physics_process(true)
@@ -106,4 +109,4 @@ func using_joypad_changed(using_joypad):
 	var button_name = get_event_button(using_joypad)
 	var text = label_text
 	text = text.replace("$BUTTON", button_name)
-	$Lever/Label.text = text
+	$Valve/Label.text = text

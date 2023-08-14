@@ -311,6 +311,10 @@ void Player::reset() {
   if (as) {
     as->play("Idle");
   }
+  auto audio = get_node<AudioStreamPlayer>("Audio/Footsteps");
+  if (audio) {
+    audio->stop();
+  }
 }
 
 void Player::set_hit_animation_time(float t) {

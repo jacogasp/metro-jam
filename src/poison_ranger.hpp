@@ -45,6 +45,7 @@ class PoisonRanger
   void _physics_process(double) override;
   void set_state(PoisonRangerState* state);
   void take_hit(int damage, Vector2 const& from_direction) override;
+  void on_body_entered(Node2D *body);
   void set_gravity(float gravity);
   [[nodiscard]] float get_gravity() const;
   void set_total_health(int health);

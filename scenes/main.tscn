@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://blkic257bpcco"]
 
 [ext_resource type="PackedScene" uid="uid://dibkh0kdqa671" path="res://scenes/player.tscn" id="2_5tq4j"]
-[ext_resource type="PackedScene" uid="uid://c4w1tkrrm3puk" path="res://scenes/rooms/Entrance.tscn" id="2_h53av"]
+[ext_resource type="PackedScene" uid="uid://c4w1tkrrm3puk" path="res://scenes/rooms/Entrance.tscn" id="2_fvsmf"]
 [ext_resource type="PackedScene" uid="uid://j3sugn7p7jhf" path="res://scenes/hud.tscn" id="3_b7rmp"]
 [ext_resource type="AudioStream" uid="uid://borvjyxrrh2xk" path="res://assets/audio/WrenchmanTheme.mp3" id="4_ske0o"]
 
@@ -10,7 +10,7 @@
 [node name="HUD" parent="." instance=ExtResource("3_b7rmp")]
 
 [node name="World" type="World" parent="."]
-entry_room = ExtResource("2_h53av")
+entry_room = ExtResource("2_fvsmf")
 player = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("2_5tq4j")]
@@ -20,7 +20,7 @@ jump_force = 350.0
 air_jump_force = 300.0
 slide_speed = 300.0
 attack_range = 120.0
-position = Vector2(-423, 510)
+position = Vector2(-427, 503)
 velocity = Vector2(0, 0)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]

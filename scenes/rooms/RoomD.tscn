@@ -1,73 +1,18 @@
-[gd_scene load_steps=25 format=3 uid="uid://cqhkrnuchxrrm"]
+[gd_scene load_steps=14 format=3 uid="uid://cqhkrnuchxrrm"]
 
 [ext_resource type="TileSet" uid="uid://0w2a5bo421v7" path="res://assets/tilesets/TilesetBlocks.tres" id="1_hh4i0"]
 [ext_resource type="PackedScene" uid="uid://b31qyx4laex5m" path="res://scenes/steam_jet.tscn" id="2_t44ap"]
 [ext_resource type="PackedScene" uid="uid://br4rfwsm3h8cw" path="res://scenes/poison_ranger.tscn" id="4_1c2rf"]
-[ext_resource type="Script" path="res://scripts/steam_door.gd" id="4_vhytv"]
-[ext_resource type="Texture2D" uid="uid://brq77udpwpfat" path="res://assets/tilesets/Tileset.png" id="5_2jii5"]
-[ext_resource type="FontFile" uid="uid://ctpai807254id" path="res://assets/fonts/Pixeled.ttf" id="6_uc010"]
-[ext_resource type="Material" uid="uid://b2nx5n23nqg2u" path="res://shaders/SteamParticle.material" id="7_xkkws"]
-[ext_resource type="Texture2D" uid="uid://bjjxt2cylw5jy" path="res://assets/textures/smoke.png" id="8_6dl0w"]
 [ext_resource type="PackedScene" uid="uid://cu0874vm7p4ku" path="res://scenes/bumblee_bee.tscn" id="9_fykdt"]
+[ext_resource type="PackedScene" uid="uid://cm30bx70vnhcg" path="res://scenes/steam_door.tscn" id="10_3cp2x"]
 [ext_resource type="Texture2D" uid="uid://dch5xho6lehap" path="res://assets/textures/light.png" id="10_s8udk"]
-[ext_resource type="Texture2D" uid="uid://2vcybdhlfsdk" path="res://assets/light_bulb_sprite.png" id="11_2bac5"]
+[ext_resource type="Texture2D" uid="uid://2vcybdhlfsdk" path="res://assets/textures/light_bulb_sprite.png" id="11_2bac5"]
 [ext_resource type="PackedScene" uid="uid://bdg1pub7dq7s0" path="res://scenes/superpowers/AirJumpPower.tscn" id="12_dm5vy"]
 [ext_resource type="PackedScene" uid="uid://p4put2nhbvkm" path="res://scenes/superpowers/Slide.tscn" id="13_hseid"]
 [ext_resource type="PackedScene" uid="uid://5ffcgqqdua1c" path="res://scenes/checkpoint.tscn" id="14_kbyol"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_egxwb"]
 size = Vector2(32, 64.6875)
-
-[sub_resource type="LabelSettings" id="LabelSettings_f34io"]
-font = ExtResource("6_uc010")
-font_size = 12
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_sly6h"]
-size = Vector2(178, 94)
-
-[sub_resource type="Animation" id="Animation_mktra"]
-resource_name = "Close"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(-2, -2),
-"update": 0,
-"values": [-2.0944, -1.0472]
-}
-
-[sub_resource type="Animation" id="Animation_eyy6y"]
-resource_name = "Open"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(-2, -2),
-"update": 0,
-"values": [-1.0472, -2.0944]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_0mmlq"]
-_data = {
-"Close": SubResource("Animation_mktra"),
-"Open": SubResource("Animation_eyy6y")
-}
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_fvr8d"]
-size = Vector2(20, 130)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_j5ukg"]
-size = Vector2(64, 135)
 
 [sub_resource type="Gradient" id="Gradient_4h2e1"]
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
@@ -286,69 +231,6 @@ position = Vector2(1391, 2570)
 [node name="PoisonRanger6" parent="PoisonRangers" instance=ExtResource("4_1c2rf")]
 position = Vector2(2017, 3057)
 
-[node name="SteamDoor" type="Node2D" parent="."]
-position = Vector2(4675, 794)
-script = ExtResource("4_vhytv")
-one_shot = true
-
-[node name="Lever" type="Node2D" parent="SteamDoor"]
-position = Vector2(1854, 685)
-
-[node name="Sprite2D" type="Sprite2D" parent="SteamDoor/Lever"]
-position = Vector2(1, -40)
-rotation = -2.0944
-texture = ExtResource("5_2jii5")
-offset = Vector2(0.0306396, -0.00267029)
-region_enabled = true
-region_rect = Rect2(32, 288, 32, 32)
-
-[node name="Label" type="Label" parent="SteamDoor/Lever"]
-offset_left = -57.0
-offset_top = -88.0
-offset_right = 46.0
-offset_bottom = -39.0
-text = "Press $BUTTON"
-label_settings = SubResource("LabelSettings_f34io")
-horizontal_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Area2D" type="Area2D" parent="SteamDoor/Lever"]
-collision_layer = 65536
-collision_mask = 256
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SteamDoor/Lever/Area2D"]
-position = Vector2(0, -47)
-shape = SubResource("RectangleShape2D_sly6h")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="SteamDoor/Lever"]
-libraries = {
-"": SubResource("AnimationLibrary_0mmlq")
-}
-
-[node name="Door" type="Node2D" parent="SteamDoor"]
-position = Vector2(1037, 994)
-
-[node name="SteamParticles" type="GPUParticles2D" parent="SteamDoor/Door"]
-position = Vector2(0, -33)
-amount = 60
-process_material = ExtResource("7_xkkws")
-texture = ExtResource("8_6dl0w")
-lifetime = 0.5
-
-[node name="StaticBody2D" type="StaticBody2D" parent="SteamDoor/Door"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SteamDoor/Door/StaticBody2D"]
-position = Vector2(0, -67)
-shape = SubResource("RectangleShape2D_fvr8d")
-
-[node name="Area2D" type="Area2D" parent="SteamDoor/Door"]
-collision_layer = 0
-collision_mask = 256
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SteamDoor/Door/Area2D"]
-position = Vector2(0, -67.5)
-shape = SubResource("RectangleShape2D_j5ukg")
-
 [node name="Bumblebees" type="Node" parent="."]
 
 [node name="BumbleBee1" parent="Bumblebees" instance=ExtResource("9_fykdt")]
@@ -516,8 +398,14 @@ position = Vector2(3122, 2558)
 [node name="Checkpoint" parent="Checkpoints" instance=ExtResource("14_kbyol")]
 position = Vector2(1203, 3073)
 
+[node name="SteamDoor" parent="." instance=ExtResource("10_3cp2x")]
+position = Vector2(5713, 1770)
+one_shot = true
+
+[node name="Valve" parent="SteamDoor" index="0"]
+position = Vector2(816, -285)
+
 [connection signal="body_entered" from="GateHallD" to="GateHallD" method="_on_body_entered"]
 [connection signal="body_exited" from="GateHallD" to="GateHallD" method="_on_body_exited"]
-[connection signal="body_entered" from="SteamDoor/Lever/Area2D" to="SteamDoor" method="show_label" flags=18]
-[connection signal="body_exited" from="SteamDoor/Lever/Area2D" to="SteamDoor" method="hide_label" flags=18]
-[connection signal="body_entered" from="SteamDoor/Door/Area2D" to="SteamDoor" method="on_body_entered" flags=18]
+
+[editable path="SteamDoor"]
