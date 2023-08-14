@@ -255,16 +255,21 @@ jobs:
           7z x butler.7z
           sudo mv butler /usr/bin
           butler --version
-      - name: Push macOS release to itch.io
+#      - name: Push macOS release to itch.io
+#        env:
+#          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+#        run: |
+#          butler push ${{ env.RELEASE_MACOS }} johnnyparafango/wrenchman:macos
+#      - name: Push Windows release to itch.io
+#        env:
+#          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+#        run: |
+#          butler push ${{ env.RELEASE_WINDOWS }} johnnyparafango/wrenchman:windows
+      - name: Push Ubuntu release to itch.io
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
         run: |
-          butler push ${{ env.RELEASE_MACOS }} johnnyparafango/wrenchman:macos
-      - name: Push Windows release to itch.io
-        env:
-          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
-        run: |
-          butler push ${{ env.RELEASE_WINDOWS }} johnnyparafango/wrenchman:windows
+          butler push ${{ env.RELEASE_LINUX }} johnnyparafango/wrenchman:linux
 
 
 
