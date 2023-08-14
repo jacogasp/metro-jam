@@ -8,6 +8,7 @@ env:
   ARTIFACT_WINDOWS: libCoreGame.dll
   RELEASE_MACOS: Wrenchman.dmg
   RELEASE_WINDOWS: Wrenchman-win64.zip
+  RELEASE_LINUX: Wrenchman-linux64.zip
   GODOT_VERSION: 4.1
 
 jobs:
@@ -163,6 +164,7 @@ jobs:
             echo "Downloading Export Templates for Godot ${GODOT_VERSION}"
             wget "https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
             unzip "Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
+            mv templates/linux_* $HOME/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
             artifact=${ARTIFACT_LINUX}
             ;;
           macOS)
@@ -242,6 +244,10 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: ${{ env.RELEASE_WINDOWS }}
+      - name: Download macOS release
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ env.RELEASE_LINUX }}
       - name: Download Butler
         run: |
           wget https://broth.itch.ovh/butler/linux-amd64/15.21.0/archive/default -O butler.7z
