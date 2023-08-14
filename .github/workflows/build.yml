@@ -136,6 +136,13 @@ jobs:
             dist_dir: dist/windows
             executable: Wrenchman.exe
             bundle: Wrenchman-win64.zip
+          - name: Export Ubuntu
+            os: ubuntu-latest
+            export_preset: Linux
+            build_dir: build/linux
+            dist_dir: dist/linux
+            executable: Wrenchman.zip
+            bundle: Wrenchman-linux64.zip
     needs:
       - build
     steps:
