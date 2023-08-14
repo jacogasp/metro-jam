@@ -17,7 +17,7 @@ String get_event_button(bool using_joypad, String const& action_name) {
       return name.get_slice("(", 0);
     }
     if (name.begins_with("Joypad")) {
-      auto start = name.find("Xbox ");
+      auto start = name.find("Xbox ") + 5;
       return name.substr(start, start + 1);
     }
   }

@@ -12,14 +12,17 @@ func _ready():
 	using_joypad_changed(false)
 
 func get_event_button(using_joypad: bool):
-	var events = InputMap.action_get_events("interact")
+	var events = InputMap.action_get_events("grenade")
 	for event in events:
 		var event_name = event.as_text()
 		if not using_joypad:
 			return event_name.get_slice("(", 0);
 		if event_name.begins_with("Joypad"):
-			var start = event_name.find("Xbox ")
-			return event_name[start]
+			var start = event_name.find("Xbox ") + 5
+			var s = event_name[start]
+			if s in "LR":
+				s += event_name[start + 1]
+			return s
 			
 
 func using_joypad_changed(using_joypad):

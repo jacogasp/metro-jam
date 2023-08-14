@@ -27,7 +27,7 @@ func get_event_button(using_joypad: bool):
 			return event_name.get_slice("(", 0);
 		if event_name.begins_with("Joypad"):
 			var start = event_name.find("Xbox ")
-			return event_name[start]
+			return event_name[start + 5]
 
 func using_joypad_changed(using_joypad):
 	var button_name = get_event_button(using_joypad)
