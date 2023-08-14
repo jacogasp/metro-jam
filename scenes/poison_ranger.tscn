@@ -223,3 +223,5 @@ debug_color = Color(0.968627, 0, 0.462745, 0.0196078)
 libraries = {
 "": SubResource("AnimationLibrary_ktlxv")
 }
+
+[connection signal="body_entered" from="Area2D" to="." method="on_body_entered"]
