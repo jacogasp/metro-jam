@@ -53,29 +53,6 @@ layer_4/tile_data = PackedInt32Array(262242, 1114112, 2, 327778, 1114112, 3, 393
 [node name="Checkpoint" parent="." instance=ExtResource("2_8iei1")]
 position = Vector2(3598, 1665)
 
-[node name="AutohideLabel" parent="." instance=ExtResource("3_a2oej")]
-position = Vector2(3470, 306)
-
-[node name="Label" parent="AutohideLabel" index="1"]
-offset_left = -219.0
-offset_top = -93.0
-offset_right = 28.0
-offset_bottom = 103.0
-text = "DANGER!!!
-RESTRICTED AREA
-ACCESS ONLY WITH
-PROPER EQUIPMENT"
-
-[node name="Corridor" parent="." instance=ExtResource("3_a2oej")]
-position = Vector2(3665, 1688)
-
-[node name="Label" parent="Corridor" index="1"]
-offset_left = -324.0
-offset_top = -2.0
-offset_right = -19.0
-offset_bottom = 47.0
-text = "TO THE ASSEMBLY AREA"
-
 [node name="GateCorridorHall" type="Gate" parent="."]
 next_room = "scenes/rooms/Hall.tscn"
 position = Vector2(3760, 1728)
@@ -357,14 +334,34 @@ position = Vector2(2195, 653)
 [node name="SteamJet56" parent="SteamJets" instance=ExtResource("1_n6r3k")]
 position = Vector2(2874, 525)
 
-[connection signal="body_entered" from="AutohideLabel/Area2D" to="AutohideLabel" method="body_entered" flags=18]
-[connection signal="body_exited" from="AutohideLabel/Area2D" to="AutohideLabel" method="body_exited" flags=18]
-[connection signal="body_entered" from="Corridor/Area2D" to="Corridor" method="body_entered" flags=18]
-[connection signal="body_exited" from="Corridor/Area2D" to="Corridor" method="body_exited" flags=18]
+[node name="CorridorLabel" parent="." instance=ExtResource("3_a2oej")]
+position = Vector2(3664, 1686)
+
+[node name="Label" parent="CorridorLabel" index="1"]
+offset_left = -290.0
+offset_top = 2.0
+offset_right = 15.0
+offset_bottom = 51.0
+text = "TO THE ASSEMBLY AREA"
+
+[node name="DangerLabel" parent="." instance=ExtResource("3_a2oej")]
+position = Vector2(3473, 310)
+
+[node name="Label" parent="DangerLabel" index="1"]
+offset_left = -272.0
+offset_top = -154.0
+offset_right = -25.0
+offset_bottom = 42.0
+theme_override_constants/line_spacing = -10
+text = "DANGER!!!
+RESTRICTED AREA
+ACCESS ONLY WITH
+PROPER EQUIPMENT"
+
 [connection signal="body_entered" from="GateCorridorHall" to="GateCorridorHall" method="_on_body_entered"]
 [connection signal="body_exited" from="GateCorridorHall" to="GateCorridorHall" method="_on_body_exited"]
 [connection signal="body_entered" from="GateCorridorBossRoom" to="GateCorridorBossRoom" method="_on_body_entered"]
 [connection signal="body_exited" from="GateCorridorBossRoom" to="GateCorridorBossRoom" method="_on_body_exited"]
 
-[editable path="AutohideLabel"]
-[editable path="Corridor"]
+[editable path="CorridorLabel"]
+[editable path="DangerLabel"]
